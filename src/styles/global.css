@@ -44,18 +44,21 @@
   --cyber-blue: #4DA3FF;
   --eye-gold: #F4D35E;
   --eye-gold-contrast: #B45309;
+  --shadow-offset-x: -4px;
+  --shadow-offset-y: 4px;
+  --dither-size: 12px;
 }
 
 html.dark {
   /* TEMA OSCURO: Hacker CRT */
   --bg-canvas: #0B0F17;
   --bg-surface: #111827;
-  --bg-header: #E63946;
+  --bg-header: var(--scorch-red, #E63946);
   --text-main: #F8FAFC;
   --text-muted: #94A3B8;
   --text-inverted: #0B0F17;
   --border-main: #E2E8F0;
-  --shadow-color: #E63946;
+  --shadow-color: var(--scorch-red, #E63946);
   --dither-color: #1E293B;
   --ascii-color: #FF4D5A;
   --eye-gold-contrast: #F4D35E;
@@ -66,7 +69,7 @@ body {
   color: var(--text-main);
   font-family: 'JetBrains Mono', monospace;
   background-image: radial-gradient(var(--dither-color) 1.25px, transparent 1.25px);
-  background-size: 12px 12px;
+  background-size: var(--dither-size, 12px) var(--dither-size, 12px);
   min-height: 100vh;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
@@ -82,14 +85,14 @@ body {
   font-family: 'Press Start 2P', 'VT323', monospace;
   text-transform: uppercase;
   -webkit-text-stroke: 1.5px #000000;
-  text-shadow: -4px 4px 0px #000000;
+  text-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px #000000;
   line-height: 1.35;
   letter-spacing: -0.02em;
 }
 
 html.dark .title-8bit {
   -webkit-text-stroke: 1.5px #000000;
-  text-shadow: -4px 4px 0px #E63946;
+  text-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px var(--scorch-red, #E63946);
 }
 
 .subtitle-pixel {
@@ -101,7 +104,7 @@ html.dark .title-8bit {
 /* Clases canónicas */
 .btn-brutal {
   border: 2px solid var(--border-main);
-  box-shadow: -4px 4px 0px 0px var(--shadow-color);
+  box-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px 0px var(--shadow-color);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
   text-transform: uppercase;
@@ -121,14 +124,14 @@ html.dark .title-8bit {
 }
 
 .btn-brutal:active {
-  transform: translate(-4px, 4px);
+  transform: translate(var(--shadow-offset-x, -4px), var(--shadow-offset-y, 4px));
   box-shadow: 0px 0px 0px 0px var(--shadow-color);
 }
 
 .tui-window {
   background-color: var(--bg-surface);
   border: 2px solid var(--border-main);
-  box-shadow: -4px 4px 0px 0px var(--shadow-color);
+  box-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px 0px var(--shadow-color);
   border-radius: 0px;
 }
 

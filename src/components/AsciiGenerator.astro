@@ -1,0 +1,248 @@
+---
+import Badge from './Badge.astro';
+---
+
+<div class="tui-window overflow-hidden font-mono text-xs">
+  <div class="tui-header bg-slate-900 text-white">
+    <span class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 bg-scorch-crimson border border-black"></span>
+      <span>0xSCORCH_ASCII // LIVE_MATRIX_FORGE</span>
+    </span>
+    <span class="text-[10px] opacity-80">WEB ENGINE v1.0</span>
+  </div>
+
+  <div class="p-5 bg-white dark:bg-slate-900 space-y-5">
+    <!-- Controles del Generador -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+      <div class="md:col-span-5 space-y-1.5">
+        <label for="ascii-text-input" class="block font-extrabold uppercase text-xs">
+          // TEXTO A FORJAR EN MATRIZ ASCII
+        </label>
+        <div class="flex">
+          <span class="inline-flex items-center px-3 bg-black text-scorch-gold border-2 border-r-0 border-black dark:border-slate-700 font-extrabold">
+            &gt;_
+          </span>
+          <input
+            id="ascii-text-input"
+            type="text"
+            maxlength="12"
+            value="RYUKAMI"
+            placeholder="Ej: RYUKAMI"
+            class="w-full bg-white dark:bg-slate-950 border-2 border-black dark:border-slate-700 px-3 py-2 text-xs font-extrabold uppercase outline-none focus:border-scorch-crimson"
+          />
+        </div>
+      </div>
+
+      <div class="md:col-span-4 space-y-1.5">
+        <label for="ascii-charset-select" class="block font-extrabold uppercase text-xs">
+          // TEXTURA DE ESCAMAS
+        </label>
+        <select
+          id="ascii-charset-select"
+          class="w-full bg-white dark:bg-slate-950 border-2 border-black dark:border-slate-700 px-3 py-2 text-xs font-extrabold uppercase outline-none focus:border-scorch-crimson"
+        >
+          <option value="block">BLOQUES RETRO (█▓▒)</option>
+          <option value="hex">MATRIZ HEX (0xAF)</option>
+          <option value="cyber">CYBER BRUTAL (@#%)</option>
+          <option value="kanji">KANJI DRAGÓN (竜炎神)</option>
+        </select>
+      </div>
+
+      <div class="md:col-span-3 flex gap-2">
+        <button
+          type="button"
+          id="btn-dragon-emblem"
+          class="btn-brutal bg-scorch-crimson text-white w-full py-2 px-3 text-xs font-extrabold"
+        >
+          🐉 EMBLEMA DRAGÓN
+        </button>
+      </div>
+    </div>
+
+    <!-- Presets Rápidos y Selector de Color -->
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-black/10 dark:border-white/10">
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="text-[10px] font-bold uppercase opacity-70 mr-1">PRESETS:</span>
+        <button type="button" data-word="RYUKAMI" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">RYUKAMI</button>
+        <button type="button" data-word="SCORCH" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">SCORCH</button>
+        <button type="button" data-word="VELGRYND" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">VELGRYND</button>
+        <button type="button" data-word="0xALEX" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">0xALEX</button>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] font-bold uppercase opacity-70">TINTA:</span>
+        <button type="button" data-color="#E63946" class="ascii-color-btn w-4 h-4 bg-[#E63946] border border-black" title="Carmesí"></button>
+        <button type="button" data-color="#4DA3FF" class="ascii-color-btn w-4 h-4 bg-[#4DA3FF] border border-black" title="Cian"></button>
+        <button type="button" data-color="#F4D35E" class="ascii-color-btn w-4 h-4 bg-[#F4D35E] border border-black" title="Oro"></button>
+        <button type="button" data-color="#10B981" class="ascii-color-btn w-4 h-4 bg-[#10B981] border border-black" title="Matrix"></button>
+      </div>
+    </div>
+
+    <!-- Salida de Consola ASCII -->
+    <div class="relative bg-slate-950 border-2 border-black dark:border-slate-700 p-4 overflow-x-auto">
+      <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
+        <span class="text-[10px] text-slate-400 font-bold">STDOUT // 8-BIT BITMAP MATRIX</span>
+        <button
+          type="button"
+          id="copy-ascii-output-btn"
+          class="btn-brutal bg-scorch-gold text-black px-2.5 py-1 text-[11px] font-extrabold"
+        >
+          📋 COPIAR ARTE ASCII
+        </button>
+      </div>
+      <pre
+        id="ascii-canvas-output"
+        class="font-mono text-[10px] sm:text-xs leading-[1.15] tracking-tighter select-all text-[#E63946] font-bold py-2"
+      ></pre>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    // Mapa de glifos pixel 5x5 para generador de banners en tiempo real
+    const glyphs = {
+      A: [' 111 ', '1   1', '11111', '1   1', '1   1'],
+      B: ['1111 ', '1   1', '1111 ', '1   1', '1111 '],
+      C: [' 1111', '1    ', '1    ', '1    ', ' 1111'],
+      D: ['1111 ', '1   1', '1   1', '1   1', '1111 '],
+      E: ['11111', '1    ', '1111 ', '1    ', '11111'],
+      F: ['11111', '1    ', '1111 ', '1    ', '1    '],
+      G: [' 1111', '1    ', '1  11', '1   1', ' 1111'],
+      H: ['1   1', '1   1', '11111', '1   1', '1   1'],
+      I: ['11111', '  1  ', '  1  ', '  1  ', '11111'],
+      J: ['  111', '   1 ', '   1 ', '1  1 ', ' 11  '],
+      K: ['1   1', '1  1 ', '111  ', '1  1 ', '1   1'],
+      L: ['1    ', '1    ', '1    ', '1    ', '11111'],
+      M: ['1   1', '11 11', '1 1 1', '1   1', '1   1'],
+      N: ['1   1', '11  1', '1 1 1', '1  11', '1   1'],
+      O: [' 111 ', '1   1', '1   1', '1   1', ' 111 '],
+      P: ['1111 ', '1   1', '1111 ', '1    ', '1    '],
+      Q: [' 111 ', '1   1', '1 1 1', '1  1 ', ' 11 1'],
+      R: ['1111 ', '1   1', '1111 ', '1  1 ', '1   1'],
+      S: [' 1111', '1    ', ' 111 ', '    1', '1111 '],
+      T: ['11111', '  1  ', '  1  ', '  1  ', '  1  '],
+      U: ['1   1', '1   1', '1   1', '1   1', ' 111 '],
+      V: ['1   1', '1   1', '1   1', ' 1 1 ', '  1  '],
+      W: ['1   1', '1   1', '1 1 1', '11 11', '1   1'],
+      X: ['1   1', ' 1 1 ', '  1  ', ' 1 1 ', '1   1'],
+      Y: ['1   1', ' 1 1 ', '  1  ', '  1  ', '  1  '],
+      Z: ['11111', '   1 ', '  1  ', ' 1   ', '11111'],
+      '0': [' 111 ', '1  11', '1 1 1', '11  1', ' 111 '],
+      '1': ['  1  ', ' 11  ', '  1  ', '  1  ', '11111'],
+      '2': [' 111 ', '1   1', '  11 ', ' 1   ', '11111'],
+      '3': ['1111 ', '    1', ' 111 ', '    1', '1111 '],
+      '4': ['1  1 ', '1  1 ', '11111', '   1 ', '   1 '],
+      '5': ['11111', '1    ', '1111 ', '    1', '1111 '],
+      '6': [' 111 ', '1    ', '1111 ', '1   1', ' 111 '],
+      '7': ['11111', '   1 ', '  1  ', ' 1   ', ' 1   '],
+      '8': [' 111 ', '1   1', ' 111 ', '1   1', ' 111 '],
+      '9': [' 111 ', '1   1', ' 1111', '    1', ' 111 '],
+      '-': ['     ', '     ', '11111', '     ', '     '],
+      _: ['     ', '     ', '     ', '     ', '11111'],
+      ' ': ['   ', '   ', '   ', '   ', '   '],
+    };
+
+    const dragonEmblem = [
+      '                  /\\  //\\\\                  ',
+      '           /\\    //\\\\///\\\\\\        /\\       ',
+      '          //\\\\  ///\\////\\\\\\\\  /\\  //\\\\      ',
+      '         /  \\ \\/^ ^ \\  /^ ^ \\/  \\///\\\\\\     ',
+      '        /   /  \\ O  /  \\ O  /   / \\//\\\\\\    ',
+      '       /   /    \\__/    \\__/   /   \\/\\\\\\    ',
+      '      /   /  _      /\\      _ /     \\\\\\     ',
+      '     |   |  ( \\____/  \\____/ )       \\\\     ',
+      '      \\   \\  \\ 0xSCORCH_CORE /        \\     ',
+      '       \\   \\  \\_____________/          \\    ',
+      '        \\   \\___/ /     \\ \\____________/    ',
+      '         \\_______/       \\____________/     ',
+      '   [ 竜神 // RYUKAMI SCORCH DRAGON // v4.1 ]',
+    ].join('\n');
+
+    const charsets = {
+      block: ['██', '▓▓', '▒▒'],
+      hex: ['0x', 'F1', 'A9'],
+      cyber: ['@@', '##', '%%'],
+      kanji: ['竜', '炎', '神'],
+    };
+
+    const textInput = document.getElementById('ascii-text-input');
+    const charsetSelect = document.getElementById('ascii-charset-select');
+    const outputPre = document.getElementById('ascii-canvas-output');
+    const dragonBtn = document.getElementById('btn-dragon-emblem');
+    const copyBtn = document.getElementById('copy-ascii-output-btn');
+
+    if (!textInput || !charsetSelect || !outputPre) return;
+
+    function renderWordAscii() {
+      const raw = (textInput.value || 'RYUKAMI').toUpperCase();
+      const setKey = charsetSelect.value || 'block';
+      const tokens = charsets[setKey] || charsets.block;
+
+      const rows = ['', '', '', '', ''];
+
+      for (let cIdx = 0; cIdx < raw.length; cIdx++) {
+        const ch = raw[cIdx];
+        const pattern = glyphs[ch] || glyphs[' '];
+        for (let r = 0; r < 5; r++) {
+          let lineStr = '';
+          for (let col = 0; col < pattern[r].length; col++) {
+            if (pattern[r][col] === '1') {
+              const token = tokens[(r + col + cIdx) % tokens.length];
+              lineStr += token;
+            } else {
+              lineStr += '  ';
+            }
+          }
+          rows[r] += lineStr + '  ';
+        }
+      }
+
+      const headerLine = `// [0xSCORCH_MATRIX] :: "${raw}" // CHARSET: ${setKey.toUpperCase()}`;
+      outputPre.textContent = `${headerLine}\n\n${rows.join('\n')}`;
+    }
+
+    textInput.addEventListener('input', renderWordAscii);
+    charsetSelect.addEventListener('change', renderWordAscii);
+
+    document.querySelectorAll('.ascii-word-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const word = btn.getAttribute('data-word');
+        if (word) {
+          textInput.value = word;
+          renderWordAscii();
+        }
+      });
+    });
+
+    document.querySelectorAll('.ascii-color-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const color = btn.getAttribute('data-color');
+        if (color) {
+          outputPre.style.color = color;
+        }
+      });
+    });
+
+    if (dragonBtn) {
+      dragonBtn.addEventListener('click', () => {
+        outputPre.textContent = dragonEmblem;
+        if (window.showToast) {
+          window.showToast('EMBLEMA INVOCADO', 'Arte ASCII del Dragón Scorch cargado en consola.', 'crimson', 2400);
+        }
+      });
+    }
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        await navigator.clipboard.writeText(outputPre.textContent || '');
+        if (window.showToast) {
+          window.showToast('ARTE ASCII COPIADO', 'Matriz ASCII copiada al portapapeles lista para pegar.', 'emerald');
+        }
+      });
+    }
+
+    // Render inicial
+    renderWordAscii();
+  })();
+</script>

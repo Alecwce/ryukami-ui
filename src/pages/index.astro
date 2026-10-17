@@ -10,6 +10,9 @@ import Switch from '../components/Switch.astro';
 import Alert from '../components/Alert.astro';
 import Modal from '../components/Modal.astro';
 import ComponentPreview from '../components/ComponentPreview.astro';
+import SidebarNav from '../components/SidebarNav.astro';
+import ThemeStudio from '../components/ThemeStudio.astro';
+import AsciiGenerator from '../components/AsciiGenerator.astro';
 
 // Snippets de código para el visor [Preview | Code]
 const buttonSnippet = `import Button from '@/components/Button.astro';
@@ -95,19 +98,30 @@ import Button from '@/components/Button.astro';
 <Modal id="demo-modal" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
   <p>Diagnóstico cuántico completado sin anomalías.</p>
 </Modal>`;
+
+const installAstroSnippet = `# 1. Instalar Tailwind CSS v4 en tu proyecto Astro 7
+pnpm add tailwindcss@latest @tailwindcss/vite@latest
+
+# 2. En astro.config.mjs:
+import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+
+export default defineConfig({
+  vite: { plugins: [tailwindcss()] }
+});`;
 ---
 
 <BaseLayout
   title="🐉 Ryukami-UI // Retro TUI & Neo-Brutalism Component Library"
-  description="Librería de componentes retro TUI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
+  description="Librería completa de componentes retro TUI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
 >
 
   <!-- 1. HERO SHOWCASE -->
-  <section class="space-y-6 text-center md:text-left">
+  <section id="hero" class="space-y-6 text-center md:text-left">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-      <Badge variant="crimson">v1.2.0 // FASE 2 ACTIVA</Badge>
+      <Badge variant="crimson">v2.0.0 // FULL RELEASE (FASE 3)</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
-      <Badge variant="gold">CMD+K PALETTE + TOASTS</Badge>
+      <Badge variant="gold">THEME STUDIO + ASCII FORGE</Badge>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
@@ -129,8 +143,11 @@ import Button from '@/components/Button.astro';
           <Button variant="crimson" size="lg" href="#components">
             &gt; EXPLORAR COMPONENTES
           </Button>
+          <Button variant="cyan" size="lg" href="#theme-studio">
+            🎨 THEME STUDIO
+          </Button>
           <Button variant="outline" size="lg" onclick="window.openPalette && window.openPalette()">
-            ⌨️ ABRIR CMD+K
+            ⌨️ CMD+K
           </Button>
         </div>
       </div>
@@ -172,6 +189,16 @@ import Button from '@/components/Button.astro';
       </Button>
     </div>
   </section>
+
+  <!-- ARQUITECTURA DE DOS COLUMNAS ESTILO 8BITCN / SHADCN (SIDEBAR + WORKSPACE) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    <!-- Sidebar Lateral Fijo (Desktop) -->
+    <div class="hidden lg:block lg:col-span-3 sticky top-28">
+      <SidebarNav />
+    </div>
+
+    <!-- Columna Principal de Contenido -->
+    <div class="lg:col-span-9 space-y-16 min-w-0">
 
   <!-- 3. COMPONENT CATALOG CON PESTAÑAS [PREVIEW | CODE] (ESTILO 8BITCN) -->
   <section id="components" class="space-y-12">
@@ -534,8 +561,71 @@ import Button from '@/components/Button.astro';
     </div>
   </section>
 
-  <!-- 7. ATAJOS DE TECLADO KBD -->
-  <section class="space-y-4 pb-8">
+  <!-- 7. THEME STUDIO EN VIVO (FASE 3) -->
+  <section id="theme-studio" class="space-y-4">
+    <div class="flex items-center gap-4">
+      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 05_THEME_STUDIO_EN_VIVO</h2>
+      <div class="h-0.5 bg-current flex-1"></div>
+    </div>
+    <p class="text-xs sm:text-sm opacity-80">
+      Personaliza en tiempo real la paleta cromática de toda la web (incluyendo la variante <strong>Crimson Soft</strong> para sesiones nocturnas largas), la física de las sombras y la densidad de la trama halftone.
+    </p>
+
+    <ThemeStudio />
+  </section>
+
+  <!-- 8. GENERADOR DE ARTE ASCII SCORCH (FASE 3) -->
+  <section id="ascii-forge" class="space-y-4">
+    <div class="flex items-center gap-4">
+      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 06_SCORCH_ASCII_FORGE</h2>
+      <div class="h-0.5 bg-current flex-1"></div>
+    </div>
+    <p class="text-xs sm:text-sm opacity-80">
+      Motor interactivo en navegador para forjar banners 8-bit en matriz de código ASCII o invocar el emblema del Dragón Scorch listo para copiar a tus cabeceras o terminales.
+    </p>
+
+    <AsciiGenerator />
+  </section>
+
+  <!-- 9. GUÍA DE INSTALACIÓN Y ARQUITECTURA (FASE 3) -->
+  <section id="install-docs" class="space-y-4">
+    <div class="flex items-center gap-4">
+      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_GUIA_DE_INSTALACION</h2>
+      <div class="h-0.5 bg-current flex-1"></div>
+    </div>
+    <p class="text-xs sm:text-sm opacity-80">
+      Integra <strong>Ryukami-UI</strong> en cualquier proyecto moderno con Astro 7, Next.js o Vite usando Tailwind CSS v4.
+    </p>
+
+    <ComponentPreview title="ASTRO_7_TAILWIND_4_SETUP" code={installAstroSnippet} status="DOCS">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
+          <Badge variant="crimson">PASO 01</Badge>
+          <h4 class="font-extrabold uppercase">Instalar Motor</h4>
+          <p class="opacity-80 leading-relaxed">
+            Instala `@tailwindcss/vite` y `tailwindcss@4.3.3` en tu proyecto Astro 7.4.
+          </p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
+          <Badge variant="cyan">PASO 02</Badge>
+          <h4 class="font-extrabold uppercase">Inyectar Tokens</h4>
+          <p class="opacity-80 leading-relaxed">
+            Pega las variables generadas por el <strong>Theme Studio</strong> en tu `src/styles/global.css`.
+          </p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
+          <Badge variant="gold">PASO 03</Badge>
+          <h4 class="font-extrabold uppercase">Copiar Componentes</h4>
+          <p class="opacity-80 leading-relaxed">
+            Usa el botón `[ 📋 COPIAR ]` de cualquier componente del catálogo y pégalo en `src/components/`.
+          </p>
+        </div>
+      </div>
+    </ComponentPreview>
+  </section>
+
+  <!-- 10. ATAJOS DE TECLADO KBD -->
+  <section id="shortcuts" class="space-y-4 pb-8">
     <Card title="KEYBOARD_SHORTCUTS" status="ACCESSIBILITY">
       <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
         <div class="flex items-center gap-1.5">
@@ -551,4 +641,8 @@ import Button from '@/components/Button.astro';
     </Card>
   </section>
 
+    </div>
+  </div>
+
 </BaseLayout>
+

@@ -122,6 +122,36 @@ import Kbd from './Kbd.astro';
         },
       },
       {
+        id: 'nav-theme-studio',
+        category: 'STUDIO',
+        label: 'Ir a: Theme Studio en Vivo (Personalizador de Paletas)',
+        shortcut: '#05',
+        keywords: 'theme studio paleta colores sombras dither customizer',
+        action: () => {
+          location.hash = '#theme-studio';
+        },
+      },
+      {
+        id: 'nav-ascii-forge',
+        category: 'STUDIO',
+        label: 'Ir a: Generador de Arte ASCII Scorch en Vivo',
+        shortcut: '#06',
+        keywords: 'ascii forge generador dragon matriz texto arte',
+        action: () => {
+          location.hash = '#ascii-forge';
+        },
+      },
+      {
+        id: 'nav-install-docs',
+        category: 'DOCS',
+        label: 'Ir a: Guía de Instalación (Astro 7, Tailwind 4, Next.js)',
+        shortcut: '#07',
+        keywords: 'instalar guia docs setup astro tailwind nextjs',
+        action: () => {
+          location.hash = '#install-docs';
+        },
+      },
+      {
         id: 'act-theme',
         category: 'SISTEMA',
         label: 'Alternar Tema: Modo Paper / Modo Hacker Nocturno',
