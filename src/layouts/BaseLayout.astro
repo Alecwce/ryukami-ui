@@ -1,0 +1,146 @@
+---
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = '⚡ Ryukami-UI // Retro TUI & Neo-Brutalism Library',
+  description = 'Librería de componentes retro TUI y Neo-Brutalismo inspirada en Velgrynd Scorch Lore para Astro & Web.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="p-4 md:p-8 max-w-6xl mx-auto space-y-12">
+  <Header />
+
+  <main class="space-y-16">
+    <slot />
+  </main>
+
+  <footer class="text-center text-xs font-bold opacity-60 pb-8 space-y-1 border-t-2 border-black dark:border-slate-800 pt-8">
+    <p>⚡ RYUKAMI-UI // SCORCH DRAGON SYSTEM (VELGRYND TRIBUTE EDITION)</p>
+    <p>Neo-Brutalism + Retro TUI CLI + 8-Bit Matrix. MIT License 2026. Made with Astro &amp; Tailwind CSS.</p>
+  </footer>
+
+  <!-- Script de Audio y Tema Global -->
+  <script is:inline>
+    // Inicializar Tema
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.documentElement.classList.add('dark');
+      actualizarBotonTema(true);
+    } else {
+      document.documentElement.classList.remove('dark');
+      actualizarBotonTema(false);
+    }
+
+    window.toggleTheme = function() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      actualizarBotonTema(isDark);
+      if (window.playTerminalBeep) window.playTerminalBeep(isDark ? 600 : 900, 0.08);
+    };
+
+    function actualizarBotonTema(isDark) {
+      const label = document.getElementById('theme-label');
+      const icon = document.getElementById('theme-icon');
+      if (label && icon) {
+        label.innerText = isDark ? 'HACKER' : 'PAPER';
+        icon.innerText = isDark ? '🌙' : '☀️';
+      }
+    }
+
+    // Web Audio API Synthesis
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    window.playMechanicalClick = function() {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(45, now + 0.03);
+
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1400, now);
+        filter.Q.setValueAtTime(2.0, now);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.03);
+      } catch (e) {}
+    };
+
+    window.playTerminalBeep = function(freq = 880, duration = 0.05) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq, now);
+
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + duration);
+      } catch (e) {}
+    };
+
+    window.toggleSound = function() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('sound-icon');
+      const label = document.getElementById('sound-label');
+      if (icon && label) {
+        icon.innerText = soundEnabled ? '🔊' : '🔇';
+        label.innerText = soundEnabled ? 'SND: ON' : 'SND: OFF';
+      }
+    };
+
+    // Enganchar sonido de click a botones
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.btn-brutal') || e.target.closest('button')) {
+        window.playMechanicalClick();
+      }
+    });
+  </script>
+</body>
+</html>

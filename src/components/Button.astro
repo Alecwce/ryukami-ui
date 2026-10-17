@@ -1,0 +1,46 @@
+---
+interface Props {
+  variant?: 'crimson' | 'cyan' | 'gold' | 'outline' | 'dark';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  class?: string;
+  id?: string;
+  onclick?: string;
+}
+
+const {
+  variant = 'crimson',
+  size = 'md',
+  href,
+  class: className = '',
+  id,
+  onclick,
+  ...rest
+} = Astro.props;
+
+const variantStyles = {
+  crimson: 'bg-scorch-crimson text-white hover:bg-red-600',
+  cyan: 'bg-scorch-cyan text-black hover:bg-sky-400',
+  gold: 'bg-scorch-gold text-black hover:bg-yellow-400',
+  outline: 'bg-white text-black dark:bg-slate-800 dark:text-white',
+  dark: 'bg-black text-white dark:bg-slate-900',
+};
+
+const sizeStyles = {
+  sm: 'px-3 py-1.5 text-xs',
+  md: 'px-5 py-2.5 text-xs sm:text-sm',
+  lg: 'px-7 py-3.5 text-sm sm:text-base',
+};
+
+const Element = href ? 'a' : 'button';
+---
+
+<Element
+  href={href}
+  id={id}
+  onclick={onclick}
+  class={`btn-brutal ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+  {...rest}
+>
+  <slot />
+</Element>

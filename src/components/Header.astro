@@ -1,0 +1,61 @@
+---
+import Button from './Button.astro';
+import Kbd from './Kbd.astro';
+---
+
+<header class="tui-window sticky top-4 z-40 mb-10">
+  <div class="tui-header">
+    <span class="flex items-center gap-2">
+      <span class="inline-block w-2.5 h-2.5 bg-scorch-cyan border border-black animate-pulse"></span>
+      0xRYUKAMI_UI // SCORCH_OS v4.1.0
+    </span>
+    <div class="flex items-center gap-3">
+      <span class="hidden sm:inline opacity-80 font-mono text-xs">PID: 9021 · MEM: 124MB</span>
+      <div class="flex gap-1 text-xs">
+        <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ _ ]</button>
+        <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ □ ]</button>
+        <button class="px-1 border border-current hover:bg-scorch-crimson hover:text-white font-bold">[ × ]</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4 flex flex-wrap justify-between items-center gap-4 bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
+    <div class="flex items-center gap-3">
+      <a href="/" class="flex items-center gap-2">
+        <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider">
+          RYUKAMI // UI
+        </span>
+        <span class="text-xs sm:text-sm font-bold tracking-tight">
+          ~/scorch-components
+        </span>
+      </a>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <!-- Nav Links -->
+      <nav class="hidden md:flex items-center gap-4 text-xs font-bold uppercase">
+        <a href="#components" class="hover:text-scorch-crimson hover:underline">[01_COMPONENTES]</a>
+        <a href="#docs" class="hover:text-scorch-cyan hover:underline">[02_DOCS]</a>
+        <a href="https://github.com/alexwce" target="_blank" class="hover:text-scorch-gold hover:underline">[GITHUB]</a>
+      </nav>
+
+      <!-- Botón Command Palette -->
+      <button onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs font-bold">
+        <span>⌨️</span>
+        <span>CMD+K</span>
+      </button>
+
+      <!-- Toggle Audio -->
+      <button onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold" id="sound-btn">
+        <span id="sound-icon">🔊</span>
+        <span id="sound-label">SND: ON</span>
+      </button>
+
+      <!-- Toggle Theme -->
+      <button onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs font-bold" id="theme-btn">
+        <span id="theme-icon">☀️</span>
+        <span id="theme-label">PAPER</span>
+      </button>
+    </div>
+  </div>
+</header>

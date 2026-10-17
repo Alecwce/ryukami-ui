@@ -1,0 +1,20 @@
+---
+interface Props {
+  variant?: 'crimson' | 'cyan' | 'gold' | 'outline' | 'dark';
+  class?: string;
+}
+
+const { variant = 'crimson', class: className = '' } = Astro.props;
+
+const variantStyles = {
+  crimson: 'bg-scorch-crimson text-white border-black dark:border-white shadow-[-2px_2px_0px_#000]',
+  cyan: 'bg-scorch-cyan text-black border-black dark:border-white shadow-[-2px_2px_0px_#000]',
+  gold: 'bg-scorch-gold text-black border-black dark:border-white shadow-[-2px_2px_0px_#000]',
+  outline: 'bg-white dark:bg-slate-800 text-current border-current shadow-[-2px_2px_0px_currentColor]',
+  dark: 'bg-black text-white dark:bg-slate-900 border-black dark:border-white shadow-[-2px_2px_0px_#4DA3FF]',
+};
+---
+
+<span class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-extrabold uppercase font-mono border-2 select-none ${variantStyles[variant]} ${className}`}>
+  <slot />
+</span>

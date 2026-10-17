@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* TEMA CLARO: Paper Brutalism */
+  --bg-canvas: #F5F7FA;
+  --bg-surface: #FFFFFF;
+  --bg-header: #0A0E14;
+  --text-main: #111111;
+  --text-muted: #4A5568;
+  --text-inverted: #FFFFFF;
+  --border-main: #000000;
+  --shadow-color: #000000;
+  --dither-color: #94A3B8;
+  --ascii-color: #E63946;
+
+  /* Paleta Velgrynd */
+  --scorch-red: #E63946;
+  --scorch-dark: #9B1B30;
+  --cyber-blue: #4DA3FF;
+  --eye-gold: #F4D35E;
+  --eye-gold-contrast: #B45309;
+}
+
+html.dark {
+  /* TEMA OSCURO: Hacker CRT */
+  --bg-canvas: #0B0F17;
+  --bg-surface: #111827;
+  --bg-header: #E63946;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-inverted: #0B0F17;
+  --border-main: #E2E8F0;
+  --shadow-color: #E63946;
+  --dither-color: #1E293B;
+  --ascii-color: #FF4D5A;
+  --eye-gold-contrast: #F4D35E;
+}
+
+body {
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: 'JetBrains Mono', monospace;
+  background-image: radial-gradient(var(--dither-color) 1.25px, transparent 1.25px);
+  background-size: 12px 12px;
+  min-height: 100vh;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Foco de accesibilidad brutalista */
+:focus-visible {
+  outline: 2px dashed var(--scorch-red) !important;
+  outline-offset: 4px !important;
+}
+
+/* Tipografía Display */
+.title-8bit {
+  font-family: 'Press Start 2P', 'VT323', monospace;
+  text-transform: uppercase;
+  -webkit-text-stroke: 1.5px #000000;
+  text-shadow: -4px 4px 0px #000000;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+html.dark .title-8bit {
+  -webkit-text-stroke: 1.5px #000000;
+  text-shadow: -4px 4px 0px #E63946;
+}
+
+.subtitle-pixel {
+  font-family: 'Tiny5', 'VT323', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+/* Clases canónicas */
+.btn-brutal {
+  border: 2px solid var(--border-main);
+  box-shadow: -4px 4px 0px 0px var(--shadow-color);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+  transition: transform 75ms ease-out, box-shadow 75ms ease-out;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0px;
+  user-select: none;
+}
+
+.btn-brutal:hover {
+  transform: translate(2px, -2px);
+  box-shadow: -6px 6px 0px 0px var(--shadow-color);
+}
+
+.btn-brutal:active {
+  transform: translate(-4px, 4px);
+  box-shadow: 0px 0px 0px 0px var(--shadow-color);
+}
+
+.tui-window {
+  background-color: var(--bg-surface);
+  border: 2px solid var(--border-main);
+  box-shadow: -4px 4px 0px 0px var(--shadow-color);
+  border-radius: 0px;
+}
+
+.tui-header {
+  background-color: var(--bg-header);
+  color: var(--text-inverted);
+  border-bottom: 2px solid var(--border-main);
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}

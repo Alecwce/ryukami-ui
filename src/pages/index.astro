@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Badge from '../components/Badge.astro';
+import Card from '../components/Card.astro';
+import Kbd from '../components/Kbd.astro';
+---
+
+<BaseLayout
+  title="🐉 Ryukami-UI // Retro TUI & Neo-Brutalism Component Library"
+  description="Librería de componentes retro TUI inspirada en Velgrynd Scorch Lore para Astro & Web."
+>
+
+  <!-- 1. HERO SHOWCASE -->
+  <section class="space-y-6 text-center md:text-left">
+    <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+      <Badge variant="crimson">v1.0.0 // OPEN SOURCE</Badge>
+      <Badge variant="cyan">ASTRO + TAILWIND</Badge>
+      <Badge variant="gold">VELGRYND LORE</Badge>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
+      <div class="lg:col-span-7 space-y-5">
+        <h1 class="title-8bit text-4xl sm:text-5xl md:text-6xl">
+          <span class="text-scorch-cyan">RYUKAMI</span>
+          <span class="text-scorch-crimson">× SCORCH</span>
+        </h1>
+
+        <p class="subtitle-pixel text-xl sm:text-2xl font-bold tracking-widest opacity-90">
+          COMPONENTES RETRO TUI &amp; NEO-BRUTALISMO PARA LA WEB MODERNA
+        </p>
+
+        <p class="text-sm md:text-base leading-relaxed opacity-80 max-w-xl">
+          Inspirado en la estética hacker de consola, terminales CRT y el poder del dragón oriental carmesí. Cero bordes redondeados, sombras sólidas hacia la izquierda-abajo y retroalimentación táctil mecánica.
+        </p>
+
+        <div class="flex flex-wrap gap-4 pt-2 justify-center md:justify-start">
+          <Button variant="crimson" size="lg" href="#components">
+            &gt; EXPLORAR COMPONENTES
+          </Button>
+          <Button variant="outline" size="lg" href="#docs">
+            VER DOCUMENTACIÓN
+          </Button>
+        </div>
+      </div>
+
+      <!-- Banner Oficial Destacado -->
+      <div class="lg:col-span-5">
+        <Card title="OFFICIAL_BANNER // 16:9" status="4K READY">
+          <img
+            src="/scorch-dragon-banner.jpg"
+            alt="Ryukami Scorch Dragon Banner"
+            class="w-full h-auto border-2 border-black shadow-[-4px_4px_0px_#E63946]"
+          />
+          <div class="flex justify-between items-center text-xs font-bold pt-3 font-mono">
+            <span>RYUKAMI × 5.5 // ART ASSET</span>
+            <span class="text-scorch-gold">VELGRYND EDITION</span>
+          </div>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. QUICK INSTALL (CLI) -->
+  <section class="tui-window">
+    <div class="tui-header">
+      <span>QUICK_START // CLI INSTALL</span>
+      <span>pnpm / npm</span>
+    </div>
+    <div class="p-5 flex flex-col sm:flex-row gap-3 items-center">
+      <div class="flex-1 w-full bg-slate-900 text-slate-100 p-3 border-2 border-black dark:border-slate-700 font-mono text-xs sm:text-sm flex items-center">
+        <span class="text-scorch-crimson font-extrabold mr-2">$</span>
+        <span>pnpm create scorch-app --template=astro</span>
+      </div>
+      <Button variant="gold" size="md" onclick="navigator.clipboard.writeText('pnpm create scorch-app --template=astro'); alert('Comando copiado!');">
+        COPIAR COMANDO
+      </Button>
+    </div>
+  </section>
+
+  <!-- 3. COMPONENT CATALOG (ESTILO 8BITCN) -->
+  <section id="components" class="space-y-12">
+    
+    <div class="flex items-center gap-4">
+      <h2 class="subtitle-pixel text-3xl font-bold">// 01_CATÁLOGO_DE_COMPONENTES</h2>
+      <div class="h-0.5 bg-current flex-1"></div>
+    </div>
+
+    <!-- A) BOTONES MECÁNICOS -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Botones Mecánicos (Button.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm opacity-80">
+        Botones con física de pulsación mecánica hacia la izquierda-abajo y sonido táctil Web Audio API incorporado.
+      </p>
+
+      <Card title="BUTTON_VARIANTS // INTERACTIVE" status="5 STYLES">
+        <div class="flex flex-wrap items-center gap-4 py-4">
+          <Button variant="crimson">Carmesí Scorch</Button>
+          <Button variant="cyan">Cian Eléctrico</Button>
+          <Button variant="gold">Oro Dragón</Button>
+          <Button variant="dark">Modo Hacker</Button>
+          <Button variant="outline">Contorno Paper</Button>
+        </div>
+        <div class="border-t-2 border-black dark:border-slate-700 pt-3 flex justify-between text-xs font-mono opacity-80">
+          <span>TAMAÑOS: sm · md · lg</span>
+          <span>FÍSICA: -4px 4px 0px translate(-4px, 4px)</span>
+        </div>
+      </Card>
+    </div>
+
+    <!-- B) BADGES Y PASTILLAS TUI -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Badges y Pastillas (Badge.astro)</h3>
+      </div>
+
+      <Card title="BADGE_STATUS // TAGS" status="ASCII READY">
+        <div class="flex flex-wrap items-center gap-3 py-3">
+          <Badge variant="crimson">● SYSTEM_ALERT</Badge>
+          <Badge variant="cyan">◆ REA_ENGINEERING</Badge>
+          <Badge variant="gold">★ VELGRYND_CORE</Badge>
+          <Badge variant="dark">TS TYPESCRIPT</Badge>
+          <Badge variant="outline">POSTGRESQL 17</Badge>
+        </div>
+      </Card>
+    </div>
+
+    <!-- C) VENTANAS TUI CON CONTROLES RETRO -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Ventanas de Consola TUI (Card.astro)</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card title="0xSERVER // NODE_2" status="ONLINE">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-base uppercase">Botkeep Cloud Container</h4>
+            <p class="text-xs leading-relaxed opacity-80">
+              Contenedor asignado con 2 GB de RAM, PostgreSQL 17 y Redis 7.2 sin suspensión por inactividad.
+            </p>
+            <div class="pt-2">
+              <Button variant="cyan" size="sm">INSPECCIONAR NODO</Button>
+            </div>
+          </div>
+        </Card>
+
+        <Card title="0xSENTINEL // FIELDWATCH" status="LISTENING">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-base uppercase">Monitor Pasivo RF Android</h4>
+            <p class="text-xs leading-relaxed opacity-80">
+              Escucha de balizas Wi-Fi y Bluetooth Low Energy (AirTags, Flipper Zero, drones con Remote ID).
+            </p>
+            <div class="pt-2">
+              <Button variant="crimson" size="sm">VER LOGS DE RADIO</Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </div>
+
+    <!-- D) TABLAS DE DATOS TUI -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-black dark:bg-white border border-current"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Tablas de Datos ASCII (Table.astro)</h3>
+      </div>
+
+      <div class="tui-window overflow-x-auto">
+        <div class="tui-header">
+          <span>ACTIVE_SERVICES_REGISTRY</span>
+          <span>4 NODOS OPERATIVOS</span>
+        </div>
+        <table class="w-full border-collapse font-mono text-xs">
+          <thead>
+            <tr class="bg-black text-white dark:bg-scorch-crimson border-b-2 border-black">
+              <th class="p-3 text-left">Módulo</th>
+              <th class="p-3 text-left">Protocolo</th>
+              <th class="p-3 text-left">Uptime</th>
+              <th class="p-3 text-left">Estado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-black/20 dark:divide-white/20">
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">PostgreSQL 17</td>
+              <td class="p-3">tcp://5432</td>
+              <td class="p-3">99.98%</td>
+              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+            </tr>
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">Redis 7.2 LTS</td>
+              <td class="p-3">tcp://6379</td>
+              <td class="p-3">100.0%</td>
+              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+            </tr>
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">DevLink Shortener</td>
+              <td class="p-3">https://devlink.bot-keep.xyz</td>
+              <td class="p-3">99.95%</td>
+              <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- E) TECLAS Y ATAJOS KBD -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-dark border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Teclas y Atajos (Kbd.astro)</h3>
+      </div>
+
+      <Card title="KEYBOARD_SHORTCUTS" status="ACCESSIBILITY">
+        <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
+          <div class="flex items-center gap-1.5">
+            <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd> <span>Abrir Paleta de Comandos</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd> <span>Cambiar Modo Claro/Oscuro</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <Kbd>Esc</Kbd> <span>Cerrar Modales Activos</span>
+          </div>
+        </div>
+      </Card>
+    </div>
+
+  </section>
+
+</BaseLayout>

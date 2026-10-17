@@ -1,0 +1,21 @@
+{
+  "name": "ryukami-ui",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Retro TUI & Neo-Brutalism Component Library inspired by Velgrynd Scorch Lore. Built with Astro & Tailwind CSS.",
+  "author": "Ryukami Labs",
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.4",
+    "astro": "^4.16.18",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}

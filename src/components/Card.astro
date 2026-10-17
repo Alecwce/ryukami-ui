@@ -1,0 +1,37 @@
+---
+interface Props {
+  title?: string;
+  status?: string;
+  class?: string;
+  controls?: boolean;
+}
+
+const {
+  title = '0xMODULE // STATUS',
+  status,
+  class: className = '',
+  controls = true,
+} = Astro.props;
+---
+
+<div class={`tui-window ${className}`}>
+  <div class="tui-header">
+    <span class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 bg-scorch-cyan border border-black"></span>
+      {title}
+    </span>
+    <div class="flex items-center gap-3">
+      {status && <span class="text-scorch-gold font-bold text-xs">{status}</span>}
+      {controls && (
+        <div class="flex gap-1 text-xs">
+          <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ _ ]</button>
+          <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ □ ]</button>
+          <button class="px-1 border border-current hover:bg-scorch-crimson hover:text-white font-bold">[ × ]</button>
+        </div>
+      )}
+    </div>
+  </div>
+  <div class="p-5">
+    <slot />
+  </div>
+</div>
