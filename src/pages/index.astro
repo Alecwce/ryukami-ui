@@ -127,15 +127,15 @@ export default defineConfig({
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
       <div class="lg:col-span-7 space-y-5">
         <h1 class="title-8bit text-4xl sm:text-5xl md:text-6xl">
-          <span class="text-scorch-cyan">RYUKAMI</span>
+          <span class="text-sky-700 dark:text-scorch-cyan">RYUKAMI</span>
           <span class="text-scorch-crimson">× SCORCH</span>
         </h1>
 
-        <p class="subtitle-pixel text-xl sm:text-2xl font-bold tracking-widest opacity-90">
+        <p class="subtitle-pixel text-xl sm:text-2xl font-bold tracking-widest">
           COMPONENTES RETRO TUI &amp; NEO-BRUTALISMO PARA LA WEB MODERNA
         </p>
 
-        <p class="text-sm md:text-base leading-relaxed opacity-80 max-w-xl">
+        <p class="text-sm md:text-base leading-relaxed text-slate-800 dark:text-slate-200 max-w-xl">
           Inspirado en la estética hacker de consola, terminales CRT y el poder del dragón oriental carmesí. Cero bordes redondeados, sombras sólidas hacia la izquierda-abajo y retroalimentación táctil mecánica con Web Audio API.
         </p>
 
@@ -152,17 +152,28 @@ export default defineConfig({
         </div>
       </div>
 
-      <!-- Banner Oficial Destacado -->
+      <!-- Banner Oficial Destacado (Optimizado WebP + CLS 0.000) -->
       <div class="lg:col-span-5">
         <Card title="OFFICIAL_BANNER // 16:9" status="4K READY">
-          <img
-            src="/scorch-dragon-banner.jpg"
-            alt="Ryukami Scorch Dragon Banner"
-            class="w-full h-auto border-2 border-black shadow-[-4px_4px_0px_#E63946]"
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="/scorch-dragon-banner-480.webp 480w, /scorch-dragon-banner-800.webp 800w, /scorch-dragon-banner.webp 1376w"
+              sizes="(max-width: 1024px) 92vw, 440px"
+            />
+            <img
+              src="/scorch-dragon-banner.jpg"
+              alt="Ryukami Scorch Dragon Banner"
+              width="800"
+              height="447"
+              fetchpriority="high"
+              decoding="async"
+              class="w-full h-auto aspect-[800/447] border-2 border-black shadow-[-4px_4px_0px_#D62436]"
+            />
+          </picture>
           <div class="flex justify-between items-center text-xs font-bold pt-3 font-mono">
             <span>RYUKAMI × 5.5 // ART ASSET</span>
-            <span class="text-scorch-gold">VELGRYND EDITION</span>
+            <span class="text-scorch-gold-text dark:text-scorch-gold">VELGRYND EDITION</span>
           </div>
         </Card>
       </div>
@@ -350,7 +361,7 @@ export default defineConfig({
       <ComponentPreview title="TOGGLES_AND_CHECKS" code={toggleSnippet} status="INTERACTIVE">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
           <div class="space-y-4">
-            <h4 class="font-extrabold text-xs uppercase opacity-70">// Checkboxes Cuadrados</h4>
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Checkboxes Cuadrados</h4>
             <div class="space-y-3">
               <Checkbox
                 label="Permitir Conexiones SSH Cuánticas"
@@ -370,7 +381,7 @@ export default defineConfig({
           </div>
 
           <div class="space-y-4">
-            <h4 class="font-extrabold text-xs uppercase opacity-70">// Switches Deslizantes</h4>
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Switches Deslizantes</h4>
             <div class="space-y-4">
               <div>
                 <Switch label="Modo Scorch Carmesí" variant="crimson" checked />
@@ -402,7 +413,7 @@ export default defineConfig({
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Alertas y Callouts (Alert.astro)</h3>
       </div>
-      <p class="text-xs sm:text-sm opacity-80">
+      <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
         Callouts y cajas de advertencia brutalistas con indicadores de estado de severidad.
       </p>
 
@@ -433,14 +444,14 @@ export default defineConfig({
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Toasts Flotantes, Modales &amp; Command Palette (Fase 2)</h3>
       </div>
-      <p class="text-xs sm:text-sm opacity-80">
+      <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
         Notificaciones emergentes con barra de progreso, frecuencia acústica según severidad y diálogos HTML5 nativos con soporte `closedby="any"`.
       </p>
 
       <ComponentPreview title="TOASTS_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO">
         <div class="space-y-6 w-full py-2">
           <div class="space-y-2">
-            <h4 class="font-extrabold text-xs uppercase opacity-70">// 1. Disparar Notificaciones Toast con Sonido</h4>
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Disparar Notificaciones Toast con Sonido</h4>
             <div class="flex flex-wrap gap-3">
               <Button
                 variant="crimson"
@@ -474,7 +485,7 @@ export default defineConfig({
           </div>
 
           <div class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2">
-            <h4 class="font-extrabold text-xs uppercase opacity-70">// 2. Consola Modal HTML5 &amp; Command Palette (Ctrl+K)</h4>
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Consola Modal HTML5 &amp; Command Palette (Ctrl+K)</h4>
             <div class="flex flex-wrap gap-3">
               <Button
                 variant="outline"
@@ -501,7 +512,7 @@ export default defineConfig({
           <Alert variant="crimson" title="AUTORIZACIÓN DE NIVEL DRAGÓN">
             Estás inspeccionando un diálogo modal nativo HTML5 (`&lt;dialog closedby="any"&gt;`) con bloqueo de scroll de fondo (`overscroll-behavior: contain`).
           </Alert>
-          <p class="leading-relaxed opacity-85">
+          <p class="leading-relaxed">
             Puedes cerrar esta ventana presionando la tecla <Kbd>Esc</Kbd>, haciendo clic fuera del recuadro (light-dismiss) o pulsando el botón inferior.
           </p>
           <div class="flex justify-end gap-3 pt-2">
@@ -567,7 +578,7 @@ export default defineConfig({
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 05_THEME_STUDIO_EN_VIVO</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
-    <p class="text-xs sm:text-sm opacity-80">
+    <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Personaliza en tiempo real la paleta cromática de toda la web (incluyendo la variante <strong>Crimson Soft</strong> para sesiones nocturnas largas), la física de las sombras y la densidad de la trama halftone.
     </p>
 
@@ -580,7 +591,7 @@ export default defineConfig({
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 06_SCORCH_ASCII_FORGE</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
-    <p class="text-xs sm:text-sm opacity-80">
+    <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Motor interactivo en navegador para forjar banners 8-bit en matriz de código ASCII o invocar el emblema del Dragón Scorch listo para copiar a tus cabeceras o terminales.
     </p>
 
@@ -593,7 +604,7 @@ export default defineConfig({
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_GUIA_DE_INSTALACION</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
-    <p class="text-xs sm:text-sm opacity-80">
+    <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Integra <strong>Ryukami-UI</strong> en cualquier proyecto moderno con Astro 7, Next.js o Vite usando Tailwind CSS v4.
     </p>
 
@@ -601,22 +612,22 @@ export default defineConfig({
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="crimson">PASO 01</Badge>
-          <h4 class="font-extrabold uppercase">Instalar Motor</h4>
-          <p class="opacity-80 leading-relaxed">
+          <h3 class="font-extrabold uppercase text-sm">Instalar Motor</h3>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
             Instala `@tailwindcss/vite` y `tailwindcss@4.3.3` en tu proyecto Astro 7.4.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="cyan">PASO 02</Badge>
-          <h4 class="font-extrabold uppercase">Inyectar Tokens</h4>
-          <p class="opacity-80 leading-relaxed">
+          <h3 class="font-extrabold uppercase text-sm">Inyectar Tokens</h3>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
             Pega las variables generadas por el <strong>Theme Studio</strong> en tu `src/styles/global.css`.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="gold">PASO 03</Badge>
-          <h4 class="font-extrabold uppercase">Copiar Componentes</h4>
-          <p class="opacity-80 leading-relaxed">
+          <h3 class="font-extrabold uppercase text-sm">Copiar Componentes</h3>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
             Usa el botón `[ 📋 COPIAR ]` de cualquier componente del catálogo y pégalo en `src/components/`.
           </p>
         </div>

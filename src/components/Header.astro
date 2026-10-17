@@ -6,15 +6,15 @@ import Kbd from './Kbd.astro';
 <header class="tui-window sticky top-4 z-40 mb-10">
   <div class="tui-header">
     <span class="flex items-center gap-2">
-      <span class="inline-block w-2.5 h-2.5 bg-scorch-cyan border border-black animate-pulse"></span>
+      <span class="inline-block w-2.5 h-2.5 bg-scorch-cyan border border-black"></span>
       0xRYUKAMI_UI // SCORCH_OS v4.1.0
     </span>
     <div class="flex items-center gap-3">
-      <span class="hidden sm:inline opacity-80 font-mono text-xs">PID: 9021 · MEM: 124MB</span>
-      <div class="flex gap-1 text-xs">
-        <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ _ ]</button>
-        <button class="px-1 border border-current hover:bg-white hover:text-black font-bold">[ □ ]</button>
-        <button class="px-1 border border-current hover:bg-scorch-crimson hover:text-white font-bold">[ × ]</button>
+      <span class="hidden sm:inline font-mono text-xs">PID: 9021 · MEM: 124MB</span>
+      <div class="flex gap-1 text-xs select-none" aria-hidden="true">
+        <span class="px-1 border border-current font-bold">[ _ ]</span>
+        <span class="px-1 border border-current font-bold">[ □ ]</span>
+        <span class="px-1 border border-current font-bold">[ × ]</span>
       </div>
     </div>
   </div>
@@ -33,29 +33,29 @@ import Kbd from './Kbd.astro';
 
     <div class="flex flex-wrap items-center gap-3">
       <!-- Nav Links -->
-      <nav class="hidden lg:flex items-center gap-3.5 text-xs font-bold uppercase">
+      <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-3.5 text-xs font-bold uppercase">
         <a href="#components" class="hover:text-scorch-crimson hover:underline">[01_CORE]</a>
-        <a href="#forms" class="hover:text-scorch-cyan hover:underline">[02_FORMS]</a>
-        <a href="#alerts" class="hover:text-scorch-gold hover:underline">[03_MODALS]</a>
+        <a href="#forms" class="hover:text-scorch-crimson hover:underline">[02_FORMS]</a>
+        <a href="#alerts" class="hover:text-scorch-crimson hover:underline">[03_MODALS]</a>
         <a href="#theme-studio" class="hover:text-scorch-crimson hover:underline">[04_STUDIO]</a>
-        <a href="#ascii-forge" class="hover:text-scorch-cyan hover:underline">[05_ASCII]</a>
+        <a href="#ascii-forge" class="hover:text-scorch-crimson hover:underline">[05_ASCII]</a>
       </nav>
 
       <!-- Botón Command Palette -->
-      <button onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs font-bold">
-        <span>⌨️</span>
+      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs font-bold">
+        <span aria-hidden="true">⌨️</span>
         <span>CMD+K</span>
       </button>
 
       <!-- Toggle Audio -->
-      <button onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold" id="sound-btn">
-        <span id="sound-icon">🔊</span>
+      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold" id="sound-btn">
+        <span id="sound-icon" aria-hidden="true">🔊</span>
         <span id="sound-label">SND: ON</span>
       </button>
 
       <!-- Toggle Theme -->
-      <button onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs font-bold" id="theme-btn">
-        <span id="theme-icon">☀️</span>
+      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs font-bold" id="theme-btn">
+        <span id="theme-icon" aria-hidden="true">☀️</span>
         <span id="theme-label">PAPER</span>
       </button>
     </div>

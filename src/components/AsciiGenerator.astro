@@ -62,7 +62,7 @@ import Badge from './Badge.astro';
     <!-- Presets Rápidos y Selector de Color -->
     <div class="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-black/10 dark:border-white/10">
       <div class="flex flex-wrap items-center gap-1.5">
-        <span class="text-[10px] font-bold uppercase opacity-70 mr-1">PRESETS:</span>
+        <span class="text-[10px] font-bold uppercase text-slate-700 dark:text-slate-300 mr-1">PRESETS:</span>
         <button type="button" data-word="RYUKAMI" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">RYUKAMI</button>
         <button type="button" data-word="SCORCH" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">SCORCH</button>
         <button type="button" data-word="VELGRYND" class="ascii-word-btn px-2 py-0.5 border border-current text-[10px] font-bold hover:bg-black hover:text-white">VELGRYND</button>
@@ -70,18 +70,18 @@ import Badge from './Badge.astro';
       </div>
 
       <div class="flex items-center gap-2">
-        <span class="text-[10px] font-bold uppercase opacity-70">TINTA:</span>
-        <button type="button" data-color="#E63946" class="ascii-color-btn w-4 h-4 bg-[#E63946] border border-black" title="Carmesí"></button>
-        <button type="button" data-color="#4DA3FF" class="ascii-color-btn w-4 h-4 bg-[#4DA3FF] border border-black" title="Cian"></button>
-        <button type="button" data-color="#F4D35E" class="ascii-color-btn w-4 h-4 bg-[#F4D35E] border border-black" title="Oro"></button>
-        <button type="button" data-color="#10B981" class="ascii-color-btn w-4 h-4 bg-[#10B981] border border-black" title="Matrix"></button>
+        <span class="text-[10px] font-bold uppercase text-slate-700 dark:text-slate-300">TINTA:</span>
+        <button type="button" data-color="#FF5C6A" aria-label="Color Carmesí" class="ascii-color-btn w-5 h-5 bg-[#E63946] border border-black" title="Carmesí"></button>
+        <button type="button" data-color="#4DA3FF" aria-label="Color Cian" class="ascii-color-btn w-5 h-5 bg-[#4DA3FF] border border-black" title="Cian"></button>
+        <button type="button" data-color="#F4D35E" aria-label="Color Oro" class="ascii-color-btn w-5 h-5 bg-[#F4D35E] border border-black" title="Oro"></button>
+        <button type="button" data-color="#34D399" aria-label="Color Matrix" class="ascii-color-btn w-5 h-5 bg-[#10B981] border border-black" title="Matrix"></button>
       </div>
     </div>
 
     <!-- Salida de Consola ASCII -->
     <div class="relative bg-slate-950 border-2 border-black dark:border-slate-700 p-4 overflow-x-auto">
       <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-800">
-        <span class="text-[10px] text-slate-400 font-bold">STDOUT // 8-BIT BITMAP MATRIX</span>
+        <span class="text-[10px] text-slate-300 font-bold">STDOUT // 8-BIT BITMAP MATRIX</span>
         <button
           type="button"
           id="copy-ascii-output-btn"
@@ -92,7 +92,7 @@ import Badge from './Badge.astro';
       </div>
       <pre
         id="ascii-canvas-output"
-        class="font-mono text-[10px] sm:text-xs leading-[1.15] tracking-tighter select-all text-[#E63946] font-bold py-2"
+        class="font-mono text-[10px] sm:text-xs leading-[1.15] tracking-tighter select-all text-[#FF5C6A] font-bold py-2"
       ></pre>
     </div>
   </div>

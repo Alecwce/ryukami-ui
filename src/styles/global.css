@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-scorch-crimson: #E63946;
+  --color-scorch-crimson: #D62436;
   --color-scorch-dark: #9B1B30;
   --color-scorch-cyan: #4DA3FF;
   --color-scorch-gold: #F4D35E;
@@ -31,15 +30,15 @@
   --bg-surface: #FFFFFF;
   --bg-header: #0A0E14;
   --text-main: #111111;
-  --text-muted: #4A5568;
+  --text-muted: #334155;
   --text-inverted: #FFFFFF;
   --border-main: #000000;
   --shadow-color: #000000;
   --dither-color: #94A3B8;
-  --ascii-color: #E63946;
+  --ascii-color: #D62436;
 
-  /* Paleta Velgrynd */
-  --scorch-red: #E63946;
+  /* Paleta Velgrynd (Calibrada WCAG AA >= 4.5:1) */
+  --scorch-red: #D62436;
   --scorch-dark: #9B1B30;
   --cyber-blue: #4DA3FF;
   --eye-gold: #F4D35E;
@@ -53,12 +52,12 @@ html.dark {
   /* TEMA OSCURO: Hacker CRT */
   --bg-canvas: #0B0F17;
   --bg-surface: #111827;
-  --bg-header: var(--scorch-red, #E63946);
+  --bg-header: var(--scorch-red, #D62436);
   --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --text-inverted: #0B0F17;
+  --text-muted: #CBD5E1;
+  --text-inverted: #FFFFFF;
   --border-main: #E2E8F0;
-  --shadow-color: var(--scorch-red, #E63946);
+  --shadow-color: var(--scorch-red, #D62436);
   --dither-color: #1E293B;
   --ascii-color: #FF4D5A;
   --eye-gold-contrast: #F4D35E;
@@ -71,7 +70,6 @@ body {
   background-image: radial-gradient(var(--dither-color) 1.25px, transparent 1.25px);
   background-size: var(--dither-size, 12px) var(--dither-size, 12px);
   min-height: 100vh;
-  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 /* Foco de accesibilidad brutalista */
@@ -92,7 +90,7 @@ body {
 
 html.dark .title-8bit {
   -webkit-text-stroke: 1.5px #000000;
-  text-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px var(--scorch-red, #E63946);
+  text-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px var(--scorch-red, #D62436);
 }
 
 .subtitle-pixel {
@@ -101,14 +99,15 @@ html.dark .title-8bit {
   letter-spacing: 0.14em;
 }
 
-/* Clases canónicas */
+/* Clases canónicas (Animaciones GPU composited exclusivamente en transform) */
 .btn-brutal {
   border: 2px solid var(--border-main);
   box-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px 0px var(--shadow-color);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
   text-transform: uppercase;
-  transition: transform 75ms ease-out, box-shadow 75ms ease-out;
+  transition: transform 75ms ease-out;
+  will-change: transform;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -162,4 +161,3 @@ dialog::backdrop {
   background-color: rgba(11, 15, 23, 0.78);
   backdrop-filter: blur(2px);
 }
-

@@ -11,10 +11,10 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
 <div class="tui-window overflow-hidden" id={uniqueId}>
   <!-- Header con Tabs y Controles -->
-  <div class="tui-header flex flex-wrap gap-2 justify-between items-center bg-slate-900 text-white">
-    <div class="flex items-center gap-3">
-      <span class="text-scorch-cyan font-extrabold">&gt; {title}</span>
-      <span class="text-[10px] opacity-70 border border-slate-700 px-1.5 py-0.5">{status}</span>
+  <div class="tui-header flex flex-wrap gap-2 justify-between items-center">
+    <div class="flex items-center gap-2">
+      <span class="bg-black text-scorch-cyan px-2 py-0.5 border border-black font-extrabold">&gt; {title}</span>
+      <span class="bg-black text-slate-200 text-[10px] border border-slate-700 px-1.5 py-0.5">{status}</span>
     </div>
 
     <div class="flex items-center gap-2">
@@ -22,14 +22,14 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
       <div class="flex bg-black p-0.5 border border-slate-700 text-xs">
         <button
           type="button"
-          class="tab-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black transition-all"
+          class="tab-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black"
           data-tab="preview"
         >
           PREVIEW
         </button>
         <button
           type="button"
-          class="tab-btn px-2.5 py-1 font-bold text-slate-400 hover:text-white transition-all"
+          class="tab-btn px-2.5 py-1 font-bold text-slate-200 hover:text-white"
           data-tab="code"
         >
           CODE
@@ -42,7 +42,7 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         class="copy-btn btn-brutal bg-scorch-gold text-black text-xs px-2.5 py-1 font-extrabold flex items-center gap-1.5"
         data-code={code}
       >
-        <span class="copy-icon">📋</span>
+        <span class="copy-icon" aria-hidden="true">📋</span>
         <span class="copy-text">COPIAR</span>
       </button>
     </div>
@@ -78,11 +78,11 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
         tabBtns.forEach((b) => {
           b.classList.remove('active', 'bg-scorch-crimson', 'text-white', 'border', 'border-black');
-          b.classList.add('text-slate-400');
+          b.classList.add('text-slate-200');
         });
 
         btn.classList.add('active', 'bg-scorch-crimson', 'text-white', 'border', 'border-black');
-        btn.classList.remove('text-slate-400');
+        btn.classList.remove('text-slate-200');
 
         if (targetTab === 'preview') {
           previewContent.classList.remove('hidden');
