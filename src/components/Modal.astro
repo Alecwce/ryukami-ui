@@ -1,0 +1,60 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  status?: string;
+}
+
+const { id, title, status = 'MODAL_ACTIVE' } = Astro.props;
+const titleId = `${id}-title`;
+---
+
+<dialog
+  id={id}
+  closedby="any"
+  aria-labelledby={titleId}
+  class="scorch-modal tui-window w-[calc(100vw-2rem)] max-w-lg bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border-2 border-black dark:border-slate-200 shadow-[-8px_8px_0px_0px_var(--shadow-color,#000000)] p-0 font-mono"
+>
+  <div class="tui-header">
+    <span id={titleId} class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 bg-scorch-crimson border border-black"></span>
+      <span>{title}</span>
+    </span>
+    <div class="flex items-center gap-2">
+      <span class="text-[10px] opacity-80">{status}</span>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="px-1.5 py-0.5 border border-current hover:bg-scorch-crimson hover:text-white font-extrabold text-xs"
+          aria-label="Cerrar ventana modal"
+        >
+          [ × ]
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="p-5 space-y-4 text-xs sm:text-sm">
+    <slot />
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll('dialog.scorch-modal').forEach((dialog) => {
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      dialog.addEventListener('click', (event) => {
+        if (event.target !== dialog) return;
+        const e = event as MouseEvent;
+        const rect = dialog.getBoundingClientRect();
+        const isDialogContent =
+          rect.top <= e.clientY &&
+          e.clientY <= rect.top + rect.height &&
+          rect.left <= e.clientX &&
+          e.clientX <= rect.left + rect.width;
+        if (!isDialogContent) {
+          (dialog as HTMLDialogElement).close();
+        }
+      });
+    }
+  });
+</script>

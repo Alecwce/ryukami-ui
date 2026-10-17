@@ -144,3 +144,19 @@ html.dark .title-8bit {
   align-items: center;
   user-select: none;
 }
+
+/* Native HTML5 Dialog / Modal Standards */
+dialog:modal {
+  overscroll-behavior: contain;
+  margin: auto;
+  padding: 0;
+  border-radius: 0px;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(11, 15, 23, 0.78);
+  backdrop-filter: blur(2px);
+}
+

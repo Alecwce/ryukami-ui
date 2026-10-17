@@ -1,5 +1,7 @@
 ---
 import Header from '../components/Header.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import ToastContainer from '../components/ToastContainer.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -33,6 +35,10 @@ const {
     <p>⚡ RYUKAMI-UI // SCORCH DRAGON SYSTEM (VELGRYND TRIBUTE EDITION)</p>
     <p>Neo-Brutalism + Retro TUI CLI + 8-Bit Matrix. MIT License 2026. Made with Astro &amp; Tailwind CSS.</p>
   </footer>
+
+  <!-- Modales y Notificaciones Globales (Fase 2) -->
+  <CommandPalette />
+  <ToastContainer />
 
   <!-- Script de Audio y Tema Global -->
   <script is:inline>

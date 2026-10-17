@@ -1,0 +1,307 @@
+---
+import Kbd from './Kbd.astro';
+---
+
+<dialog
+  id="scorch-cmd-palette"
+  closedby="any"
+  aria-labelledby="cmdPaletteTitle"
+  class="tui-window w-[calc(100vw-2rem)] max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border-2 border-black dark:border-slate-200 shadow-[-8px_8px_0px_0px_var(--shadow-color,#000000)] p-0 font-mono"
+>
+  <!-- Cabecera de Consola -->
+  <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
+    <span id="cmdPaletteTitle" class="flex items-center gap-2">
+      <span class="inline-block w-2 h-2 bg-scorch-gold border border-black"></span>
+      <span>0xCOMMAND_PALETTE // SCORCH_CLI</span>
+    </span>
+    <div class="flex items-center gap-2">
+      <span class="text-[10px] opacity-80 hidden sm:inline">ESC PARA CERRAR</span>
+      <form method="dialog">
+        <button
+          type="submit"
+          class="px-1.5 py-0.5 border border-current hover:bg-white hover:text-black font-extrabold text-xs"
+          aria-label="Cerrar paleta de comandos"
+        >
+          [ × ]
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Buscador en Tiempo Real -->
+  <div class="p-3 border-b-2 border-black dark:border-slate-700 bg-slate-100 dark:bg-slate-950 flex items-center gap-2.5">
+    <span class="text-scorch-crimson font-extrabold text-sm select-none">&gt;_</span>
+    <input
+      id="cmd-search-input"
+      type="text"
+      placeholder="Buscar componente o ejecutar comando (ej: boton, tema, toast, form)..."
+      autocomplete="off"
+      class="w-full bg-transparent text-xs sm:text-sm font-mono outline-none placeholder:opacity-50 text-slate-900 dark:text-slate-100"
+    />
+  </div>
+
+  <!-- Lista de Comandos -->
+  <div id="cmd-list" class="max-h-80 overflow-y-auto divide-y divide-black/10 dark:divide-white/10 p-2 space-y-1">
+    <!-- Items inyectados / gestionados dinámicamente -->
+  </div>
+
+  <!-- Pie de Consola -->
+  <div class="px-3 py-2 border-t-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex flex-wrap justify-between items-center gap-2 text-[11px] opacity-80">
+    <div class="flex items-center gap-3">
+      <span><Kbd>↑</Kbd> <Kbd>↓</Kbd> Navegar</span>
+      <span><Kbd>Enter</Kbd> Ejecutar</span>
+      <span><Kbd>Esc</Kbd> Salir</span>
+    </div>
+    <span class="text-scorch-crimson font-bold">RYUKAMI // v1.2</span>
+  </div>
+</dialog>
+
+<script is:inline>
+  (function () {
+    const dialog = document.getElementById('scorch-cmd-palette');
+    const searchInput = document.getElementById('cmd-search-input');
+    const cmdList = document.getElementById('cmd-list');
+
+    if (!dialog || !searchInput || !cmdList) return;
+
+    // Fallback obligatorio para navegadores sin soporte nativo de closedby="any"
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      dialog.addEventListener('click', (event) => {
+        if (event.target !== dialog) return;
+        const rect = dialog.getBoundingClientRect();
+        const isDialogContent =
+          rect.top <= event.clientY &&
+          event.clientY <= rect.top + rect.height &&
+          rect.left <= event.clientX &&
+          event.clientX <= rect.left + rect.width;
+        if (!isDialogContent) {
+          dialog.close();
+        }
+      });
+    }
+
+    const commands = [
+      {
+        id: 'nav-components',
+        category: 'NAVEGACIÓN',
+        label: 'Ir a: Catálogo Base (Botones, Badges, Cards)',
+        shortcut: '#01',
+        keywords: 'botones button badge card componentes catalogo',
+        action: () => {
+          location.hash = '#components';
+        },
+      },
+      {
+        id: 'nav-forms',
+        category: 'NAVEGACIÓN',
+        label: 'Ir a: Suite de Formularios (Input, Checkbox, Switch)',
+        shortcut: '#02',
+        keywords: 'formularios forms input checkbox switch toggle texto',
+        action: () => {
+          location.hash = '#forms';
+        },
+      },
+      {
+        id: 'nav-alerts',
+        category: 'NAVEGACIÓN',
+        label: 'Ir a: Feedback, Modales y Alertas (Alert, Toast, Modal)',
+        shortcut: '#03',
+        keywords: 'alertas callouts feedback modal toast notificaciones',
+        action: () => {
+          location.hash = '#alerts';
+        },
+      },
+      {
+        id: 'nav-tables',
+        category: 'NAVEGACIÓN',
+        label: 'Ir a: Tablas de Datos TUI ASCII (Table.astro)',
+        shortcut: '#04',
+        keywords: 'tabla table ascii datos registros',
+        action: () => {
+          location.hash = '#tables';
+        },
+      },
+      {
+        id: 'act-theme',
+        category: 'SISTEMA',
+        label: 'Alternar Tema: Modo Paper / Modo Hacker Nocturno',
+        shortcut: 'Ctrl+D',
+        keywords: 'tema dark light oscuro claro hacker paper color',
+        action: () => {
+          if (window.toggleTheme) window.toggleTheme();
+          if (window.showToast) {
+            const isDark = document.documentElement.classList.contains('dark');
+            window.showToast(
+              'TEMA ACTUALIZADO',
+              isDark ? 'Modo Hacker CRT activado (#0B0F17).' : 'Modo Paper Brutalism activado (#F5F7FA).',
+              isDark ? 'crimson' : 'cyan'
+            );
+          }
+        },
+      },
+      {
+        id: 'act-sound',
+        category: 'SISTEMA',
+        label: 'Alternar Sintetizador de Audio Mecánico (ON / OFF)',
+        shortcut: 'AUDIO',
+        keywords: 'sonido audio mute silencio click beep',
+        action: () => {
+          if (window.toggleSound) window.toggleSound();
+        },
+      },
+      {
+        id: 'act-copy-cli',
+        category: 'CLI',
+        label: 'Copiar Comando de Instalación (pnpm create scorch-app)',
+        shortcut: 'COPY',
+        keywords: 'copiar instalar cli pnpm comando astro',
+        action: async () => {
+          await navigator.clipboard.writeText('pnpm create scorch-app --template=astro');
+          if (window.showToast) {
+            window.showToast(
+              'CLI COPIADO',
+              'Comando copiado al portapapeles: pnpm create scorch-app --template=astro',
+              'emerald'
+            );
+          }
+        },
+      },
+      {
+        id: 'act-test-toast',
+        category: 'DEMO',
+        label: 'Disparar Alerta Flotante de Prueba (Scorch Dragon)',
+        shortcut: 'TOAST',
+        keywords: 'toast prueba test dragon alerta velgrynd',
+        action: () => {
+          if (window.showToast) {
+            window.showToast(
+              'SCORCH_DRAGON // ACTIVE',
+              'Pulso térmico de Velgrynd sincronizado al 100% con el kernel.',
+              'crimson'
+            );
+          }
+        },
+      },
+    ];
+
+    let filteredCommands = [...commands];
+    let selectedIndex = 0;
+
+    function renderList() {
+      cmdList.innerHTML = '';
+
+      if (filteredCommands.length === 0) {
+        cmdList.innerHTML = `
+          <div class="p-6 text-center text-xs opacity-60">
+            &gt; [404] No se encontraron comandos para "${searchInput.value}"
+          </div>
+        `;
+        return;
+      }
+
+      filteredCommands.forEach((cmd, idx) => {
+        const isSelected = idx === selectedIndex;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left px-3 py-2.5 flex items-center justify-between gap-3 text-xs transition-colors border ${
+          isSelected
+            ? 'bg-scorch-crimson text-white border-black font-extrabold'
+            : 'border-transparent hover:bg-slate-200 dark:hover:bg-slate-800'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center gap-2.5 truncate">
+            <span class="px-1.5 py-0.5 text-[10px] font-extrabold border border-current ${
+              isSelected ? 'bg-black text-scorch-gold' : 'opacity-70'
+            }">${cmd.category}</span>
+            <span class="truncate">${cmd.label}</span>
+          </div>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 border border-current opacity-80 shrink-0">${cmd.shortcut}</span>
+        `;
+
+        btn.addEventListener('mouseenter', () => {
+          selectedIndex = idx;
+          renderList();
+        });
+
+        btn.addEventListener('click', () => {
+          executeCommand(cmd);
+        });
+
+        cmdList.appendChild(btn);
+      });
+    }
+
+    function executeCommand(cmd) {
+      if (!cmd) return;
+      dialog.close();
+      cmd.action();
+    }
+
+    window.openPalette = function () {
+      if (window.playTerminalBeep) window.playTerminalBeep(740, 0.05);
+      searchInput.value = '';
+      filteredCommands = [...commands];
+      selectedIndex = 0;
+      renderList();
+      dialog.showModal();
+      searchInput.focus();
+    };
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      filteredCommands = commands.filter(
+        (c) =>
+          c.label.toLowerCase().includes(q) ||
+          c.category.toLowerCase().includes(q) ||
+          c.keywords.toLowerCase().includes(q)
+      );
+      selectedIndex = 0;
+      renderList();
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (filteredCommands.length > 0) {
+          selectedIndex = (selectedIndex + 1) % filteredCommands.length;
+          renderList();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (filteredCommands.length > 0) {
+          selectedIndex = (selectedIndex - 1 + filteredCommands.length) % filteredCommands.length;
+          renderList();
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredCommands[selectedIndex]) {
+          executeCommand(filteredCommands[selectedIndex]);
+        }
+      }
+    });
+
+    // Atajos de teclado globales: Ctrl+K / Cmd+K y Ctrl+D
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (dialog.open) {
+          dialog.close();
+        } else {
+          window.openPalette();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'd') {
+        e.preventDefault();
+        if (window.toggleTheme) window.toggleTheme();
+        if (window.showToast) {
+          const isDark = document.documentElement.classList.contains('dark');
+          window.showToast(
+            'ATAJO CTRL+D',
+            isDark ? 'Modo Hacker CRT activado.' : 'Modo Paper Brutalism activado.',
+            isDark ? 'crimson' : 'cyan'
+          );
+        }
+      }
+    });
+  })();
+</script>

@@ -101,7 +101,11 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
         try {
           await navigator.clipboard.writeText(textToCopy);
-          if ((window as any).playTerminalBeep) (window as any).playTerminalBeep(980, 0.08);
+          if ((window as any).showToast) {
+            (window as any).showToast('SNIPPET COPIADO', 'Código Astro copiado al portapapeles.', 'emerald', 2800);
+          } else if ((window as any).playTerminalBeep) {
+            (window as any).playTerminalBeep(980, 0.08);
+          }
 
           const copyText = copyBtn.querySelector('.copy-text');
           const copyIcon = copyBtn.querySelector('.copy-icon');

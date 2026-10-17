@@ -8,6 +8,7 @@ import Input from '../components/Input.astro';
 import Checkbox from '../components/Checkbox.astro';
 import Switch from '../components/Switch.astro';
 import Alert from '../components/Alert.astro';
+import Modal from '../components/Modal.astro';
 import ComponentPreview from '../components/ComponentPreview.astro';
 
 // Snippets de código para el visor [Preview | Code]
@@ -77,6 +78,23 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
 <Alert variant="cyan" title="SISTEMA ACTUALIZADO">
   Núcleo actualizado exitosamente a Astro 7.4.0 y Tailwind CSS 4.3.3.
 </Alert>`;
+
+const modalToastSnippet = `import Modal from '@/components/Modal.astro';
+import Button from '@/components/Button.astro';
+
+<!-- Disparar Toast Flotante con Audio -->
+<Button variant="crimson" onclick="window.showToast('ALERT_CRITICAL', 'Pulso térmico detectado.', 'crimson')">
+  Disparar Toast Carmesí
+</Button>
+
+<!-- Abrir Ventana Modal HTML5 -->
+<Button variant="cyan" onclick="document.getElementById('demo-modal').showModal()">
+  Abrir Consola Modal
+</Button>
+
+<Modal id="demo-modal" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
+  <p>Diagnóstico cuántico completado sin anomalías.</p>
+</Modal>`;
 ---
 
 <BaseLayout
@@ -87,9 +105,9 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
   <!-- 1. HERO SHOWCASE -->
   <section class="space-y-6 text-center md:text-left">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-      <Badge variant="crimson">v1.1.0 // FASE 1 ACTIVA</Badge>
+      <Badge variant="crimson">v1.2.0 // FASE 2 ACTIVA</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
-      <Badge variant="gold">VELGRYND LORE</Badge>
+      <Badge variant="gold">CMD+K PALETTE + TOASTS</Badge>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
@@ -111,8 +129,8 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
           <Button variant="crimson" size="lg" href="#components">
             &gt; EXPLORAR COMPONENTES
           </Button>
-          <Button variant="outline" size="lg" href="#forms">
-            VER FORMULARIOS
+          <Button variant="outline" size="lg" onclick="window.openPalette && window.openPalette()">
+            ⌨️ ABRIR CMD+K
           </Button>
         </div>
       </div>
@@ -145,7 +163,11 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
         <span class="text-scorch-crimson font-extrabold mr-2">$</span>
         <span>pnpm create scorch-app --template=astro</span>
       </div>
-      <Button variant="gold" size="md" onclick="navigator.clipboard.writeText('pnpm create scorch-app --template=astro'); alert('Comando copiado al portapapeles!');">
+      <Button
+        variant="gold"
+        size="md"
+        onclick="navigator.clipboard.writeText('pnpm create scorch-app --template=astro'); window.showToast && window.showToast('CLI COPIADO', 'Comando copiado: pnpm create scorch-app --template=astro', 'emerald');"
+      >
         COPIAR COMANDO
       </Button>
     </div>
@@ -340,14 +362,19 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
 
   </section>
 
-  <!-- 5. FEEDBACK Y ALERTAS (NUEVO EN FASE 1) -->
+  <!-- 5. FEEDBACK, ALERTAS, MODALES Y TOASTS (FASE 1 + FASE 2) -->
   <section id="alerts" class="space-y-12">
     <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 03_FEEDBACK_Y_ALERTAS</h2>
+      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 03_FEEDBACK_MODALES_Y_TOASTS</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
 
+    <!-- A) CALLOUTS Y ALERTAS DE SISTEMA -->
     <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Alertas y Callouts (Alert.astro)</h3>
+      </div>
       <p class="text-xs sm:text-sm opacity-80">
         Callouts y cajas de advertencia brutalistas con indicadores de estado de severidad.
       </p>
@@ -372,10 +399,98 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
         </div>
       </ComponentPreview>
     </div>
+
+    <!-- B) TOASTS FLOTANTES, MODAL NATIVO Y COMMAND PALETTE (FASE 2) -->
+    <div class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Toasts Flotantes, Modales &amp; Command Palette (Fase 2)</h3>
+      </div>
+      <p class="text-xs sm:text-sm opacity-80">
+        Notificaciones emergentes con barra de progreso, frecuencia acústica según severidad y diálogos HTML5 nativos con soporte `closedby="any"`.
+      </p>
+
+      <ComponentPreview title="TOASTS_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO">
+        <div class="space-y-6 w-full py-2">
+          <div class="space-y-2">
+            <h4 class="font-extrabold text-xs uppercase opacity-70">// 1. Disparar Notificaciones Toast con Sonido</h4>
+            <div class="flex flex-wrap gap-3">
+              <Button
+                variant="crimson"
+                size="sm"
+                onclick="window.showToast && window.showToast('CRITICAL // ALERT', 'Pulso térmico de Velgrynd al 99.4%. Escudo activado.', 'crimson')"
+              >
+                ⚡ Toast Carmesí (420Hz)
+              </Button>
+              <Button
+                variant="gold"
+                size="sm"
+                onclick="window.showToast && window.showToast('NOTICE // ADVISORY', 'Certificado SSH próximo a rotar en el nodo 02.', 'gold')"
+              >
+                ▲ Toast Oro (660Hz)
+              </Button>
+              <Button
+                variant="cyan"
+                size="sm"
+                onclick="window.showToast && window.showToast('INFO // TELEMETRY', 'Sincronización de paquetes completada en 12ms.', 'cyan')"
+              >
+                ◆ Toast Cian (880Hz)
+              </Button>
+              <Button
+                variant="dark"
+                size="sm"
+                onclick="window.showToast && window.showToast('OK // NOMINAL', 'Compilación estática en Astro 7 lista para producción.', 'emerald')"
+              >
+                ✓ Toast Esmeralda (1040Hz)
+              </Button>
+            </div>
+          </div>
+
+          <div class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2">
+            <h4 class="font-extrabold text-xs uppercase opacity-70">// 2. Consola Modal HTML5 &amp; Command Palette (Ctrl+K)</h4>
+            <div class="flex flex-wrap gap-3">
+              <Button
+                variant="outline"
+                size="md"
+                onclick="document.getElementById('demo-scorch-modal').showModal()"
+              >
+                🪟 ABRIR VENTANA MODAL TUI
+              </Button>
+              <Button
+                variant="crimson"
+                size="md"
+                onclick="window.openPalette && window.openPalette()"
+              >
+                ⌨️ ABRIR COMMAND PALETTE (CTRL+K)
+              </Button>
+            </div>
+          </div>
+        </div>
+      </ComponentPreview>
+
+      <!-- Instancia del Modal de Demostración -->
+      <Modal id="demo-scorch-modal" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
+        <div class="space-y-4">
+          <Alert variant="crimson" title="AUTORIZACIÓN DE NIVEL DRAGÓN">
+            Estás inspeccionando un diálogo modal nativo HTML5 (`&lt;dialog closedby="any"&gt;`) con bloqueo de scroll de fondo (`overscroll-behavior: contain`).
+          </Alert>
+          <p class="leading-relaxed opacity-85">
+            Puedes cerrar esta ventana presionando la tecla <Kbd>Esc</Kbd>, haciendo clic fuera del recuadro (light-dismiss) o pulsando el botón inferior.
+          </p>
+          <div class="flex justify-end gap-3 pt-2">
+            <form method="dialog">
+              <Button variant="crimson" size="sm" type="submit">
+                ENTENDIDO // CERRAR
+              </Button>
+            </form>
+          </div>
+        </div>
+      </Modal>
+    </div>
   </section>
 
   <!-- 6. TABLA DE DATOS TUI -->
-  <section class="space-y-4">
+  <section id="tables" class="space-y-4">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 04_REGISTRO_TUI_ASCII</h2>
       <div class="h-0.5 bg-current flex-1"></div>

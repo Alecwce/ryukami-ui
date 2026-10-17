@@ -1,0 +1,108 @@
+---
+// Contenedor global de notificaciones Toast estilo consola retro TUI
+---
+
+<div
+  id="scorch-toast-container"
+  aria-live="polite"
+  class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-[calc(100vw-2.5rem)] pointer-events-none font-mono"
+></div>
+
+<script is:inline>
+  window.showToast = function (title = 'SYS_EVENT', message = 'Operación completada.', variant = 'cyan', duration = 3500) {
+    const container = document.getElementById('scorch-toast-container');
+    if (!container) return;
+
+    const palette = {
+      crimson: {
+        headerBg: 'bg-scorch-crimson text-white',
+        border: 'border-scorch-crimson',
+        bar: 'bg-scorch-crimson',
+        icon: '⚡',
+        freq: 420,
+      },
+      gold: {
+        headerBg: 'bg-scorch-gold text-black',
+        border: 'border-scorch-gold',
+        bar: 'bg-scorch-gold',
+        icon: '▲',
+        freq: 660,
+      },
+      cyan: {
+        headerBg: 'bg-scorch-cyan text-black',
+        border: 'border-scorch-cyan',
+        bar: 'bg-scorch-cyan',
+        icon: '◆',
+        freq: 880,
+      },
+      emerald: {
+        headerBg: 'bg-emerald-400 text-black',
+        border: 'border-emerald-400',
+        bar: 'bg-emerald-400',
+        icon: '✓',
+        freq: 1040,
+      },
+    };
+
+    const style = palette[variant] || palette.cyan;
+
+    if (window.playTerminalBeep) {
+      window.playTerminalBeep(style.freq, 0.07);
+    }
+
+    const toast = document.createElement('div');
+    toast.className =
+      'pointer-events-auto bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-200 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none overflow-hidden transition-all duration-150 translate-y-2 opacity-0';
+
+    const timestamp = new Date().toLocaleTimeString('es-PE', { hour12: false });
+
+    toast.innerHTML = `
+      <div class="px-3 py-1.5 border-b-2 border-black dark:border-slate-700 flex justify-between items-center text-[11px] font-extrabold uppercase ${style.headerBg}">
+        <span class="flex items-center gap-1.5">
+          <span>${style.icon}</span>
+          <span>${title}</span>
+        </span>
+        <div class="flex items-center gap-2">
+          <span class="opacity-75 text-[10px]">${timestamp}</span>
+          <button type="button" class="toast-close px-1 border border-current hover:bg-black hover:text-white leading-none font-bold" aria-label="Cerrar notificación">×</button>
+        </div>
+      </div>
+      <div class="p-3 text-xs leading-relaxed text-slate-900 dark:text-slate-100">
+        ${message}
+      </div>
+      <div class="h-1 w-full bg-slate-200 dark:bg-slate-800">
+        <div class="toast-progress h-full ${style.bar} transition-all ease-linear" style="width: 100%; transition-duration: ${duration}ms;"></div>
+      </div>
+    `;
+
+    container.appendChild(toast);
+
+    // Animar entrada y barra de progreso
+    requestAnimationFrame(() => {
+      toast.classList.remove('translate-y-2', 'opacity-0');
+      const bar = toast.querySelector('.toast-progress');
+      if (bar) {
+        requestAnimationFrame(() => {
+          bar.style.width = '0%';
+        });
+      }
+    });
+
+    const removeToast = () => {
+      toast.classList.add('opacity-0', 'translate-x-4');
+      setTimeout(() => {
+        toast.remove();
+      }, 150);
+    };
+
+    const timer = setTimeout(removeToast, duration);
+
+    const closeBtn = toast.querySelector('.toast-close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        clearTimeout(timer);
+        removeToast();
+      });
+    }
+  };
+</script>
