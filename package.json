@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/Alecwce/ryukami-ui.git"
   },
-  "homepage": "https://github.com/Alecwce/ryukami-ui",
+  "homepage": "https://ryukami-ui.pages.dev",
   "keywords": [
     "astro",
     "tailwindcss-v4",
@@ -31,8 +31,9 @@
     "preview": "astro preview",
     "registry:build": "node scripts/build-registry.mjs",
     "cli": "node bin/ryukami-ui.mjs",
-    "pages:dev": "pnpm build && npx wrangler pages dev dist --port 8788",
-    "pages:deploy": "pnpm build && npx wrangler pages deploy dist --project-name=ryukami-ui --branch=main",
+    "pages:dev": "pnpm build && npx --yes wrangler pages dev dist --port 8788",
+    "pages:deploy": "pnpm build && npx --yes wrangler pages deploy dist --project-name=ryukami-ui --branch=main --commit-dirty=true",
+    "ship": "git push origin main",
     "astro": "astro"
   },
   "dependencies": {

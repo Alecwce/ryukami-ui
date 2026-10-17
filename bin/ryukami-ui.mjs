@@ -64,6 +64,8 @@ function parseArgs(argv) {
   return { command: positional[0], args: positional.slice(1), flags };
 }
 
+const DEFAULT_REMOTE_REGISTRY = 'https://ryukami-ui.pages.dev/r';
+
 async function loadRegistryJson(fileName, registryUrl) {
   if (registryUrl) {
     const cleanBase = registryUrl.replace(/\/+$/, '');
@@ -75,25 +77,30 @@ async function loadRegistryJson(fileName, registryUrl) {
   }
 
   const localPath = path.join(LOCAL_REGISTRY_DIR, fileName);
-  if (!fs.existsSync(localPath)) {
-    throw new Error(`Archivo de registro no encontrado: ${localPath}`);
+  if (fs.existsSync(localPath)) {
+    return JSON.parse(fs.readFileSync(localPath, 'utf-8'));
   }
-  return JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+
+  const res = await fetch(`${DEFAULT_REMOTE_REGISTRY}/${fileName}`);
+  if (!res.ok) {
+    throw new Error(`No se pudo descargar ${fileName} desde ${DEFAULT_REMOTE_REGISTRY} (HTTP ${res.status})`);
+  }
+  return await res.json();
 }
 
 function showHelp() {
   printBanner();
   console.log(`${C.bold}COMANDOS DISPONIBLES:${C.reset}`);
   console.log(`  ${C.cyan}ryukami-ui init${C.reset}                  Inicializa tokens CSS (global.css) y ryukami.json`);
-  console.log(`  ${C.cyan}ryukami-ui list${C.reset}                  Lista los 14 componentes disponibles en el registro`);
+  console.log(`  ${C.cyan}ryukami-ui list${C.reset}                  Lista los 27 componentes disponibles en el registro`);
   console.log(`  ${C.cyan}ryukami-ui add <comp...>${C.reset}         Instala uno o varios componentes en tu proyecto`);
-  console.log(`  ${C.cyan}ryukami-ui add --all${C.reset}             Instala el catálogo completo de componentes`);
+  console.log(`  ${C.cyan}ryukami-ui add --all${C.reset}             Instala el catálogo completo de 27 componentes`);
   console.log(`  ${C.cyan}ryukami-ui info <comp>${C.reset}           Muestra detalles técnicos y ruta de un componente`);
   console.log('');
   console.log(`${C.bold}OPCIONES:${C.reset}`);
   console.log(`  ${C.gold}--dir, -d <ruta>${C.reset}                Directorio destino del proyecto (por defecto: actual)`);
   console.log(`  ${C.gold}--overwrite, -f${C.reset}                 Sobrescribe archivos existentes sin omitirlos`);
-  console.log(`  ${C.gold}--registry, -r <url>${C.reset}            URL remota del registro (ej: http://localhost:4321/r)`);
+  console.log(`  ${C.gold}--registry, -r <url>${C.reset}            URL remota del registro (por defecto: https://ryukami-ui.pages.dev/r)`);
   console.log('');
   console.log(`${C.bold}EJEMPLOS RÁPIDOS:${C.reset}`);
   console.log(`  ${C.red}$${C.reset} ryukami-ui list`);

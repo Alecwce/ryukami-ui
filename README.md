@@ -3,6 +3,10 @@
 > **Retro TUI & Neo-Brutalist Component Library + CLI Installer for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
 > Inspired by oriental dragon lore, 8-bit CRT terminals, and raw mechanical engineering aesthetics.
 
+🌐 **Live Production (Cloudflare Pages):** [**https://ryukami-ui.pages.dev**](https://ryukami-ui.pages.dev)  
+📦 **Live Open-Code JSON Registry:** [**https://ryukami-ui.pages.dev/r/registry.json**](https://ryukami-ui.pages.dev/r/registry.json)  
+🐙 **GitHub Repository:** [**https://github.com/Alecwce/ryukami-ui**](https://github.com/Alecwce/ryukami-ui)
+
 ![Ryukami Scorch Dragon Banner](public/scorch-dragon-banner.webp)
 
 ---
@@ -50,8 +54,8 @@ ryukami-ui add --all --dir ./mi-proyecto-astro
 # Inspeccionar metadatos y endpoint JSON de un componente
 ryukami-ui info command-palette
 
-# Consumir desde un servidor remoto o localhost
-ryukami-ui add button --registry http://localhost:4321/r
+# Consumir directamente desde el registro remoto en Cloudflare Pages
+ryukami-ui add button --registry https://ryukami-ui.pages.dev/r
 ```
 
 ---
