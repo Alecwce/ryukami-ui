@@ -117,6 +117,27 @@ pnpm build
 
 # 5. Previsualizar compilación de producción optimizada
 pnpm preview --port 4321 --host
+
+# 6. Previsualizar o desplegar en Cloudflare Pages con Wrangler
+pnpm pages:dev      # Emulador local de Cloudflare Pages (puerto 8788)
+pnpm pages:deploy   # Despliega ./dist a Cloudflare Pages (proyecto: ryukami-ui)
+```
+
+---
+
+## ☁️ Despliegue en Cloudflare Pages (`wrangler`)
+
+El repositorio incluye configuración lista para producción en [`wrangler.jsonc`](wrangler.jsonc) y cabeceras de seguridad/CORS/caché en [`public/_headers`](public/_headers) (que expone `/r/*.json` con `Access-Control-Allow-Origin: *` para que el CLI funcione desde tu dominio de Cloudflare Pages).
+
+```bash
+# 1. Autenticarse en Cloudflare (solo la primera vez)
+npx wrangler login
+
+# 2. Crear el proyecto en Cloudflare Pages (solo la primera vez)
+npx wrangler pages project create ryukami-ui --production-branch=main
+
+# 3. Compilar los 27 módulos + Astro y desplegar a producción
+pnpm pages:deploy
 ```
 
 ---
@@ -127,8 +148,9 @@ pnpm preview --port 4321 --host
 | :--- | :--- |
 | `Ctrl + K` / `Cmd + K` | Abrir / cerrar la **Command Palette** interactiva |
 | `Ctrl + D` | Alternar entre **Modo Paper (Claro)** y **Modo Hacker (Oscuro)** |
+| `←` / `→` | Cambiar pestañas activas en `Tabs.astro` |
 | `↑` / `↓` / `Enter` | Navegar y ejecutar comandos dentro de la Command Palette |
-| `Esc` | Cerrar cualquier modal o paleta activa |
+| `Esc` | Cerrar cualquier modal, popover o paleta activa |
 
 ---
 
@@ -139,20 +161,26 @@ ryukami-ui/
 ├── bin/
 │   └── ryukami-ui.mjs          # Ejecutable CLI oficial (init, list, add, info)
 ├── scripts/
-│   └── build-registry.mjs      # Compilador estático de componentes a public/r/*.json
+│   ├── build-registry.mjs      # Compilador estático de 27 módulos a public/r/*.json
+│   └── scorch-ascii.py         # Convertidor Python de imágenes a arte ASCII Velgrynd
+├── examples/
+│   └── legacy-prototype.html   # Prototipo HTML estático inicial de referencia
 ├── public/
-│   ├── r/                      # Endpoints JSON del registro (registry.json, button.json, etc.)
+│   ├── _headers                # Cabeceras Cloudflare Pages (Seguridad, Cache Immutable y CORS /r/*)
+│   ├── r/                      # 27 endpoints JSON del registro (registry.json, button.json, etc.)
 │   └── scorch-dragon-banner.*  # Banners WebP responsivos (480w, 800w, 1376w)
 ├── src/
-│   ├── components/             # 16 componentes Astro (.astro)
+│   ├── components/             # 29 componentes Astro (.astro)
 │   ├── layouts/
 │   │   └── BaseLayout.astro    # Layout maestro, preload LCP y carga asíncrona de fuentes
 │   ├── pages/
-│   │   └── index.astro         # Showcase interactivo + Docs + Labs
+│   │   └── index.astro         # Showcase interactivo + 0xSCORCH_SHELL + Docs + Labs
 │   └── styles/
 │       └── global.css          # Tokens @theme de Tailwind v4 y utilidades brutalistas
 ├── AGENTS.md                   # Guía rápida de contexto y reglas para agentes IA
+├── LICENSE                     # Licencia MIT oficial (Ryukami Labs)
 ├── astro.config.mjs            # Configuración Astro 7 (compressHTML, Vite 8)
+├── wrangler.jsonc              # Configuración oficial de despliegue para Cloudflare Pages
 └── package.json
 ```
 
@@ -160,5 +188,5 @@ ryukami-ui/
 
 ## ⚖️ Licencia y Propiedad Intelectual
 
-Distribuido bajo licencia **MIT License**.  
+Distribuido bajo licencia **[MIT License](LICENSE)**.  
 **Ryukami Labs** (*竜神 - Dios Dragón*) · *Velgrynd Tribute Edition* (homenaje artístico y estético de código abierto).
