@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "button",
+  "title": "Button",
+  "type": "registry:ui",
+  "category": "01_CORE_UI",
+  "description": "Botón mecánico Neo-Brutalista con 5 variantes y síntesis de clic Web Audio.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/Button.astro",
+      "type": "registry:component",
+      "content": "---\ninterface Props {\n  variant?: 'crimson' | 'cyan' | 'gold' | 'outline' | 'dark';\n  size?: 'sm' | 'md' | 'lg';\n  href?: string;\n  class?: string;\n  id?: string;\n  onclick?: string;\n}\n\nconst {\n  variant = 'crimson',\n  size = 'md',\n  href,\n  class: className = '',\n  id,\n  onclick,\n  ...rest\n} = Astro.props;\n\nconst variantStyles = {\n  crimson: 'bg-scorch-crimson text-white hover:bg-red-600',\n  cyan: 'bg-scorch-cyan text-black hover:bg-sky-400',\n  gold: 'bg-scorch-gold text-black hover:bg-yellow-400',\n  outline: 'bg-white text-black dark:bg-slate-800 dark:text-white',\n  dark: 'bg-black text-white dark:bg-slate-900',\n};\n\nconst sizeStyles = {\n  sm: 'px-3 py-1.5 text-xs',\n  md: 'px-5 py-2.5 text-xs sm:text-sm',\n  lg: 'px-7 py-3.5 text-sm sm:text-base',\n};\n\nconst Element = href ? 'a' : 'button';\n---\n\n<Element\n  href={href}\n  id={id}\n  onclick={onclick}\n  class={`btn-brutal ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}\n  {...rest}\n>\n  <slot />\n</Element>\n"
+    }
+  ]
+}

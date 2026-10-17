@@ -99,16 +99,17 @@ import Button from '@/components/Button.astro';
   <p>Diagnóstico cuántico completado sin anomalías.</p>
 </Modal>`;
 
-const installAstroSnippet = `# 1. Instalar Tailwind CSS v4 en tu proyecto Astro 7
-pnpm add tailwindcss@latest @tailwindcss/vite@latest
+const installAstroSnippet = `# 1. Inicializar tokens CSS (Tailwind v4) y ryukami.json en tu proyecto
+ryukami-ui init --dir ./mi-proyecto-astro
 
-# 2. En astro.config.mjs:
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
+# 2. Listar los 14 componentes disponibles en el registro
+ryukami-ui list
 
-export default defineConfig({
-  vite: { plugins: [tailwindcss()] }
-});`;
+# 3. Instalar componentes específicos (resuelve dependencias automáticamente)
+ryukami-ui add button badge card modal command-palette --dir ./mi-proyecto-astro
+
+# 4. O instalar el catálogo completo de una sola vez
+ryukami-ui add --all --dir ./mi-proyecto-astro`;
 ---
 
 <BaseLayout
@@ -117,9 +118,9 @@ export default defineConfig({
 >
 
   <!-- 1. HERO SHOWCASE -->
-  <section id="hero" class="space-y-6 text-center md:text-left">
+  <section id="hero" class="space-y-6 text-center md:text-left scroll-mt-32">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-      <Badge variant="crimson">v2.0.0 // FULL RELEASE (FASE 3)</Badge>
+      <Badge variant="crimson">v2.1.0 // CLI + REGISTRY READY</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
       <Badge variant="gold">THEME STUDIO + ASCII FORGE</Badge>
     </div>
@@ -183,20 +184,29 @@ export default defineConfig({
   <!-- 2. QUICK INSTALL (CLI) -->
   <section class="tui-window">
     <div class="tui-header">
-      <span>QUICK_START // CLI INSTALL</span>
-      <span>pnpm / npm</span>
+      <span>QUICK_START // RYUKAMI-UI CLI INSTALLER</span>
+      <span>14 MODULES // /r/registry.json</span>
     </div>
     <div class="p-5 flex flex-col sm:flex-row gap-3 items-center">
-      <div class="flex-1 w-full bg-slate-900 text-slate-100 p-3 border-2 border-black dark:border-slate-700 font-mono text-xs sm:text-sm flex items-center">
-        <span class="text-scorch-crimson font-extrabold mr-2">$</span>
-        <span>pnpm create scorch-app --template=astro</span>
+      <div class="flex-1 w-full bg-slate-900 text-slate-100 p-3 border-2 border-black dark:border-slate-700 font-mono text-xs sm:text-sm flex items-center justify-between gap-2">
+        <div>
+          <span class="text-scorch-crimson font-extrabold mr-2">$</span>
+          <span>ryukami-ui init &amp;&amp; ryukami-ui add button card modal command-palette</span>
+        </div>
+        <a
+          href="/r/registry.json"
+          target="_blank"
+          class="hidden md:inline-block bg-black text-scorch-cyan border border-slate-700 px-2 py-0.5 text-[10px] font-bold hover:bg-scorch-cyan hover:text-black"
+        >
+          [JSON REGISTRY ↗]
+        </a>
       </div>
       <Button
         variant="gold"
         size="md"
-        onclick="navigator.clipboard.writeText('pnpm create scorch-app --template=astro'); window.showToast && window.showToast('CLI COPIADO', 'Comando copiado: pnpm create scorch-app --template=astro', 'emerald');"
+        onclick="navigator.clipboard.writeText('ryukami-ui init && ryukami-ui add button card modal command-palette'); window.showToast && window.showToast('CLI COPIADO', 'Comando copiado: ryukami-ui init && ryukami-ui add button card modal command-palette', 'emerald');"
       >
-        COPIAR COMANDO
+        COPIAR CLI
       </Button>
     </div>
   </section>
@@ -229,7 +239,7 @@ export default defineConfig({
         Botones con física de pulsación mecánica hacia la izquierda-abajo y sonido táctil Web Audio API incorporado.
       </p>
 
-      <ComponentPreview title="BUTTON_VARIANTS" code={buttonSnippet} status="5 STYLES">
+      <ComponentPreview title="BUTTON_VARIANTS" code={buttonSnippet} status="5 STYLES" cli="ryukami-ui add button">
         <div class="flex flex-wrap items-center gap-4 py-2">
           <Button variant="crimson">Carmesí Scorch</Button>
           <Button variant="cyan">Cian Eléctrico</Button>
@@ -250,7 +260,7 @@ export default defineConfig({
         Etiquetas de estado de nodo, protocolos de red y categorías técnicas.
       </p>
 
-      <ComponentPreview title="BADGE_STATUS" code={badgeSnippet} status="ASCII READY">
+      <ComponentPreview title="BADGE_STATUS" code={badgeSnippet} status="ASCII READY" cli="ryukami-ui add badge">
         <div class="flex flex-wrap items-center gap-3 py-2">
           <Badge variant="crimson">● SYSTEM_ALERT</Badge>
           <Badge variant="cyan">◆ REA_ENGINEERING</Badge>
@@ -271,7 +281,7 @@ export default defineConfig({
         Contenedores de información emulando ventanas de emulador de terminal retro con botones geométricos `[ - ][ □ ][ × ]`.
       </p>
 
-      <ComponentPreview title="TUI_WINDOW_CONSOLE" code={cardSnippet} status="ONLINE">
+      <ComponentPreview title="TUI_WINDOW_CONSOLE" code={cardSnippet} status="ONLINE" cli="ryukami-ui add card">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
           <Card title="0xSERVER // NODE_2" status="ONLINE">
             <div class="space-y-3">
@@ -319,12 +329,12 @@ export default defineConfig({
         Inputs de texto brutalistas con prefijo de terminal, sombra hacia la izquierda y foco de alta visibilidad.
       </p>
 
-      <ComponentPreview title="TEXT_INPUTS" code={inputSnippet} status="FORM CONTROLS">
+      <ComponentPreview title="TEXT_INPUTS" code={inputSnippet} status="FORM CONTROLS" cli="ryukami-ui add input">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
           <Input
             label="Comando de Terminal"
             prefix="$"
-            placeholder="pnpm create scorch-app"
+            placeholder="ryukami-ui add button"
             hint="Ejecuta en tu terminal de confianza"
           />
           <Input
@@ -358,7 +368,7 @@ export default defineConfig({
         Casillas de selección cuadradas con marca pixel-art y deslizadores táctiles ON/OFF.
       </p>
 
-      <ComponentPreview title="TOGGLES_AND_CHECKS" code={toggleSnippet} status="INTERACTIVE">
+      <ComponentPreview title="TOGGLES_AND_CHECKS" code={toggleSnippet} status="INTERACTIVE" cli="ryukami-ui add checkbox switch">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
           <div class="space-y-4">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Checkboxes Cuadrados</h4>
@@ -417,7 +427,7 @@ export default defineConfig({
         Callouts y cajas de advertencia brutalistas con indicadores de estado de severidad.
       </p>
 
-      <ComponentPreview title="SYSTEM_ALERTS" code={alertSnippet} status="CALLOUTS">
+      <ComponentPreview title="SYSTEM_ALERTS" code={alertSnippet} status="CALLOUTS" cli="ryukami-ui add alert">
         <div class="space-y-4 w-full">
           <Alert variant="crimson" title="SOBRECALENTAMIENTO DE NÚCLEO">
             Frecuencia de CPU al 98%. Temperatura en 89°C. Se activan ventiladores secundarios de enfriamiento.
@@ -448,7 +458,7 @@ export default defineConfig({
         Notificaciones emergentes con barra de progreso, frecuencia acústica según severidad y diálogos HTML5 nativos con soporte `closedby="any"`.
       </p>
 
-      <ComponentPreview title="TOASTS_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO">
+      <ComponentPreview title="TOASTS_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO" cli="ryukami-ui add modal toast-container command-palette">
         <div class="space-y-6 w-full py-2">
           <div class="space-y-2">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Disparar Notificaciones Toast con Sonido</h4>
@@ -598,37 +608,37 @@ export default defineConfig({
     <AsciiGenerator />
   </section>
 
-  <!-- 9. GUÍA DE INSTALACIÓN Y ARQUITECTURA (FASE 3) -->
+  <!-- 9. GUÍA DE INSTALACIÓN Y ARQUITECTURA (FASE 3 + CLI REGISTRY) -->
   <section id="install-docs" class="space-y-4 scroll-mt-32">
     <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_GUIA_DE_INSTALACION</h2>
+      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_CLI_E_INSTALACION</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
     <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-      Integra <strong>Ryukami-UI</strong> en cualquier proyecto moderno con Astro 7, Next.js o Vite usando Tailwind CSS v4.
+      Instala componentes directamente desde la terminal con el CLI oficial <code>ryukami-ui</code> (estilo <code>shadcn</code> / <code>8bitcn</code>) o consúmelos desde el registro estático <a href="/r/registry.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/registry.json</a>.
     </p>
 
-    <ComponentPreview title="ASTRO_7_TAILWIND_4_SETUP" code={installAstroSnippet} status="DOCS">
+    <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.1" cli="ryukami-ui init">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="crimson">PASO 01</Badge>
-          <h3 class="font-extrabold uppercase text-sm">Instalar Motor</h3>
+          <Badge variant="crimson">PASO 01 // INIT</Badge>
+          <h3 class="font-extrabold uppercase text-sm">ryukami-ui init</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Instala `@tailwindcss/vite` y `tailwindcss@4.3.3` en tu proyecto Astro 7.4.
+            Inyecta automáticamente <code>src/styles/global.css</code> con los tokens Tailwind v4 y genera <code>ryukami.json</code>.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="cyan">PASO 02</Badge>
-          <h3 class="font-extrabold uppercase text-sm">Inyectar Tokens</h3>
+          <Badge variant="cyan">PASO 02 // ADD</Badge>
+          <h3 class="font-extrabold uppercase text-sm">ryukami-ui add &lt;comp&gt;</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Pega las variables generadas por el <strong>Theme Studio</strong> en tu `src/styles/global.css`.
+            Descarga e instala los componentes solicitados (y sus dependencias internas) directo en <code>src/components/</code>.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="gold">PASO 03</Badge>
-          <h3 class="font-extrabold uppercase text-sm">Copiar Componentes</h3>
+          <Badge variant="gold">PASO 03 // REGISTRY</Badge>
+          <h3 class="font-extrabold uppercase text-sm">/r/&lt;comp&gt;.json</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Usa el botón `[ 📋 COPIAR ]` de cualquier componente del catálogo y pégalo en `src/components/`.
+            Cada componente expone su propio endpoint JSON estático en <code>public/r/</code> listo para consumirse local o remotamente.
           </p>
         </div>
       </div>

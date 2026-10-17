@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "badge",
+  "title": "Badge",
+  "type": "registry:ui",
+  "category": "01_CORE_UI",
+  "description": "Etiquetas y pastillas TUI de estado con sombra dura de -2px 2px.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/Badge.astro",
+      "type": "registry:component",
+      "content": "---\ninterface Props {\n  variant?: 'crimson' | 'cyan' | 'gold' | 'outline' | 'dark';\n  class?: string;\n}\n\nconst { variant = 'crimson', class: className = '' } = Astro.props;\n\nconst variantStyles = {\n  crimson: 'bg-scorch-crimson text-white border-black dark:border-white shadow-[-2px_2px_0px_#000]',\n  cyan: 'bg-scorch-cyan text-black border-black dark:border-white shadow-[-2px_2px_0px_#000]',\n  gold: 'bg-scorch-gold text-black border-black dark:border-white shadow-[-2px_2px_0px_#000]',\n  outline: 'bg-white dark:bg-slate-800 text-current border-current shadow-[-2px_2px_0px_currentColor]',\n  dark: 'bg-black text-white dark:bg-slate-900 border-black dark:border-white shadow-[-2px_2px_0px_#4DA3FF]',\n};\n---\n\n<span class={`inline-flex items-center gap-1.5 px-2.5 py-0.5 text-xs font-extrabold uppercase font-mono border-2 select-none ${variantStyles[variant]} ${className}`}>\n  <slot />\n</span>\n"
+    }
+  ]
+}

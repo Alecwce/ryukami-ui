@@ -3,9 +3,10 @@ interface Props {
   title: string;
   code: string;
   status?: string;
+  cli?: string;
 }
 
-const { title, code, status = "ASCII READY" } = Astro.props;
+const { title, code, status = "ASCII READY", cli } = Astro.props;
 const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
@@ -17,19 +18,31 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
       <span class="bg-black text-slate-200 text-[10px] border border-slate-700 px-1.5 py-0.5">{status}</span>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex flex-wrap items-center gap-2">
+      {cli && (
+        <button
+          type="button"
+          class="cli-copy-btn bg-black hover:bg-slate-800 text-slate-100 border border-slate-600 px-2 py-1 text-[11px] font-mono flex items-center gap-1.5 cursor-pointer"
+          data-cli={cli}
+          title="Copiar comando CLI de instalación"
+        >
+          <span class="text-scorch-crimson font-extrabold">$</span>
+          <span class="cli-text">{cli}</span>
+        </button>
+      )}
+
       <!-- Tabs Selector -->
       <div class="flex bg-black p-0.5 border border-slate-700 text-xs">
         <button
           type="button"
-          class="tab-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black"
+          class="tab-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black cursor-pointer"
           data-tab="preview"
         >
           PREVIEW
         </button>
         <button
           type="button"
-          class="tab-btn px-2.5 py-1 font-bold text-slate-200 hover:text-white"
+          class="tab-btn px-2.5 py-1 font-bold text-slate-200 hover:text-white cursor-pointer"
           data-tab="code"
         >
           CODE
@@ -68,6 +81,7 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
     const previewContent = container.querySelector('.preview-content');
     const codeContent = container.querySelector('.code-content');
     const copyBtn = container.querySelector('.copy-btn');
+    const cliCopyBtn = container.querySelector('.cli-copy-btn');
 
     if (!tabBtns.length || !previewContent || !codeContent) return;
 
@@ -93,6 +107,29 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         }
       });
     });
+
+    if (cliCopyBtn) {
+      cliCopyBtn.addEventListener('click', async () => {
+        const cliCmd = cliCopyBtn.getAttribute('data-cli');
+        if (!cliCmd) return;
+        try {
+          await navigator.clipboard.writeText(cliCmd);
+          if ((window as any).showToast) {
+            (window as any).showToast('CLI COPIADO', `Comando listo: ${cliCmd}`, 'cyan', 2600);
+          }
+          const cliText = cliCopyBtn.querySelector('.cli-text');
+          if (cliText) {
+            const orig = cliText.textContent;
+            cliText.textContent = '✓ COPIADO AL PORTAPAPELES';
+            setTimeout(() => {
+              cliText.textContent = orig;
+            }, 1800);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    }
 
     if (copyBtn) {
       copyBtn.addEventListener('click', async () => {

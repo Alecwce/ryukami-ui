@@ -1,0 +1,138 @@
+{
+  "name": "ryukami-ui",
+  "version": "2.1.0",
+  "edition": "Scorch Dragon // Velgrynd Tribute Edition",
+  "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
+  "updatedAt": "2026-10-17T20:43:04.722Z",
+  "totalItems": 14,
+  "items": [
+    {
+      "name": "button",
+      "title": "Button",
+      "category": "01_CORE_UI",
+      "description": "Botón mecánico Neo-Brutalista con 5 variantes y síntesis de clic Web Audio.",
+      "registryDependencies": [],
+      "endpoint": "/r/button.json",
+      "target": "src/components/Button.astro"
+    },
+    {
+      "name": "badge",
+      "title": "Badge",
+      "category": "01_CORE_UI",
+      "description": "Etiquetas y pastillas TUI de estado con sombra dura de -2px 2px.",
+      "registryDependencies": [],
+      "endpoint": "/r/badge.json",
+      "target": "src/components/Badge.astro"
+    },
+    {
+      "name": "card",
+      "title": "Card (TUI Window)",
+      "category": "01_CORE_UI",
+      "description": "Ventana de consola TUI con barra superior y controles geométricos [ - ][ □ ][ × ].",
+      "registryDependencies": [],
+      "endpoint": "/r/card.json",
+      "target": "src/components/Card.astro"
+    },
+    {
+      "name": "kbd",
+      "title": "Kbd",
+      "category": "01_CORE_UI",
+      "description": "Representación física de teclas de atajos de teclado ([Ctrl] + [K]).",
+      "registryDependencies": [],
+      "endpoint": "/r/kbd.json",
+      "target": "src/components/Kbd.astro"
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "category": "02_FORM_CONTROLS",
+      "description": "Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.",
+      "registryDependencies": [],
+      "endpoint": "/r/input.json",
+      "target": "src/components/Input.astro"
+    },
+    {
+      "name": "checkbox",
+      "title": "Checkbox",
+      "category": "02_FORM_CONTROLS",
+      "description": "Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.",
+      "registryDependencies": [],
+      "endpoint": "/r/checkbox.json",
+      "target": "src/components/Checkbox.astro"
+    },
+    {
+      "name": "switch",
+      "title": "Switch",
+      "category": "02_FORM_CONTROLS",
+      "description": "Interruptor táctil deslizante (role=\"switch\") con variantes crimson, cyan y gold.",
+      "registryDependencies": [],
+      "endpoint": "/r/switch.json",
+      "target": "src/components/Switch.astro"
+    },
+    {
+      "name": "alert",
+      "title": "Alert",
+      "category": "03_FEEDBACK_OVERLAYS",
+      "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
+      "registryDependencies": [],
+      "endpoint": "/r/alert.json",
+      "target": "src/components/Alert.astro"
+    },
+    {
+      "name": "modal",
+      "title": "Modal (HTML5 Dialog)",
+      "category": "03_FEEDBACK_OVERLAYS",
+      "description": "Diálogo modal nativo <dialog closedby=\"any\"> con bloqueo de scroll de fondo.",
+      "registryDependencies": [],
+      "endpoint": "/r/modal.json",
+      "target": "src/components/Modal.astro"
+    },
+    {
+      "name": "toast-container",
+      "title": "ToastContainer",
+      "category": "03_FEEDBACK_OVERLAYS",
+      "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
+      "registryDependencies": [],
+      "endpoint": "/r/toast-container.json",
+      "target": "src/components/ToastContainer.astro"
+    },
+    {
+      "name": "command-palette",
+      "title": "CommandPalette",
+      "category": "03_FEEDBACK_OVERLAYS",
+      "description": "Consola de comandos interactiva (Ctrl+K) con buscador en vivo y atajos de teclado.",
+      "registryDependencies": [
+        "kbd"
+      ],
+      "endpoint": "/r/command-palette.json",
+      "target": "src/components/CommandPalette.astro"
+    },
+    {
+      "name": "component-preview",
+      "title": "ComponentPreview",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado en 1 clic.",
+      "registryDependencies": [],
+      "endpoint": "/r/component-preview.json",
+      "target": "src/components/ComponentPreview.astro"
+    },
+    {
+      "name": "theme-studio",
+      "title": "ThemeStudio",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.",
+      "registryDependencies": [],
+      "endpoint": "/r/theme-studio.json",
+      "target": "src/components/ThemeStudio.astro"
+    },
+    {
+      "name": "ascii-generator",
+      "title": "AsciiGenerator",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.",
+      "registryDependencies": [],
+      "endpoint": "/r/ascii-generator.json",
+      "target": "src/components/AsciiGenerator.astro"
+    }
+  ]
+}

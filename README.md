@@ -1,6 +1,6 @@
 # 🐉 Ryukami-UI (Scorch Dragon // Velgrynd Tribute Edition)
 
-> **Retro TUI & Neo-Brutalist Component Library for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
+> **Retro TUI & Neo-Brutalist Component Library + CLI Installer for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
 > Inspired by oriental dragon lore, 8-bit CRT terminals, and raw mechanical engineering aesthetics.
 
 ![Ryukami Scorch Dragon Banner](public/scorch-dragon-banner.webp)
@@ -13,60 +13,96 @@
 | :--- | :--- | :--- |
 | **Framework** | [Astro 7.4.0](https://astro.build) | Motor **Vite 8 + Rolldown**, HTML comprimido y **0 KiB de bundles JS externos**. |
 | **Estilos** | [Tailwind CSS 4.3.3](https://tailwindcss.com) | Configuración CSS-first (`@import "tailwindcss";`, `@theme`, `@custom-variant dark`). |
-| **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`interface Props`) en todos los componentes. |
+| **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes. |
+| **CLI & Registry** | **`ryukami-ui` v2.1.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Registro estático JSON en `/public/r/*.json`. |
 | **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos `.mp3`. |
 | **Auditoría** | **Lighthouse 100/100** | **100** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
+
+---
+
+## 🛠️ Instalador CLI (`ryukami-ui`) — Estilo `shadcn` / `8bitcn`
+
+El proyecto incluye su propio **CLI ejecutable** ([`bin/ryukami-ui.mjs`](bin/ryukami-ui.mjs)) y su compilador de registro estático ([`scripts/build-registry.mjs`](scripts/build-registry.mjs)), instalado globalmente en `~/.local/bin/ryukami-ui`.
+
+### 1. Inicializar Tokens y Configuración en cualquier Proyecto
+Inyecta automáticamente `src/styles/global.css` con la paleta Scorch calibrada para Tailwind v4 y crea `ryukami.json`:
+```bash
+ryukami-ui init --dir ./mi-proyecto-astro
+```
+
+### 2. Listar todos los Componentes del Registro
+Muestra una tabla TUI en terminal con los **14 módulos** disponibles y sus dependencias:
+```bash
+ryukami-ui list
+```
+
+### 3. Instalar Componentes Específicos (con resolución de dependencias)
+Copia los componentes `.astro` directamente en `src/components/` (por ejemplo, al pedir `command-palette`, instala automáticamente su dependencia `kbd`):
+```bash
+ryukami-ui add button badge card modal command-palette --dir ./mi-proyecto-astro
+```
+
+### 4. Instalar Todo el Catálogo de una Vez o Inspeccionar un Módulo
+```bash
+# Instalar los 14 componentes a la vez
+ryukami-ui add --all --dir ./mi-proyecto-astro
+
+# Inspeccionar metadatos y endpoint JSON de un componente
+ryukami-ui info command-palette
+
+# Consumir desde un servidor remoto o localhost
+ryukami-ui add button --registry http://localhost:4321/r
+```
 
 ---
 
 ## 🏛️ Reglas de Diseño (Scorch Design System v4.1)
 
 1. **Neo-Brutalismo Puro (`0px` Radius):** Bordes sólidos de `2px`, esquinas de `0px` y sombras duras hacia abajo-izquierda (`-4px 4px 0px 0px`).
-2. **Física Táctil acelerada por GPU:** Transiciones exclusivas en `transform: translate(-2px, 2px)` (`75ms ease-out`) para evitar repintados de CPU.
-3. **Contraste Calibrado WCAG AA:** Carmesí Scorch (`#D62436`, ratio **5.04:1** sobre blanco), Cian Eléctrico (`#4DA3FF`) y Oro Dragón (`#F4D35E`).
-4. **Doble Tema Nativo:** Modo **Paper (`#F5F7FA`)** de alto contraste diurno y Modo **Hacker (`#0B0F17`)** con opción *Crimson Soft (Nocturno Pro)* en el Theme Studio.
+2. **Controles Geométricos de Ventana (`[ - ][ □ ][ × ]`):** Cajas cuadradas exactas de `20×20 px` (`w-5 h-5`) con vectores centrados al píxel.
+3. **Física Táctil Acelerada por GPU:** Transiciones exclusivas en `transform: translate(-2px, 2px)` (`75ms ease-out`) para evitar repintados de CPU.
+4. **Contraste Calibrado WCAG AA:** Carmesí Scorch (`#D62436`, ratio **5.04:1** sobre blanco), Cian Eléctrico (`#4DA3FF`) y Oro Dragón (`#F4D35E`).
+5. **Doble Tema Nativo:** Modo **Paper (`#F5F7FA`)** de alto contraste diurno y Modo **Hacker (`#0B0F17`)** con opción *Crimson Soft (Nocturno Pro)* en el Theme Studio.
 
 ---
 
 ## 🧩 Catálogo Completo (14 Componentes & Herramientas)
 
-### Núcleo TUI & Primitivos
-- **`Button.astro`** — Botón mecánico con variantes `crimson | cyan | gold | dark | outline`, tamaños `sm | md | lg` y clic Web Audio.
-- **`Badge.astro`** — Etiquetas de estado y telemetría con sombra dura de `-2px 2px 0px`.
-- **`Card.astro`** — Ventana de consola TUI con barra de título, estado en vivo y controles `[ _ ][ □ ][ × ]`.
-- **`Table.astro`** — Tabla de datos estilo salida ASCII de terminal con cabeceras de alto contraste.
-- **`Kbd.astro`** — Teclas físicas de atajos mecánicos (`[Ctrl] + [K]`).
-- **`ComponentPreview.astro`** — Visor interactivo con pestañas `[ PREVIEW | CODE ]` y copiado en 1 clic.
-
-### Controles de Formulario & Feedback
-- **`Input.astro`** — Input brutalista con prefijo de consola (`$`, `tcp://`), textos de ayuda y estado de error.
-- **`Checkbox.astro`** — Casilla de verificación cuadrada con marca pixel-art `✕`.
-- **`Switch.astro`** — Interruptor táctil deslizante (`role="switch"`) con variantes `crimson | cyan | gold`.
-- **`Alert.astro`** — Callouts de sistema con 4 niveles de severidad (`crimson`, `gold`, `cyan`, `emerald`).
-
-### Sistemas Interactivos & Laboratorios
-- **`CommandPalette.astro`** — Paleta de comandos global (`Ctrl+K` / `Cmd+K`) con `<dialog closedby="any">`, filtro en vivo y navegación por teclado (`↑`, `↓`, `Enter`, `Esc`).
-- **`ToastContainer.astro`** — Motor de notificaciones flotantes (`window.showToast(...)`) con frecuencias acústicas por severidad (`420Hz`, `660Hz`, `880Hz`, `1040Hz`).
-- **`Modal.astro`** — Diálogo modal HTML5 nativo con light-dismiss y `overscroll-behavior: contain`.
-- **`ThemeStudio.astro`** — Laboratorio en vivo para personalizar núcleos de color, profundidad de sombras (`-2px`, `-4px`, `-8px`), densidad Halftone y exportar el `:root` CSS.
-- **`AsciiGenerator.astro`** — Forja de banners ASCII 8-bit y emblema del Dragón Scorch con 4 texturas de escamas (`█▓▒`, `0xAF`, `@#%`, `竜炎神`).
-- **`SidebarNav.astro`** — Navegación lateral fija categorizada estilo `8bitcn.com` / `shadcn`.
+| ID en CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
+| :--- | :--- | :--- | :--- |
+| `button` | `Button.astro` | `01_CORE_UI` | Botón mecánico con 5 variantes y clic Web Audio. |
+| `badge` | `Badge.astro` | `01_CORE_UI` | Pastillas de estado y telemetría (`-2px 2px 0px`). |
+| `card` | `Card.astro` | `01_CORE_UI` | Ventana de consola TUI con controles geométricos `[ - ][ □ ][ × ]`. |
+| `kbd` | `Kbd.astro` | `01_CORE_UI` | Teclas físicas de atajos mecánicos (`[Ctrl] + [K]`). |
+| `input` | `Input.astro` | `02_FORM_CONTROLS` | Input brutalista con prefijo de terminal (`$`, `tcp://`), hints y error. |
+| `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla cuadrada con marca pixel-art `✕`. |
+| `switch` | `Switch.astro` | `02_FORM_CONTROLS` | Interruptor táctil deslizante (`role="switch"`). |
+| `alert` | `Alert.astro` | `03_FEEDBACK_OVERLAYS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
+| `modal` | `Modal.astro` | `03_FEEDBACK_OVERLAYS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
+| `toast-container` | `ToastContainer.astro` | `03_FEEDBACK_OVERLAYS` | Notificaciones flotantes con frecuencia acústica por severidad. |
+| `command-palette` | `CommandPalette.astro` | `03_FEEDBACK_OVERLAYS` | Paleta de comandos (`Ctrl+K`) con buscador en vivo (`deps: kbd`). |
+| `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Visor `[ PREVIEW | CODE ]` con copia de CLI y código en 1 clic. |
+| `theme-studio` | `ThemeStudio.astro` | `04_SCORCH_STUDIO` | Laboratorio en vivo de colores, sombras, dither y exportador CSS. |
+| `ascii-generator` | `AsciiGenerator.astro` | `04_SCORCH_STUDIO` | Forja de banners ASCII 8-bit y emblema del Dragón Scorch. |
 
 ---
 
-## 🚀 Inicio Rápido
+## 🚀 Desarrollo y Servidor Local
 
 ```bash
 # 1. Instalar dependencias
 pnpm install
 
-# 2. Servidor de desarrollo (http://localhost:4321)
+# 2. Regenerar el registro JSON estático (public/r/*.json)
+pnpm registry:build
+
+# 3. Servidor de desarrollo (http://localhost:4321)
 pnpm dev
 
-# 3. Compilar para producción (genera dist/)
+# 4. Compilar para producción (regenera el registro + genera dist/)
 pnpm build
 
-# 4. Previsualizar compilación de producción optimizada
+# 5. Previsualizar compilación de producción optimizada
 pnpm preview --port 4321 --host
 ```
 
@@ -87,9 +123,15 @@ pnpm preview --port 4321 --host
 
 ```text
 ryukami-ui/
-├── public/                     # Banners WebP responsivos (480w, 800w, 1376w)
+├── bin/
+│   └── ryukami-ui.mjs          # Ejecutable CLI oficial (init, list, add, info)
+├── scripts/
+│   └── build-registry.mjs      # Compilador estático de componentes a public/r/*.json
+├── public/
+│   ├── r/                      # Endpoints JSON del registro (registry.json, button.json, etc.)
+│   └── scorch-dragon-banner.*  # Banners WebP responsivos (480w, 800w, 1376w)
 ├── src/
-│   ├── components/             # 14 componentes Astro (.astro)
+│   ├── components/             # 16 componentes Astro (.astro)
 │   ├── layouts/
 │   │   └── BaseLayout.astro    # Layout maestro, preload LCP y carga asíncrona de fuentes
 │   ├── pages/
