@@ -1,0 +1,43 @@
+---
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  active?: boolean;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+  prefix?: string;
+}
+
+const { items = [], prefix = '~' } = Astro.props;
+---
+
+<nav
+  aria-label="Ruta de navegación"
+  class="tui-window px-3.5 py-2 bg-white dark:bg-slate-900 font-mono text-xs flex flex-wrap items-center gap-1.5"
+>
+  <span class="bg-scorch-crimson text-white px-1.5 py-0.5 border border-black font-extrabold text-[11px]">
+    {prefix}
+  </span>
+  {items.map((item, idx) => (
+    <div class="inline-flex items-center gap-1.5">
+      <span class="text-slate-500 font-extrabold select-none" aria-hidden="true">/</span>
+      {item.active || !item.href ? (
+        <span
+          aria-current={item.active ? 'page' : undefined}
+          class="bg-black text-scorch-gold px-2 py-0.5 border border-black font-extrabold"
+        >
+          {item.label}
+        </span>
+      ) : (
+        <a
+          href={item.href}
+          class="px-1.5 py-0.5 font-bold hover:bg-scorch-cyan hover:text-black border border-transparent hover:border-black"
+        >
+          {item.label}
+        </a>
+      )}
+    </div>
+  ))}
+</nav>

@@ -1,10 +1,10 @@
 {
   "name": "ryukami-ui",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-17T20:56:25.421Z",
-  "totalItems": 20,
+  "updatedAt": "2026-10-17T21:16:20.254Z",
+  "totalItems": 27,
   "items": [
     {
       "name": "button",
@@ -52,6 +52,24 @@
       "target": "src/components/ProgressBar.astro"
     },
     {
+      "name": "avatar",
+      "title": "Avatar",
+      "category": "01_CORE_UI",
+      "description": "Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).",
+      "registryDependencies": [],
+      "endpoint": "/r/avatar.json",
+      "target": "src/components/Avatar.astro"
+    },
+    {
+      "name": "skeleton",
+      "title": "Skeleton",
+      "category": "01_CORE_UI",
+      "description": "Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.",
+      "registryDependencies": [],
+      "endpoint": "/r/skeleton.json",
+      "target": "src/components/Skeleton.astro"
+    },
+    {
       "name": "input",
       "title": "Input",
       "category": "02_FORM_CONTROLS",
@@ -59,6 +77,15 @@
       "registryDependencies": [],
       "endpoint": "/r/input.json",
       "target": "src/components/Input.astro"
+    },
+    {
+      "name": "textarea",
+      "title": "Textarea",
+      "category": "02_FORM_CONTROLS",
+      "description": "Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.",
+      "registryDependencies": [],
+      "endpoint": "/r/textarea.json",
+      "target": "src/components/Textarea.astro"
     },
     {
       "name": "select",
@@ -77,6 +104,15 @@
       "registryDependencies": [],
       "endpoint": "/r/slider.json",
       "target": "src/components/Slider.astro"
+    },
+    {
+      "name": "radio-group",
+      "title": "RadioGroup",
+      "category": "02_FORM_CONTROLS",
+      "description": "Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).",
+      "registryDependencies": [],
+      "endpoint": "/r/radio-group.json",
+      "target": "src/components/RadioGroup.astro"
     },
     {
       "name": "checkbox",
@@ -113,6 +149,33 @@
       "registryDependencies": [],
       "endpoint": "/r/accordion.json",
       "target": "src/components/Accordion.astro"
+    },
+    {
+      "name": "breadcrumb",
+      "title": "Breadcrumb",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).",
+      "registryDependencies": [],
+      "endpoint": "/r/breadcrumb.json",
+      "target": "src/components/Breadcrumb.astro"
+    },
+    {
+      "name": "pagination",
+      "title": "Pagination",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).",
+      "registryDependencies": [],
+      "endpoint": "/r/pagination.json",
+      "target": "src/components/Pagination.astro"
+    },
+    {
+      "name": "popover",
+      "title": "Popover (HTML5 Popover API)",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Globo flotante de telemetría con API nativa popover=\"auto\" sin dependencias JS.",
+      "registryDependencies": [],
+      "endpoint": "/r/popover.json",
+      "target": "src/components/Popover.astro"
     },
     {
       "name": "alert",

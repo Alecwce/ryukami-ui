@@ -1,12 +1,12 @@
 ---
-// Sidebar de Navegación Categorizado estilo 8bitcn / shadcn con ScrollSpy activo (20 módulos)
+// Sidebar de Navegación Categorizado estilo 8bitcn / shadcn con ScrollSpy activo (27 módulos)
 ---
 
 <aside class="space-y-4 font-mono text-xs" aria-label="Índice de documentación">
   <div class="tui-window overflow-hidden">
     <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
       <span>INDEX // EXPLORER</span>
-      <span>20 MODS</span>
+      <span>27 MODS</span>
     </div>
 
     <nav
@@ -77,9 +77,18 @@
             <a
               href="#comp-progress"
               data-nav-target="comp-progress"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
+            >
+              &gt; ProgressBar.astro
+            </a>
+          </li>
+          <li>
+            <a
+              href="#comp-avatar"
+              data-nav-target="comp-avatar"
               class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center"
             >
-              <span>&gt; ProgressBar.astro</span>
+              <span>&gt; Avatar &amp; Skeleton</span>
               <span class="bg-scorch-cyan text-black text-[9px] px-1 border border-black">NEW</span>
             </a>
           </li>
@@ -103,12 +112,21 @@
           </li>
           <li>
             <a
-              href="#comp-select"
-              data-nav-target="comp-select"
+              href="#comp-textarea"
+              data-nav-target="comp-textarea"
               class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
             >
-              <span>&gt; Select &amp; Slider</span>
+              <span>&gt; Textarea &amp; Radio</span>
               <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">NEW</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#comp-select"
+              data-nav-target="comp-select"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
+            >
+              &gt; Select &amp; Slider
             </a>
           </li>
           <li>
@@ -117,16 +135,7 @@
               data-nav-target="comp-checkbox"
               class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
             >
-              &gt; Checkbox.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-switch"
-              data-nav-target="comp-switch"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
-            >
-              &gt; Switch.astro
+              &gt; Checkbox &amp; Switch
             </a>
           </li>
         </ul>
@@ -142,19 +151,27 @@
             <a
               href="#comp-tabs"
               data-nav-target="comp-tabs"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
             >
-              <span>&gt; Tabs.astro</span>
-              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">NEW</span>
+              &gt; Tabs.astro
             </a>
           </li>
           <li>
             <a
               href="#comp-accordion"
               data-nav-target="comp-accordion"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+            >
+              &gt; Accordion.astro
+            </a>
+          </li>
+          <li>
+            <a
+              href="#comp-nav-primitives"
+              data-nav-target="comp-nav-primitives"
               class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
             >
-              <span>&gt; Accordion.astro</span>
+              <span>&gt; Breadcrumb &amp; Pager</span>
               <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">NEW</span>
             </a>
           </li>
@@ -171,9 +188,10 @@
             <a
               href="#comp-toast"
               data-nav-target="comp-toast"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
             >
-              &gt; Toast &amp; Modal
+              <span>&gt; Popover, Modal &amp; Toast</span>
+              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">API</span>
             </a>
           </li>
           <li>

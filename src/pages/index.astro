@@ -14,6 +14,13 @@ import Tabs from '../components/Tabs.astro';
 import Accordion from '../components/Accordion.astro';
 import Alert from '../components/Alert.astro';
 import Modal from '../components/Modal.astro';
+import Popover from '../components/Popover.astro';
+import Avatar from '../components/Avatar.astro';
+import Skeleton from '../components/Skeleton.astro';
+import Textarea from '../components/Textarea.astro';
+import RadioGroup from '../components/RadioGroup.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Pagination from '../components/Pagination.astro';
 import TerminalEmulator from '../components/TerminalEmulator.astro';
 import ComponentPreview from '../components/ComponentPreview.astro';
 import SidebarNav from '../components/SidebarNav.astro';
@@ -136,18 +143,51 @@ const alertSnippet = `import Alert from '@/components/Alert.astro';
   Núcleo actualizado exitosamente a Astro 7.4.0 y Tailwind CSS 4.3.3.
 </Alert>`;
 
+const avatarSkeletonSnippet = `import Avatar from '@/components/Avatar.astro';
+import Skeleton from '@/components/Skeleton.astro';
+import Kbd from '@/components/Kbd.astro';
+
+<Avatar name="0xAlex // Architect" role="CORE LEAD" initials="0X" status="ONLINE" variant="crimson" />
+<Skeleton lines={2} label="FETCHING_DRAGON_TELEMETRY" variant="cyan" />
+<Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>`;
+
+const textareaRadioSnippet = `import Textarea from '@/components/Textarea.astro';
+import RadioGroup from '@/components/RadioGroup.astro';
+
+<Textarea label="Payload de Configuración" value="{\\n  \\"node\\": \\"scorch-02\\"\\n}" />
+<RadioGroup
+  label="Modo de Encriptación"
+  name="cipher-mode"
+  value="ed25519"
+  options={[
+    { value: 'ed25519', label: 'Ed25519 Quantum Key', badge: 'DEFAULT' },
+    { value: 'rsa4096', label: 'RSA-4096 Legacy' },
+  ]}
+/>`;
+
+const navPrimitivesSnippet = `import Breadcrumb from '@/components/Breadcrumb.astro';
+import Pagination from '@/components/Pagination.astro';
+
+<Breadcrumb
+  items={[
+    { label: 'ryukami-labs', href: '#hero' },
+    { label: 'scorch-v4.1', href: '#components' },
+    { label: '0xkernel.astro', active: true },
+  ]}
+/>
+<Pagination currentPage={2} totalPages={8} />`;
+
 const modalToastSnippet = `import Modal from '@/components/Modal.astro';
+import Popover from '@/components/Popover.astro';
 import Button from '@/components/Button.astro';
 
-<!-- Disparar Toast Flotante con Audio -->
 <Button variant="crimson" onclick="window.showToast('ALERT_CRITICAL', 'Pulso térmico detectado.', 'crimson')">
   Disparar Toast Carmesí
 </Button>
 
-<!-- Abrir Ventana Modal HTML5 -->
-<Button variant="cyan" onclick="document.getElementById('demo-modal').showModal()">
-  Abrir Consola Modal
-</Button>
+<Popover id="node-popover" triggerLabel="🔍 INSPECCIONAR NODO (POPOVER)" title="0xNODE // TELEMETRY">
+  <p>Popover nativo HTML5 Top-Layer sin JS externo.</p>
+</Popover>
 
 <Modal id="demo-modal" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
   <p>Diagnóstico cuántico completado sin anomalías.</p>
@@ -156,25 +196,25 @@ import Button from '@/components/Button.astro';
 const installAstroSnippet = `# 1. Inicializar tokens CSS (Tailwind v4) y ryukami.json en tu proyecto
 ryukami-ui init --dir ./mi-proyecto-astro
 
-# 2. Listar los 20 componentes disponibles en el registro
+# 2. Listar los 27 componentes disponibles en el registro
 ryukami-ui list
 
 # 3. Instalar componentes específicos (resuelve dependencias automáticamente)
-ryukami-ui add button card progress-bar select slider tabs accordion modal --dir ./mi-proyecto-astro
+ryukami-ui add button card avatar skeleton textarea radio-group breadcrumb pagination popover --dir ./mi-proyecto-astro
 
-# 4. O instalar los 20 componentes del catálogo de una sola vez
+# 4. O instalar los 27 componentes del catálogo de una sola vez
 ryukami-ui add --all --dir ./mi-proyecto-astro`;
 ---
 
 <BaseLayout
   title="🐉 Ryukami-UI // Retro TUI & Neo-Brutalism Component Library"
-  description="Librería completa de 20 componentes retro TUI e instalador CLI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
+  description="Librería completa de 27 componentes retro TUI e instalador CLI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
 >
 
   <!-- 1. HERO SHOWCASE -->
   <section id="hero" class="space-y-6 text-center md:text-left scroll-mt-32">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-      <Badge variant="crimson">v2.2.0 // 20 MODULES + CLI</Badge>
+      <Badge variant="crimson">v2.3.0 // 27 MODULES + CLI</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
       <Badge variant="gold">LIGHTHOUSE 100 / 100 / 100 / 100</Badge>
     </div>
@@ -187,7 +227,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         </h1>
 
         <p class="subtitle-pixel text-xl sm:text-2xl font-bold tracking-widest">
-          20 COMPONENTES RETRO TUI, CONSOLA EN VIVO &amp; CLI PARA LA WEB MODERNA
+          27 COMPONENTES RETRO TUI, CONSOLA EN VIVO &amp; CLI PARA LA WEB MODERNA
         </p>
 
         <p class="text-sm md:text-base leading-relaxed text-slate-800 dark:text-slate-200 max-w-xl">
@@ -196,7 +236,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
         <div class="flex flex-wrap gap-4 pt-2 justify-center md:justify-start">
           <Button variant="crimson" size="lg" href="#components">
-            &gt; EXPLORAR 20 MÓDULOS
+            &gt; EXPLORAR 27 MÓDULOS
           </Button>
           <Button variant="cyan" size="lg" href="#live-shell">
             💻 0xSCORCH_SHELL
@@ -239,7 +279,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <section class="tui-window">
     <div class="tui-header">
       <span>QUICK_START // RYUKAMI-UI CLI INSTALLER</span>
-      <span>20 MODULES // /r/registry.json</span>
+      <span>27 MODULES // /r/registry.json</span>
     </div>
     <div class="p-5 flex flex-col sm:flex-row gap-3 items-center">
       <div class="flex-1 w-full bg-slate-900 text-slate-100 p-3 border-2 border-black dark:border-slate-700 font-mono text-xs sm:text-sm flex items-center justify-between gap-2">
@@ -409,6 +449,44 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       </ComponentPreview>
     </div>
 
+    <!-- E) AVATARES DE OPERADOR, SKELETON BUFFERS Y TECLAS KBD (NUEVO) -->
+    <div id="comp-avatar" class="space-y-4 scroll-mt-32">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Avatares de Operador, Skeletons &amp; Teclas (Avatar.astro &amp; Skeleton.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm opacity-80">
+        Identificadores cuadrados de operador con indicador de estado en vivo, buffers de carga matricial ASCII y teclas mecánicas 3D.
+      </p>
+
+      <ComponentPreview title="OPERATOR_AVATARS_AND_BUFFERS" code={avatarSkeletonSnippet} status="TUI IDENTITY" cli="ryukami-ui add avatar skeleton kbd">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full py-2">
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Avatares de Operador</h4>
+            <div class="flex flex-wrap gap-3">
+              <Avatar name="0xAlex // Lead" role="ROOT ARCHITECT" initials="0X" status="ONLINE" variant="crimson" />
+              <Avatar name="Velgrynd Core" role="AI SENTINEL" initials="VG" status="BUSY" variant="gold" />
+              <Avatar name="Node_02 Relay" role="EDGE DAEMON" initials="N2" status="IDLE" variant="cyan" />
+            </div>
+            <div id="comp-kbd" class="pt-2 flex flex-wrap items-center gap-2 text-xs font-mono scroll-mt-32">
+              <span class="font-bold text-slate-700 dark:text-slate-300">Atajos Kbd:</span>
+              <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+              <span class="mx-1">|</span>
+              <Kbd>Ctrl</Kbd> + <Kbd>D</Kbd>
+              <span class="mx-1">|</span>
+              <Kbd>Esc</Kbd>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Buffers de Carga (Skeleton.astro)</h4>
+            <Skeleton lines={2} label="SYNCING_SCORCH_REGISTRY" variant="crimson" />
+            <Skeleton lines={1} label="DECRYPTING_SSH_HANDSHAKE" variant="cyan" showAscii={false} />
+          </div>
+        </div>
+      </ComponentPreview>
+    </div>
+
   </section>
 
   <!-- 4. SUITE DE FORMULARIOS RETRO -->
@@ -566,6 +644,54 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       </ComponentPreview>
     </div>
 
+    <!-- D) EDITOR TEXTAREA MULTILÍNEA Y RADIO GROUPS TUI (NUEVO) -->
+    <div id="comp-textarea" class="space-y-4 scroll-mt-32">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Buffer Multilínea &amp; Radio Groups (Textarea.astro &amp; RadioGroup.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm opacity-80">
+        Editor de texto de consola con contador de líneas/bytes en vivo y selectores de opción única estilo TUI <code>( • )</code>.
+      </p>
+
+      <ComponentPreview title="TEXTAREA_AND_RADIO_GROUP" code={textareaRadioSnippet} status="UTF-8 BUFFER" cli="ryukami-ui add textarea radio-group">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
+          <Textarea
+            label="Payload de Configuración JSON / YAML"
+            rows={5}
+            value={`{\n  "cluster": "ryukami-scorch-v4",\n  "firewall": "strict-zero-radius",\n  "nodes": ["node_01", "node_02"]\n}`}
+            hint="Edita el payload para ver el contador de líneas y bytes en tiempo real"
+          />
+
+          <RadioGroup
+            label="Protocolo de Cifrado del Túnel"
+            name="scorch-cipher-protocol"
+            value="ed25519"
+            options={[
+              {
+                value: 'ed25519',
+                label: 'ChaCha20-Poly1305 + Ed25519',
+                description: 'Cifrado de baja latencia recomendado para nodos móviles y contenedores.',
+                badge: 'RECOMMENDED',
+              },
+              {
+                value: 'aes256',
+                label: 'AES-256-GCM Hardware Accelerated',
+                description: 'Compatible con instrucciones AES-NI en servidores dedicados.',
+                badge: 'FIPS',
+              },
+              {
+                value: 'kyber',
+                label: 'ML-KEM-1024 Post-Quantum Hybrid',
+                description: 'Protección experimental contra desencriptación cuántica.',
+                badge: 'EXPERIMENTAL',
+              },
+            ]}
+          />
+        </div>
+      </ComponentPreview>
+    </div>
+
   </section>
 
   <!-- 5. NAVEGACIÓN INTERNA, FEEDBACK, ALERTAS, MODALES Y TOASTS -->
@@ -650,6 +776,38 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       </ComponentPreview>
     </div>
 
+    <!-- B.2) BREADCRUMB UNIX Y PAGINACIÓN MECÁNICA (NUEVO) -->
+    <div id="comp-nav-primitives" class="space-y-4 scroll-mt-32">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Rutas Unix &amp; Paginación TUI (Breadcrumb.astro &amp; Pagination.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+        Jerarquía de directorios estilo filesystem Unix (<code>~/ryukami/core</code>) y selector interactivo de páginas de memoria.
+      </p>
+
+      <ComponentPreview title="UNIX_BREADCRUMB_AND_PAGINATION" code={navPrimitivesSnippet} status="FILESYSTEM NAV" cli="ryukami-ui add breadcrumb pagination">
+        <div class="space-y-5 w-full py-2">
+          <div class="space-y-2">
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Ruta de Directorio (Breadcrumb.astro)</h4>
+            <Breadcrumb
+              items={[
+                { label: 'ryukami-labs', href: '#hero' },
+                { label: 'scorch-v4.1', href: '#components' },
+                { label: 'registry', href: '#install-docs' },
+                { label: '0xkernel.astro', active: true },
+              ]}
+            />
+          </div>
+
+          <div class="space-y-2">
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Paginación Interactiva de Bloques (Pagination.astro)</h4>
+            <Pagination currentPage={2} totalPages={6} />
+          </div>
+        </div>
+      </ComponentPreview>
+    </div>
+
     <!-- C) CALLOUTS Y ALERTAS DE SISTEMA -->
     <div id="comp-alert" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
@@ -681,17 +839,17 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       </ComponentPreview>
     </div>
 
-    <!-- D) TOASTS FLOTANTES, MODAL NATIVO Y COMMAND PALETTE -->
+    <!-- D) TOASTS FLOTANTES, POPOVER NATIVO, MODAL Y COMMAND PALETTE -->
     <div id="comp-toast" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
-        <h3 class="font-extrabold text-lg uppercase font-mono">Toasts Flotantes, Modales &amp; Command Palette</h3>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Toasts, Popover HTML5, Modales &amp; Command Palette</h3>
       </div>
       <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-        Notificaciones emergentes con barra de progreso, frecuencia acústica según severidad y diálogos HTML5 nativos con soporte `closedby="any"`.
+        Notificaciones emergentes con barra de progreso, Popovers nativos Top-Layer (`popover="auto"`) y diálogos HTML5 con soporte `closedby="any"`.
       </p>
 
-      <ComponentPreview title="TOASTS_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO" cli="ryukami-ui add modal toast-container command-palette">
+      <ComponentPreview title="TOASTS_POPOVER_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO" cli="ryukami-ui add modal popover toast-container command-palette">
         <div class="space-y-6 w-full py-2">
           <div class="space-y-2">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Disparar Notificaciones Toast con Sonido</h4>
@@ -728,8 +886,8 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
           </div>
 
           <div id="comp-modal" class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2 scroll-mt-32">
-            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Consola Modal HTML5 &amp; Command Palette (Ctrl+K)</h4>
-            <div class="flex flex-wrap gap-3">
+            <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Consola Modal HTML5, Popover Top-Layer &amp; Command Palette (Ctrl+K)</h4>
+            <div class="flex flex-wrap items-center gap-3">
               <Button
                 variant="outline"
                 size="md"
@@ -737,6 +895,16 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
               >
                 🪟 ABRIR VENTANA MODAL TUI
               </Button>
+              <Popover
+                id="scorch-telemetry-popover"
+                triggerLabel="🔍 INSPECCIONAR POPOVER HTML5"
+                title="0xPOPOVER // TOP_LAYER_SPEC"
+                status="ZERO-JS"
+              >
+                <p>
+                  Renderizado en el <strong>Top Layer</strong> nativo del navegador mediante <code>popover="auto"</code>. Pulsa <Kbd>Esc</Kbd> o haz clic fuera para cerrarlo.
+                </p>
+              </Popover>
               <Button
                 variant="crimson"
                 size="md"
@@ -861,10 +1029,10 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
     <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-      Instala cualquiera de los <strong>20 componentes</strong> directamente desde la terminal con el CLI oficial <code>ryukami-ui</code> (estilo <code>shadcn</code> / <code>8bitcn</code>) o consúmelos desde el registro estático <a href="/r/registry.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/registry.json</a>.
+      Instala cualquiera de los <strong>27 componentes</strong> directamente desde la terminal con el CLI oficial <code>ryukami-ui</code> (estilo <code>shadcn</code> / <code>8bitcn</code>) o consúmelos desde el registro estático <a href="/r/registry.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/registry.json</a>.
     </p>
 
-    <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.2" cli="ryukami-ui init">
+    <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.3" cli="ryukami-ui init">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="crimson">PASO 01 // INIT</Badge>
@@ -884,7 +1052,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
           <Badge variant="gold">PASO 03 // REGISTRY</Badge>
           <h3 class="font-extrabold uppercase text-sm">/r/&lt;comp&gt;.json</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Los 20 módulos exponen su propio endpoint JSON estático en <code>public/r/</code> listo para consumirse local o remotamente.
+            Los 27 módulos exponen su propio endpoint JSON estático en <code>public/r/</code> listo para consumirse local o remotamente.
           </p>
         </div>
       </div>

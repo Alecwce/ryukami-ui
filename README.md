@@ -14,7 +14,7 @@
 | **Framework** | [Astro 7.4.0](https://astro.build) | Motor **Vite 8 + Rolldown**, HTML comprimido y **0 KiB de bundles JS externos**. |
 | **Estilos** | [Tailwind CSS 4.3.3](https://tailwindcss.com) | Configuración CSS-first (`@import "tailwindcss";`, `@theme`, `@custom-variant dark`). |
 | **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes. |
-| **CLI & Registry** | **`ryukami-ui` v2.1.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Registro estático JSON en `/public/r/*.json`. |
+| **CLI & Registry** | **`ryukami-ui` v2.3.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Registro estático JSON en `/public/r/*.json` (**27 módulos**). |
 | **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos `.mp3`. |
 | **Auditoría** | **Lighthouse 100/100** | **100** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
 
@@ -31,7 +31,7 @@ ryukami-ui init --dir ./mi-proyecto-astro
 ```
 
 ### 2. Listar todos los Componentes del Registro
-Muestra una tabla TUI en terminal con los **14 módulos** disponibles y sus dependencias:
+Muestra una tabla TUI en terminal con los **27 módulos** disponibles y sus dependencias:
 ```bash
 ryukami-ui list
 ```
@@ -39,12 +39,12 @@ ryukami-ui list
 ### 3. Instalar Componentes Específicos (con resolución de dependencias)
 Copia los componentes `.astro` directamente en `src/components/` (por ejemplo, al pedir `command-palette`, instala automáticamente su dependencia `kbd`):
 ```bash
-ryukami-ui add button badge card modal command-palette --dir ./mi-proyecto-astro
+ryukami-ui add button badge card avatar skeleton textarea radio-group breadcrumb pagination popover modal command-palette --dir ./mi-proyecto-astro
 ```
 
 ### 4. Instalar Todo el Catálogo de una Vez o Inspeccionar un Módulo
 ```bash
-# Instalar los 14 componentes a la vez
+# Instalar los 27 componentes a la vez
 ryukami-ui add --all --dir ./mi-proyecto-astro
 
 # Inspeccionar metadatos y endpoint JSON de un componente
@@ -66,7 +66,7 @@ ryukami-ui add button --registry http://localhost:4321/r
 
 ---
 
-## 🧩 Catálogo Completo (20 Componentes & Herramientas Instalables por CLI)
+## 🧩 Catálogo Completo (27 Componentes & Herramientas Instalables por CLI)
 
 | ID en CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
 | :--- | :--- | :--- | :--- |
@@ -75,13 +75,20 @@ ryukami-ui add button --registry http://localhost:4321/r
 | `card` | `Card.astro` | `01_CORE_UI` | Ventana de consola TUI interactiva con controles `[ - ][ □ ][ × ]`. |
 | `kbd` | `Kbd.astro` | `01_CORE_UI` | Teclas físicas de atajos mecánicos (`[Ctrl] + [K]`). |
 | `progress-bar` | `ProgressBar.astro` | `01_CORE_UI` | Barra de progreso segmentada BIOS con lectura ASCII `[████████░░░░]`. |
+| `avatar` | `Avatar.astro` | `01_CORE_UI` | Identificador cuadrado de operador TUI con indicador de estado (`ONLINE`/`BUSY`/`IDLE`). |
+| `skeleton` | `Skeleton.astro` | `01_CORE_UI` | Bloque de carga de búfer ASCII (`[ ░░░ SYNC ░░░ ]`) con `role="status"`. |
 | `input` | `Input.astro` | `02_FORM_CONTROLS` | Input brutalista con prefijo de terminal (`$`, `tcp://`), hints y error. |
+| `textarea` | `Textarea.astro` | `02_FORM_CONTROLS` | Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes. |
 | `select` | `Select.astro` | `02_FORM_CONTROLS` | Selector desplegable brutalista con prefijo `OPT //` e indicador mecánico. |
 | `slider` | `Slider.astro` | `02_FORM_CONTROLS` | Slider de rango con barra ASCII `[====|----]` en vivo y pulso de audio. |
+| `radio-group` | `RadioGroup.astro` | `02_FORM_CONTROLS` | Selector exclusivo de opciones con indicadores de terminal `( • )` y `(   )`. |
 | `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla cuadrada con marca pixel-art `✕`. |
 | `switch` | `Switch.astro` | `02_FORM_CONTROLS` | Interruptor táctil deslizante (`role="switch"`). |
 | `tabs` | `Tabs.astro` | `03_LAYOUT_AND_MODALS` | Pestañas multipanel TUI con navegación por flechas (`←` / `→`). |
 | `accordion` | `Accordion.astro` | `03_LAYOUT_AND_MODALS` | Acordeón exclusivo nativo con `<details name="...">` HTML5. |
+| `breadcrumb` | `Breadcrumb.astro` | `03_LAYOUT_AND_MODALS` | Ruta de navegación estilo sistema de archivos Unix (`~/ryukami/core/nodes`). |
+| `pagination` | `Pagination.astro` | `03_LAYOUT_AND_MODALS` | Barra de paginación mecánica TUI (`[ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]`). |
+| `popover` | `Popover.astro` | `03_LAYOUT_AND_MODALS` | Globo flotante de telemetría con API nativa `popover="auto"` Top-Layer sin JS. |
 | `alert` | `Alert.astro` | `03_LAYOUT_AND_MODALS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
 | `modal` | `Modal.astro` | `03_LAYOUT_AND_MODALS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
 | `toast-container` | `ToastContainer.astro` | `03_LAYOUT_AND_MODALS` | Notificaciones flotantes con frecuencia acústica por severidad. |

@@ -1,0 +1,88 @@
+---
+export interface RadioOption {
+  value: string;
+  label: string;
+  description?: string;
+  badge?: string;
+}
+
+export interface Props {
+  name: string;
+  label: string;
+  options: RadioOption[];
+  value?: string;
+}
+
+const {
+  name = `scorch-radio-${Math.random().toString(36).substring(2, 7)}`,
+  label,
+  options = [],
+  value,
+} = Astro.props;
+---
+
+<fieldset class="space-y-2 font-mono text-xs w-full" data-scorch-radiogroup>
+  <legend class="font-extrabold uppercase tracking-tight mb-2">
+    {label}
+  </legend>
+
+  <div class="space-y-2">
+    {options.map((opt, idx) => {
+      const isChecked = value ? opt.value === value : idx === 0;
+      return (
+        <label class="group flex items-start justify-between gap-3 p-3 border-2 border-black dark:border-slate-300 bg-white dark:bg-slate-900 shadow-[-3px_3px_0px_0px_var(--shadow-color,#000000)] cursor-pointer transition-transform duration-75 hover:translate-x-[1px] hover:-translate-y-[1px] has-[:checked]:bg-slate-900 has-[:checked]:text-white dark:has-[:checked]:bg-scorch-crimson dark:has-[:checked]:border-white">
+          <div class="flex items-start gap-3">
+            <input
+              type="radio"
+              name={name}
+              value={opt.value}
+              checked={isChecked}
+              class="sr-only peer"
+              onchange="window.playMechanicalClick && window.playMechanicalClick()"
+            />
+            <!-- Indicador de Terminal ( • ) / (   ) -->
+            <span
+              class="font-extrabold text-xs px-1.5 py-0.5 border border-current bg-black/10 peer-checked:bg-black peer-checked:text-scorch-gold select-none shrink-0"
+              aria-hidden="true"
+            >
+              <span class="hidden peer-checked:inline radio-dot-on">( • )</span>
+              <span class="inline peer-checked:hidden radio-dot-off">( &nbsp; )</span>
+            </span>
+
+            <div class="space-y-0.5">
+              <div class="font-extrabold uppercase tracking-tight">{opt.label}</div>
+              {opt.description && (
+                <div class="text-[11px] opacity-80">{opt.description}</div>
+              )}
+            </div>
+          </div>
+
+          {opt.badge && (
+            <span class="bg-black text-scorch-cyan px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold shrink-0">
+              {opt.badge}
+            </span>
+          )}
+        </label>
+      );
+    })}
+  </div>
+</fieldset>
+
+<script>
+  document.querySelectorAll('[data-scorch-radiogroup]').forEach((group) => {
+    const syncIndicators = () => {
+      group.querySelectorAll('label').forEach((lbl) => {
+        const input = lbl.querySelector('input[type="radio"]') as HTMLInputElement | null;
+        const onEl = lbl.querySelector('.radio-dot-on');
+        const offEl = lbl.querySelector('.radio-dot-off');
+        if (!input || !onEl || !offEl) return;
+        onEl.classList.toggle('hidden', !input.checked);
+        onEl.classList.toggle('inline', input.checked);
+        offEl.classList.toggle('hidden', input.checked);
+        offEl.classList.toggle('inline', !input.checked);
+      });
+    };
+    syncIndicators();
+    group.addEventListener('change', syncIndicators);
+  });
+</script>

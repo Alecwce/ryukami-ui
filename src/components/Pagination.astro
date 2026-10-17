@@ -1,0 +1,85 @@
+---
+export interface Props {
+  totalPages?: number;
+  currentPage?: number;
+}
+
+const { totalPages = 5, currentPage = 1 } = Astro.props;
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+<nav
+  aria-label="Paginación de registros"
+  class="inline-flex flex-wrap items-center gap-2 font-mono text-xs"
+  data-scorch-pagination
+>
+  <button
+    type="button"
+    data-page-action="prev"
+    class="btn-brutal bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-1.5 text-xs font-extrabold"
+  >
+    ◄ PREV
+  </button>
+
+  <div class="inline-flex items-center gap-1.5">
+    {pages.map((p) => (
+      <button
+        type="button"
+        data-page-num={p}
+        aria-current={p === currentPage ? 'page' : undefined}
+        class={`btn-brutal w-8 h-8 text-xs font-extrabold ${
+          p === currentPage
+            ? 'bg-scorch-crimson text-white'
+            : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100'
+        }`}
+      >
+        0{p}
+      </button>
+    ))}
+  </div>
+
+  <button
+    type="button"
+    data-page-action="next"
+    class="btn-brutal bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-1.5 text-xs font-extrabold"
+  >
+    NEXT ►
+  </button>
+</nav>
+
+<script>
+  document.querySelectorAll('[data-scorch-pagination]').forEach((nav) => {
+    const pageBtns = Array.from(nav.querySelectorAll('[data-page-num]')) as HTMLButtonElement[];
+    const prevBtn = nav.querySelector('[data-page-action="prev"]');
+    const nextBtn = nav.querySelector('[data-page-action="next"]');
+    if (!pageBtns.length) return;
+
+    let current = 1;
+
+    function setPage(nextPage: number) {
+      current = Math.max(1, Math.min(pageBtns.length, nextPage));
+      pageBtns.forEach((btn) => {
+        const num = Number(btn.getAttribute('data-page-num'));
+        const isActive = num === current;
+        if (isActive) {
+          btn.setAttribute('aria-current', 'page');
+          btn.classList.add('bg-scorch-crimson', 'text-white');
+          btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-900', 'dark:text-slate-100');
+        } else {
+          btn.removeAttribute('aria-current');
+          btn.classList.remove('bg-scorch-crimson', 'text-white');
+          btn.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-900', 'dark:text-slate-100');
+        }
+      });
+    }
+
+    pageBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        setPage(Number(btn.getAttribute('data-page-num')));
+      });
+    });
+
+    if (prevBtn) prevBtn.addEventListener('click', () => setPage(current - 1));
+    if (nextBtn) nextBtn.addEventListener('click', () => setPage(current + 1));
+  });
+</script>

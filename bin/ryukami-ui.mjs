@@ -31,7 +31,7 @@ const C = {
 
 function printBanner() {
   console.log('');
-  console.log(`${C.bgRed}${C.bold} 🐉 RYUKAMI-UI CLI v2.1.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH_DRAGON // VELGRYND EDITION ${C.reset}`);
+  console.log(`${C.bgRed}${C.bold} 🐉 RYUKAMI-UI CLI v2.3.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH_DRAGON // VELGRYND EDITION ${C.reset}`);
   console.log(`${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
 }
 

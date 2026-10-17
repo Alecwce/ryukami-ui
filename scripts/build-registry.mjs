@@ -54,11 +54,35 @@ const ITEMS = [
     registryDependencies: [],
   },
   {
+    name: 'avatar',
+    title: 'Avatar',
+    category: '01_CORE_UI',
+    description: 'Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).',
+    file: 'src/components/Avatar.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'skeleton',
+    title: 'Skeleton',
+    category: '01_CORE_UI',
+    description: 'Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.',
+    file: 'src/components/Skeleton.astro',
+    registryDependencies: [],
+  },
+  {
     name: 'input',
     title: 'Input',
     category: '02_FORM_CONTROLS',
     description: 'Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.',
     file: 'src/components/Input.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'textarea',
+    title: 'Textarea',
+    category: '02_FORM_CONTROLS',
+    description: 'Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.',
+    file: 'src/components/Textarea.astro',
     registryDependencies: [],
   },
   {
@@ -75,6 +99,14 @@ const ITEMS = [
     category: '02_FORM_CONTROLS',
     description: 'Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.',
     file: 'src/components/Slider.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'radio-group',
+    title: 'RadioGroup',
+    category: '02_FORM_CONTROLS',
+    description: 'Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).',
+    file: 'src/components/RadioGroup.astro',
     registryDependencies: [],
   },
   {
@@ -107,6 +139,30 @@ const ITEMS = [
     category: '03_LAYOUT_AND_MODALS',
     description: 'Acordeón exclusivo nativo con <details name="..."> accesible y buscable en página.',
     file: 'src/components/Accordion.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'breadcrumb',
+    title: 'Breadcrumb',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).',
+    file: 'src/components/Breadcrumb.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'pagination',
+    title: 'Pagination',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).',
+    file: 'src/components/Pagination.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'popover',
+    title: 'Popover (HTML5 Popover API)',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Globo flotante de telemetría con API nativa popover="auto" sin dependencias JS.',
+    file: 'src/components/Popover.astro',
     registryDependencies: [],
   },
   {
@@ -177,7 +233,6 @@ const ITEMS = [
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
-// 1. Generar JSON individual por cada componente
 const registryIndex = [];
 
 for (const item of ITEMS) {
@@ -218,7 +273,6 @@ for (const item of ITEMS) {
   });
 }
 
-// 2. Generar tokens base (styles.json) para `ryukami-ui init`
 const globalCssPath = path.join(ROOT_DIR, 'src/styles/global.css');
 const globalCssContent = fs.readFileSync(globalCssPath, 'utf-8');
 fs.writeFileSync(
@@ -242,10 +296,9 @@ fs.writeFileSync(
   'utf-8'
 );
 
-// 3. Generar índice maestro public/r/registry.json
 const masterRegistry = {
   name: 'ryukami-ui',
-  version: '2.2.0',
+  version: '2.3.0',
   edition: 'Scorch Dragon // Velgrynd Tribute Edition',
   stack: 'Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0',
   updatedAt: new Date().toISOString(),

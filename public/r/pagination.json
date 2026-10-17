@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "pagination",
+  "title": "Pagination",
+  "type": "registry:ui",
+  "category": "03_LAYOUT_AND_MODALS",
+  "description": "Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/Pagination.astro",
+      "type": "registry:component",
+      "content": "---\nexport interface Props {\n  totalPages?: number;\n  currentPage?: number;\n}\n\nconst { totalPages = 5, currentPage = 1 } = Astro.props;\nconst pages = Array.from({ length: totalPages }, (_, i) => i + 1);\n---\n\n<nav\n  aria-label=\"Paginación de registros\"\n  class=\"inline-flex flex-wrap items-center gap-2 font-mono text-xs\"\n  data-scorch-pagination\n>\n  <button\n    type=\"button\"\n    data-page-action=\"prev\"\n    class=\"btn-brutal bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-1.5 text-xs font-extrabold\"\n  >\n    ◄ PREV\n  </button>\n\n  <div class=\"inline-flex items-center gap-1.5\">\n    {pages.map((p) => (\n      <button\n        type=\"button\"\n        data-page-num={p}\n        aria-current={p === currentPage ? 'page' : undefined}\n        class={`btn-brutal w-8 h-8 text-xs font-extrabold ${\n          p === currentPage\n            ? 'bg-scorch-crimson text-white'\n            : 'bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100'\n        }`}\n      >\n        0{p}\n      </button>\n    ))}\n  </div>\n\n  <button\n    type=\"button\"\n    data-page-action=\"next\"\n    class=\"btn-brutal bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 px-3 py-1.5 text-xs font-extrabold\"\n  >\n    NEXT ►\n  </button>\n</nav>\n\n<script>\n  document.querySelectorAll('[data-scorch-pagination]').forEach((nav) => {\n    const pageBtns = Array.from(nav.querySelectorAll('[data-page-num]')) as HTMLButtonElement[];\n    const prevBtn = nav.querySelector('[data-page-action=\"prev\"]');\n    const nextBtn = nav.querySelector('[data-page-action=\"next\"]');\n    if (!pageBtns.length) return;\n\n    let current = 1;\n\n    function setPage(nextPage: number) {\n      current = Math.max(1, Math.min(pageBtns.length, nextPage));\n      pageBtns.forEach((btn) => {\n        const num = Number(btn.getAttribute('data-page-num'));\n        const isActive = num === current;\n        if (isActive) {\n          btn.setAttribute('aria-current', 'page');\n          btn.classList.add('bg-scorch-crimson', 'text-white');\n          btn.classList.remove('bg-white', 'dark:bg-slate-900', 'text-slate-900', 'dark:text-slate-100');\n        } else {\n          btn.removeAttribute('aria-current');\n          btn.classList.remove('bg-scorch-crimson', 'text-white');\n          btn.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-900', 'dark:text-slate-100');\n        }\n      });\n    }\n\n    pageBtns.forEach((btn) => {\n      btn.addEventListener('click', () => {\n        setPage(Number(btn.getAttribute('data-page-num')));\n      });\n    });\n\n    if (prevBtn) prevBtn.addEventListener('click', () => setPage(current - 1));\n    if (nextBtn) nextBtn.addEventListener('click', () => setPage(current + 1));\n  });\n</script>\n"
+    }
+  ]
+}

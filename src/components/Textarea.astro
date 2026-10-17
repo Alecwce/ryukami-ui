@@ -1,0 +1,72 @@
+---
+export interface Props {
+  label: string;
+  placeholder?: string;
+  value?: string;
+  rows?: number;
+  maxLength?: number;
+  hint?: string;
+  name?: string;
+}
+
+const {
+  label,
+  placeholder = '// Ingresa payload de configuración o script...',
+  value = '',
+  rows = 4,
+  maxLength = 512,
+  hint,
+  name,
+} = Astro.props;
+
+const areaId = `scorch-textarea-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div class="space-y-1.5 font-mono text-xs w-full" data-scorch-textarea>
+  <div class="flex justify-between items-center gap-2">
+    <label for={areaId} class="font-extrabold uppercase tracking-tight">
+      {label}
+    </label>
+    <span class="bg-black text-scorch-gold px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold" data-byte-counter>
+      {value.length} / {maxLength} BYTES
+    </span>
+  </div>
+
+  <div class="border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] overflow-hidden">
+    <div class="px-3 py-1 bg-slate-100 dark:bg-slate-950 border-b-2 border-black dark:border-slate-700 flex justify-between items-center text-[10px] font-bold text-slate-700 dark:text-slate-300">
+      <span>BUFFER // UTF-8</span>
+      <span data-line-counter>LINES: {value ? value.split('\n').length : 1}</span>
+    </div>
+    <textarea
+      id={areaId}
+      name={name}
+      rows={rows}
+      maxlength={maxLength}
+      placeholder={placeholder}
+      class="w-full p-3 bg-transparent font-mono text-xs text-slate-900 dark:text-slate-100 outline-none resize-y placeholder:text-slate-500"
+    >{value}</textarea>
+  </div>
+
+  {hint && (
+    <p class="text-[11px] text-slate-700 dark:text-slate-300">
+      &gt; {hint}
+    </p>
+  )}
+</div>
+
+<script>
+  document.querySelectorAll('[data-scorch-textarea]').forEach((root) => {
+    const area = root.querySelector('textarea') as HTMLTextAreaElement | null;
+    const byteCounter = root.querySelector('[data-byte-counter]');
+    const lineCounter = root.querySelector('[data-line-counter]');
+    if (!area || !byteCounter || !lineCounter) return;
+
+    const max = area.getAttribute('maxlength') || '512';
+    area.addEventListener('input', () => {
+      const len = area.value.length;
+      const lines = area.value.split('\n').length;
+      byteCounter.textContent = `${len} / ${max} BYTES`;
+      lineCounter.textContent = `LINES: ${lines}`;
+    });
+  });
+</script>
