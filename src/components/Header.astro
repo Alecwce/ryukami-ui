@@ -5,23 +5,34 @@ import Kbd from './Kbd.astro';
 
 <header class="tui-window sticky top-4 z-40 mb-10">
   <div class="tui-header">
-    <span class="flex items-center gap-2">
-      <span class="inline-block w-2.5 h-2.5 bg-scorch-cyan border border-black"></span>
-      0xRYUKAMI_UI // SCORCH_OS v4.1.0
+    <span class="flex items-center gap-2 min-w-0">
+      <span class="inline-block w-2.5 h-2.5 shrink-0 bg-scorch-cyan border border-black"></span>
+      <span class="truncate">0xRYUKAMI_UI // SCORCH_OS v4.1.0</span>
     </span>
-    <div class="flex items-center gap-3">
-      <span class="hidden sm:inline font-mono text-xs">PID: 9021 · MEM: 124MB</span>
-      <div class="flex gap-1 text-xs select-none" aria-hidden="true">
-        <span class="px-1 border border-current font-bold">[ _ ]</span>
-        <span class="px-1 border border-current font-bold">[ □ ]</span>
-        <span class="px-1 border border-current font-bold">[ × ]</span>
+    <div class="flex items-center gap-3 shrink-0">
+      <span class="hidden sm:inline font-mono text-xs leading-none">PID: 9021 · MEM: 124MB</span>
+      <div class="inline-flex items-center gap-1 select-none" aria-hidden="true">
+        <!-- Minimizar (-) -->
+        <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-black/25">
+          <span class="w-2.5 h-0.5 bg-current block"></span>
+        </span>
+        <!-- Maximizar (□) -->
+        <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-black/25">
+          <span class="w-2.5 h-2.5 border-[1.5px] border-current block"></span>
+        </span>
+        <!-- Cerrar (×) -->
+        <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-scorch-crimson text-white">
+          <svg class="w-2.5 h-2.5 stroke-current stroke-[2.2]" viewBox="0 0 10 10" fill="none">
+            <path d="M1.5 1.5L8.5 8.5M8.5 1.5L1.5 8.5" stroke-linecap="square" />
+          </svg>
+        </span>
       </div>
     </div>
   </div>
 
   <div class="p-4 flex flex-wrap justify-between items-center gap-4 bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
     <div class="flex items-center gap-3">
-      <a href="/" class="flex items-center gap-2">
+      <a href="#hero" class="flex items-center gap-2">
         <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider">
           RYUKAMI // UI
         </span>

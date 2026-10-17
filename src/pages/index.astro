@@ -212,7 +212,7 @@ export default defineConfig({
     <div class="lg:col-span-9 space-y-16 min-w-0">
 
   <!-- 3. COMPONENT CATALOG CON PESTAÑAS [PREVIEW | CODE] (ESTILO 8BITCN) -->
-  <section id="components" class="space-y-12">
+  <section id="components" class="space-y-12 scroll-mt-32">
     
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 01_CATÁLOGO_DE_COMPONENTES</h2>
@@ -220,7 +220,7 @@ export default defineConfig({
     </div>
 
     <!-- A) BOTONES MECÁNICOS -->
-    <div class="space-y-4">
+    <div id="comp-button" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Botones Mecánicos (Button.astro)</h3>
@@ -241,7 +241,7 @@ export default defineConfig({
     </div>
 
     <!-- B) BADGES Y PASTILLAS TUI -->
-    <div class="space-y-4">
+    <div id="comp-badge" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Badges y Pastillas (Badge.astro)</h3>
@@ -262,13 +262,13 @@ export default defineConfig({
     </div>
 
     <!-- C) VENTANAS TUI CON CONTROLES RETRO -->
-    <div class="space-y-4">
+    <div id="comp-card" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Ventanas de Consola TUI (Card.astro)</h3>
       </div>
       <p class="text-xs sm:text-sm opacity-80">
-        Contenedores de información emulando ventanas de emulador de terminal retro con botones `[ _ ][ □ ][ × ]`.
+        Contenedores de información emulando ventanas de emulador de terminal retro con botones geométricos `[ - ][ □ ][ × ]`.
       </p>
 
       <ComponentPreview title="TUI_WINDOW_CONSOLE" code={cardSnippet} status="ONLINE">
@@ -303,14 +303,14 @@ export default defineConfig({
   </section>
 
   <!-- 4. SUITE DE FORMULARIOS RETRO (NUEVO EN FASE 1) -->
-  <section id="forms" class="space-y-12">
+  <section id="forms" class="space-y-12 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 02_SUITE_DE_FORMULARIOS</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
 
     <!-- A) CAMPOS DE TEXTO (INPUT) -->
-    <div class="space-y-4">
+    <div id="comp-input" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Campos de Entrada (Input.astro)</h3>
@@ -349,7 +349,7 @@ export default defineConfig({
     </div>
 
     <!-- B) CHECKBOXES Y SWITCHES -->
-    <div class="space-y-4">
+    <div id="comp-checkbox" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Interruptores y Casillas (Switch &amp; Checkbox)</h3>
@@ -380,7 +380,7 @@ export default defineConfig({
             </div>
           </div>
 
-          <div class="space-y-4">
+          <div id="comp-switch" class="space-y-4 scroll-mt-32">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Switches Deslizantes</h4>
             <div class="space-y-4">
               <div>
@@ -401,14 +401,14 @@ export default defineConfig({
   </section>
 
   <!-- 5. FEEDBACK, ALERTAS, MODALES Y TOASTS (FASE 1 + FASE 2) -->
-  <section id="alerts" class="space-y-12">
+  <section id="alerts" class="space-y-12 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 03_FEEDBACK_MODALES_Y_TOASTS</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
 
     <!-- A) CALLOUTS Y ALERTAS DE SISTEMA -->
-    <div class="space-y-4">
+    <div id="comp-alert" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Alertas y Callouts (Alert.astro)</h3>
@@ -439,7 +439,7 @@ export default defineConfig({
     </div>
 
     <!-- B) TOASTS FLOTANTES, MODAL NATIVO Y COMMAND PALETTE (FASE 2) -->
-    <div class="space-y-4">
+    <div id="comp-toast" class="space-y-4 scroll-mt-32">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Toasts Flotantes, Modales &amp; Command Palette (Fase 2)</h3>
@@ -484,7 +484,7 @@ export default defineConfig({
             </div>
           </div>
 
-          <div class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2">
+          <div id="comp-modal" class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2 scroll-mt-32">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Consola Modal HTML5 &amp; Command Palette (Ctrl+K)</h4>
             <div class="flex flex-wrap gap-3">
               <Button
@@ -528,7 +528,7 @@ export default defineConfig({
   </section>
 
   <!-- 6. TABLA DE DATOS TUI -->
-  <section id="tables" class="space-y-4">
+  <section id="tables" class="space-y-4 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 04_REGISTRO_TUI_ASCII</h2>
       <div class="h-0.5 bg-current flex-1"></div>
@@ -573,7 +573,7 @@ export default defineConfig({
   </section>
 
   <!-- 7. THEME STUDIO EN VIVO (FASE 3) -->
-  <section id="theme-studio" class="space-y-4">
+  <section id="theme-studio" class="space-y-4 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 05_THEME_STUDIO_EN_VIVO</h2>
       <div class="h-0.5 bg-current flex-1"></div>
@@ -586,7 +586,7 @@ export default defineConfig({
   </section>
 
   <!-- 8. GENERADOR DE ARTE ASCII SCORCH (FASE 3) -->
-  <section id="ascii-forge" class="space-y-4">
+  <section id="ascii-forge" class="space-y-4 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 06_SCORCH_ASCII_FORGE</h2>
       <div class="h-0.5 bg-current flex-1"></div>
@@ -599,7 +599,7 @@ export default defineConfig({
   </section>
 
   <!-- 9. GUÍA DE INSTALACIÓN Y ARQUITECTURA (FASE 3) -->
-  <section id="install-docs" class="space-y-4">
+  <section id="install-docs" class="space-y-4 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_GUIA_DE_INSTALACION</h2>
       <div class="h-0.5 bg-current flex-1"></div>
@@ -636,7 +636,7 @@ export default defineConfig({
   </section>
 
   <!-- 10. ATAJOS DE TECLADO KBD -->
-  <section id="shortcuts" class="space-y-4 pb-8">
+  <section id="shortcuts" class="space-y-4 pb-8 scroll-mt-32">
     <Card title="KEYBOARD_SHORTCUTS" status="ACCESSIBILITY">
       <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
         <div class="flex items-center gap-1.5">

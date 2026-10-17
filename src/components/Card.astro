@@ -16,17 +16,32 @@ const {
 
 <div class={`tui-window ${className}`}>
   <div class="tui-header">
-    <span class="flex items-center gap-2">
-      <span class="inline-block w-2 h-2 bg-scorch-cyan border border-black"></span>
-      {title}
+    <span class="flex items-center gap-2 min-w-0">
+      <span class="inline-block w-2 h-2 shrink-0 bg-scorch-cyan border border-black"></span>
+      <span class="truncate">{title}</span>
     </span>
-    <div class="flex items-center gap-3">
-      {status && <span class="bg-black text-scorch-gold px-1.5 py-0.5 border border-slate-700 font-bold text-[11px]">{status}</span>}
+    <div class="flex items-center gap-2.5 shrink-0">
+      {status && (
+        <span class="inline-flex items-center justify-center bg-black text-scorch-gold px-1.5 h-5 border border-slate-700 font-bold text-[10px] leading-none">
+          {status}
+        </span>
+      )}
       {controls && (
-        <div class="flex gap-1 text-xs select-none" aria-hidden="true">
-          <span class="px-1 border border-current font-bold">[ _ ]</span>
-          <span class="px-1 border border-current font-bold">[ □ ]</span>
-          <span class="px-1 border border-current font-bold">[ × ]</span>
+        <div class="inline-flex items-center gap-1 select-none" aria-hidden="true">
+          <!-- Minimizar (-) -->
+          <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-black/25">
+            <span class="w-2.5 h-0.5 bg-current block"></span>
+          </span>
+          <!-- Maximizar (□) -->
+          <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-black/25">
+            <span class="w-2.5 h-2.5 border-[1.5px] border-current block"></span>
+          </span>
+          <!-- Cerrar (×) -->
+          <span class="w-5 h-5 inline-flex items-center justify-center border border-current bg-scorch-crimson text-white">
+            <svg class="w-2.5 h-2.5 stroke-current stroke-[2.2]" viewBox="0 0 10 10" fill="none">
+              <path d="M1.5 1.5L8.5 8.5M8.5 1.5L1.5 8.5" stroke-linecap="square" />
+            </svg>
+          </span>
         </div>
       )}
     </div>
