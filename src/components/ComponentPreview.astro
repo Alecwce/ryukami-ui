@@ -1,0 +1,127 @@
+---
+interface Props {
+  title: string;
+  code: string;
+  status?: string;
+}
+
+const { title, code, status = "ASCII READY" } = Astro.props;
+const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div class="tui-window overflow-hidden" id={uniqueId}>
+  <!-- Header con Tabs y Controles -->
+  <div class="tui-header flex flex-wrap gap-2 justify-between items-center bg-slate-900 text-white">
+    <div class="flex items-center gap-3">
+      <span class="text-scorch-cyan font-extrabold">&gt; {title}</span>
+      <span class="text-[10px] opacity-70 border border-slate-700 px-1.5 py-0.5">{status}</span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Tabs Selector -->
+      <div class="flex bg-black p-0.5 border border-slate-700 text-xs">
+        <button
+          type="button"
+          class="tab-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black transition-all"
+          data-tab="preview"
+        >
+          PREVIEW
+        </button>
+        <button
+          type="button"
+          class="tab-btn px-2.5 py-1 font-bold text-slate-400 hover:text-white transition-all"
+          data-tab="code"
+        >
+          CODE
+        </button>
+      </div>
+
+      <!-- Copy Button -->
+      <button
+        type="button"
+        class="copy-btn btn-brutal bg-scorch-gold text-black text-xs px-2.5 py-1 font-extrabold flex items-center gap-1.5"
+        data-code={code}
+      >
+        <span class="copy-icon">📋</span>
+        <span class="copy-text">COPIAR</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Vista Previa Container -->
+  <div class="preview-content p-6 bg-canvas-surface dark:bg-canvas-dark-surface min-h-[120px] flex items-center justify-center">
+    <div class="w-full">
+      <slot />
+    </div>
+  </div>
+
+  <!-- Vista Código Container (Oculto por defecto) -->
+  <div class="code-content hidden p-4 bg-slate-950 text-slate-100 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
+    <pre class="whitespace-pre"><code>{code}</code></pre>
+  </div>
+</div>
+
+<script>
+  // Inicializar todos los ComponentPreview
+  document.querySelectorAll('.tui-window').forEach((container) => {
+    const tabBtns = container.querySelectorAll('.tab-btn');
+    const previewContent = container.querySelector('.preview-content');
+    const codeContent = container.querySelector('.code-content');
+    const copyBtn = container.querySelector('.copy-btn');
+
+    if (!tabBtns.length || !previewContent || !codeContent) return;
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if ((window as any).playMechanicalClick) (window as any).playMechanicalClick();
+        const targetTab = btn.getAttribute('data-tab');
+
+        tabBtns.forEach((b) => {
+          b.classList.remove('active', 'bg-scorch-crimson', 'text-white', 'border', 'border-black');
+          b.classList.add('text-slate-400');
+        });
+
+        btn.classList.add('active', 'bg-scorch-crimson', 'text-white', 'border', 'border-black');
+        btn.classList.remove('text-slate-400');
+
+        if (targetTab === 'preview') {
+          previewContent.classList.remove('hidden');
+          codeContent.classList.add('hidden');
+        } else {
+          previewContent.classList.add('hidden');
+          codeContent.classList.remove('hidden');
+        }
+      });
+    });
+
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const textToCopy = copyBtn.getAttribute('data-code');
+        if (!textToCopy) return;
+
+        try {
+          await navigator.clipboard.writeText(textToCopy);
+          if ((window as any).playTerminalBeep) (window as any).playTerminalBeep(980, 0.08);
+
+          const copyText = copyBtn.querySelector('.copy-text');
+          const copyIcon = copyBtn.querySelector('.copy-icon');
+
+          if (copyText && copyIcon) {
+            const originalText = copyText.textContent;
+            copyText.textContent = '¡COPIADO!';
+            copyIcon.textContent = '✓';
+            copyBtn.classList.add('bg-emerald-400');
+
+            setTimeout(() => {
+              copyText.textContent = originalText;
+              copyIcon.textContent = '📋';
+              copyBtn.classList.remove('bg-emerald-400');
+            }, 2000);
+          }
+        } catch (err) {
+          console.error('Error al copiar:', err);
+        }
+      });
+    }
+  });
+</script>

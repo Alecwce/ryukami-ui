@@ -1,0 +1,59 @@
+---
+interface Props {
+  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';
+  title?: string;
+}
+
+const {
+  variant = 'cyan',
+  title,
+} = Astro.props;
+
+const styles = {
+  crimson: {
+    border: 'border-scorch-crimson',
+    tagBg: 'bg-scorch-crimson text-white',
+    icon: '⚡',
+    label: 'CRITICAL // ALERT',
+    accentText: 'text-scorch-crimson',
+  },
+  cyan: {
+    border: 'border-scorch-cyan',
+    tagBg: 'bg-scorch-cyan text-black',
+    icon: '◆',
+    label: 'INFO // SYSTEM',
+    accentText: 'text-scorch-cyan',
+  },
+  gold: {
+    border: 'border-scorch-gold',
+    tagBg: 'bg-scorch-gold text-black',
+    icon: '▲',
+    label: 'NOTICE // ADVISORY',
+    accentText: 'text-scorch-gold-text dark:text-scorch-gold',
+  },
+  emerald: {
+    border: 'border-emerald-500',
+    tagBg: 'bg-emerald-500 text-black',
+    icon: '✓',
+    label: 'OK // NOMINAL',
+    accentText: 'text-emerald-500',
+  },
+}[variant];
+---
+
+<div class={`border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none space-y-2 font-mono text-xs`}>
+  <div class="flex items-center gap-2">
+    <span class={`px-2 py-0.5 text-[10px] font-extrabold uppercase border border-black ${styles.tagBg}`}>
+      {styles.icon} {styles.label}
+    </span>
+    {title && (
+      <span class="font-extrabold text-sm uppercase tracking-wider">
+        {title}
+      </span>
+    )}
+  </div>
+
+  <div class="leading-relaxed opacity-90 pl-1 text-xs sm:text-sm">
+    <slot />
+  </div>
+</div>
