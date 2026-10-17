@@ -1,0 +1,67 @@
+---
+export interface AccordionItem {
+  id?: string;
+  title: string;
+  badge?: string;
+  content: string;
+  open?: boolean;
+}
+
+export interface Props {
+  name?: string;
+  items: AccordionItem[];
+}
+
+const {
+  name = `scorch-acc-${Math.random().toString(36).substring(2, 7)}`,
+  items = [],
+} = Astro.props;
+---
+
+<div class="space-y-3 font-mono text-xs w-full" data-scorch-accordion>
+  {items.map((item, idx) => (
+    <details
+      name={name}
+      open={item.open}
+      class="group tui-window overflow-hidden bg-white dark:bg-slate-900"
+    >
+      <summary
+        class="list-none cursor-pointer select-none px-4 py-3 bg-slate-100 dark:bg-slate-950 hover:bg-scorch-crimson hover:text-white dark:hover:bg-scorch-crimson flex items-center justify-between gap-3 font-extrabold uppercase border-b-0 group-open:border-b-2 border-black dark:border-slate-700 group-open:bg-black group-open:text-white dark:group-open:bg-scorch-crimson"
+      >
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="bg-scorch-crimson text-white group-open:bg-scorch-gold group-open:text-black px-1.5 py-0.5 text-[10px] border border-black shrink-0">
+            0{idx + 1}
+          </span>
+          <span class="truncate">{item.title}</span>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          {item.badge && (
+            <span class="hidden sm:inline-block bg-black text-scorch-cyan px-1.5 py-0.5 text-[10px] border border-slate-700">
+              {item.badge}
+            </span>
+          )}
+          <span
+            class="w-5 h-5 inline-flex items-center justify-center border border-current bg-black/20 font-extrabold text-xs leading-none"
+            aria-hidden="true"
+          >
+            <span class="group-open:hidden">+</span>
+            <span class="hidden group-open:inline">−</span>
+          </span>
+        </div>
+      </summary>
+
+      <div class="p-4 text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900">
+        <p>{item.content}</p>
+      </div>
+    </details>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('[data-scorch-accordion] summary').forEach((summary) => {
+    summary.addEventListener('click', () => {
+      if ((window as any).playMechanicalClick) (window as any).playMechanicalClick();
+    });
+  });
+</script>

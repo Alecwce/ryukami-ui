@@ -3,7 +3,7 @@
   "name": "toast-container",
   "title": "ToastContainer",
   "type": "registry:ui",
-  "category": "03_FEEDBACK_OVERLAYS",
+  "category": "03_LAYOUT_AND_MODALS",
   "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
   "registryDependencies": [],
   "files": [

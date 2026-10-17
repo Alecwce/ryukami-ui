@@ -3,7 +3,7 @@
   "name": "alert",
   "title": "Alert",
   "type": "registry:ui",
-  "category": "03_FEEDBACK_OVERLAYS",
+  "category": "03_LAYOUT_AND_MODALS",
   "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
   "registryDependencies": [],
   "files": [

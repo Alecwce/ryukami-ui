@@ -1,29 +1,29 @@
 ---
-// Sidebar de Navegación Categorizado estilo 8bitcn / shadcn con ScrollSpy activo
+// Sidebar de Navegación Categorizado estilo 8bitcn / shadcn con ScrollSpy activo (20 módulos)
 ---
 
 <aside class="space-y-4 font-mono text-xs" aria-label="Índice de documentación">
   <div class="tui-window overflow-hidden">
     <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
       <span>INDEX // EXPLORER</span>
-      <span>14 MODS</span>
+      <span>20 MODS</span>
     </div>
 
     <nav
       id="scorch-sidebar-nav"
-      class="p-3.5 space-y-5 bg-white dark:bg-slate-900 max-h-[calc(100vh-10rem)] overflow-y-auto"
+      class="p-3.5 space-y-4 bg-white dark:bg-slate-900 max-h-[calc(100vh-9rem)] overflow-y-auto"
     >
       <!-- Grupo 1: Inicio -->
-      <div class="space-y-1.5">
+      <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson">
           // 00_GETTING_STARTED
         </div>
-        <ul class="space-y-1 pl-1">
+        <ul class="space-y-0.5 pl-1">
           <li>
             <a
               href="#hero"
               data-nav-target="hero"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
             >
               &gt; Visión General
             </a>
@@ -32,25 +32,25 @@
             <a
               href="#install-docs"
               data-nav-target="install-docs"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
             >
-              &gt; Instalación &amp; Setup
+              &gt; CLI &amp; Instalación
             </a>
           </li>
         </ul>
       </div>
 
       <!-- Grupo 2: Componentes Base -->
-      <div class="space-y-1.5">
+      <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-sky-700 dark:text-scorch-cyan">
           // 01_CORE_UI
         </div>
-        <ul class="space-y-1 pl-1">
+        <ul class="space-y-0.5 pl-1">
           <li>
             <a
               href="#comp-button"
               data-nav-target="comp-button"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
             >
               &gt; Button.astro
             </a>
@@ -59,7 +59,7 @@
             <a
               href="#comp-badge"
               data-nav-target="comp-badge"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
             >
               &gt; Badge.astro
             </a>
@@ -68,34 +68,54 @@
             <a
               href="#comp-card"
               data-nav-target="comp-card"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
             >
               &gt; Card.astro (TUI)
+            </a>
+          </li>
+          <li>
+            <a
+              href="#comp-progress"
+              data-nav-target="comp-progress"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center"
+            >
+              <span>&gt; ProgressBar.astro</span>
+              <span class="bg-scorch-cyan text-black text-[9px] px-1 border border-black">NEW</span>
             </a>
           </li>
         </ul>
       </div>
 
       <!-- Grupo 3: Formularios -->
-      <div class="space-y-1.5">
+      <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-gold-text dark:text-scorch-gold">
           // 02_FORM_CONTROLS
         </div>
-        <ul class="space-y-1 pl-1">
+        <ul class="space-y-0.5 pl-1">
           <li>
             <a
               href="#comp-input"
               data-nav-target="comp-input"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
             >
               &gt; Input.astro
             </a>
           </li>
           <li>
             <a
+              href="#comp-select"
+              data-nav-target="comp-select"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
+            >
+              <span>&gt; Select &amp; Slider</span>
+              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">NEW</span>
+            </a>
+          </li>
+          <li>
+            <a
               href="#comp-checkbox"
               data-nav-target="comp-checkbox"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
             >
               &gt; Checkbox.astro
             </a>
@@ -104,7 +124,7 @@
             <a
               href="#comp-switch"
               data-nav-target="comp-switch"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
             >
               &gt; Switch.astro
             </a>
@@ -112,17 +132,37 @@
         </ul>
       </div>
 
-      <!-- Grupo 4: Feedback & Modales -->
-      <div class="space-y-1.5">
+      <!-- Grupo 4: Navegación, Feedback & Modales -->
+      <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson">
-          // 03_FEEDBACK_OVERLAYS
+          // 03_LAYOUT_AND_MODALS
         </div>
-        <ul class="space-y-1 pl-1">
+        <ul class="space-y-0.5 pl-1">
+          <li>
+            <a
+              href="#comp-tabs"
+              data-nav-target="comp-tabs"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
+            >
+              <span>&gt; Tabs.astro</span>
+              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">NEW</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#comp-accordion"
+              data-nav-target="comp-accordion"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
+            >
+              <span>&gt; Accordion.astro</span>
+              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">NEW</span>
+            </a>
+          </li>
           <li>
             <a
               href="#comp-alert"
               data-nav-target="comp-alert"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
             >
               &gt; Alert.astro
             </a>
@@ -131,25 +171,16 @@
             <a
               href="#comp-toast"
               data-nav-target="comp-toast"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
             >
-              &gt; ToastContainer.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-modal"
-              data-nav-target="comp-modal"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; Modal.astro (Dialog)
+              &gt; Toast &amp; Modal
             </a>
           </li>
           <li>
             <button
               type="button"
               onclick="window.openPalette && window.openPalette()"
-              class="w-full text-left px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center cursor-pointer"
+              class="w-full text-left px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center cursor-pointer"
             >
               <span>&gt; CommandPalette</span>
               <span class="text-[9px] border border-current px-1">⌘K</span>
@@ -159,16 +190,26 @@
       </div>
 
       <!-- Grupo 5: Datos & Herramientas -->
-      <div class="space-y-1.5">
+      <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-          // 04_SCORCH_STUDIO
+          // 04_SCORCH_LABS
         </div>
-        <ul class="space-y-1 pl-1">
+        <ul class="space-y-0.5 pl-1">
+          <li>
+            <a
+              href="#live-shell"
+              data-nav-target="live-shell"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-emerald-500 hover:text-black font-bold flex justify-between items-center"
+            >
+              <span>&gt; 0xSCORCH_SHELL</span>
+              <span class="bg-emerald-400 text-black text-[9px] px-1 border border-black">TTY</span>
+            </a>
+          </li>
           <li>
             <a
               href="#theme-studio"
               data-nav-target="theme-studio"
-              class="sidebar-link px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
             >
               <span>&gt; Theme Studio</span>
               <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">LIVE</span>
@@ -178,17 +219,17 @@
             <a
               href="#ascii-forge"
               data-nav-target="ascii-forge"
-              class="sidebar-link px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
+              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
             >
               <span>&gt; ASCII Forge</span>
-              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">NEW</span>
+              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">8BIT</span>
             </a>
           </li>
           <li>
             <a
               href="#tables"
               data-nav-target="tables"
-              class="sidebar-link block px-2 py-1.5 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
+              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
             >
               &gt; Table &amp; Kbd
             </a>
@@ -220,7 +261,6 @@
       });
     }
 
-    // Navegación precisa con sonido mecánico y compensación de cabecera fija
     links.forEach((link) => {
       link.addEventListener('click', (e) => {
         const targetId = link.getAttribute('data-nav-target');
@@ -240,7 +280,6 @@
           behavior: 'smooth',
         });
 
-        // Destello táctico breve sobre el bloque destino
         targetEl.classList.add('ring-2', 'ring-scorch-crimson', 'ring-offset-4');
         setTimeout(() => {
           targetEl.classList.remove('ring-2', 'ring-scorch-crimson', 'ring-offset-4');
@@ -248,7 +287,6 @@
       });
     });
 
-    // ScrollSpy automático mientras el usuario baja por la página
     const sections = targetIds.map((id) => document.getElementById(id)).filter(Boolean);
     if ('IntersectionObserver' in window && sections.length > 0) {
       const observer = new IntersectionObserver(
@@ -269,7 +307,6 @@
       sections.forEach((sec) => observer.observe(sec));
     }
 
-    // Activar el primero por defecto o el hash actual
     const initialHash = window.location.hash ? window.location.hash.slice(1) : 'hero';
     setActiveLink(targetIds.includes(initialHash) ? initialHash : 'hero');
   })();

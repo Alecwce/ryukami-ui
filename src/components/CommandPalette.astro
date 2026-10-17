@@ -86,9 +86,9 @@ import Kbd from './Kbd.astro';
       {
         id: 'nav-components',
         category: 'NAVEGACIÓN',
-        label: 'Ir a: Catálogo Base (Botones, Badges, Cards)',
+        label: 'Ir a: Catálogo Base (Botones, Badges, Cards, ProgressBar)',
         shortcut: '#01',
-        keywords: 'botones button badge card componentes catalogo',
+        keywords: 'botones button badge card progressbar barra componentes catalogo',
         action: () => {
           location.hash = '#components';
         },
@@ -96,29 +96,49 @@ import Kbd from './Kbd.astro';
       {
         id: 'nav-forms',
         category: 'NAVEGACIÓN',
-        label: 'Ir a: Suite de Formularios (Input, Checkbox, Switch)',
+        label: 'Ir a: Suite de Formularios (Input, Select, Slider, Checkbox, Switch)',
         shortcut: '#02',
-        keywords: 'formularios forms input checkbox switch toggle texto',
+        keywords: 'formularios forms input select slider range checkbox switch toggle texto',
         action: () => {
           location.hash = '#forms';
+        },
+      },
+      {
+        id: 'nav-tabs-acc',
+        category: 'NAVEGACIÓN',
+        label: 'Ir a: Navegación TUI (Tabs Multipestaña & Accordion HTML5)',
+        shortcut: '#03A',
+        keywords: 'tabs pestañas accordion acordeon details colapsable',
+        action: () => {
+          location.hash = '#comp-tabs';
         },
       },
       {
         id: 'nav-alerts',
         category: 'NAVEGACIÓN',
         label: 'Ir a: Feedback, Modales y Alertas (Alert, Toast, Modal)',
-        shortcut: '#03',
+        shortcut: '#03B',
         keywords: 'alertas callouts feedback modal toast notificaciones',
         action: () => {
-          location.hash = '#alerts';
+          location.hash = '#comp-alert';
+        },
+      },
+      {
+        id: 'nav-shell',
+        category: 'STUDIO',
+        label: 'Ir a: Consola Interactiva en Vivo (0xSCORCH_SHELL)',
+        shortcut: 'TTY',
+        keywords: 'terminal shell consola interactiva zsh neofetch comandos',
+        action: () => {
+          location.hash = '#live-shell';
         },
       },
       {
         id: 'nav-tables',
         category: 'NAVEGACIÓN',
-        label: 'Ir a: Tablas de Datos TUI ASCII (Table.astro)',
+        label: 'Ir a: Tablas de Datos TUI ASCII (Table & Kbd)',
         shortcut: '#04',
-        keywords: 'tabla table ascii datos registros',
+        keywords: 'tabla table ascii datos registros kbd',
         action: () => {
           location.hash = '#tables';
         },
@@ -146,9 +166,9 @@ import Kbd from './Kbd.astro';
       {
         id: 'nav-install-docs',
         category: 'DOCS',
-        label: 'Ir a: Guía de Instalación (Astro 7, Tailwind 4, Next.js)',
+        label: 'Ir a: Guía del CLI ryukami-ui & Registro JSON',
         shortcut: '#07',
-        keywords: 'instalar guia docs setup astro tailwind nextjs',
+        keywords: 'instalar guia docs setup cli ryukami-ui registry json',
         action: () => {
           location.hash = '#install-docs';
         },

@@ -3,7 +3,7 @@
   "name": "modal",
   "title": "Modal (HTML5 Dialog)",
   "type": "registry:ui",
-  "category": "03_FEEDBACK_OVERLAYS",
+  "category": "03_LAYOUT_AND_MODALS",
   "description": "Diálogo modal nativo <dialog closedby=\"any\"> con bloqueo de scroll de fondo.",
   "registryDependencies": [],
   "files": [

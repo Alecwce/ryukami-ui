@@ -1,0 +1,91 @@
+---
+export interface Props {
+  label: string;
+  min?: number;
+  max?: number;
+  value?: number;
+  step?: number;
+  unit?: string;
+  variant?: 'crimson' | 'cyan' | 'gold';
+  name?: string;
+}
+
+const {
+  label,
+  min = 0,
+  max = 100,
+  value = 64,
+  step = 1,
+  unit = '%',
+  variant = 'crimson',
+  name,
+} = Astro.props;
+
+const sliderId = `scorch-slider-${Math.random().toString(36).substring(2, 9)}`;
+const pct = Math.round(((value - min) / (max - min || 1)) * 100);
+const totalChars = 16;
+const filled = Math.round((pct / 100) * totalChars);
+const asciiInit = `[${'='.repeat(Math.max(0, filled - 1))}${filled > 0 ? '|' : ''}${'-'.repeat(Math.max(0, totalChars - filled))}]`;
+
+const accentClass = {
+  crimson: 'accent-[#D62436]',
+  cyan: 'accent-[#4DA3FF]',
+  gold: 'accent-[#F4D35E]',
+}[variant];
+---
+
+<div class="space-y-2 font-mono text-xs" data-scorch-slider>
+  <div class="flex flex-wrap justify-between items-center gap-2">
+    <label for={sliderId} class="font-extrabold uppercase tracking-tight cursor-pointer">
+      {label}
+    </label>
+    <div class="flex items-center gap-2">
+      <span class="text-[11px] font-bold text-scorch-crimson dark:text-scorch-cyan" data-slider-ascii>
+        {asciiInit}
+      </span>
+      <span class="bg-black text-scorch-gold px-1.5 py-0.5 border border-slate-700 font-extrabold text-[11px]" data-slider-val>
+        {value}{unit}
+      </span>
+    </div>
+  </div>
+
+  <div class="p-2 bg-white dark:bg-slate-950 border-2 border-black dark:border-slate-300 shadow-[-3px_3px_0px_0px_var(--shadow-color,#000000)] flex items-center gap-3">
+    <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300">{min}{unit}</span>
+    <input
+      id={sliderId}
+      name={name}
+      type="range"
+      min={min}
+      max={max}
+      value={value}
+      step={step}
+      data-unit={unit}
+      class={`w-full h-2 bg-slate-200 dark:bg-slate-800 appearance-none cursor-pointer ${accentClass}`}
+    />
+    <span class="text-[10px] font-bold text-slate-700 dark:text-slate-300">{max}{unit}</span>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-scorch-slider]').forEach((root) => {
+    const input = root.querySelector('input[type="range"]') as HTMLInputElement | null;
+    const asciiEl = root.querySelector('[data-slider-ascii]');
+    const valEl = root.querySelector('[data-slider-val]');
+    if (!input || !asciiEl || !valEl) return;
+
+    input.addEventListener('input', () => {
+      const min = Number(input.min || 0);
+      const max = Number(input.max || 100);
+      const val = Number(input.value);
+      const unit = input.getAttribute('data-unit') || '';
+      const pct = Math.max(0, Math.min(100, Math.round(((val - min) / (max - min || 1)) * 100)));
+      const total = 16;
+      const filled = Math.round((pct / 100) * total);
+      const bar = `[${'='.repeat(Math.max(0, filled - 1))}${filled > 0 ? '|' : ''}${'-'.repeat(Math.max(0, total - filled))}]`;
+
+      asciiEl.textContent = bar;
+      valEl.textContent = `${val}${unit}`;
+      if ((window as any).playTerminalBeep) (window as any).playTerminalBeep(520 + pct * 4, 0.015);
+    });
+  });
+</script>

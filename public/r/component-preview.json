@@ -4,7 +4,7 @@
   "title": "ComponentPreview",
   "type": "registry:ui",
   "category": "04_SCORCH_STUDIO",
-  "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado en 1 clic.",
+  "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.",
   "registryDependencies": [],
   "files": [
     {

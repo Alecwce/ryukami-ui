@@ -66,21 +66,27 @@ ryukami-ui add button --registry http://localhost:4321/r
 
 ---
 
-## 🧩 Catálogo Completo (14 Componentes & Herramientas)
+## 🧩 Catálogo Completo (20 Componentes & Herramientas Instalables por CLI)
 
 | ID en CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
 | :--- | :--- | :--- | :--- |
 | `button` | `Button.astro` | `01_CORE_UI` | Botón mecánico con 5 variantes y clic Web Audio. |
 | `badge` | `Badge.astro` | `01_CORE_UI` | Pastillas de estado y telemetría (`-2px 2px 0px`). |
-| `card` | `Card.astro` | `01_CORE_UI` | Ventana de consola TUI con controles geométricos `[ - ][ □ ][ × ]`. |
+| `card` | `Card.astro` | `01_CORE_UI` | Ventana de consola TUI interactiva con controles `[ - ][ □ ][ × ]`. |
 | `kbd` | `Kbd.astro` | `01_CORE_UI` | Teclas físicas de atajos mecánicos (`[Ctrl] + [K]`). |
+| `progress-bar` | `ProgressBar.astro` | `01_CORE_UI` | Barra de progreso segmentada BIOS con lectura ASCII `[████████░░░░]`. |
 | `input` | `Input.astro` | `02_FORM_CONTROLS` | Input brutalista con prefijo de terminal (`$`, `tcp://`), hints y error. |
+| `select` | `Select.astro` | `02_FORM_CONTROLS` | Selector desplegable brutalista con prefijo `OPT //` e indicador mecánico. |
+| `slider` | `Slider.astro` | `02_FORM_CONTROLS` | Slider de rango con barra ASCII `[====|----]` en vivo y pulso de audio. |
 | `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla cuadrada con marca pixel-art `✕`. |
 | `switch` | `Switch.astro` | `02_FORM_CONTROLS` | Interruptor táctil deslizante (`role="switch"`). |
-| `alert` | `Alert.astro` | `03_FEEDBACK_OVERLAYS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
-| `modal` | `Modal.astro` | `03_FEEDBACK_OVERLAYS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
-| `toast-container` | `ToastContainer.astro` | `03_FEEDBACK_OVERLAYS` | Notificaciones flotantes con frecuencia acústica por severidad. |
-| `command-palette` | `CommandPalette.astro` | `03_FEEDBACK_OVERLAYS` | Paleta de comandos (`Ctrl+K`) con buscador en vivo (`deps: kbd`). |
+| `tabs` | `Tabs.astro` | `03_LAYOUT_AND_MODALS` | Pestañas multipanel TUI con navegación por flechas (`←` / `→`). |
+| `accordion` | `Accordion.astro` | `03_LAYOUT_AND_MODALS` | Acordeón exclusivo nativo con `<details name="...">` HTML5. |
+| `alert` | `Alert.astro` | `03_LAYOUT_AND_MODALS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
+| `modal` | `Modal.astro` | `03_LAYOUT_AND_MODALS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
+| `toast-container` | `ToastContainer.astro` | `03_LAYOUT_AND_MODALS` | Notificaciones flotantes con frecuencia acústica por severidad. |
+| `command-palette` | `CommandPalette.astro` | `03_LAYOUT_AND_MODALS` | Paleta de comandos (`Ctrl+K`) con buscador en vivo (`deps: kbd`). |
+| `terminal-emulator` | `TerminalEmulator.astro` | `04_SCORCH_STUDIO` | Consola interactiva en vivo (`0xSCORCH_SHELL`) con comandos (`neofetch`, `status`, `dragon`, `cli`, `theme`). |
 | `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Visor `[ PREVIEW | CODE ]` con copia de CLI y código en 1 clic. |
 | `theme-studio` | `ThemeStudio.astro` | `04_SCORCH_STUDIO` | Laboratorio en vivo de colores, sombras, dither y exportador CSS. |
 | `ascii-generator` | `AsciiGenerator.astro` | `04_SCORCH_STUDIO` | Forja de banners ASCII 8-bit y emblema del Dragón Scorch. |

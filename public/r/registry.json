@@ -1,10 +1,10 @@
 {
   "name": "ryukami-ui",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-17T20:43:04.722Z",
-  "totalItems": 14,
+  "updatedAt": "2026-10-17T20:56:25.421Z",
+  "totalItems": 20,
   "items": [
     {
       "name": "button",
@@ -28,7 +28,7 @@
       "name": "card",
       "title": "Card (TUI Window)",
       "category": "01_CORE_UI",
-      "description": "Ventana de consola TUI con barra superior y controles geométricos [ - ][ □ ][ × ].",
+      "description": "Ventana de consola TUI interactiva con controles geométricos [ - ][ □ ][ × ].",
       "registryDependencies": [],
       "endpoint": "/r/card.json",
       "target": "src/components/Card.astro"
@@ -43,6 +43,15 @@
       "target": "src/components/Kbd.astro"
     },
     {
+      "name": "progress-bar",
+      "title": "ProgressBar",
+      "category": "01_CORE_UI",
+      "description": "Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.",
+      "registryDependencies": [],
+      "endpoint": "/r/progress-bar.json",
+      "target": "src/components/ProgressBar.astro"
+    },
+    {
       "name": "input",
       "title": "Input",
       "category": "02_FORM_CONTROLS",
@@ -50,6 +59,24 @@
       "registryDependencies": [],
       "endpoint": "/r/input.json",
       "target": "src/components/Input.astro"
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "category": "02_FORM_CONTROLS",
+      "description": "Selector desplegable brutalista con prefijo OPT // e indicador mecánico.",
+      "registryDependencies": [],
+      "endpoint": "/r/select.json",
+      "target": "src/components/Select.astro"
+    },
+    {
+      "name": "slider",
+      "title": "Slider (ASCII Range)",
+      "category": "02_FORM_CONTROLS",
+      "description": "Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.",
+      "registryDependencies": [],
+      "endpoint": "/r/slider.json",
+      "target": "src/components/Slider.astro"
     },
     {
       "name": "checkbox",
@@ -70,9 +97,27 @@
       "target": "src/components/Switch.astro"
     },
     {
+      "name": "tabs",
+      "title": "Tabs",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Paneles multipestaña TUI con navegación por flechas de teclado y sonido mecánico.",
+      "registryDependencies": [],
+      "endpoint": "/r/tabs.json",
+      "target": "src/components/Tabs.astro"
+    },
+    {
+      "name": "accordion",
+      "title": "Accordion",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Acordeón exclusivo nativo con <details name=\"...\"> accesible y buscable en página.",
+      "registryDependencies": [],
+      "endpoint": "/r/accordion.json",
+      "target": "src/components/Accordion.astro"
+    },
+    {
       "name": "alert",
       "title": "Alert",
-      "category": "03_FEEDBACK_OVERLAYS",
+      "category": "03_LAYOUT_AND_MODALS",
       "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
       "registryDependencies": [],
       "endpoint": "/r/alert.json",
@@ -81,7 +126,7 @@
     {
       "name": "modal",
       "title": "Modal (HTML5 Dialog)",
-      "category": "03_FEEDBACK_OVERLAYS",
+      "category": "03_LAYOUT_AND_MODALS",
       "description": "Diálogo modal nativo <dialog closedby=\"any\"> con bloqueo de scroll de fondo.",
       "registryDependencies": [],
       "endpoint": "/r/modal.json",
@@ -90,7 +135,7 @@
     {
       "name": "toast-container",
       "title": "ToastContainer",
-      "category": "03_FEEDBACK_OVERLAYS",
+      "category": "03_LAYOUT_AND_MODALS",
       "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
       "registryDependencies": [],
       "endpoint": "/r/toast-container.json",
@@ -99,7 +144,7 @@
     {
       "name": "command-palette",
       "title": "CommandPalette",
-      "category": "03_FEEDBACK_OVERLAYS",
+      "category": "03_LAYOUT_AND_MODALS",
       "description": "Consola de comandos interactiva (Ctrl+K) con buscador en vivo y atajos de teclado.",
       "registryDependencies": [
         "kbd"
@@ -108,10 +153,19 @@
       "target": "src/components/CommandPalette.astro"
     },
     {
+      "name": "terminal-emulator",
+      "title": "TerminalEmulator (0xSCORCH_SHELL)",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
+      "registryDependencies": [],
+      "endpoint": "/r/terminal-emulator.json",
+      "target": "src/components/TerminalEmulator.astro"
+    },
+    {
       "name": "component-preview",
       "title": "ComponentPreview",
       "category": "04_SCORCH_STUDIO",
-      "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado en 1 clic.",
+      "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.",
       "registryDependencies": [],
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"

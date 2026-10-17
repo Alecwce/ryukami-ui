@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "progress-bar",
+  "title": "ProgressBar",
+  "type": "registry:ui",
+  "category": "01_CORE_UI",
+  "description": "Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/ProgressBar.astro",
+      "type": "registry:component",
+      "content": "---\nexport interface Props {\n  label: string;\n  value: number;\n  max?: number;\n  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';\n  showAscii?: boolean;\n  status?: string;\n  id?: string;\n}\n\nconst {\n  label,\n  value = 75,\n  max = 100,\n  variant = 'crimson',\n  showAscii = true,\n  status,\n  id,\n} = Astro.props;\n\nconst pct = Math.max(0, Math.min(100, Math.round((value / max) * 100)));\nconst totalBlocks = 16;\nconst filledBlocks = Math.round((pct / 100) * totalBlocks);\nconst asciiBar = `[${'█'.repeat(filledBlocks)}${'░'.repeat(totalBlocks - filledBlocks)}]`;\n\nconst colorMap = {\n  crimson: 'bg-scorch-crimson',\n  cyan: 'bg-scorch-cyan',\n  gold: 'bg-scorch-gold',\n  emerald: 'bg-emerald-500',\n};\n---\n\n<div class=\"space-y-1.5 font-mono text-xs\" data-progress-root id={id}>\n  <div class=\"flex justify-between items-center gap-2\">\n    <div class=\"flex items-center gap-2\">\n      <span class={`inline-block w-2.5 h-2.5 border border-black ${colorMap[variant]}`}></span>\n      <span class=\"font-extrabold uppercase tracking-tight\">{label}</span>\n      {status && (\n        <span class=\"bg-black text-slate-200 px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold\">\n          {status}\n        </span>\n      )}\n    </div>\n    <div class=\"flex items-center gap-2\">\n      {showAscii && (\n        <span class=\"hidden sm:inline text-[11px] text-slate-700 dark:text-slate-300 font-bold\" data-progress-ascii>\n          {asciiBar}\n        </span>\n      )}\n      <span class=\"bg-black text-white px-1.5 py-0.5 border border-black font-extrabold text-[11px]\" data-progress-pct>\n        {pct}%\n      </span>\n    </div>\n  </div>\n\n  <!-- Barra Mecánica con Retícula Segmentada -->\n  <div\n    class=\"w-full h-5 bg-slate-200 dark:bg-slate-950 border-2 border-black dark:border-slate-300 shadow-[-2px_2px_0px_0px_var(--shadow-color,#000000)] relative overflow-hidden p-0.5\"\n    role=\"progressbar\"\n    aria-label={label}\n    aria-valuenow={pct}\n    aria-valuemin={0}\n    aria-valuemax={100}\n  >\n    <div\n      class={`h-full ${colorMap[variant]} origin-left transition-transform duration-150 ease-out`}\n      style={`transform: scaleX(${pct / 100});`}\n      data-progress-fill\n    ></div>\n    <!-- División de celdas estilo BIOS -->\n    <div\n      class=\"inset-0 absolute pointer-events-none opacity-25\"\n      style=\"background-image: repeating-linear-gradient(to right, transparent, transparent 14px, #000 14px, #000 16px);\"\n      aria-hidden=\"true\"\n    ></div>\n  </div>\n</div>\n"
+    }
+  ]
+}

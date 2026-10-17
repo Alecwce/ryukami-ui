@@ -1,0 +1,117 @@
+---
+export interface TabItem {
+  id: string;
+  label: string;
+  badge?: string;
+  code?: string;
+  content: string;
+}
+
+export interface Props {
+  title?: string;
+  tabs: TabItem[];
+}
+
+const { title = '0xTABS // MULTI_VIEW', tabs = [] } = Astro.props;
+const groupId = `scorch-tabs-${Math.random().toString(36).substring(2, 8)}`;
+---
+
+<div class="tui-window overflow-hidden font-mono text-xs" data-scorch-tabs id={groupId}>
+  <!-- Cabecera de Pestañas -->
+  <div class="bg-black text-white border-b-2 border-black dark:border-slate-700 px-3 pt-2 flex flex-wrap items-center justify-between gap-2">
+    <div class="flex flex-wrap gap-1" role="tablist" aria-label={title}>
+      {tabs.map((tab, idx) => (
+        <button
+          type="button"
+          role="tab"
+          aria-selected={idx === 0 ? 'true' : 'false'}
+          aria-controls={`${groupId}-panel-${tab.id}`}
+          id={`${groupId}-tab-${tab.id}`}
+          data-tab-target={tab.id}
+          class={`scorch-tab-btn px-3 py-2 font-extrabold uppercase tracking-tight border-t-2 border-x-2 border-black flex items-center gap-2 cursor-pointer transition-transform duration-75 ${
+            idx === 0
+              ? 'bg-scorch-crimson text-white -translate-y-[1px]'
+              : 'bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
+          }`}
+        >
+          <span>{tab.label}</span>
+          {tab.badge && (
+            <span class="bg-black text-scorch-gold px-1 py-0.2 text-[9px] border border-slate-700">
+              {tab.badge}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+    <span class="text-[10px] text-scorch-cyan font-bold pb-1.5 hidden sm:inline">{title}</span>
+  </div>
+
+  <!-- Paneles de Contenido -->
+  <div class="p-5 bg-white dark:bg-slate-900">
+    {tabs.map((tab, idx) => (
+      <div
+        role="tabpanel"
+        id={`${groupId}-panel-${tab.id}`}
+        aria-labelledby={`${groupId}-tab-${tab.id}`}
+        data-tab-panel={tab.id}
+        class={idx === 0 ? 'space-y-3' : 'hidden space-y-3'}
+      >
+        <p class="text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+          {tab.content}
+        </p>
+        {tab.code && (
+          <pre class="p-3 bg-slate-950 text-scorch-cyan border-2 border-black dark:border-slate-700 overflow-x-auto text-xs"><code>{tab.code}</code></pre>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('[data-scorch-tabs]').forEach((container) => {
+    const btns = Array.from(container.querySelectorAll('.scorch-tab-btn')) as HTMLButtonElement[];
+    const panels = Array.from(container.querySelectorAll('[data-tab-panel]')) as HTMLElement[];
+
+    function activateTab(targetId: string | null) {
+      if (!targetId) return;
+      if ((window as any).playMechanicalClick) (window as any).playMechanicalClick();
+
+      btns.forEach((b) => {
+        const isActive = b.getAttribute('data-tab-target') === targetId;
+        b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        if (isActive) {
+          b.classList.add('bg-scorch-crimson', 'text-white', '-translate-y-[1px]');
+          b.classList.remove('bg-slate-900', 'text-slate-300');
+        } else {
+          b.classList.remove('bg-scorch-crimson', 'text-white', '-translate-y-[1px]');
+          b.classList.add('bg-slate-900', 'text-slate-300');
+        }
+      });
+
+      panels.forEach((p) => {
+        const isMatch = p.getAttribute('data-tab-panel') === targetId;
+        p.classList.toggle('hidden', !isMatch);
+      });
+    }
+
+    btns.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        activateTab(btn.getAttribute('data-tab-target'));
+      });
+
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const next = btns[(idx + 1) % btns.length];
+          next.focus();
+          activateTab(next.getAttribute('data-tab-target'));
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prev = btns[(idx - 1 + btns.length) % btns.length];
+          prev.focus();
+          activateTab(prev.getAttribute('data-tab-target'));
+        }
+      });
+    });
+  });
+</script>

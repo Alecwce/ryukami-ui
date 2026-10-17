@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "accordion",
+  "title": "Accordion",
+  "type": "registry:ui",
+  "category": "03_LAYOUT_AND_MODALS",
+  "description": "Acordeón exclusivo nativo con <details name=\"...\"> accesible y buscable en página.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/Accordion.astro",
+      "type": "registry:component",
+      "content": "---\nexport interface AccordionItem {\n  id?: string;\n  title: string;\n  badge?: string;\n  content: string;\n  open?: boolean;\n}\n\nexport interface Props {\n  name?: string;\n  items: AccordionItem[];\n}\n\nconst {\n  name = `scorch-acc-${Math.random().toString(36).substring(2, 7)}`,\n  items = [],\n} = Astro.props;\n---\n\n<div class=\"space-y-3 font-mono text-xs w-full\" data-scorch-accordion>\n  {items.map((item, idx) => (\n    <details\n      name={name}\n      open={item.open}\n      class=\"group tui-window overflow-hidden bg-white dark:bg-slate-900\"\n    >\n      <summary\n        class=\"list-none cursor-pointer select-none px-4 py-3 bg-slate-100 dark:bg-slate-950 hover:bg-scorch-crimson hover:text-white dark:hover:bg-scorch-crimson flex items-center justify-between gap-3 font-extrabold uppercase border-b-0 group-open:border-b-2 border-black dark:border-slate-700 group-open:bg-black group-open:text-white dark:group-open:bg-scorch-crimson\"\n      >\n        <div class=\"flex items-center gap-2.5 min-w-0\">\n          <span class=\"bg-scorch-crimson text-white group-open:bg-scorch-gold group-open:text-black px-1.5 py-0.5 text-[10px] border border-black shrink-0\">\n            0{idx + 1}\n          </span>\n          <span class=\"truncate\">{item.title}</span>\n        </div>\n\n        <div class=\"flex items-center gap-2 shrink-0\">\n          {item.badge && (\n            <span class=\"hidden sm:inline-block bg-black text-scorch-cyan px-1.5 py-0.5 text-[10px] border border-slate-700\">\n              {item.badge}\n            </span>\n          )}\n          <span\n            class=\"w-5 h-5 inline-flex items-center justify-center border border-current bg-black/20 font-extrabold text-xs leading-none\"\n            aria-hidden=\"true\"\n          >\n            <span class=\"group-open:hidden\">+</span>\n            <span class=\"hidden group-open:inline\">−</span>\n          </span>\n        </div>\n      </summary>\n\n      <div class=\"p-4 text-xs sm:text-sm leading-relaxed text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-900\">\n        <p>{item.content}</p>\n      </div>\n    </details>\n  ))}\n</div>\n\n<script>\n  document.querySelectorAll('[data-scorch-accordion] summary').forEach((summary) => {\n    summary.addEventListener('click', () => {\n      if ((window as any).playMechanicalClick) (window as any).playMechanicalClick();\n    });\n  });\n</script>\n"
+    }
+  ]
+}

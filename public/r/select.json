@@ -1,0 +1,16 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "select",
+  "title": "Select",
+  "type": "registry:ui",
+  "category": "02_FORM_CONTROLS",
+  "description": "Selector desplegable brutalista con prefijo OPT // e indicador mecánico.",
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "src/components/Select.astro",
+      "type": "registry:component",
+      "content": "---\nexport interface SelectOption {\n  value: string;\n  label: string;\n}\n\nexport interface Props {\n  label: string;\n  options: SelectOption[];\n  prefix?: string;\n  hint?: string;\n  name?: string;\n  value?: string;\n}\n\nconst {\n  label,\n  options = [],\n  prefix = 'OPT //',\n  hint,\n  name,\n  value,\n} = Astro.props;\n\nconst selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;\n---\n\n<div class=\"space-y-1.5 font-mono text-xs w-full\">\n  <label for={selectId} class=\"block font-extrabold uppercase tracking-tight\">\n    {label}\n  </label>\n\n  <div class=\"relative flex items-stretch border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] transition-transform duration-75 focus-within:translate-x-[1px] focus-within:-translate-y-[1px]\">\n    {prefix && (\n      <span class=\"px-2.5 py-2 bg-black text-scorch-cyan font-extrabold border-r-2 border-black dark:border-slate-700 flex items-center select-none shrink-0\">\n        {prefix}\n      </span>\n    )}\n    <select\n      id={selectId}\n      name={name}\n      class=\"w-full appearance-none bg-transparent px-3 py-2.5 pr-10 font-mono text-xs font-bold text-slate-900 dark:text-slate-100 outline-none cursor-pointer\"\n      onchange=\"window.playMechanicalClick && window.playMechanicalClick()\"\n    >\n      {options.map((opt) => (\n        <option\n          value={opt.value}\n          selected={opt.value === value}\n          class=\"bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-mono\"\n        >\n          {opt.label}\n        </option>\n      ))}\n    </select>\n    <!-- Indicador Mecánico Derecha -->\n    <span\n      class=\"pointer-events-none inset-y-0 right-0 absolute px-2.5 bg-scorch-crimson text-white border-l-2 border-black flex items-center justify-center font-extrabold text-[10px]\"\n      aria-hidden=\"true\"\n    >\n      ▼\n    </span>\n  </div>\n\n  {hint && (\n    <p class=\"text-[11px] text-slate-700 dark:text-slate-300\">\n      &gt; {hint}\n    </p>\n  )}\n</div>\n"
+    }
+  ]
+}
