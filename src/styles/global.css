@@ -1,8 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-scorch-crimson: #E63946;
+  --color-scorch-dark: #9B1B30;
+  --color-scorch-cyan: #4DA3FF;
+  --color-scorch-gold: #F4D35E;
+  --color-scorch-gold-text: #B45309;
+
+  --color-canvas-paper: #F5F7FA;
+  --color-canvas-surface: #FFFFFF;
+  --color-canvas-hacker: #0B0F17;
+  --color-canvas-dark-surface: #111827;
+
+  --shadow-brutal-sm: -2px 2px 0px 0px var(--shadow-color, #000000);
+  --shadow-brutal: -4px 4px 0px 0px var(--shadow-color, #000000);
+  --shadow-brutal-lg: -6px 6px 0px 0px var(--shadow-color, #000000);
+  --shadow-brutal-xl: -8px 8px 0px 0px var(--shadow-color, #000000);
+
+  --font-pixel: 'Press Start 2P', 'VT323', monospace;
+  --font-sub: 'Tiny5', 'VT323', monospace;
+  --font-mono: 'JetBrains Mono', monospace;
+}
 
 :root {
   /* TEMA CLARO: Paper Brutalism */

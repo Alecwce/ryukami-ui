@@ -7,6 +7,15 @@
 
 ---
 
+## ⚡ Stack Tecnológico de Vanguardia
+
+- **Framework:** [Astro 7.4.0](https://astro.build) (Motor Rolldown + Vite 8, compilación estática en ~1.1s).
+- **Estilos:** [Tailwind CSS 4.3.3](https://tailwindcss.com) (Arquitectura `@import "tailwindcss";`, `@theme` en CSS puro y `@custom-variant dark`).
+- **Tipado:** [TypeScript 7.0.2](https://www.typescriptlang.org) (Modo estricto nativo).
+- **Audio:** Web Audio API nativo (síntesis procedural de clics mecánicos sin assets externos).
+
+---
+
 ## ⚡ Filosofía de Diseño
 
 1. **Neo-Brutalismo Puro:** Bordes rígidos de 2px, esquinas cuadradas (`border-radius: 0px`) y sombras sólidas hacia la izquierda-abajo (`-4px 4px 0px`).
@@ -18,10 +27,9 @@
 
 ## 🚀 Inicio Rápido
 
-### 1. Clonar e Instalar Dependencias
+### 1. Instalar Dependencias
 
 ```bash
-git clone https://github.com/alexwce/ryukami-ui.git
 cd ryukami-ui
 pnpm install
 ```
