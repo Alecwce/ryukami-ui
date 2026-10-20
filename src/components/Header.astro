@@ -31,66 +31,180 @@ import Icon from './Icon.astro';
     </div>
   </div>
 
-  <div class="p-4 flex flex-wrap justify-between items-center gap-4 bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
-    <div class="flex items-center gap-3">
-      <a href="#hero" class="flex items-center gap-2">
-        <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider">
+  <div class="px-2.5 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3 flex-nowrap overflow-x-clip bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
+    <div class="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
+      <a href="#hero" class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider shrink-0 select-none">
           RYUKAMI // UI
         </span>
-        <span class="text-xs sm:text-sm font-bold tracking-tight">
+        <span class="hidden lg:inline text-xs sm:text-sm font-bold tracking-tight text-slate-600 dark:text-slate-400 truncate">
           ~/scorch-components
         </span>
       </a>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-      <!-- Nav Links -->
-      <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-3.5 text-xs font-bold uppercase">
-        <a href="#components" class="hover:text-scorch-crimson hover:underline">[01_CORE]</a>
-        <a href="#forms" class="hover:text-scorch-crimson hover:underline">[02_FORMS]</a>
-        <a href="#alerts" class="hover:text-scorch-crimson hover:underline">[03_MODALS]</a>
-        <a href="#theme-studio" class="hover:text-scorch-crimson hover:underline">[04_STUDIO]</a>
-        <a href="#ascii-forge" class="hover:text-scorch-crimson hover:underline">[05_ASCII]</a>
-      </nav>
+    <!-- Nav Links con ScrollSpy (Oculto bajo md) -->
+    <nav
+      aria-label="Navegación principal"
+      id="header-nav-list"
+      class="hidden md:flex items-center gap-1 lg:gap-1.5 text-xs font-bold uppercase shrink-0"
+    >
+      <a
+        href="#components"
+        data-header-nav="components"
+        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+      >
+        [01_CORE]
+      </a>
+      <a
+        href="#forms"
+        data-header-nav="forms"
+        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+      >
+        [02_FORMS]
+      </a>
+      <a
+        href="#alerts"
+        data-header-nav="alerts"
+        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+      >
+        [03_MODALS]
+      </a>
+      <a
+        href="#theme-studio"
+        data-header-nav="theme-studio"
+        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+      >
+        [04_STUDIO]
+      </a>
+      <a
+        href="#ascii-forge"
+        data-header-nav="ascii-forge"
+        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+      >
+        [05_ASCII]
+      </a>
+    </nav>
 
+    <!-- 4 Acciones con altura idéntica h-8, leading-none e iconos w-3.5 h-3.5 alineados al pixel -->
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 flex-nowrap">
       <!-- GitHub Repo Link -->
       <a
         href="https://github.com/Alecwce/ryukami-ui"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-brutal bg-black text-white dark:bg-white dark:text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5"
+        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-black text-white dark:bg-white dark:text-black shrink-0"
         aria-label="Repositorio oficial en GitHub"
         title="Ver repositorio en GitHub (Alecwce/ryukami-ui)"
       >
-        <svg class="w-3.5 h-3.5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-        </svg>
-        <span>GITHUB</span>
+        <Icon name="github" class="w-3.5 h-3.5 block shrink-0" />
+        <span class="hidden sm:inline leading-none">GITHUB</span>
       </a>
 
       <!-- Botón Command Palette -->
-      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5">
-        <Icon name="command" class="w-3.5 h-3.5 shrink-0" />
-        <span>CMD+K</span>
+      <button
+        type="button"
+        onclick="window.openPalette && window.openPalette()"
+        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-cyan text-black shrink-0"
+        title="Abrir paleta de comandos (Ctrl+K)"
+        aria-label="Abrir paleta de comandos (Ctrl+K)"
+      >
+        <Icon name="command" class="w-3.5 h-3.5 block shrink-0" />
+        <span class="hidden sm:inline leading-none">CMD+K</span>
       </button>
 
       <!-- Toggle Audio -->
-      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5" id="sound-btn">
-        <span id="sound-icon" class="inline-flex items-center" aria-hidden="true">
-          <span id="sound-icon-off"><Icon name="volume-x" class="w-3.5 h-3.5 shrink-0" /></span>
-          <span id="sound-icon-on" class="hidden"><Icon name="volume-2" class="w-3.5 h-3.5 shrink-0" /></span>
+      <button
+        type="button"
+        onclick="window.toggleSound && window.toggleSound()"
+        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-black dark:text-white shrink-0"
+        id="sound-btn"
+        title="Alternar sintetizador de sonido"
+        aria-label="Alternar sintetizador de sonido"
+      >
+        <span id="sound-icon" class="inline-flex items-center shrink-0" aria-hidden="true">
+          <span id="sound-icon-off" class="block"><Icon name="volume-x" class="w-3.5 h-3.5 block shrink-0" /></span>
+          <span id="sound-icon-on" class="hidden"><Icon name="volume-2" class="w-3.5 h-3.5 block shrink-0" /></span>
         </span>
-        <span id="sound-label">SND: OFF</span>
+        <span id="sound-label" class="hidden sm:inline leading-none">SND: OFF</span>
       </button>
 
       <!-- Toggle Theme -->
-      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5" id="theme-btn">
-        <span id="theme-icon" class="inline-flex items-center" aria-hidden="true">
-          <span id="theme-icon-sun"><Icon name="sun" class="w-3.5 h-3.5 shrink-0" /></span>
-          <span id="theme-icon-moon" class="hidden"><Icon name="moon" class="w-3.5 h-3.5 shrink-0" /></span>
+      <button
+        type="button"
+        onclick="window.toggleTheme && window.toggleTheme()"
+        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-gold text-black shrink-0"
+        id="theme-btn"
+        title="Alternar modo claro / modo oscuro"
+        aria-label="Alternar modo claro / modo oscuro"
+      >
+        <span id="theme-icon" class="inline-flex items-center shrink-0" aria-hidden="true">
+          <span id="theme-icon-sun" class="block"><Icon name="sun" class="w-3.5 h-3.5 block shrink-0" /></span>
+          <span id="theme-icon-moon" class="hidden"><Icon name="moon" class="w-3.5 h-3.5 block shrink-0" /></span>
         </span>
-        <span id="theme-label">PAPER</span>
+        <span id="theme-label" class="hidden sm:inline leading-none">PAPER</span>
       </button>
     </div>
   </div>
 </header>
+
+<script is:inline>
+  (function () {
+    const nav = document.getElementById('header-nav-list');
+    if (!nav) return;
+
+    const links = Array.from(nav.querySelectorAll('a[data-header-nav]'));
+    const targetIds = links.map((l) => l.getAttribute('data-header-nav')).filter(Boolean);
+
+    const activeClasses = [
+      'bg-black',
+      'text-white',
+      'dark:bg-white',
+      'dark:text-black',
+      'border-black',
+      'dark:border-white',
+    ];
+
+    function setActive(activeId) {
+      links.forEach((link) => {
+        const isMatch = link.getAttribute('data-header-nav') === activeId;
+        if (isMatch) {
+          link.classList.add(...activeClasses);
+          link.classList.remove('border-transparent');
+        } else {
+          link.classList.remove(...activeClasses);
+          link.classList.add('border-transparent');
+        }
+      });
+    }
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        const targetId = link.getAttribute('data-header-nav');
+        if (targetId) {
+          setActive(targetId);
+          if (window.playMechanicalClick) window.playMechanicalClick();
+        }
+      });
+    });
+
+    const sections = targetIds.map((id) => document.getElementById(id)).filter(Boolean);
+    if ('IntersectionObserver' in window && sections.length > 0) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+          if (visible.length > 0 && visible[0].target.id) {
+            setActive(visible[0].target.id);
+          }
+        },
+        {
+          rootMargin: '-100px 0px -60% 0px',
+          threshold: 0.05,
+        }
+      );
+      sections.forEach((sec) => observer.observe(sec));
+    }
+  })();
+</script>
