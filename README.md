@@ -1,17 +1,23 @@
 # 🐉 Ryukami-UI (Scorch Dragon // Velgrynd Tribute Edition)
 
+[![CI](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/badge/version-v2.3.0-D62436.svg)](https://github.com/Alecwce/ryukami-ui/releases/tag/v2.3.0)
+[![Lighthouse](https://img.shields.io/badge/Lighthouse-95%20%7C%2097%20%7C%20100%20%7C%20100-success.svg)](https://ryukami-ui.pages.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 > **Retro TUI & Neo-Brutalist Component Library + CLI Installer for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
 > Inspired by oriental dragon lore, 8-bit CRT terminals, and raw mechanical engineering aesthetics.
 
-🌐 **Live Production (Cloudflare Pages):** [**https://ryukami-ui.pages.dev**](https://ryukami-ui.pages.dev)  
-📦 **Live Open-Code JSON Registry:** [**https://ryukami-ui.pages.dev/r/registry.json**](https://ryukami-ui.pages.dev/r/registry.json)  
-🐙 **GitHub Repository:** [**https://github.com/Alecwce/ryukami-ui**](https://github.com/Alecwce/ryukami-ui)
+- 🌐 **Live Production (Cloudflare Pages):** [**https://ryukami-ui.pages.dev**](https://ryukami-ui.pages.dev)  
+- 📦 **Live Open-Code JSON Registry:** [**https://ryukami-ui.pages.dev/r/registry.json**](https://ryukami-ui.pages.dev/r/registry.json)  
+- 🤖 **AI Agent Manifest (llms.txt):** [**https://ryukami-ui.pages.dev/llms.txt**](https://ryukami-ui.pages.dev/llms.txt)  
+- 🐙 **GitHub Repository:** [**https://github.com/Alecwce/ryukami-ui**](https://github.com/Alecwce/ryukami-ui)
 
 ![Ryukami Scorch Dragon Banner](public/scorch-dragon-banner.webp)
 
 ---
 
-## ⚡ Stack Tecnológico & Rendimiento (Lighthouse 100/100)
+## Stack Tecnológico & Rendimiento Auditado (Lighthouse 95 / 97 / 100 / 100)
 
 | Capa | Tecnología | Detalles Técnicos |
 | :--- | :--- | :--- |
@@ -20,7 +26,7 @@
 | **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes. |
 | **CLI & Registry** | **`ryukami-ui` v2.3.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Registro estático JSON en `/public/r/*.json` (**27 módulos**). |
 | **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos `.mp3`. |
-| **Auditoría** | **Lighthouse 100/100** | **100** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
+| **Auditoría Real** | **Lighthouse Verified** | **95** Performance · **97** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
 
 ---
 

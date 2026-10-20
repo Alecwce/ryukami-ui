@@ -26,6 +26,7 @@ import ComponentPreview from '../components/ComponentPreview.astro';
 import SidebarNav from '../components/SidebarNav.astro';
 import ThemeStudio from '../components/ThemeStudio.astro';
 import AsciiGenerator from '../components/AsciiGenerator.astro';
+import Icon from '../components/Icon.astro';
 
 // Snippets de código para el visor [Preview | Code]
 const buttonSnippet = `import Button from '@/components/Button.astro';
@@ -185,7 +186,7 @@ import Button from '@/components/Button.astro';
   Disparar Toast Carmesí
 </Button>
 
-<Popover id="node-popover" triggerLabel="🔍 INSPECCIONAR NODO (POPOVER)" title="0xNODE // TELEMETRY">
+<Popover id="node-popover" triggerLabel="INSPECCIONAR NODO (POPOVER)" title="0xNODE // TELEMETRY">
   <p>Popover nativo HTML5 Top-Layer sin JS externo.</p>
 </Popover>
 
@@ -222,7 +223,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
       <Badge variant="crimson">v2.3.0 // 27 MODULES + CLI</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
-      <Badge variant="gold">LIGHTHOUSE 100 / 100 / 100 / 100</Badge>
+      <Badge variant="gold">LIGHTHOUSE 95 / 97 / 100 / 100</Badge>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
@@ -245,10 +246,12 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             &gt; EXPLORAR 27 MÓDULOS
           </Button>
           <Button variant="cyan" size="lg" href="#live-shell">
-            💻 0xSCORCH_SHELL
+            <Icon name="terminal" class="w-4 h-4 shrink-0 inline-block mr-1.5" />
+            <span>0xSCORCH_SHELL</span>
           </Button>
           <Button variant="outline" size="lg" onclick="window.openPalette && window.openPalette()">
-            ⌨️ CMD+K
+            <Icon name="command" class="w-4 h-4 shrink-0 inline-block mr-1.5" />
+            <span>CMD+K</span>
           </Button>
         </div>
       </div>
@@ -436,9 +439,10 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <button
           type="button"
           id="simulate-telemetry-btn"
-          class="btn-brutal bg-scorch-crimson text-white px-3 py-1 text-xs font-extrabold"
+          class="btn-brutal bg-scorch-crimson text-white px-3 py-1 text-xs font-extrabold inline-flex items-center gap-1.5"
         >
-          ⚡ SIMULAR PULSO DE TELEMETRÍA
+          <Icon name="zap" class="w-3.5 h-3.5 shrink-0" />
+          <span>SIMULAR PULSO DE TELEMETRÍA</span>
         </button>
       </div>
       <p class="text-xs sm:text-sm opacity-80">
@@ -865,7 +869,8 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
                 size="sm"
                 onclick="window.showToast && window.showToast('CRITICAL // ALERT', 'Pulso térmico de Velgrynd al 99.4%. Escudo activado.', 'crimson')"
               >
-                ⚡ Toast Carmesí (420Hz)
+                <Icon name="zap" class="w-3.5 h-3.5 shrink-0 inline-block mr-1" />
+                <span>Toast Carmesí (420Hz)</span>
               </Button>
               <Button
                 variant="gold"
@@ -899,11 +904,12 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
                 size="md"
                 onclick="document.getElementById('demo-scorch-modal').showModal()"
               >
-                🪟 ABRIR VENTANA MODAL TUI
+                <Icon name="app-window" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
+                <span>ABRIR VENTANA MODAL TUI</span>
               </Button>
               <Popover
                 id="scorch-telemetry-popover"
-                triggerLabel="🔍 INSPECCIONAR POPOVER HTML5"
+                triggerLabel="INSPECCIONAR POPOVER HTML5"
                 title="0xPOPOVER // TOP_LAYER_SPEC"
                 status="ZERO-JS"
               >
@@ -916,7 +922,8 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
                 size="md"
                 onclick="window.openPalette && window.openPalette()"
               >
-                ⌨️ ABRIR COMMAND PALETTE (CTRL+K)
+                <Icon name="command" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
+                <span>ABRIR COMMAND PALETTE (CTRL+K)</span>
               </Button>
             </div>
           </div>

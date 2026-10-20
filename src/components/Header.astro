@@ -1,6 +1,7 @@
 ---
 import Button from './Button.astro';
 import Kbd from './Kbd.astro';
+import Icon from './Icon.astro';
 ---
 
 <header class="tui-window sticky top-4 z-40 mb-10">
@@ -68,20 +69,26 @@ import Kbd from './Kbd.astro';
       </a>
 
       <!-- Botón Command Palette -->
-      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold">
-        <span aria-hidden="true">⌨️</span>
+      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5">
+        <Icon name="command" class="w-3.5 h-3.5 shrink-0" />
         <span>CMD+K</span>
       </button>
 
       <!-- Toggle Audio -->
-      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-2.5 sm:px-3 py-1.5 text-xs font-bold" id="sound-btn">
-        <span id="sound-icon" aria-hidden="true">🔇</span>
+      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5" id="sound-btn">
+        <span id="sound-icon" class="inline-flex items-center" aria-hidden="true">
+          <span id="sound-icon-off"><Icon name="volume-x" class="w-3.5 h-3.5 shrink-0" /></span>
+          <span id="sound-icon-on" class="hidden"><Icon name="volume-2" class="w-3.5 h-3.5 shrink-0" /></span>
+        </span>
         <span id="sound-label">SND: OFF</span>
       </button>
 
       <!-- Toggle Theme -->
-      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold" id="theme-btn">
-        <span id="theme-icon" aria-hidden="true">☀️</span>
+      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5" id="theme-btn">
+        <span id="theme-icon" class="inline-flex items-center" aria-hidden="true">
+          <span id="theme-icon-sun"><Icon name="sun" class="w-3.5 h-3.5 shrink-0" /></span>
+          <span id="theme-icon-moon" class="hidden"><Icon name="moon" class="w-3.5 h-3.5 shrink-0" /></span>
+        </span>
         <span id="theme-label">PAPER</span>
       </button>
     </div>

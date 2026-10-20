@@ -1,5 +1,6 @@
 ---
 import Badge from './Badge.astro';
+import Icon from './Icon.astro';
 ---
 
 <div class="tui-window overflow-hidden font-mono text-xs">
@@ -85,9 +86,10 @@ import Badge from './Badge.astro';
         <button
           type="button"
           id="copy-ascii-output-btn"
-          class="btn-brutal bg-scorch-gold text-black px-2.5 py-1 text-[11px] font-extrabold"
+          class="btn-brutal bg-scorch-gold text-black px-2.5 py-1 text-[11px] font-extrabold inline-flex items-center gap-1.5"
         >
-          📋 COPIAR ARTE ASCII
+          <Icon name="copy" class="w-3.5 h-3.5 shrink-0" />
+          <span>COPIAR ARTE ASCII</span>
         </button>
       </div>
       <pre

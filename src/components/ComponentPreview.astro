@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   title: string;
   code: string;
@@ -55,7 +57,7 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         class="copy-btn btn-brutal bg-scorch-gold text-black text-xs px-2.5 py-1 font-extrabold flex items-center gap-1.5"
         data-code={code}
       >
-        <span class="copy-icon" aria-hidden="true">📋</span>
+        <span class="copy-icon inline-flex items-center" aria-hidden="true"><Icon name="copy" class="w-3.5 h-3.5" /></span>
         <span class="copy-text">COPIAR</span>
       </button>
     </div>
@@ -149,13 +151,14 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
           if (copyText && copyIcon) {
             const originalText = copyText.textContent;
+            const originalIconHtml = copyIcon.innerHTML;
             copyText.textContent = '¡COPIADO!';
             copyIcon.textContent = '✓';
             copyBtn.classList.add('bg-emerald-400');
 
             setTimeout(() => {
               copyText.textContent = originalText;
-              copyIcon.textContent = '📋';
+              copyIcon.innerHTML = originalIconHtml;
               copyBtn.classList.remove('bg-emerald-400');
             }, 2000);
           }

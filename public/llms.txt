@@ -1,0 +1,134 @@
+# Ryukami-UI (v2.3.0)
+
+> Librería de componentes Neo-Brutalistas y Retro TUI inspirada en Velgrynd Scorch Lore para Astro 7, Tailwind CSS v4 y TypeScript 7. Incluye CLI propio de instalación (`ryukami-ui`) y registro de componentes estático en formato JSON estilo shadcn/ui y 8bitcn.
+
+## Resumen y Filosofía
+- **Framework:** Astro 7.4.0 (Vite 8 + Rolldown, 0 KiB JS bundles externos).
+- **Estilos:** Tailwind CSS 4.3.3 (`@theme`, variables reactivas en tiempo real, `@custom-variant dark`).
+- **Diseño:** Neo-Brutalismo con esquinas de `0px`, bordes negros de `2px`, sombras duras de `-4px 4px 0px 0px`, controles de ventana geométricos `[ - ][ □ ][ × ]`.
+- **Rendimiento Verificado:** Lighthouse 95 Performance / 97 Accessibility / 100 Best Practices / 100 SEO.
+- **Repositorio Oficial:** https://github.com/Alecwce/ryukami-ui
+- **Sitio en Producción:** https://ryukami-ui.pages.dev
+
+## Instalación del CLI y Registro
+
+### 1. Obtener el CLI oficial
+El CLI vive en `bin/ryukami-ui.mjs` y se enlaza globalmente en `~/.local/bin/ryukami-ui`:
+```bash
+git clone https://github.com/Alecwce/ryukami-ui.git ~/.local/share/ryukami-ui
+ln -sf ~/.local/share/ryukami-ui/bin/ryukami-ui.mjs ~/.local/bin/ryukami-ui
+chmod +x ~/.local/bin/ryukami-ui
+```
+
+### 2. Inicializar en un proyecto Astro + Tailwind v4
+Inyecta `src/styles/global.css` con los tokens de Tailwind v4 y genera el manifiesto local `ryukami.json`:
+```bash
+ryukami-ui init --dir ./mi-proyecto
+```
+
+### 3. Instalar componentes específicos
+Descarga los componentes `.astro` y resuelve automáticamente dependencias internas:
+```bash
+ryukami-ui add button card modal tabs accordion --dir ./mi-proyecto
+```
+
+### 4. Instalar los 27 componentes a la vez
+```bash
+ryukami-ui add --all --dir ./mi-proyecto
+```
+
+## Consumo Directo del Registro JSON por Agentes de IA
+Los agentes pueden consultar o descargar directamente el código de cada componente desde la CDN en Cloudflare Pages:
+- Manifiesto completo de los 27 módulos: `https://ryukami-ui.pages.dev/r/registry.json`
+- Tokens globales CSS de Tailwind v4: `https://ryukami-ui.pages.dev/r/styles.json`
+- Endpoint directo de cada componente: `https://ryukami-ui.pages.dev/r/<id>.json`
+
+Formato de cada endpoint JSON:
+```json
+{
+  "name": "button",
+  "type": "registry:ui",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": ["src/components/Button.astro"],
+  "content": "--- ... ---"
+}
+```
+
+## Catálogo de los 27 Componentes
+
+1. `button` (src/components/Button.astro): Botón mecánico Neo-Brutalista con 5 variantes (crimson, cyan, gold, dark, outline) y síntesis de clic Web Audio.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/button.json`
+2. `badge` (src/components/Badge.astro): Etiquetas y pastillas TUI de estado con sombra dura de -2px 2px.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/badge.json`
+3. `card` (src/components/Card.astro): Ventana de consola TUI interactiva con controles geométricos [ - ][ □ ][ × ].
+   - Endpoint: `https://ryukami-ui.pages.dev/r/card.json`
+4. `kbd` (src/components/Kbd.astro): Representación física de teclas de atajos de teclado ([Ctrl] + [K]).
+   - Endpoint: `https://ryukami-ui.pages.dev/r/kbd.json`
+5. `progress-bar` (src/components/ProgressBar.astro): Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/progress-bar.json`
+6. `avatar` (src/components/Avatar.astro): Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).
+   - Endpoint: `https://ryukami-ui.pages.dev/r/avatar.json`
+7. `skeleton` (src/components/Skeleton.astro): Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/skeleton.json`
+8. `input` (src/components/Input.astro): Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/input.json`
+9. `textarea` (src/components/Textarea.astro): Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.
+   - Endpoint: `https://ryukami-ui.pages.dev/r/textarea.json`
+10. `select` (src/components/Select.astro): Selector desplegable brutalista con prefijo OPT // e indicador mecánico.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/select.json`
+11. `slider` (src/components/Slider.astro): Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/slider.json`
+12. `radio-group` (src/components/RadioGroup.astro): Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).
+    - Endpoint: `https://ryukami-ui.pages.dev/r/radio-group.json`
+13. `checkbox` (src/components/Checkbox.astro): Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/checkbox.json`
+14. `switch` (src/components/Switch.astro): Interruptor táctil deslizante (role="switch") con variantes crimson, cyan y gold.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/switch.json`
+15. `tabs` (src/components/Tabs.astro): Paneles multipestaña TUI con navegación por flechas de teclado y sonido mecánico.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/tabs.json`
+16. `accordion` (src/components/Accordion.astro): Acordeón exclusivo nativo con <details name="..."> accesible y buscable en página.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/accordion.json`
+17. `breadcrumb` (src/components/Breadcrumb.astro): Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).
+    - Endpoint: `https://ryukami-ui.pages.dev/r/breadcrumb.json`
+18. `pagination` (src/components/Pagination.astro): Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).
+    - Endpoint: `https://ryukami-ui.pages.dev/r/pagination.json`
+19. `popover` (src/components/Popover.astro): Globo flotante de telemetría con API nativa popover="auto" sin dependencias JS.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/popover.json`
+20. `alert` (src/components/Alert.astro): Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).
+    - Endpoint: `https://ryukami-ui.pages.dev/r/alert.json`
+21. `modal` (src/components/Modal.astro): Diálogo modal nativo <dialog closedby="any"> con bloqueo de scroll de fondo.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/modal.json`
+22. `toast-container` (src/components/ToastContainer.astro): Motor global de notificaciones flotantes con síntesis de audio por severidad.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/toast-container.json`
+23. `command-palette` (src/components/CommandPalette.astro): Consola de comandos interactiva (Ctrl+K) con buscador en vivo y atajos de teclado.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/command-palette.json`
+24. `terminal-emulator` (src/components/TerminalEmulator.astro): Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).
+    - Endpoint: `https://ryukami-ui.pages.dev/r/terminal-emulator.json`
+25. `component-preview` (src/components/ComponentPreview.astro): Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/component-preview.json`
+26. `theme-studio` (src/components/ThemeStudio.astro): Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/theme-studio.json`
+27. `ascii-generator` (src/components/AsciiGenerator.astro): Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.
+    - Endpoint: `https://ryukami-ui.pages.dev/r/ascii-generator.json`
+
+## Ejemplo de Integración en Astro
+```astro
+---
+import Button from '@/components/Button.astro';
+import Card from '@/components/Card.astro';
+import Badge from '@/components/Badge.astro';
+---
+
+<Card title="0xKERNEL // STATUS" status="ACTIVE">
+  <div class="space-y-4">
+    <div class="flex items-center gap-2">
+      <Badge variant="crimson">● NODO_01</Badge>
+      <span class="font-mono text-xs">Núcleo térmico estabilizado</span>
+    </div>
+    <Button variant="crimson" size="md">
+      EJECUTAR PULSO
+    </Button>
+  </div>
+</Card>
+```

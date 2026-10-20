@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Badge from '../components/Badge.astro';
+import Icon from '../components/Icon.astro';
 ---
 
 <BaseLayout
@@ -74,13 +75,16 @@ import Badge from '../components/Badge.astro';
             &gt; VOLVER A LA PORTADA
           </Button>
           <Button variant="cyan" size="md" href="/#components">
-            📦 CATÁLOGO DE MÓDULOS
+            <Icon name="package" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
+            <span>CATÁLOGO DE MÓDULOS</span>
           </Button>
           <Button variant="gold" size="md" href="/#live-shell">
-            💻 ABRIR 0xSHELL
+            <Icon name="terminal" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
+            <span>ABRIR 0xSHELL</span>
           </Button>
           <Button variant="outline" size="md" href="https://github.com/Alecwce/ryukami-ui">
-            🐙 REPOSITORIO GITHUB ↗
+            <Icon name="github" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
+            <span>REPOSITORIO GITHUB ↗</span>
           </Button>
         </div>
       </div>

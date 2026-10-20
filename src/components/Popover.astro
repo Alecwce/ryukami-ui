@@ -1,4 +1,6 @@
 ---
+import Icon from './Icon.astro';
+
 export interface Props {
   id?: string;
   triggerLabel: string;
@@ -27,8 +29,9 @@ const variantClasses = {
   <button
     type="button"
     popovertarget={id}
-    class={`btn-brutal px-4 py-2 text-xs font-extrabold ${variantClasses[variant]}`}
+    class={`btn-brutal px-4 py-2 text-xs font-extrabold inline-flex items-center gap-1.5 ${variantClasses[variant]}`}
   >
+    <Icon name="search" class="w-3.5 h-3.5 shrink-0" />
     <span>{triggerLabel}</span>
     <span class="text-[10px] border border-current px-1">⊞</span>
   </button>
