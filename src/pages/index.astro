@@ -227,12 +227,12 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
       <div class="lg:col-span-7 space-y-5">
-        <h1 class="title-8bit text-4xl sm:text-5xl md:text-6xl">
+        <h1 class="title-8bit text-3xl sm:text-5xl md:text-6xl">
           <span class="text-sky-700 dark:text-scorch-cyan">RYUKAMI</span>
           <span class="text-scorch-crimson">× SCORCH</span>
         </h1>
 
-        <p class="subtitle-pixel text-xl sm:text-2xl font-bold tracking-widest">
+        <p class="subtitle-pixel text-base sm:text-xl md:text-2xl font-bold tracking-normal sm:tracking-widest">
           27 COMPONENTES RETRO TUI, CONSOLA EN VIVO &amp; CLI PARA LA WEB MODERNA
         </p>
 
@@ -340,9 +340,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <!-- 3. COMPONENT CATALOG CON PESTAÑAS [PREVIEW | CODE] (ESTILO 8BITCN) -->
   <section id="components" class="space-y-12 scroll-mt-32">
     
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 01_NÚCLEO_TUI_Y_TELEMETRÍA</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 01_NÚCLEO_TUI_Y_TELEMETRÍA</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <!-- A) BOTONES MECÁNICOS -->
@@ -497,9 +497,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 4. SUITE DE FORMULARIOS RETRO -->
   <section id="forms" class="space-y-12 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 02_SUITE_DE_FORMULARIOS</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 02_SUITE_DE_FORMULARIOS</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <!-- A) CAMPOS DE TEXTO (INPUT) -->
@@ -702,9 +702,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 5. NAVEGACIÓN INTERNA, FEEDBACK, ALERTAS, MODALES Y TOASTS -->
   <section id="alerts" class="space-y-12 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 03_NAVEGACIÓN_MODALES_Y_ALERTAS</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-sm sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 03_NAVEGACIÓN_MODALES_Y_ALERTAS</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <!-- A) PESTAÑAS MULTIVISTA TUI (TABS.ASTRO - NUEVO) -->
@@ -946,9 +946,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 6. CONSOLA INTERACTIVA EN VIVO 0xSCORCH_SHELL (NUEVO) -->
   <section id="live-shell" class="space-y-4 scroll-mt-52 sm:scroll-mt-48">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 04_CONSOLA_INTERACTIVA_0xSHELL</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-sm sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 04_CONSOLA_INTERACTIVA_0xSHELL</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
     <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Terminal TUI funcional integrada en el navegador (<code>TerminalEmulator.astro</code>). Haz clic en los botones de acceso rápido o escribe comandos como <code>neofetch</code>, <code>status</code>, <code>dragon</code>, <code>cli</code> o <code>theme</code>.
@@ -959,60 +959,62 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 7. TABLA DE DATOS TUI -->
   <section id="tables" class="space-y-4 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 05_REGISTRO_TUI_ASCII</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 05_REGISTRO_TUI_ASCII</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
-    <div class="tui-window overflow-x-auto">
+    <div class="tui-window overflow-hidden">
       <div class="tui-header">
         <span>ACTIVE_SERVICES_REGISTRY</span>
         <span>4 NODOS OPERATIVOS</span>
       </div>
-      <table class="w-full border-collapse font-mono text-xs">
-        <thead>
-          <tr class="bg-black text-white dark:bg-scorch-crimson border-b-2 border-black">
-            <th class="p-3 text-left">Módulo</th>
-            <th class="p-3 text-left">Protocolo</th>
-            <th class="p-3 text-left">Uptime</th>
-            <th class="p-3 text-left">Estado</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-black/20 dark:divide-white/20">
-          <tr class="hover:bg-scorch-crimson/10">
-            <td class="p-3 font-bold">PostgreSQL 17</td>
-            <td class="p-3">tcp://5432</td>
-            <td class="p-3">99.98%</td>
-            <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-          </tr>
-          <tr class="hover:bg-scorch-crimson/10">
-            <td class="p-3 font-bold">Redis 7.2 LTS</td>
-            <td class="p-3">tcp://6379</td>
-            <td class="p-3">100.0%</td>
-            <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-          </tr>
-          <tr class="hover:bg-scorch-crimson/10">
-            <td class="p-3 font-bold">Cloudflare Pages Edge</td>
-            <td class="p-3">https://ryukami-ui.pages.dev</td>
-            <td class="p-3">100.0%</td>
-            <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-          </tr>
-          <tr class="hover:bg-scorch-crimson/10">
-            <td class="p-3 font-bold">Open-Code Registry CDN</td>
-            <td class="p-3">https://ryukami-ui.pages.dev/r</td>
-            <td class="p-3">100.0%</td>
-            <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="overflow-x-auto w-full">
+        <table class="w-full min-w-[500px] border-collapse font-mono text-xs">
+          <thead>
+            <tr class="bg-black text-white dark:bg-scorch-crimson border-b-2 border-black">
+              <th class="p-3 text-left">Módulo</th>
+              <th class="p-3 text-left">Protocolo</th>
+              <th class="p-3 text-left">Uptime</th>
+              <th class="p-3 text-left">Estado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-black/20 dark:divide-white/20">
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">PostgreSQL 17</td>
+              <td class="p-3">tcp://5432</td>
+              <td class="p-3 font-bold text-scorch-cyan">99.98%</td>
+              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+            </tr>
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">Redis 7.2 LTS</td>
+              <td class="p-3">tcp://6379</td>
+              <td class="p-3 font-bold text-scorch-cyan">100.0%</td>
+              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+            </tr>
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">Cloudflare Pages Edge</td>
+              <td class="p-3">https://ryukami-ui.pages.dev</td>
+              <td class="p-3 font-bold text-scorch-cyan">100.0%</td>
+              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+            </tr>
+            <tr class="hover:bg-scorch-crimson/10">
+              <td class="p-3 font-bold">Open-Code Registry CDN</td>
+              <td class="p-3">https://ryukami-ui.pages.dev/r</td>
+              <td class="p-3 font-bold text-scorch-gold">99.99%</td>
+              <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 
   <!-- 8. THEME STUDIO EN VIVO -->
   <section id="theme-studio" class="space-y-4 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 06_THEME_STUDIO_EN_VIVO</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 06_THEME_STUDIO_EN_VIVO</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
     <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Personaliza en tiempo real la paleta cromática de toda la web (incluyendo la variante <strong>Crimson Soft</strong> para sesiones nocturnas largas), la física de las sombras y la densidad de la trama halftone.
@@ -1023,9 +1025,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 9. GENERADOR DE ARTE ASCII SCORCH -->
   <section id="ascii-forge" class="space-y-4 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 07_SCORCH_ASCII_FORGE</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 07_SCORCH_ASCII_FORGE</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
     <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
       Motor interactivo en navegador para forjar banners 8-bit en matriz de código ASCII o invocar el emblema del Dragón Scorch listo para copiar a tus cabeceras o terminales.
@@ -1036,9 +1038,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 10. GUÍA DE INSTALACIÓN Y ARQUITECTURA (CLI REGISTRY) -->
   <section id="install-docs" class="space-y-6 scroll-mt-32">
-    <div class="flex items-center gap-4">
-      <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 08_CLI_E_INSTALACION</h2>
-      <div class="h-0.5 bg-current flex-1"></div>
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 08_CLI_E_INSTALACION</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_#000] dark:shadow-[-4px_4px_0px_#D62436]">

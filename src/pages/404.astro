@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import Badge from '../components/Badge.astro';
+---
+
+<BaseLayout
+  title="404 // RUTA NO ENCONTRADA - Ryukami-UI"
+  description="Error 404: La coordenada solicitada no existe o ha sido incinerada por las llamas térmicas de Velgrynd."
+>
+  <div class="py-8 sm:py-16 max-w-4xl mx-auto space-y-8">
+    <!-- Ventana TUI 404 -->
+    <div class="tui-window">
+      <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
+        <span class="flex items-center gap-2">
+          <span class="inline-block w-2.5 h-2.5 bg-scorch-crimson border border-black"></span>
+          <span class="font-extrabold font-mono">0x404_KERNEL_PANIC // SCORCH_OS</span>
+        </span>
+        <div class="flex items-center gap-2">
+          <Badge variant="crimson">STATUS: 404 FAULT</Badge>
+        </div>
+      </div>
+
+      <div class="p-6 sm:p-10 bg-white dark:bg-slate-900 space-y-6">
+        <!-- Arte ASCII 404 -->
+        <div class="bg-black text-scorch-crimson p-4 sm:p-6 border-2 border-black dark:border-slate-700 overflow-x-auto shadow-[-4px_4px_0px_#D62436]">
+          <pre class="font-mono text-[11px] sm:text-xs leading-none font-extrabold select-none">
+  ██████╗  ██████╗  ██╗  ██╗
+  ██╔═══╝ ██╔═████╗ ██║  ██║
+  ███████╗██║██╔██║ ███████║
+  ╚════██║████╔╝██║ ╚════██║
+  ███████║╚██████╔╝      ██║
+  ╚══════╝ ╚═════╝       ╚═╝
+          </pre>
+          <div class="mt-3 pt-3 border-t border-red-900/60 font-mono text-[11px] text-slate-300">
+            <span class="text-scorch-gold font-bold">&gt; DIAGNÓSTICO:</span>
+            <span class="text-white"> RUTA DESCONOCIDA O INEXISTENTE EN EL NÚCLEO.</span>
+          </div>
+        </div>
+
+        <!-- Mensaje Explicativo -->
+        <div class="space-y-3 font-mono">
+          <div class="flex items-center gap-2 text-xs font-bold text-scorch-crimson">
+            <span class="w-2 h-2 bg-scorch-crimson inline-block"></span>
+            <span>[FAULT_DESCRIPTOR: 0x404_PAGE_MISSING]</span>
+          </div>
+          <h1 class="text-xl sm:text-2xl font-bold font-mono tracking-tight text-slate-900 dark:text-slate-100">
+            La ruta solicitada <span id="missing-path" class="text-scorch-cyan bg-black/10 dark:bg-white/10 px-1.5 py-0.5">/404</span> no existe o fue desintegrada.
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl">
+            Has alcanzado un sector no mapeado del sistema de archivos de Ryukami-UI. Las llamas térmicas de Velgrynd han purgado esta dirección. Puedes regresar al centro de mando o explorar los 27 componentes del catálogo.
+          </p>
+        </div>
+
+        <!-- Telemetría del Error -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 bg-slate-100 dark:bg-slate-950 border-2 border-black dark:border-slate-800 text-xs font-mono">
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">CÓDIGO HTTP</span>
+            <span class="text-scorch-crimson font-extrabold text-sm">404 NOT FOUND</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">PROTOCOLO</span>
+            <span class="text-scorch-cyan font-extrabold text-sm">CLOUDFLARE EDGE</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block text-[10px] uppercase font-bold">ACCIÓN SUGERIDA</span>
+            <span class="text-scorch-gold font-extrabold text-sm">REINICIAR TTY</span>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="flex flex-wrap items-center gap-3 pt-2">
+          <Button variant="crimson" size="md" href="/">
+            &gt; VOLVER A LA PORTADA
+          </Button>
+          <Button variant="cyan" size="md" href="/#components">
+            📦 CATÁLOGO DE MÓDULOS
+          </Button>
+          <Button variant="gold" size="md" href="/#live-shell">
+            💻 ABRIR 0xSHELL
+          </Button>
+          <Button variant="outline" size="md" href="https://github.com/Alecwce/ryukami-ui">
+            🐙 REPOSITORIO GITHUB ↗
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Reflejar la ruta no encontrada dinámicamente
+    try {
+      const el = document.getElementById('missing-path');
+      if (el && window.location.pathname) {
+        el.textContent = window.location.pathname;
+      }
+    } catch (e) {}
+  </script>
+</BaseLayout>

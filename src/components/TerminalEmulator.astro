@@ -4,11 +4,11 @@
 
 <div class="tui-window overflow-hidden font-mono text-xs scroll-mt-52 sm:scroll-mt-48" id="scorch-live-terminal">
   <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
-    <span class="flex items-center gap-2">
-      <span class="inline-block w-2.5 h-2.5 bg-emerald-400 border border-black"></span>
-      <span>0xSCORCH_SHELL // INTERACTIVE_TUI_CONSOLE (zsh 5.9)</span>
+    <span class="flex items-center gap-2 min-w-0">
+      <span class="inline-block w-2.5 h-2.5 shrink-0 bg-emerald-400 border border-black"></span>
+      <span class="truncate">0xSCORCH_SHELL <span class="hidden sm:inline">// INTERACTIVE_TUI_CONSOLE (zsh 5.9)</span></span>
     </span>
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 shrink-0">
       <span class="bg-black text-scorch-gold px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold">
         TTY1 // ROOT
       </span>
@@ -16,24 +16,24 @@
   </div>
 
   <!-- Barra de Comandos Rápidos en 1 Clic (Relative z-10 para evitar superposición) -->
-  <div class="relative z-10 px-3 py-2 bg-slate-900 text-slate-200 border-b-2 border-black dark:border-slate-800 flex flex-wrap items-center gap-2">
-    <span class="text-[10px] font-extrabold text-scorch-gold uppercase mr-1">COMANDOS RÁPIDOS:</span>
-    <button type="button" data-term-cmd="neofetch" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-crimson text-white border border-slate-600 font-bold cursor-pointer">
+  <div class="relative z-10 px-2.5 sm:px-3 py-2 bg-slate-900 text-slate-200 border-b-2 border-black dark:border-slate-800 flex flex-wrap items-center gap-1.5 sm:gap-2">
+    <span class="text-[10px] font-extrabold text-scorch-gold uppercase mr-1 w-full sm:w-auto">COMANDOS RÁPIDOS:</span>
+    <button type="button" data-term-cmd="neofetch" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-crimson text-white border border-slate-600 font-bold cursor-pointer text-[11px]">
       neofetch
     </button>
-    <button type="button" data-term-cmd="status" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-cyan hover:text-black text-white border border-slate-600 font-bold cursor-pointer">
+    <button type="button" data-term-cmd="status" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-cyan hover:text-black text-white border border-slate-600 font-bold cursor-pointer text-[11px]">
       status
     </button>
-    <button type="button" data-term-cmd="cli" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-gold hover:text-black text-white border border-slate-600 font-bold cursor-pointer">
+    <button type="button" data-term-cmd="cli" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-gold hover:text-black text-white border border-slate-600 font-bold cursor-pointer text-[11px]">
       cli
     </button>
-    <button type="button" data-term-cmd="dragon" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-crimson text-white border border-slate-600 font-bold cursor-pointer">
+    <button type="button" data-term-cmd="dragon" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-crimson text-white border border-slate-600 font-bold cursor-pointer text-[11px]">
       dragon
     </button>
-    <button type="button" data-term-cmd="theme" class="px-2 py-0.5 bg-slate-800 hover:bg-emerald-400 hover:text-black text-white border border-slate-600 font-bold cursor-pointer">
+    <button type="button" data-term-cmd="theme" class="px-2 py-0.5 bg-slate-800 hover:bg-emerald-400 hover:text-black text-white border border-slate-600 font-bold cursor-pointer text-[11px]">
       theme
     </button>
-    <button type="button" data-term-cmd="clear" class="px-2 py-0.5 bg-black hover:bg-white hover:text-black text-slate-300 border border-slate-700 font-bold cursor-pointer ml-auto">
+    <button type="button" data-term-cmd="clear" class="px-2 py-0.5 bg-black hover:bg-white hover:text-black text-slate-300 border border-slate-700 font-bold cursor-pointer text-[11px] ml-auto">
       clear
     </button>
   </div>
@@ -56,21 +56,23 @@
   <!-- Input de Comando en Vivo -->
   <form
     id="scorch-term-form"
-    class="p-2.5 bg-black border-t-2 border-black dark:border-slate-800 flex items-center gap-2"
+    class="p-2 sm:p-2.5 bg-black border-t-2 border-black dark:border-slate-800 flex flex-wrap sm:flex-nowrap items-center gap-2"
   >
-    <label for="scorch-term-input" class="text-scorch-crimson font-extrabold select-none shrink-0">
-      alex@ryukami:~#
-    </label>
-    <input
-      id="scorch-term-input"
-      type="text"
-      placeholder="Escribe un comando (help, neofetch, status, cli, dragon, theme, clear)..."
-      autocomplete="off"
-      class="w-full bg-transparent text-slate-100 font-mono text-xs outline-none placeholder:text-slate-500"
-    />
+    <div class="flex items-center gap-1.5 flex-1 min-w-[180px]">
+      <label for="scorch-term-input" class="text-scorch-crimson font-extrabold select-none shrink-0 text-xs">
+        <span class="hidden xs:inline">alex@</span>ryukami:~#
+      </label>
+      <input
+        id="scorch-term-input"
+        type="text"
+        placeholder="Escribe un comando (help, neofetch, dragon...)"
+        autocomplete="off"
+        class="w-full bg-transparent text-slate-100 font-mono text-xs outline-none placeholder:text-slate-500 min-w-0"
+      />
+    </div>
     <button
       type="submit"
-      class="px-2.5 py-1 bg-scorch-crimson text-white font-extrabold text-[11px] border border-black cursor-pointer shrink-0"
+      class="px-2.5 py-1 bg-scorch-crimson text-white font-extrabold text-[11px] border border-black cursor-pointer shrink-0 ml-auto sm:ml-0"
     >
       EJECUTAR ↵
     </button>

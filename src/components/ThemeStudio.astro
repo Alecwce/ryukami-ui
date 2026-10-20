@@ -5,14 +5,14 @@ import Badge from './Badge.astro';
 
 <div class="tui-window overflow-hidden font-mono text-xs">
   <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
-    <span class="flex items-center gap-2">
-      <span class="inline-block w-2.5 h-2.5 bg-scorch-gold border border-black"></span>
-      <span>0xTHEME_STUDIO // LIVE_TOKEN_ENGINE</span>
+    <span class="flex items-center gap-2 min-w-0">
+      <span class="inline-block w-2.5 h-2.5 shrink-0 bg-scorch-gold border border-black"></span>
+      <span class="truncate">0xTHEME_STUDIO <span class="hidden sm:inline">// LIVE_TOKEN_ENGINE</span></span>
     </span>
-    <span class="text-[10px] opacity-80">REALTIME CSS VARS</span>
+    <span class="text-[10px] opacity-80 shrink-0">REALTIME CSS</span>
   </div>
 
-  <div class="p-5 bg-white dark:bg-slate-900 space-y-6">
+  <div class="p-3.5 sm:p-5 bg-white dark:bg-slate-900 space-y-5 sm:space-y-6">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <!-- Controles Interactivos -->
       <div class="lg:col-span-7 space-y-5">
@@ -77,25 +77,25 @@ import Badge from './Badge.astro';
           <label class="block font-extrabold uppercase tracking-wider text-xs">
             // 2. FÍSICA DE SOMBRA (OFFSET IZQUIERDA-ABAJO)
           </label>
-          <div class="grid grid-cols-3 gap-2.5" id="shadow-size-group">
+          <div class="grid grid-cols-3 gap-1.5 sm:gap-2.5" id="shadow-size-group">
             <button
               type="button"
               data-shadow="-2px,2px"
-              class="shadow-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs"
+              class="shadow-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               FINA (-2px)
             </button>
             <button
               type="button"
               data-shadow="-4px,4px"
-              class="shadow-btn btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs"
+              class="shadow-btn btn-brutal bg-scorch-cyan text-black px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               ESTÁNDAR (-4px)
             </button>
             <button
               type="button"
               data-shadow="-8px,8px"
-              class="shadow-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs"
+              class="shadow-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               PESADA (-8px)
             </button>
@@ -107,25 +107,25 @@ import Badge from './Badge.astro';
           <label class="block font-extrabold uppercase tracking-wider text-xs">
             // 3. TRAMA HALFTONE DE FONDO (DITHERING)
           </label>
-          <div class="grid grid-cols-3 gap-2.5" id="dither-size-group">
+          <div class="grid grid-cols-3 gap-1.5 sm:gap-2.5" id="dither-size-group">
             <button
               type="button"
               data-dither="8px"
-              class="dither-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs"
+              class="dither-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               DENSA (8px)
             </button>
             <button
               type="button"
               data-dither="12px"
-              class="dither-btn btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs"
+              class="dither-btn btn-brutal bg-scorch-gold text-black px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               NORMAL (12px)
             </button>
             <button
               type="button"
               data-dither="20px"
-              class="dither-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs"
+              class="dither-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs"
             >
               AMPLIA (20px)
             </button>
@@ -267,9 +267,9 @@ import Badge from './Badge.astro';
         currentState.shadowY = y;
 
         document.querySelectorAll('.shadow-btn').forEach((b) => {
-          b.className = 'shadow-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs';
+          b.className = 'shadow-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs';
         });
-        btn.className = 'shadow-btn btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs';
+        btn.className = 'shadow-btn btn-brutal bg-scorch-cyan text-black px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs';
 
         applyThemeState();
       });
@@ -282,9 +282,9 @@ import Badge from './Badge.astro';
         currentState.dither = val;
 
         document.querySelectorAll('.dither-btn').forEach((b) => {
-          b.className = 'dither-btn btn-brutal bg-white dark:bg-slate-800 px-3 py-1.5 text-xs';
+          b.className = 'dither-btn btn-brutal bg-white dark:bg-slate-800 px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs';
         });
-        btn.className = 'dither-btn btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs';
+        btn.className = 'dither-btn btn-brutal bg-scorch-gold text-black px-1.5 sm:px-3 py-1.5 text-[10px] sm:text-xs';
 
         applyThemeState();
       });

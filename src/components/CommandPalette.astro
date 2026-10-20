@@ -204,15 +204,17 @@ import Kbd from './Kbd.astro';
       {
         id: 'act-copy-cli',
         category: 'CLI',
-        label: 'Copiar Comando de Instalación (pnpm create scorch-app)',
-        shortcut: 'COPY',
-        keywords: 'copiar instalar cli pnpm comando astro',
+        label: 'Copiar Instalación CLI (git clone & symlink en ~/.local/bin)',
+        shortcut: 'INSTALL',
+        keywords: 'copiar instalar cli repo git bin ryukami-ui symlink global clone',
         action: async () => {
-          await navigator.clipboard.writeText('pnpm create scorch-app --template=astro');
+          const cliInstallCmd =
+            'git clone https://github.com/Alecwce/ryukami-ui.git ~/.local/share/ryukami-ui && ln -sf ~/.local/share/ryukami-ui/bin/ryukami-ui.mjs ~/.local/bin/ryukami-ui && chmod +x ~/.local/bin/ryukami-ui';
+          await navigator.clipboard.writeText(cliInstallCmd);
           if (window.showToast) {
             window.showToast(
               'CLI COPIADO',
-              'Comando copiado al portapapeles: pnpm create scorch-app --template=astro',
+              'Flujo de instalación CLI copiado al portapapeles (git clone + symlink a ~/.local/bin)',
               'emerald'
             );
           }

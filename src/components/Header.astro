@@ -42,7 +42,7 @@ import Kbd from './Kbd.astro';
       </a>
     </div>
 
-    <div class="flex flex-wrap items-center gap-3">
+    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
       <!-- Nav Links -->
       <nav aria-label="Navegación principal" class="hidden lg:flex items-center gap-3.5 text-xs font-bold uppercase">
         <a href="#components" class="hover:text-scorch-crimson hover:underline">[01_CORE]</a>
@@ -57,7 +57,7 @@ import Kbd from './Kbd.astro';
         href="https://github.com/Alecwce/ryukami-ui"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-brutal bg-black text-white dark:bg-white dark:text-black px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5"
+        class="btn-brutal bg-black text-white dark:bg-white dark:text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold inline-flex items-center gap-1.5"
         aria-label="Repositorio oficial en GitHub"
         title="Ver repositorio en GitHub (Alecwce/ryukami-ui)"
       >
@@ -68,19 +68,19 @@ import Kbd from './Kbd.astro';
       </a>
 
       <!-- Botón Command Palette -->
-      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-3 py-1.5 text-xs font-bold">
+      <button type="button" onclick="window.openPalette && window.openPalette()" class="btn-brutal bg-scorch-cyan text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold">
         <span aria-hidden="true">⌨️</span>
         <span>CMD+K</span>
       </button>
 
       <!-- Toggle Audio -->
-      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-3 py-1.5 text-xs font-bold" id="sound-btn">
+      <button type="button" onclick="window.toggleSound && window.toggleSound()" class="btn-brutal bg-slate-100 dark:bg-slate-800 px-2.5 sm:px-3 py-1.5 text-xs font-bold" id="sound-btn">
         <span id="sound-icon" aria-hidden="true">🔇</span>
         <span id="sound-label">SND: OFF</span>
       </button>
 
       <!-- Toggle Theme -->
-      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-3 py-1.5 text-xs font-bold" id="theme-btn">
+      <button type="button" onclick="window.toggleTheme && window.toggleTheme()" class="btn-brutal bg-scorch-gold text-black px-2.5 sm:px-3 py-1.5 text-xs font-bold" id="theme-btn">
         <span id="theme-icon" aria-hidden="true">☀️</span>
         <span id="theme-label">PAPER</span>
       </button>

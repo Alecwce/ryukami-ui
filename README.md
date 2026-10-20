@@ -58,6 +58,20 @@ ryukami-ui info command-palette
 ryukami-ui add button --registry https://ryukami-ui.pages.dev/r
 ```
 
+### 5. Nota sobre Cloudflare Bot Fight Mode & Acceso Automatizado a `/r/*.json`
+
+Los endpoints JSON en `https://ryukami-ui.pages.dev/r/*.json` cuentan con cabeceras `Access-Control-Allow-Origin: *` y están disponibles para consumo web y terminal.
+
+> [!NOTE]
+> **Error HTTP 403 (Error 1010 de Cloudflare)**: Si intentas consumir los archivos JSON usando librerías de scraping o clientes HTTP sin un User-Agent de navegador (por ejemplo `curl` sin cabeceras o librerías estándar como `Python-urllib/*`), el sistema de seguridad en el Edge de Cloudflare (**Browser Integrity Check / Bot Fight Mode**) interceptará la conexión respondiendo con código `403 Forbidden` (`error code: 1010`).
+>
+> **Cómo resolverlo:**
+> - **En scripts y automatizaciones:** Especifica siempre una cabecera `User-Agent` descriptiva (el CLI nativo `ryukami-ui` en Node.js y navegadores acceden con código 200 sin problemas):
+>   ```bash
+>   curl -A "Ryukami-CLI/2.3.0" https://ryukami-ui.pages.dev/r/registry.json
+>   ```
+> - **En el panel de Cloudflare (Dashboard):** Si deseas permitir clientes sin User-Agent, ve a **Security > Bots** en Cloudflare Dashboard y desactiva *Bot Fight Mode*, o crea una regla WAF personalizada para la ruta `/r/*`. Esta configuración opera a nivel de proxy DNS/WAF y no puede alterarse únicamente desde el repositorio estático.
+
 ---
 
 ## 🏛️ Reglas de Diseño (Scorch Design System v4.1)
