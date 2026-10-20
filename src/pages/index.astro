@@ -223,7 +223,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
       <Badge variant="crimson">v2.3.0 // 27 MODULES + CLI</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
-      <Badge variant="gold">LIGHTHOUSE 95 / 97 / 100 / 100</Badge>
+      <Badge variant="gold">LIGHTHOUSE 96 / 100 / 100 / 100</Badge>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
@@ -271,7 +271,8 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
               width="800"
               height="447"
               fetchpriority="high"
-              decoding="async"
+              loading="eager"
+              decoding="sync"
               class="w-full h-auto aspect-[800/447] border-2 border-black shadow-[-4px_4px_0px_#D62436]"
             />
           </picture>
@@ -729,7 +730,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
               id: 'astro',
               label: '01 // ASTRO 7.4',
               badge: 'SSG',
-              content: 'Compilación estática ultrarrápida impulsada por Vite 8 y Rolldown. Cero JavaScript innecesario en el cliente y 100/100 en Lighthouse.',
+              content: 'Compilación estática ultrarrápida impulsada por Vite 8 y Rolldown. Cero JavaScript innecesario en el cliente y alto rendimiento auditado en Lighthouse.',
               code: '$ ryukami-ui init && ryukami-ui add button card tabs accordion',
             },
             {
@@ -777,9 +778,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
               content: 'Al ejecutar "ryukami-ui add <componente>", el CLI lee el registro JSON estático (/r/<componente>.json), resuelve sus dependencias internas e inyecta el archivo .astro directamente en tu carpeta src/components/.',
             },
             {
-              title: '¿Cómo logra 100/100 en Performance y Accessibility en Lighthouse?',
-              badge: 'CWV 100%',
-              content: 'Imágenes WebP responsivas con preload, 0 KiB de bundles JS externos, animaciones exclusivas en GPU (transform) y contraste cromático calibrado a #D62436 (5.04:1 WCAG AA).',
+              title: '¿Cómo logra puntuaciones de élite en Performance y Accessibility en Lighthouse?',
+              badge: 'CWV AUDITED',
+              content: 'Imágenes WebP responsivas con preload y fetchpriority="high", 0 KiB de bundles JS externos, animaciones exclusivas en GPU (transform) y contraste cromático calibrado WCAG AA (>= 4.5:1).',
             },
           ]}
         />
@@ -990,25 +991,25 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             <tr class="hover:bg-scorch-crimson/10">
               <td class="p-3 font-bold">PostgreSQL 17</td>
               <td class="p-3">tcp://5432</td>
-              <td class="p-3 font-bold text-scorch-cyan">99.98%</td>
+              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">99.98%</td>
               <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
             </tr>
             <tr class="hover:bg-scorch-crimson/10">
               <td class="p-3 font-bold">Redis 7.2 LTS</td>
               <td class="p-3">tcp://6379</td>
-              <td class="p-3 font-bold text-scorch-cyan">100.0%</td>
+              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">100.0%</td>
               <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
             </tr>
             <tr class="hover:bg-scorch-crimson/10">
               <td class="p-3 font-bold">Cloudflare Pages Edge</td>
               <td class="p-3">https://ryukami-ui.pages.dev</td>
-              <td class="p-3 font-bold text-scorch-cyan">100.0%</td>
+              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">100.0%</td>
               <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
             </tr>
             <tr class="hover:bg-scorch-crimson/10">
               <td class="p-3 font-bold">Open-Code Registry CDN</td>
               <td class="p-3">https://ryukami-ui.pages.dev/r</td>
-              <td class="p-3 font-bold text-scorch-gold">99.99%</td>
+              <td class="p-3 font-bold text-amber-800 dark:text-scorch-gold">99.99%</td>
               <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
             </tr>
           </tbody>

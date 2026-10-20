@@ -49,7 +49,7 @@ const {
   <meta name="twitter:image" content="https://ryukami-ui.pages.dev/scorch-dragon-banner.jpg" />
   <meta name="twitter:image:alt" content="Ryukami-UI // Retro TUI & Neo-Brutalism Component Library" />
 
-  <!-- Preload LCP Banner Asset (WebP) -->
+  <!-- Preload LCP Banner Asset (WebP) with fetchpriority="high" -->
   <link
     rel="preload"
     as="image"
@@ -60,19 +60,44 @@ const {
     fetchpriority="high"
   />
 
-  <!-- Google Fonts Non-Blocking Load -->
+  <!-- Preconnect to Google Fonts Domains -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Preload Critical Google Fonts (WOFF2) for Instant Render & Zero CLS -->
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href="https://fonts.gstatic.com/s/tiny5/v3/KFOpCnmCvdGT7iw5xUk.woff2"
+    crossorigin
+  />
+
+  <!-- Google Fonts with display=optional to eliminate layout shifts -->
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap"
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=optional"
     media="print"
     onload="this.media='all'"
   />
   <noscript>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=optional"
     />
   </noscript>
 </head>

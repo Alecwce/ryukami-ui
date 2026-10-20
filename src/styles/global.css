@@ -19,9 +19,19 @@
   --shadow-brutal-lg: -6px 6px 0px 0px var(--shadow-color, #000000);
   --shadow-brutal-xl: -8px 8px 0px 0px var(--shadow-color, #000000);
 
-  --font-pixel: 'Press Start 2P', 'VT323', monospace;
+  --font-pixel: 'Press Start 2P', 'Press Start 2P Fallback', 'VT323', monospace;
   --font-sub: 'Tiny5', 'VT323', monospace;
   --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Fallback métrico calibrado para Press Start 2P (Zero Layout Shift) */
+@font-face {
+  font-family: 'Press Start 2P Fallback';
+  src: local('Courier New'), local('monospace');
+  ascent-override: 80%;
+  descent-override: 20%;
+  line-gap-override: 0%;
+  size-adjust: 65%;
 }
 
 :root {
@@ -85,7 +95,7 @@ body {
 
 /* Tipografía Display */
 .title-8bit {
-  font-family: 'Press Start 2P', 'VT323', monospace;
+  font-family: 'Press Start 2P', 'Press Start 2P Fallback', 'VT323', monospace;
   text-transform: uppercase;
   -webkit-text-stroke: 1.5px #000000;
   text-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px #000000;
