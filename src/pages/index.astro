@@ -39,7 +39,7 @@ const buttonSnippet = `import Button from '@/components/Button.astro';
 const badgeSnippet = `import Badge from '@/components/Badge.astro';
 
 <Badge variant="crimson">● SYSTEM_ALERT</Badge>
-<Badge variant="cyan">◆ REA_ENGINEERING</Badge>
+<Badge variant="cyan">◆ RE_ENGINEERING</Badge>
 <Badge variant="gold">★ VELGRYND_CORE</Badge>
 <Badge variant="dark">TS TYPESCRIPT 7</Badge>
 <Badge variant="outline">POSTGRESQL 17</Badge>`;
@@ -193,16 +193,22 @@ import Button from '@/components/Button.astro';
   <p>Diagnóstico cuántico completado sin anomalías.</p>
 </Modal>`;
 
-const installAstroSnippet = `# 1. Inicializar tokens CSS (Tailwind v4) y ryukami.json en tu proyecto
+const installAstroSnippet = `# 1. Obtener el CLI desde el repositorio de GitHub (bin/ryukami-ui.mjs)
+# Se instala en ~/.local/bin/ryukami-ui para usarlo como comando global:
+git clone https://github.com/Alecwce/ryukami-ui.git ~/.local/share/ryukami-ui
+ln -sf ~/.local/share/ryukami-ui/bin/ryukami-ui.mjs ~/.local/bin/ryukami-ui
+chmod +x ~/.local/bin/ryukami-ui
+
+# 2. Inicializar tokens CSS (Tailwind v4) y ryukami.json en tu proyecto
 ryukami-ui init --dir ./mi-proyecto-astro
 
-# 2. Listar los 27 componentes disponibles en el registro
+# 3. Listar los 27 componentes disponibles en el registro
 ryukami-ui list
 
-# 3. Instalar componentes específicos (resuelve dependencias automáticamente)
+# 4. Instalar componentes específicos (resuelve dependencias automáticamente)
 ryukami-ui add button card avatar skeleton textarea radio-group breadcrumb pagination popover --dir ./mi-proyecto-astro
 
-# 4. O instalar los 27 componentes del catálogo de una sola vez
+# 5. O instalar los 27 componentes del catálogo de una sola vez
 ryukami-ui add --all --dir ./mi-proyecto-astro`;
 ---
 
@@ -373,7 +379,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       <ComponentPreview title="BADGE_STATUS" code={badgeSnippet} status="ASCII READY" cli="ryukami-ui add badge">
         <div class="flex flex-wrap items-center gap-3 py-2">
           <Badge variant="crimson">● SYSTEM_ALERT</Badge>
-          <Badge variant="cyan">◆ REA_ENGINEERING</Badge>
+          <Badge variant="cyan">◆ RE_ENGINEERING</Badge>
           <Badge variant="gold">★ VELGRYND_CORE</Badge>
           <Badge variant="dark">TS TYPESCRIPT 7</Badge>
           <Badge variant="outline">POSTGRESQL 17</Badge>
@@ -524,7 +530,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             label="Clave Maestra"
             type="password"
             placeholder="••••••••••••"
-            hint="Token encriptado con SHA-256"
+            hint="Token cifrado con SHA-256"
           />
           <Input
             label="Campo con Error de Validación"
@@ -939,7 +945,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 6. CONSOLA INTERACTIVA EN VIVO 0xSCORCH_SHELL (NUEVO) -->
-  <section id="live-shell" class="space-y-4 scroll-mt-32">
+  <section id="live-shell" class="space-y-4 scroll-mt-52 sm:scroll-mt-48">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 04_CONSOLA_INTERACTIVA_0xSHELL</h2>
       <div class="h-0.5 bg-current flex-1"></div>
@@ -986,9 +992,15 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
           </tr>
           <tr class="hover:bg-scorch-crimson/10">
-            <td class="p-3 font-bold">DevLink Shortener</td>
-            <td class="p-3">https://devlink.bot-keep.xyz</td>
-            <td class="p-3">99.95%</td>
+            <td class="p-3 font-bold">Cloudflare Pages Edge</td>
+            <td class="p-3">https://ryukami-ui.pages.dev</td>
+            <td class="p-3">100.0%</td>
+            <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
+          </tr>
+          <tr class="hover:bg-scorch-crimson/10">
+            <td class="p-3 font-bold">Open-Code Registry CDN</td>
+            <td class="p-3">https://ryukami-ui.pages.dev/r</td>
+            <td class="p-3">100.0%</td>
             <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
           </tr>
         </tbody>
@@ -1023,36 +1035,64 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 10. GUÍA DE INSTALACIÓN Y ARQUITECTURA (CLI REGISTRY) -->
-  <section id="install-docs" class="space-y-4 scroll-mt-32">
+  <section id="install-docs" class="space-y-6 scroll-mt-32">
     <div class="flex items-center gap-4">
       <h2 class="subtitle-pixel text-2xl sm:text-3xl font-bold">// 08_CLI_E_INSTALACION</h2>
       <div class="h-0.5 bg-current flex-1"></div>
     </div>
-    <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-      Instala cualquiera de los <strong>27 componentes</strong> directamente desde la terminal con el CLI oficial <code>ryukami-ui</code> (estilo <code>shadcn</code> / <code>8bitcn</code>) o consúmelos desde el registro estático <a href="/r/registry.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/registry.json</a>.
-    </p>
+
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_#000] dark:shadow-[-4px_4px_0px_#D62436]">
+      <div class="space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
+          <span class="font-extrabold uppercase font-mono text-xs text-scorch-crimson">// FUENTE ABIERTA &amp; BINARIO</span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+          El CLI vive en <code class="bg-black/10 dark:bg-white/10 px-1 py-0.5 font-bold">bin/ryukami-ui.mjs</code> del repositorio y se instala en <code class="bg-black/10 dark:bg-white/10 px-1 py-0.5 font-bold">~/.local/bin/ryukami-ui</code> para acceso global.
+        </p>
+      </div>
+      <a
+        href="https://github.com/Alecwce/ryukami-ui"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-brutal bg-black text-white dark:bg-white dark:text-black px-4 py-2 text-xs font-extrabold inline-flex items-center gap-2 shrink-0 self-start md:self-auto"
+        title="Ver repositorio oficial en GitHub"
+      >
+        <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+        </svg>
+        <span>GITHUB: Alecwce/ryukami-ui ↗</span>
+      </a>
+    </div>
 
     <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.3" cli="ryukami-ui init">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="crimson">PASO 01 // INIT</Badge>
+          <Badge variant="crimson">PASO 00 // OBTENER</Badge>
+          <h3 class="font-extrabold uppercase text-sm">git clone &amp; link</h3>
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
+            El CLI vive en <code>bin/ryukami-ui.mjs</code>. Clona el repo y enlázalo a <code>~/.local/bin/ryukami-ui</code> para usarlo como binario global en tu terminal.
+          </p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
+          <Badge variant="cyan">PASO 01 // INIT</Badge>
           <h3 class="font-extrabold uppercase text-sm">ryukami-ui init</h3>
-          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Inyecta automáticamente <code>src/styles/global.css</code> con los tokens Tailwind v4 y genera <code>ryukami.json</code>.
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
+            Inyecta automáticamente <code>src/styles/global.css</code> con los tokens de Tailwind v4 y genera el manifiesto local <code>ryukami.json</code>.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="cyan">PASO 02 // ADD</Badge>
+          <Badge variant="gold">PASO 02 // ADD</Badge>
           <h3 class="font-extrabold uppercase text-sm">ryukami-ui add &lt;comp&gt;</h3>
-          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Descarga e instala los componentes solicitados (y sus dependencias internas) directo en <code>src/components/</code>.
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
+            Descarga e inyecta los componentes solicitados y resuelve sus dependencias internas directamente en <code>src/components/</code>.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="gold">PASO 03 // REGISTRY</Badge>
+          <Badge variant="dark">PASO 03 // REGISTRY</Badge>
           <h3 class="font-extrabold uppercase text-sm">/r/&lt;comp&gt;.json</h3>
-          <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
-            Los 27 módulos exponen su propio endpoint JSON estático en <code>public/r/</code> listo para consumirse local o remotamente.
+          <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
+            Los 27 módulos exponen su propio endpoint JSON estático en <code>public/r/</code> para consumirse local o remotamente vía CDN.
           </p>
         </div>
       </div>

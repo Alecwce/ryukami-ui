@@ -2,7 +2,7 @@
 // Consola Interactiva en Vivo 0xSCORCH_SHELL
 ---
 
-<div class="tui-window overflow-hidden font-mono text-xs" id="scorch-live-terminal">
+<div class="tui-window overflow-hidden font-mono text-xs scroll-mt-52 sm:scroll-mt-48" id="scorch-live-terminal">
   <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
     <span class="flex items-center gap-2">
       <span class="inline-block w-2.5 h-2.5 bg-emerald-400 border border-black"></span>
@@ -15,8 +15,8 @@
     </div>
   </div>
 
-  <!-- Barra de Comandos Rápidos en 1 Clic -->
-  <div class="px-3 py-2 bg-slate-900 text-slate-200 border-b-2 border-black dark:border-slate-800 flex flex-wrap items-center gap-2">
+  <!-- Barra de Comandos Rápidos en 1 Clic (Relative z-10 para evitar superposición) -->
+  <div class="relative z-10 px-3 py-2 bg-slate-900 text-slate-200 border-b-2 border-black dark:border-slate-800 flex flex-wrap items-center gap-2">
     <span class="text-[10px] font-extrabold text-scorch-gold uppercase mr-1">COMANDOS RÁPIDOS:</span>
     <button type="button" data-term-cmd="neofetch" class="px-2 py-0.5 bg-slate-800 hover:bg-scorch-crimson text-white border border-slate-600 font-bold cursor-pointer">
       neofetch
