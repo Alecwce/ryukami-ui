@@ -37,52 +37,52 @@ import Icon from './Icon.astro';
         <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider shrink-0 select-none">
           RYUKAMI // UI
         </span>
-        <span class="hidden lg:inline text-xs sm:text-sm font-bold tracking-tight text-slate-600 dark:text-slate-400 truncate">
+        <span class="hidden xl:inline text-xs sm:text-sm font-bold tracking-tight text-slate-600 dark:text-slate-400 truncate">
           ~/scorch-components
         </span>
       </a>
     </div>
 
-    <!-- Nav Links con ScrollSpy (Oculto bajo md) -->
+    <!-- Nav Links con ScrollSpy (Oculto bajo lg, visible en escritorio) -->
     <nav
       aria-label="Navegación principal"
       id="header-nav-list"
-      class="hidden md:flex items-center gap-1 lg:gap-1.5 text-xs font-bold uppercase shrink-0"
+      class="hidden lg:flex items-center gap-1 lg:gap-1.5 text-xs font-bold uppercase shrink-0"
     >
       <a
         href="#components"
         data-header-nav="components"
-        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+        class="header-nav-link px-1.5 lg:px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
       >
         [01_CORE]
       </a>
       <a
         href="#forms"
         data-header-nav="forms"
-        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+        class="header-nav-link px-1.5 lg:px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
       >
         [02_FORMS]
       </a>
       <a
         href="#alerts"
         data-header-nav="alerts"
-        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+        class="header-nav-link px-1.5 lg:px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
       >
         [03_MODALS]
       </a>
       <a
         href="#theme-studio"
         data-header-nav="theme-studio"
-        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+        class="header-nav-link px-1.5 lg:px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
       >
-        [04_STUDIO]
+        [06_STUDIO]
       </a>
       <a
         href="#ascii-forge"
         data-header-nav="ascii-forge"
-        class="header-nav-link px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
+        class="header-nav-link px-1.5 lg:px-2 py-1 transition-colors border border-transparent hover:text-scorch-crimson"
       >
-        [05_ASCII]
+        [07_ASCII]
       </a>
     </nav>
 
@@ -93,31 +93,31 @@ import Icon from './Icon.astro';
         href="https://github.com/Alecwce/ryukami-ui"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-black text-white dark:bg-white dark:text-black shrink-0"
+        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-black text-white dark:bg-white dark:text-black shrink-0"
         aria-label="Repositorio oficial en GitHub"
         title="Ver repositorio en GitHub (Alecwce/ryukami-ui)"
       >
         <Icon name="github" class="w-3.5 h-3.5 block shrink-0" />
-        <span class="hidden sm:inline leading-none">GITHUB</span>
+        <span class="hidden xl:inline leading-none">GITHUB</span>
       </a>
 
       <!-- Botón Command Palette -->
       <button
         type="button"
         onclick="window.openPalette && window.openPalette()"
-        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-cyan text-black shrink-0"
+        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-cyan text-black shrink-0"
         title="Abrir paleta de comandos (Ctrl+K)"
         aria-label="Abrir paleta de comandos (Ctrl+K)"
       >
         <Icon name="command" class="w-3.5 h-3.5 block shrink-0" />
-        <span class="hidden sm:inline leading-none">CMD+K</span>
+        <span class="hidden xl:inline leading-none">CMD+K</span>
       </button>
 
       <!-- Toggle Audio -->
       <button
         type="button"
         onclick="window.toggleSound && window.toggleSound()"
-        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-black dark:text-white shrink-0"
+        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-black dark:text-white shrink-0"
         id="sound-btn"
         title="Alternar sintetizador de sonido"
         aria-label="Alternar sintetizador de sonido"
@@ -126,14 +126,14 @@ import Icon from './Icon.astro';
           <span id="sound-icon-off" class="block"><Icon name="volume-x" class="w-3.5 h-3.5 block shrink-0" /></span>
           <span id="sound-icon-on" class="hidden"><Icon name="volume-2" class="w-3.5 h-3.5 block shrink-0" /></span>
         </span>
-        <span id="sound-label" class="hidden sm:inline leading-none">SND: OFF</span>
+        <span id="sound-label" class="hidden xl:inline leading-none">SND: OFF</span>
       </button>
 
       <!-- Toggle Theme -->
       <button
         type="button"
         onclick="window.toggleTheme && window.toggleTheme()"
-        class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-gold text-black shrink-0"
+        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2.5 text-xs font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-gold text-black shrink-0"
         id="theme-btn"
         title="Alternar modo claro / modo oscuro"
         aria-label="Alternar modo claro / modo oscuro"
@@ -142,7 +142,7 @@ import Icon from './Icon.astro';
           <span id="theme-icon-sun" class="block"><Icon name="sun" class="w-3.5 h-3.5 block shrink-0" /></span>
           <span id="theme-icon-moon" class="hidden"><Icon name="moon" class="w-3.5 h-3.5 block shrink-0" /></span>
         </span>
-        <span id="theme-label" class="hidden sm:inline leading-none">PAPER</span>
+        <span id="theme-label" class="hidden xl:inline leading-none">PAPER</span>
       </button>
     </div>
   </div>
@@ -178,15 +178,40 @@ import Icon from './Icon.astro';
       });
     }
 
+    function scrollToSection(targetId) {
+      const targetEl = document.getElementById(targetId);
+      if (!targetEl) return;
+
+      const header = document.querySelector('header.sticky');
+      const headerHeight = header ? header.getBoundingClientRect().height : 92;
+      const headerTop = header ? (parseFloat(window.getComputedStyle(header).top) || 16) : 16;
+      const totalOffset = headerTop + headerHeight + 12;
+
+      const elementPos = targetEl.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: Math.max(0, elementPos - totalOffset),
+        behavior: 'smooth',
+      });
+
+      setActive(targetId);
+      history.replaceState(null, '', `#${targetId}`);
+    }
+
     links.forEach((link) => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
         const targetId = link.getAttribute('data-header-nav');
         if (targetId) {
-          setActive(targetId);
+          e.preventDefault();
           if (window.playMechanicalClick) window.playMechanicalClick();
+          scrollToSection(targetId);
         }
       });
     });
+
+    const initialHash = window.location.hash ? window.location.hash.slice(1) : '';
+    if (initialHash && targetIds.includes(initialHash)) {
+      setActive(initialHash);
+    }
 
     const sections = targetIds.map((id) => document.getElementById(id)).filter(Boolean);
     if ('IntersectionObserver' in window && sections.length > 0) {
@@ -200,7 +225,7 @@ import Icon from './Icon.astro';
           }
         },
         {
-          rootMargin: '-100px 0px -60% 0px',
+          rootMargin: '-110px 0px -60% 0px',
           threshold: 0.05,
         }
       );

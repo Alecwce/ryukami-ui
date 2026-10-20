@@ -219,7 +219,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 >
 
   <!-- 1. HERO SHOWCASE -->
-  <section id="hero" class="space-y-6 text-center md:text-left scroll-mt-32">
+  <section id="hero" class="space-y-6 text-center md:text-left">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
       <Badge variant="crimson">v2.3.0 // 27 MODULES + CLI</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
@@ -342,7 +342,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     <div class="lg:col-span-9 space-y-16 min-w-0">
 
   <!-- 3. COMPONENT CATALOG CON PESTAÑAS [PREVIEW | CODE] (ESTILO 8BITCN) -->
-  <section id="components" class="space-y-12 scroll-mt-32">
+  <section id="components" class="space-y-12">
     
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 01_NÚCLEO_TUI_Y_TELEMETRÍA</h2>
@@ -350,7 +350,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- A) BOTONES MECÁNICOS -->
-    <div id="comp-button" class="space-y-4 scroll-mt-32">
+    <div id="comp-button" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Botones Mecánicos (Button.astro)</h3>
@@ -371,7 +371,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- B) BADGES Y PASTILLAS TUI -->
-    <div id="comp-badge" class="space-y-4 scroll-mt-32">
+    <div id="comp-badge" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Badges y Pastillas (Badge.astro)</h3>
@@ -392,7 +392,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- C) VENTANAS TUI CON CONTROLES RETRO INTERACTIVOS -->
-    <div id="comp-card" class="space-y-4 scroll-mt-32">
+    <div id="comp-card" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Ventanas de Consola TUI Interactivas (Card.astro)</h3>
@@ -431,7 +431,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- D) BARRAS DE PROGRESO Y TELEMETRÍA BIOS (NUEVO) -->
-    <div id="comp-progress" class="space-y-4 scroll-mt-32">
+    <div id="comp-progress" class="space-y-4">
       <div class="flex items-center justify-between flex-wrap gap-2">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 bg-emerald-500 border border-black"></span>
@@ -461,7 +461,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- E) AVATARES DE OPERADOR, SKELETON BUFFERS Y TECLAS KBD (NUEVO) -->
-    <div id="comp-avatar" class="space-y-4 scroll-mt-32">
+    <div id="comp-avatar" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Avatares de Operador, Skeletons &amp; Teclas (Avatar.astro &amp; Skeleton.astro)</h3>
@@ -479,7 +479,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
               <Avatar name="Velgrynd Core" role="AI SENTINEL" initials="VG" status="BUSY" variant="gold" />
               <Avatar name="Node_02 Relay" role="EDGE DAEMON" initials="N2" status="IDLE" variant="cyan" />
             </div>
-            <div id="comp-kbd" class="pt-2 flex flex-wrap items-center gap-2 text-xs font-mono scroll-mt-32">
+            <div id="comp-kbd" class="pt-2 flex flex-wrap items-center gap-2 text-xs font-mono">
               <span class="font-bold text-slate-700 dark:text-slate-300">Atajos Kbd:</span>
               <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
               <span class="mx-1">|</span>
@@ -501,14 +501,14 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 4. SUITE DE FORMULARIOS RETRO -->
-  <section id="forms" class="space-y-12 scroll-mt-32">
+  <section id="forms" class="space-y-12">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 02_SUITE_DE_FORMULARIOS</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <!-- A) CAMPOS DE TEXTO (INPUT) -->
-    <div id="comp-input" class="space-y-4 scroll-mt-32">
+    <div id="comp-input" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Campos de Entrada (Input.astro)</h3>
@@ -547,7 +547,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- B) SELECTORES DESPLEGABLES Y SLIDERS ASCII (NUEVO) -->
-    <div id="comp-select" class="space-y-4 scroll-mt-32">
+    <div id="comp-select" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Selectores TUI &amp; Sliders ASCII (Select.astro &amp; Slider.astro)</h3>
@@ -606,7 +606,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- C) CHECKBOXES Y SWITCHES -->
-    <div id="comp-checkbox" class="space-y-4 scroll-mt-32">
+    <div id="comp-checkbox" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Interruptores y Casillas (Switch &amp; Checkbox)</h3>
@@ -637,7 +637,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             </div>
           </div>
 
-          <div id="comp-switch" class="space-y-4 scroll-mt-32">
+          <div id="comp-switch" class="space-y-4">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Switches Deslizantes</h4>
             <div class="space-y-4">
               <div>
@@ -656,7 +656,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- D) EDITOR TEXTAREA MULTILÍNEA Y RADIO GROUPS TUI (NUEVO) -->
-    <div id="comp-textarea" class="space-y-4 scroll-mt-32">
+    <div id="comp-textarea" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Buffer Multilínea &amp; Radio Groups (Textarea.astro &amp; RadioGroup.astro)</h3>
@@ -706,14 +706,14 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 5. NAVEGACIÓN INTERNA, FEEDBACK, ALERTAS, MODALES Y TOASTS -->
-  <section id="alerts" class="space-y-12 scroll-mt-32">
+  <section id="alerts" class="space-y-12">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-sm sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 03_NAVEGACIÓN_MODALES_Y_ALERTAS</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
     <!-- A) PESTAÑAS MULTIVISTA TUI (TABS.ASTRO - NUEVO) -->
-    <div id="comp-tabs" class="space-y-4 scroll-mt-32">
+    <div id="comp-tabs" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Pestañas Multivista TUI (Tabs.astro)</h3>
@@ -753,7 +753,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- B) ACORDEÓN EXCLUSIVO NATIVO HTML5 (ACCORDION.ASTRO - NUEVO) -->
-    <div id="comp-accordion" class="space-y-4 scroll-mt-32">
+    <div id="comp-accordion" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Acordeón Exclusivo HTML5 (Accordion.astro)</h3>
@@ -788,7 +788,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- B.2) BREADCRUMB UNIX Y PAGINACIÓN MECÁNICA (NUEVO) -->
-    <div id="comp-nav-primitives" class="space-y-4 scroll-mt-32">
+    <div id="comp-nav-primitives" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Rutas Unix &amp; Paginación TUI (Breadcrumb.astro &amp; Pagination.astro)</h3>
@@ -820,7 +820,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- C) CALLOUTS Y ALERTAS DE SISTEMA -->
-    <div id="comp-alert" class="space-y-4 scroll-mt-32">
+    <div id="comp-alert" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Alertas y Callouts (Alert.astro)</h3>
@@ -851,7 +851,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     </div>
 
     <!-- D) TOASTS FLOTANTES, POPOVER NATIVO, MODAL Y COMMAND PALETTE -->
-    <div id="comp-toast" class="space-y-4 scroll-mt-32">
+    <div id="comp-toast" class="space-y-4">
       <div class="flex items-center gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
         <h3 class="font-extrabold text-lg uppercase font-mono">Toasts, Popover HTML5, Modales &amp; Command Palette</h3>
@@ -897,7 +897,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             </div>
           </div>
 
-          <div id="comp-modal" class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2 scroll-mt-32">
+          <div id="comp-modal" class="border-t-2 border-black/20 dark:border-white/20 pt-4 space-y-2">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 2. Consola Modal HTML5, Popover Top-Layer &amp; Command Palette (Ctrl+K)</h4>
             <div class="flex flex-wrap items-center gap-3">
               <Button
@@ -953,7 +953,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 6. CONSOLA INTERACTIVA EN VIVO 0xSCORCH_SHELL (NUEVO) -->
-  <section id="live-shell" class="space-y-4 scroll-mt-52 sm:scroll-mt-48">
+  <section id="live-shell" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-sm sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 04_CONSOLA_INTERACTIVA_0xSHELL</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
@@ -966,7 +966,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 7. TABLA DE DATOS TUI -->
-  <section id="tables" class="space-y-4 scroll-mt-32">
+  <section id="tables" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 05_REGISTRO_TUI_ASCII</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
@@ -1019,7 +1019,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 8. THEME STUDIO EN VIVO -->
-  <section id="theme-studio" class="space-y-4 scroll-mt-32">
+  <section id="theme-studio" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 06_THEME_STUDIO_EN_VIVO</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
@@ -1032,7 +1032,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 9. GENERADOR DE ARTE ASCII SCORCH -->
-  <section id="ascii-forge" class="space-y-4 scroll-mt-32">
+  <section id="ascii-forge" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 07_SCORCH_ASCII_FORGE</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
@@ -1045,7 +1045,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 10. GUÍA DE INSTALACIÓN Y ARQUITECTURA (CLI REGISTRY) -->
-  <section id="install-docs" class="space-y-6 scroll-mt-32">
+  <section id="install-docs" class="space-y-6">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 08_CLI_E_INSTALACION</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
@@ -1110,7 +1110,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 11. ATAJOS DE TECLADO KBD -->
-  <section id="shortcuts" class="space-y-4 pb-8 scroll-mt-32">
+  <section id="shortcuts" class="space-y-4 pb-8">
     <Card title="KEYBOARD_SHORTCUTS" status="ACCESSIBILITY">
       <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
         <div class="flex items-center gap-1.5">
