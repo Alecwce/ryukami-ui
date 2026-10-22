@@ -54,7 +54,7 @@
     toast.setAttribute('role', 'status');
     toast.setAttribute('aria-atomic', 'true');
     toast.className =
-      'pointer-events-auto bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-200 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none overflow-hidden transition-all duration-150 translate-y-2 opacity-0';
+      'pointer-events-auto bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-200 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none overflow-hidden transition-[transform,opacity] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] translate-y-2 opacity-0';
 
     const timestamp = new Date().toLocaleTimeString('es-PE', { hour12: false });
 
@@ -97,12 +97,50 @@
       }, 150);
     };
 
-    const timer = setTimeout(removeToast, duration);
+    // Principio Sonner (Emil Kowalski): Pausar temporizador en hover y cuando la pestaña esté oculta
+    let remaining = duration;
+    let startTime = Date.now();
+    let isPaused = false;
+    let timer = setTimeout(removeToast, remaining);
+
+    const pauseTimer = () => {
+      if (isPaused) return;
+      isPaused = true;
+      clearTimeout(timer);
+      remaining = Math.max(0, remaining - (Date.now() - startTime));
+      const bar = toast.querySelector('.toast-progress');
+      if (bar) bar.style.transition = 'none';
+    };
+
+    const resumeTimer = () => {
+      if (!isPaused) return;
+      isPaused = false;
+      startTime = Date.now();
+      timer = setTimeout(removeToast, Math.max(remaining, 600));
+      const bar = toast.querySelector('.toast-progress');
+      if (bar) {
+        bar.style.transition = `width ${remaining}ms linear`;
+        bar.style.width = '0%';
+      }
+    };
+
+    toast.addEventListener('mouseenter', pauseTimer);
+    toast.addEventListener('mouseleave', resumeTimer);
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        pauseTimer();
+      } else {
+        resumeTimer();
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
 
     const closeBtn = toast.querySelector('.toast-close');
     if (closeBtn) {
       closeBtn.addEventListener('click', () => {
         clearTimeout(timer);
+        document.removeEventListener('visibilitychange', onVisibilityChange);
         removeToast();
       });
     }

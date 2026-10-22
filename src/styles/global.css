@@ -22,6 +22,10 @@
   --font-pixel: 'Press Start 2P', 'VT323', monospace;
   --font-sub: 'Tiny5', 'VT323', monospace;
   --font-mono: 'JetBrains Mono', monospace;
+
+  /* Emil Kowalski Custom Mechanical Easings (Zero-Lag Punch) */
+  --ease-mechanical: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-smooth: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 :root {
@@ -104,14 +108,14 @@ html.dark .title-8bit {
   letter-spacing: 0.14em;
 }
 
-/* Clases canónicas (Animaciones GPU composited exclusivamente en transform) */
+/* Clases canónicas (Animaciones GPU composited con curva Emil Kowalski) */
 .btn-brutal {
   border: 2px solid var(--border-main);
   box-shadow: var(--shadow-offset-x, -4px) var(--shadow-offset-y, 4px) 0px 0px var(--shadow-color);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 800;
   text-transform: uppercase;
-  transition: transform 75ms ease-out;
+  transition: transform 75ms var(--ease-mechanical);
   will-change: transform;
   cursor: pointer;
   display: inline-flex;
@@ -122,9 +126,11 @@ html.dark .title-8bit {
   user-select: none;
 }
 
-.btn-brutal:hover {
-  transform: translate(2px, -2px);
-  box-shadow: -6px 6px 0px 0px var(--shadow-color);
+@media (hover: hover) and (pointer: fine) {
+  .btn-brutal:hover {
+    transform: translate(2px, -2px);
+    box-shadow: -6px 6px 0px 0px var(--shadow-color);
+  }
 }
 
 .btn-brutal:active {
@@ -152,19 +158,66 @@ html.dark .title-8bit {
   user-select: none;
 }
 
-/* Native HTML5 Dialog / Modal Standards */
+/* Native HTML5 Dialog / Modal Standards con transición Emil Kowalski (scale 0.96 -> 1) */
 dialog:modal {
   overscroll-behavior: contain;
   margin: auto;
   padding: 0;
   border-radius: 0px;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 150ms ease-out, transform 150ms var(--ease-mechanical), display 150ms allow-discrete, overlay 150ms allow-discrete;
+}
+
+dialog[open]:modal {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  dialog[open]:modal {
+    opacity: 0;
+    transform: scale(0.96);
+  }
 }
 
 dialog::backdrop {
   overflow: hidden;
   overscroll-behavior: contain;
+  background-color: rgba(11, 15, 23, 0);
+  backdrop-filter: blur(0px);
+  transition: background-color 150ms ease-out, backdrop-filter 150ms ease-out, display 150ms allow-discrete, overlay 150ms allow-discrete;
+}
+
+dialog[open]::backdrop {
   background-color: rgba(11, 15, 23, 0.78);
   backdrop-filter: blur(2px);
+}
+
+@starting-style {
+  dialog[open]::backdrop {
+    background-color: rgba(11, 15, 23, 0);
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* Transición nativa para Popover API */
+[popover] {
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 150ms ease-out, transform 150ms var(--ease-mechanical), display 150ms allow-discrete, overlay 150ms allow-discrete;
+}
+
+[popover]:popover-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@starting-style {
+  [popover]:popover-open {
+    opacity: 0;
+    transform: scale(0.96);
+  }
 }
 
 /* Accesibilidad: Reducción de movimiento */
