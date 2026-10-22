@@ -23,12 +23,21 @@ const CLI_USER_AGENT = 'ryukami-ui-cli/2.3.0';
  * Valida que la ruta final resuelta se encuentre estrictamente dentro de targetDir.
  */
 function resolveSafeTargetPath(targetDir, relativePath) {
-  const safeBase = path.basename(relativePath);
+  if (!relativePath || typeof relativePath !== 'string') {
+    throw new Error('[SECURITY ALERT] Ruta de archivo inválida o vacía.');
+  }
+
+  // Cross-platform: normalizar backslashes de Windows a forward slashes
+  const normalizedSlashes = relativePath.replace(/\\/g, '/');
+  const normalized = path.normalize(normalizedSlashes);
+  const safeBase = path.basename(normalized);
+
   if (!safeBase || safeBase === '.' || safeBase === '..') {
     throw new Error(`[SECURITY ALERT] Nombre de archivo inválido: "${relativePath}"`);
   }
+
   const resolvedTarget = path.resolve(targetDir);
-  const resolvedPath = path.resolve(resolvedTarget, relativePath);
+  const resolvedPath = path.resolve(resolvedTarget, normalized);
 
   if (!resolvedPath.startsWith(resolvedTarget + path.sep)) {
     throw new Error(
@@ -393,4 +402,24 @@ async function main() {
   }
 }
 
-main();
+const isDirectExecution = () => {
+  if (!process.argv[1]) return false;
+  try {
+    const realArgv1 = fs.realpathSync(process.argv[1]);
+    const realFilename = fs.realpathSync(__filename);
+    return realArgv1 === realFilename;
+  } catch {
+    return path.resolve(process.argv[1]) === path.resolve(__filename);
+  }
+};
+
+if (isDirectExecution()) {
+  main();
+}
+
+export {
+  resolveSafeTargetPath,
+  verifyFileIntegrity,
+  validateRegistryPayload,
+};
+

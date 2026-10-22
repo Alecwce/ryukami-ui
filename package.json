@@ -25,6 +25,7 @@
     "ryukami-ui": "./bin/ryukami-ui.mjs"
   },
   "scripts": {
+    "test": "node --test tests/**/*.test.mjs",
     "dev": "node scripts/build-registry.mjs && astro dev",
     "start": "astro dev",
     "build": "node scripts/build-registry.mjs && astro build",
