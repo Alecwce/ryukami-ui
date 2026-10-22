@@ -220,17 +220,35 @@ import Icon from './Icon.astro';
     const copyBtn = document.getElementById('copy-live-tokens-btn');
     const resetBtn = document.getElementById('reset-theme-studio-btn');
 
+    // Validadores estrictos para prevención de CSS Injection
+    const COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/;
+    const OFFSET_REGEX = /^-?\d+px$/;
+    const DITHER_REGEX = /^\d+px$/;
+
     function applyThemeState() {
       const root = document.documentElement;
-      root.style.setProperty('--scorch-red', currentState.primary);
-      root.style.setProperty('--color-scorch-crimson', currentState.primary);
-      root.style.setProperty('--cyber-blue', currentState.secondary);
-      root.style.setProperty('--color-scorch-cyan', currentState.secondary);
-      root.style.setProperty('--eye-gold', currentState.accent);
-      root.style.setProperty('--color-scorch-gold', currentState.accent);
-      root.style.setProperty('--shadow-offset-x', currentState.shadowX);
-      root.style.setProperty('--shadow-offset-y', currentState.shadowY);
-      root.style.setProperty('--dither-size', currentState.dither);
+
+      if (COLOR_REGEX.test(currentState.primary)) {
+        root.style.setProperty('--scorch-red', currentState.primary);
+        root.style.setProperty('--color-scorch-crimson', currentState.primary);
+      }
+      if (COLOR_REGEX.test(currentState.secondary)) {
+        root.style.setProperty('--cyber-blue', currentState.secondary);
+        root.style.setProperty('--color-scorch-cyan', currentState.secondary);
+      }
+      if (COLOR_REGEX.test(currentState.accent)) {
+        root.style.setProperty('--eye-gold', currentState.accent);
+        root.style.setProperty('--color-scorch-gold', currentState.accent);
+      }
+      if (OFFSET_REGEX.test(currentState.shadowX)) {
+        root.style.setProperty('--shadow-offset-x', currentState.shadowX);
+      }
+      if (OFFSET_REGEX.test(currentState.shadowY)) {
+        root.style.setProperty('--shadow-offset-y', currentState.shadowY);
+      }
+      if (DITHER_REGEX.test(currentState.dither)) {
+        root.style.setProperty('--dither-size', currentState.dither);
+      }
 
       if (outputEl) {
         outputEl.textContent = `:root {\n  /* Preset: ${presets[currentState.preset].name} */\n  --scorch-red: ${currentState.primary};\n  --cyber-blue: ${currentState.secondary};\n  --eye-gold: ${currentState.accent};\n  --shadow-offset-x: ${currentState.shadowX};\n  --shadow-offset-y: ${currentState.shadowY};\n  --dither-size: ${currentState.dither};\n}`;

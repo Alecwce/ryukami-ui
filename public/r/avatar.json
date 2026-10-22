@@ -6,10 +6,12 @@
   "category": "01_CORE_UI",
   "description": "Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).",
   "registryDependencies": [],
+  "sha256": "a9962261337b38097bfaf9b06532f7b0bff0eb91628594efbb1068962f24461a",
   "files": [
     {
       "path": "src/components/Avatar.astro",
       "type": "registry:component",
+      "sha256": "a9962261337b38097bfaf9b06532f7b0bff0eb91628594efbb1068962f24461a",
       "content": "---\nexport interface Props {\n  initials: string;\n  name: string;\n  role?: string;\n  status?: 'online' | 'busy' | 'idle' | 'ONLINE' | 'BUSY' | 'IDLE';\n  variant?: 'crimson' | 'cyan' | 'gold' | 'dark';\n}\n\nconst {\n  initials = '0xA',\n  name = '0xAlex // Root Architect',\n  role = 'SYS_ADMIN // LEVEL_99',\n  status = 'online',\n  variant = 'crimson',\n} = Astro.props;\n\nconst bgMap = {\n  crimson: 'bg-scorch-crimson text-white',\n  cyan: 'bg-scorch-cyan text-black',\n  gold: 'bg-scorch-gold text-black',\n  dark: 'bg-slate-900 text-white',\n};\n\nconst statusMap = {\n  online: { dot: 'bg-emerald-400', label: 'ONLINE' },\n  busy: { dot: 'bg-scorch-crimson', label: 'BUSY' },\n  idle: { dot: 'bg-scorch-gold', label: 'IDLE' },\n};\n\nconst normalizedStatus = (String(status).toLowerCase() as keyof typeof statusMap);\nconst statusInfo = statusMap[normalizedStatus] || statusMap.online;\n---\n\n<div class=\"inline-flex items-center gap-3 p-2.5 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-300 shadow-[-3px_3px_0px_0px_var(--shadow-color,#000000)] font-mono text-xs\">\n  <div class=\"relative shrink-0\">\n    <div class={`w-10 h-10 border-2 border-black flex items-center justify-center font-extrabold text-xs tracking-tighter ${bgMap[variant]}`}>\n      {initials}\n    </div>\n    <span\n      class={`w-3 h-3 border-2 border-black absolute -bottom-1 -right-1 ${statusInfo.dot}`}\n      title={statusInfo.label}\n      aria-hidden=\"true\"\n    ></span>\n  </div>\n\n  <div class=\"min-w-0 pr-1\">\n    <div class=\"font-extrabold uppercase tracking-tight truncate\">{name}</div>\n    <div class=\"flex items-center gap-1.5 text-[10px] text-slate-700 dark:text-slate-300 font-bold\">\n      <span>{role}</span>\n      <span>·</span>\n      <span class=\"underline\">{statusInfo.label}</span>\n    </div>\n  </div>\n</div>\n"
     }
   ]

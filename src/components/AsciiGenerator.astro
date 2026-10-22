@@ -217,10 +217,11 @@ import Icon from './Icon.astro';
       });
     });
 
+    const SAFE_COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/;
     document.querySelectorAll('.ascii-color-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const color = btn.getAttribute('data-color');
-        if (color) {
+        if (color && SAFE_COLOR_REGEX.test(color)) {
           outputPre.style.color = color;
         }
       });

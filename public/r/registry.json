@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-22T03:49:46.998Z",
+  "updatedAt": "2026-10-22T04:37:25.739Z",
   "totalItems": 27,
   "items": [
     {
@@ -12,6 +12,7 @@
       "category": "01_CORE_UI",
       "description": "Botón mecánico Neo-Brutalista con 5 variantes y síntesis de clic Web Audio.",
       "registryDependencies": [],
+      "sha256": "953e82e3da4ca73fae56cabd910ad6e3d08882db64f991bfdb9eb750f4398e23",
       "endpoint": "/r/button.json",
       "target": "src/components/Button.astro"
     },
@@ -21,6 +22,7 @@
       "category": "01_CORE_UI",
       "description": "Etiquetas y pastillas TUI de estado con sombra dura de -2px 2px.",
       "registryDependencies": [],
+      "sha256": "dc663b10223613816db71f34afadfad12b3dab56aefab3316d19ff03f3ec2005",
       "endpoint": "/r/badge.json",
       "target": "src/components/Badge.astro"
     },
@@ -30,6 +32,7 @@
       "category": "01_CORE_UI",
       "description": "Ventana de consola TUI interactiva con controles geométricos [ - ][ □ ][ × ].",
       "registryDependencies": [],
+      "sha256": "c7be9974356e0b42546654972135b5cc74725ed452ca89a8eae168bd4231c484",
       "endpoint": "/r/card.json",
       "target": "src/components/Card.astro"
     },
@@ -39,6 +42,7 @@
       "category": "01_CORE_UI",
       "description": "Representación física de teclas de atajos de teclado ([Ctrl] + [K]).",
       "registryDependencies": [],
+      "sha256": "d673444a1df85a9938bb73e060e87b156fdb5ae9095b43a98e0e5b65fe938da6",
       "endpoint": "/r/kbd.json",
       "target": "src/components/Kbd.astro"
     },
@@ -48,6 +52,7 @@
       "category": "01_CORE_UI",
       "description": "Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.",
       "registryDependencies": [],
+      "sha256": "7cd1d133c6c632012370d955f02a04272ffb427105ecfad76f3f04946ba3c8c8",
       "endpoint": "/r/progress-bar.json",
       "target": "src/components/ProgressBar.astro"
     },
@@ -57,6 +62,7 @@
       "category": "01_CORE_UI",
       "description": "Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).",
       "registryDependencies": [],
+      "sha256": "a9962261337b38097bfaf9b06532f7b0bff0eb91628594efbb1068962f24461a",
       "endpoint": "/r/avatar.json",
       "target": "src/components/Avatar.astro"
     },
@@ -66,6 +72,7 @@
       "category": "01_CORE_UI",
       "description": "Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.",
       "registryDependencies": [],
+      "sha256": "9cba1bb3e88baa74e3c68cd1c78bac6c93d3501ac56e8d5c257f876f080ae6c3",
       "endpoint": "/r/skeleton.json",
       "target": "src/components/Skeleton.astro"
     },
@@ -75,6 +82,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.",
       "registryDependencies": [],
+      "sha256": "f9ee89ac110dd26d04bfc46cfdeb1c5b76fae43e1ed68a038a0daf5fbf69466f",
       "endpoint": "/r/input.json",
       "target": "src/components/Input.astro"
     },
@@ -84,6 +92,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.",
       "registryDependencies": [],
+      "sha256": "d7a25c3d6a997b273e3ee29074ac15b09f59b3f670a4d3a290b8f58b66620154",
       "endpoint": "/r/textarea.json",
       "target": "src/components/Textarea.astro"
     },
@@ -93,6 +102,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Selector desplegable brutalista con prefijo OPT // e indicador mecánico.",
       "registryDependencies": [],
+      "sha256": "8a7e972a10f74e1836d34890aca0cb325140e28fea455e4f197198c7620c0f99",
       "endpoint": "/r/select.json",
       "target": "src/components/Select.astro"
     },
@@ -102,6 +112,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.",
       "registryDependencies": [],
+      "sha256": "82520936541734c00e80b011dbe1a19da5a6f2bb1db7f4a6718627929627c8a8",
       "endpoint": "/r/slider.json",
       "target": "src/components/Slider.astro"
     },
@@ -111,6 +122,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).",
       "registryDependencies": [],
+      "sha256": "c6c156d9e36278b3f6375d380c14998d5aba4b4f8d0039969913f676f688502a",
       "endpoint": "/r/radio-group.json",
       "target": "src/components/RadioGroup.astro"
     },
@@ -120,6 +132,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.",
       "registryDependencies": [],
+      "sha256": "cb7814bbef696f68f16baddc84579cae28b6d487d9a04fd8fb99286eef602e84",
       "endpoint": "/r/checkbox.json",
       "target": "src/components/Checkbox.astro"
     },
@@ -129,6 +142,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Interruptor táctil deslizante (role=\"switch\") con variantes crimson, cyan y gold.",
       "registryDependencies": [],
+      "sha256": "d94dfc07b2607f2a999cd3228731347146f52b559b4059b24b73af574766a64f",
       "endpoint": "/r/switch.json",
       "target": "src/components/Switch.astro"
     },
@@ -138,6 +152,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Paneles multipestaña TUI con navegación por flechas de teclado y sonido mecánico.",
       "registryDependencies": [],
+      "sha256": "56cc7bbd0dbffd1af299a08615e4d01c47448abf62438979623c3882c1c89c79",
       "endpoint": "/r/tabs.json",
       "target": "src/components/Tabs.astro"
     },
@@ -147,6 +162,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Acordeón exclusivo nativo con <details name=\"...\"> accesible y buscable en página.",
       "registryDependencies": [],
+      "sha256": "531f280d133bd548de375e0427921c97e45702bf58e13366e422412dde738b2c",
       "endpoint": "/r/accordion.json",
       "target": "src/components/Accordion.astro"
     },
@@ -156,6 +172,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).",
       "registryDependencies": [],
+      "sha256": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
       "endpoint": "/r/breadcrumb.json",
       "target": "src/components/Breadcrumb.astro"
     },
@@ -165,6 +182,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).",
       "registryDependencies": [],
+      "sha256": "4401cdc9962c6222c425ce39827f3caff462260c70ec679693c21f474c331092",
       "endpoint": "/r/pagination.json",
       "target": "src/components/Pagination.astro"
     },
@@ -174,6 +192,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Globo flotante de telemetría con API nativa popover=\"auto\" sin dependencias JS.",
       "registryDependencies": [],
+      "sha256": "aecd6ed4f115e2a263ff6c9f6f75879d328006b51bff4809c613d071ab1204d5",
       "endpoint": "/r/popover.json",
       "target": "src/components/Popover.astro"
     },
@@ -183,6 +202,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
       "registryDependencies": [],
+      "sha256": "7d7f7c56d8abb9d7d6a63f84e81ad3803babc18a8048f89e897b5b15ee706030",
       "endpoint": "/r/alert.json",
       "target": "src/components/Alert.astro"
     },
@@ -192,6 +212,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Diálogo modal nativo <dialog closedby=\"any\"> con bloqueo de scroll de fondo.",
       "registryDependencies": [],
+      "sha256": "6a3d7538b9fa67d400e6821f2698b381949be4fc5003c06c23bae66749758ce9",
       "endpoint": "/r/modal.json",
       "target": "src/components/Modal.astro"
     },
@@ -201,6 +222,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
       "registryDependencies": [],
+      "sha256": "de81ff08be6f20cf20f90cf6ff77ac3383a0ba4e9532f92d7088ed5b425f00e8",
       "endpoint": "/r/toast-container.json",
       "target": "src/components/ToastContainer.astro"
     },
@@ -212,6 +234,7 @@
       "registryDependencies": [
         "kbd"
       ],
+      "sha256": "2f8f1a99e27b97b288f3d6216dd5ffcd46636359dbf967d9196d622a5bc6a043",
       "endpoint": "/r/command-palette.json",
       "target": "src/components/CommandPalette.astro"
     },
@@ -221,6 +244,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
+      "sha256": "f7eb1a57170af268b971d05fade463ba791d2c13a8044eb8c6425a8a38420c9c",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },
@@ -230,6 +254,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.",
       "registryDependencies": [],
+      "sha256": "aa3a093d4d75797d69e94d583ee5d715ceffed92bf1d1c3e0588dabaf8dc41e1",
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"
     },
@@ -239,6 +264,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.",
       "registryDependencies": [],
+      "sha256": "80dba92eab62c0e9b77badd5670bd977c9f1f0a3161cf99543087e7aef09cb10",
       "endpoint": "/r/theme-studio.json",
       "target": "src/components/ThemeStudio.astro"
     },
@@ -248,6 +274,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.",
       "registryDependencies": [],
+      "sha256": "8980e68798930b6f5b022d589c9208ebd27f95a1fbf0c4ce2d34e53d34bde2c3",
       "endpoint": "/r/ascii-generator.json",
       "target": "src/components/AsciiGenerator.astro"
     }

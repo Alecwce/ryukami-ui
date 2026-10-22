@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import ToastContainer from '../components/ToastContainer.astro';
+import Font from 'astro/components/Font.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -49,49 +50,11 @@ const {
   <meta name="twitter:image" content="https://ryukami-ui.pages.dev/scorch-dragon-banner.jpg" />
   <meta name="twitter:image:alt" content="Ryukami-UI // Retro TUI & Neo-Brutalism Component Library" />
 
-  <!-- Preload LCP Banner Asset (WebP) with fetchpriority="high" -->
-  <link
-    rel="preload"
-    as="image"
-    href="/scorch-dragon-banner-800.webp"
-    imagesrcset="/scorch-dragon-banner-480.webp 480w, /scorch-dragon-banner-800.webp 800w, /scorch-dragon-banner.webp 1376w"
-    imagesizes="(max-width: 1024px) 92vw, 440px"
-    type="image/webp"
-    fetchpriority="high"
-  />
-
-  <!-- Preconnect to Google Fonts Domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <!-- Preload Critical Google Fonts (WOFF2) for Instant 8-Bit Pixel Rendering -->
-  <link
-    rel="preload"
-    as="font"
-    type="font/woff2"
-    href="https://fonts.gstatic.com/s/pressstart2p/v16/e3t4euO8T-267oIAQAu6jDQyK3nVivM.woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    as="font"
-    type="font/woff2"
-    href="https://fonts.gstatic.com/s/tiny5/v3/KFOpCnmCvdGT7iw5xUk.woff2"
-    crossorigin
-  />
-  <link
-    rel="preload"
-    as="font"
-    type="font/woff2"
-    href="https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
-    crossorigin
-  />
-
-  <!-- Google Fonts: Press Start 2P (Pixel 8-Bit), Tiny5, VT323 & JetBrains Mono -->
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Press+Start+2P&family=Tiny5&family=VT323&display=swap"
-  />
+  <!-- Built-in Fonts API (Astro 7.4) - Fuentes servidas localmente desde el mismo origen (self) -->
+  <Font cssVariable="--font-pixel" preload />
+  <Font cssVariable="--font-sub" />
+  <Font cssVariable="--font-mono" />
+  <Font cssVariable="--font-vt323" />
 </head>
 <body class="p-3 sm:p-4 md:p-8 pt-0 sm:pt-0 md:pt-0 max-w-6xl mx-auto space-y-8 sm:space-y-12">
   <!-- Enlace de salto accesible para navegación por teclado (Vercel Web Interface Guidelines) -->
@@ -202,9 +165,13 @@ const {
     let soundEnabled = localStorage.getItem(SOUND_STORAGE_KEY) === 'true';
 
     function actualizarBotonSonido(enabled) {
+      const soundBtn = document.getElementById('sound-btn');
       const offIcon = document.getElementById('sound-icon-off');
       const onIcon = document.getElementById('sound-icon-on');
       const label = document.getElementById('sound-label');
+      if (soundBtn) {
+        soundBtn.setAttribute('aria-checked', enabled ? 'true' : 'false');
+      }
       if (label) {
         label.innerText = enabled ? 'SND: ON' : 'SND: OFF';
       }

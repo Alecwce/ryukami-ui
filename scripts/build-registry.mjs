@@ -5,6 +5,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -238,6 +239,7 @@ const registryIndex = [];
 for (const item of ITEMS) {
   const absPath = path.join(ROOT_DIR, item.file);
   const content = fs.readFileSync(absPath, 'utf-8');
+  const sha256 = crypto.createHash('sha256').update(content, 'utf-8').digest('hex');
 
   const payload = {
     $schema: 'https://ryukami-ui.dev/schema/registry-item.json',
@@ -247,10 +249,12 @@ for (const item of ITEMS) {
     category: item.category,
     description: item.description,
     registryDependencies: item.registryDependencies,
+    sha256,
     files: [
       {
         path: item.file,
         type: 'registry:component',
+        sha256,
         content,
       },
     ],
@@ -268,6 +272,7 @@ for (const item of ITEMS) {
     category: item.category,
     description: item.description,
     registryDependencies: item.registryDependencies,
+    sha256,
     endpoint: `/r/${item.name}.json`,
     target: item.file,
   });
@@ -275,6 +280,8 @@ for (const item of ITEMS) {
 
 const globalCssPath = path.join(ROOT_DIR, 'src/styles/global.css');
 const globalCssContent = fs.readFileSync(globalCssPath, 'utf-8');
+const stylesSha256 = crypto.createHash('sha256').update(globalCssContent, 'utf-8').digest('hex');
+
 fs.writeFileSync(
   path.join(OUT_DIR, 'styles.json'),
   JSON.stringify(
@@ -282,10 +289,12 @@ fs.writeFileSync(
       name: 'styles',
       title: 'Scorch Design System Global CSS (Tailwind v4)',
       type: 'registry:style',
+      sha256: stylesSha256,
       files: [
         {
           path: 'src/styles/global.css',
           type: 'registry:style',
+          sha256: stylesSha256,
           content: globalCssContent,
         },
       ],

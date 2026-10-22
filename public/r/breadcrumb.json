@@ -6,10 +6,12 @@
   "category": "03_LAYOUT_AND_MODALS",
   "description": "Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).",
   "registryDependencies": [],
+  "sha256": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
   "files": [
     {
       "path": "src/components/Breadcrumb.astro",
       "type": "registry:component",
+      "sha256": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
       "content": "---\nexport interface BreadcrumbItem {\n  label: string;\n  href?: string;\n  active?: boolean;\n}\n\nexport interface Props {\n  items: BreadcrumbItem[];\n  prefix?: string;\n}\n\nconst { items = [], prefix = '~' } = Astro.props;\n---\n\n<nav\n  aria-label=\"Ruta de navegación\"\n  class=\"tui-window px-3.5 py-2 bg-white dark:bg-slate-900 font-mono text-xs flex flex-wrap items-center gap-1.5\"\n>\n  <span class=\"bg-scorch-crimson text-white px-1.5 py-0.5 border border-black font-extrabold text-[11px]\">\n    {prefix}\n  </span>\n  {items.map((item, idx) => (\n    <div class=\"inline-flex items-center gap-1.5\">\n      <span class=\"text-slate-500 font-extrabold select-none\" aria-hidden=\"true\">/</span>\n      {item.active || !item.href ? (\n        <span\n          aria-current={item.active ? 'page' : undefined}\n          class=\"bg-black text-scorch-gold px-2 py-0.5 border border-black font-extrabold\"\n        >\n          {item.label}\n        </span>\n      ) : (\n        <a\n          href={item.href}\n          class=\"px-1.5 py-0.5 font-bold hover:bg-scorch-cyan hover:text-black border border-transparent hover:border-black\"\n        >\n          {item.label}\n        </a>\n      )}\n    </div>\n  ))}\n</nav>\n"
     }
   ]

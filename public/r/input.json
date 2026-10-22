@@ -6,10 +6,12 @@
   "category": "02_FORM_CONTROLS",
   "description": "Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.",
   "registryDependencies": [],
+  "sha256": "f9ee89ac110dd26d04bfc46cfdeb1c5b76fae43e1ed68a038a0daf5fbf69466f",
   "files": [
     {
       "path": "src/components/Input.astro",
       "type": "registry:component",
+      "sha256": "f9ee89ac110dd26d04bfc46cfdeb1c5b76fae43e1ed68a038a0daf5fbf69466f",
       "content": "---\ninterface Props {\n  label?: string;\n  placeholder?: string;\n  prefix?: string;\n  type?: string;\n  value?: string;\n  id?: string;\n  name?: string;\n  disabled?: boolean;\n  hint?: string;\n  error?: string;\n  required?: boolean;\n}\n\nconst {\n  label,\n  placeholder = \"Escribe aquí...\",\n  prefix,\n  type = \"text\",\n  value = \"\",\n  id,\n  name,\n  disabled = false,\n  hint,\n  error,\n  required = false,\n} = Astro.props;\n\nconst inputId = id || `input-${Math.random().toString(36).substring(2, 9)}`;\n---\n\n<div class=\"space-y-1.5 font-mono text-xs w-full\">\n  {label && (\n    <label for={inputId} class=\"block font-extrabold uppercase tracking-wider text-xs\">\n      {label} {required && <span class=\"text-scorch-crimson\">*</span>}\n    </label>\n  )}\n\n  <div class=\"relative flex items-stretch\">\n    {prefix && (\n      <span class=\"inline-flex items-center px-3 bg-slate-900 text-scorch-cyan border-2 border-r-0 border-black dark:border-slate-700 font-extrabold select-none\">\n        {prefix}\n      </span>\n    )}\n\n    <input\n      id={inputId}\n      name={name}\n      type={type}\n      value={value}\n      placeholder={placeholder}\n      disabled={disabled}\n      required={required}\n      class={`w-full bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 px-3.5 py-2 text-xs md:text-sm font-mono shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none outline-none placeholder:text-slate-500 dark:placeholder:text-slate-400 focus:border-scorch-crimson focus:shadow-[-6px_6px_0px_0px_var(--shadow-color,#000000)] disabled:opacity-50 disabled:cursor-not-allowed ${\n        error ? 'border-scorch-crimson' : ''\n      }`}\n    />\n  </div>\n\n  {hint && !error && (\n    <p class=\"text-[11px] text-slate-700 dark:text-slate-300\">&gt; {hint}</p>\n  )}\n\n  {error && (\n    <p class=\"text-[11px] text-scorch-crimson font-bold\">&gt; [ERROR] {error}</p>\n  )}\n</div>\n"
     }
   ]

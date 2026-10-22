@@ -137,13 +137,24 @@
       if (window.playTerminalBeep) window.playTerminalBeep(780, 0.04);
 
       if (cmd === 'clear' || cmd === 'cls') {
-        output.innerHTML = `<div class="text-slate-400">Búfer limpiado. Escribe <code class="text-scorch-gold">help</code> para ver comandos.</div>`;
+        output.textContent = '';
+        const clearMsg = document.createElement('div');
+        clearMsg.className = 'text-slate-400';
+        clearMsg.textContent = 'Búfer limpiado. Escribe help para ver comandos.';
+        output.appendChild(clearMsg);
         return;
       }
 
+      // Prevención estricta de DOM XSS: nunca concatenar inputs en innerHTML
       const cmdLine = document.createElement('div');
-      cmdLine.className = 'text-slate-300 font-bold pt-1';
-      cmdLine.innerHTML = `<span class="text-[#FF5263]">alex@ryukami:~#</span> ${cmd}`;
+      cmdLine.className = 'text-slate-300 font-bold pt-1 flex items-center gap-1.5 flex-wrap';
+      const promptSpan = document.createElement('span');
+      promptSpan.className = 'text-[#FF5263] shrink-0 select-none';
+      promptSpan.textContent = 'alex@ryukami:~#';
+      const cmdSpan = document.createElement('span');
+      cmdSpan.textContent = cmd;
+      cmdLine.appendChild(promptSpan);
+      cmdLine.appendChild(cmdSpan);
       output.appendChild(cmdLine);
 
       const resBlock = document.createElement('div');
@@ -152,11 +163,18 @@
       if (cmd === 'theme') {
         if (window.toggleTheme) window.toggleTheme();
         const isDark = document.documentElement.classList.contains('dark');
-        resBlock.innerHTML = `<span class="text-scorch-gold font-bold">◆ Tema conmutado a: ${isDark ? 'MODO HACKER CRT (#0B0F17)' : 'MODO PAPER BRUTALISM (#F5F7FA)'}</span>`;
-      } else if (RESPONSES[cmd]) {
+        const themeSpan = document.createElement('span');
+        themeSpan.className = 'text-scorch-gold font-bold';
+        themeSpan.textContent = `◆ Tema conmutado a: ${isDark ? 'MODO HACKER CRT (#0B0F17)' : 'MODO PAPER BRUTALISM (#F5F7FA)'}`;
+        resBlock.appendChild(themeSpan);
+      } else if (Object.prototype.hasOwnProperty.call(RESPONSES, cmd)) {
+        // RESPONSES es un diccionario interno estático seguro sin inputs de usuario
         resBlock.innerHTML = RESPONSES[cmd];
       } else {
-        resBlock.innerHTML = `<span class="text-[#FF5263]">zsh: comando no encontrado: "${cmd}". Escribe <strong class="text-scorch-gold">help</strong>.</span>`;
+        const errSpan = document.createElement('span');
+        errSpan.className = 'text-[#FF5263]';
+        errSpan.textContent = `zsh: comando no encontrado: "${cmd}". Escribe help para ver comandos.`;
+        resBlock.appendChild(errSpan);
       }
 
       output.appendChild(resBlock);

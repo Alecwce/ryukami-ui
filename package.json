@@ -29,6 +29,7 @@
     "start": "astro dev",
     "build": "node scripts/build-registry.mjs && astro build",
     "preview": "astro preview",
+    "build:perf": "node scripts/build-registry.mjs && astro build --timings",
     "registry:build": "node scripts/build-registry.mjs",
     "cli": "node bin/ryukami-ui.mjs",
     "pages:dev": "pnpm build && npx --yes wrangler pages dev dist --port 8788",

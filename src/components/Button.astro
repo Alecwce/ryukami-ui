@@ -1,22 +1,44 @@
 ---
-interface Props {
+interface CommonProps {
   variant?: 'crimson' | 'cyan' | 'gold' | 'outline' | 'dark';
   size?: 'sm' | 'md' | 'lg';
-  href?: string;
   class?: string;
   id?: string;
+  disabled?: boolean;
   onclick?: string;
+  title?: string;
+  'aria-label'?: string;
+  [key: string]: any;
 }
 
+interface AnchorButtonProps extends CommonProps {
+  href: string;
+  target?: string;
+  rel?: string;
+  download?: string | boolean;
+  type?: never;
+}
+
+interface NativeButtonProps extends CommonProps {
+  href?: never;
+  type?: 'button' | 'submit' | 'reset';
+  target?: never;
+  rel?: never;
+  download?: never;
+}
+
+export type Props = AnchorButtonProps | NativeButtonProps;
+
+const props = Astro.props as Props;
 const {
   variant = 'crimson',
   size = 'md',
-  href,
   class: className = '',
   id,
   onclick,
+  disabled = false,
   ...rest
-} = Astro.props;
+} = props;
 
 const variantStyles = {
   crimson: 'bg-scorch-crimson text-white hover:bg-red-600',
@@ -32,15 +54,36 @@ const sizeStyles = {
   lg: 'px-7 py-3.5 text-sm sm:text-base',
 };
 
-const Element = href ? 'a' : 'button';
+const isLink = 'href' in props && typeof props.href === 'string' && props.href.length > 0;
+const disabledClasses = disabled ? 'pointer-events-none opacity-50 cursor-not-allowed select-none' : '';
 ---
 
-<Element
-  href={href}
-  id={id}
-  onclick={onclick}
-  class={`btn-brutal ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
-  {...rest}
->
-  <slot />
-</Element>
+{isLink ? (
+  <a
+    href={disabled ? undefined : props.href}
+    id={id}
+    role={disabled ? 'link' : undefined}
+    aria-disabled={disabled ? 'true' : undefined}
+    tabindex={disabled ? -1 : undefined}
+    target={props.target}
+    rel={props.target === '_blank' && !props.rel ? 'noopener noreferrer' : props.rel}
+    download={props.download}
+    onclick={disabled ? 'return false;' : onclick}
+    class={`btn-brutal ${variantStyles[variant]} ${sizeStyles[size]} ${disabledClasses} ${className}`}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={'type' in props && props.type ? props.type : 'button'}
+    id={id}
+    disabled={disabled}
+    aria-disabled={disabled ? 'true' : undefined}
+    onclick={onclick}
+    class={`btn-brutal ${variantStyles[variant]} ${sizeStyles[size]} ${disabledClasses} ${className}`}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

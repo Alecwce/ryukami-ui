@@ -9,12 +9,77 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CLI_ROOT = path.resolve(__dirname, '..');
 const LOCAL_REGISTRY_DIR = path.join(CLI_ROOT, 'public', 'r');
+const CLI_USER_AGENT = 'ryukami-ui-cli/2.3.0';
+
+/**
+ * Helper de Ciberseguridad: Prevención de Arbitrary File Write y Path Traversal
+ * Valida que la ruta final resuelta se encuentre estrictamente dentro de targetDir.
+ */
+function resolveSafeTargetPath(targetDir, relativePath) {
+  const safeBase = path.basename(relativePath);
+  if (!safeBase || safeBase === '.' || safeBase === '..') {
+    throw new Error(`[SECURITY ALERT] Nombre de archivo inválido: "${relativePath}"`);
+  }
+  const resolvedTarget = path.resolve(targetDir);
+  const resolvedPath = path.resolve(resolvedTarget, relativePath);
+
+  if (!resolvedPath.startsWith(resolvedTarget + path.sep)) {
+    throw new Error(
+      `[SECURITY ALERT] Intento de Path Traversal bloqueado: "${relativePath}" intenta escapar de "${resolvedTarget}"`
+    );
+  }
+  return resolvedPath;
+}
+
+/**
+ * Validador de esquema de integridad para payloads del Registry
+ */
+function validateRegistryPayload(payload, expectedName) {
+  if (!payload || typeof payload !== 'object') {
+    throw new Error(`Respuesta inválida recibida para "${expectedName}": no es un objeto JSON válido.`);
+  }
+  if (expectedName === 'registry.json') {
+    if (!Array.isArray(payload.items)) {
+      throw new Error(`El registro maestro registry.json no contiene una lista de items válida.`);
+    }
+    return;
+  }
+  if (!payload.name || typeof payload.name !== 'string') {
+    throw new Error(`El módulo descargado no contiene un atributo "name" válido.`);
+  }
+  if (!Array.isArray(payload.files) || payload.files.length === 0) {
+    throw new Error(`El módulo "${payload.name}" no define ningún archivo en el array "files".`);
+  }
+  for (const file of payload.files) {
+    if (!file.path || typeof file.path !== 'string') {
+      throw new Error(`Archivo sin ruta válida en el módulo "${payload.name}".`);
+    }
+    if (typeof file.content !== 'string') {
+      throw new Error(`Archivo sin contenido de texto en "${file.path}".`);
+    }
+  }
+}
+
+/**
+ * Verificación de integridad criptográfica SHA-256
+ */
+function verifyFileIntegrity(file) {
+  if (file.sha256) {
+    const computed = crypto.createHash('sha256').update(file.content, 'utf-8').digest('hex');
+    if (computed !== file.sha256) {
+      throw new Error(
+        `[INTEGRITY ERROR] Fallo de suma de verificación SHA-256 en ${file.path}.\nEsperado: ${file.sha256}\nCalculado: ${computed}`
+      );
+    }
+  }
+}
 
 // Colores ANSI Scorch
 const C = {
@@ -66,26 +131,57 @@ function parseArgs(argv) {
 
 const DEFAULT_REMOTE_REGISTRY = 'https://ryukami-ui.pages.dev/r';
 
+async function fetchRegistryEndpoint(url, fileName) {
+  let res;
+  try {
+    res = await fetch(url, {
+      headers: {
+        'User-Agent': CLI_USER_AGENT,
+        Accept: 'application/json',
+      },
+    });
+  } catch (err) {
+    throw new Error(`Error de conexión con el Registry (${url}): ${err.message}`);
+  }
+
+  if (res.status === 403) {
+    throw new Error(
+      `[403 FORBIDDEN] Petición interceptada por Cloudflare WAF o política de seguridad en ${url}. Verifica tu conexión.`
+    );
+  }
+  if (res.status === 404) {
+    throw new Error(
+      `[404 NOT FOUND] El archivo "${fileName}" no existe en el registro (${url}).`
+    );
+  }
+  if (res.status === 429) {
+    throw new Error(
+      `[429 RATE LIMIT] Límite de peticiones excedido en Cloudflare Edge. Por favor espera unos momentos antes de reintentar.`
+    );
+  }
+  if (!res.ok) {
+    throw new Error(`Fallo de descarga HTTP ${res.status} desde ${url}`);
+  }
+
+  const data = await res.json();
+  validateRegistryPayload(data, fileName);
+  return data;
+}
+
 async function loadRegistryJson(fileName, registryUrl) {
   if (registryUrl) {
     const cleanBase = registryUrl.replace(/\/+$/, '');
-    const res = await fetch(`${cleanBase}/${fileName}`);
-    if (!res.ok) {
-      throw new Error(`No se pudo descargar ${fileName} desde ${cleanBase} (HTTP ${res.status})`);
-    }
-    return await res.json();
+    return await fetchRegistryEndpoint(`${cleanBase}/${fileName}`, fileName);
   }
 
   const localPath = path.join(LOCAL_REGISTRY_DIR, fileName);
   if (fs.existsSync(localPath)) {
-    return JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+    const raw = JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+    validateRegistryPayload(raw, fileName);
+    return raw;
   }
 
-  const res = await fetch(`${DEFAULT_REMOTE_REGISTRY}/${fileName}`);
-  if (!res.ok) {
-    throw new Error(`No se pudo descargar ${fileName} desde ${DEFAULT_REMOTE_REGISTRY} (HTTP ${res.status})`);
-  }
-  return await res.json();
+  return await fetchRegistryEndpoint(`${DEFAULT_REMOTE_REGISTRY}/${fileName}`, fileName);
 }
 
 function showHelp() {
@@ -141,14 +237,15 @@ async function cmdInit(flags) {
   console.log(`${C.cyan}▶ Inicializando Scorch Design System en:${C.reset} ${C.bold}${targetDir}${C.reset}\n`);
 
   for (const file of stylesPayload.files) {
-    const destPath = path.join(targetDir, file.path);
+    verifyFileIntegrity(file);
+    const destPath = resolveSafeTargetPath(targetDir, file.path);
     fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
     if (fs.existsSync(destPath) && !flags.overwrite) {
       console.log(`  ${C.gold}⚠ Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para reemplazar)${C.reset}`);
     } else {
       fs.writeFileSync(destPath, file.content, 'utf-8');
-      console.log(`  ${C.emerald}✓ Tokens inyectados:${C.reset}   ${file.path}`);
+      console.log(`  ${C.emerald}✓ Tokens inyectados e integridad verificada:${C.reset} ${file.path}`);
     }
   }
 
@@ -221,7 +318,8 @@ async function cmdAdd(args, flags) {
   for (const name of resolvedSet) {
     const itemPayload = await loadRegistryJson(`${name}.json`, flags.registry);
     for (const file of itemPayload.files) {
-      const destPath = path.join(flags.dir, file.path);
+      verifyFileIntegrity(file);
+      const destPath = resolveSafeTargetPath(flags.dir, file.path);
       fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
       if (fs.existsSync(destPath) && !flags.overwrite) {
@@ -229,7 +327,7 @@ async function cmdAdd(args, flags) {
         skippedCount++;
       } else {
         fs.writeFileSync(destPath, file.content, 'utf-8');
-        console.log(`  ${C.emerald}✓ Instalado [${name}]:${C.reset} ${file.path}`);
+        console.log(`  ${C.emerald}✓ Instalado e integridad verificada [${name}]:${C.reset} ${file.path}`);
         installedCount++;
       }
     }
