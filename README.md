@@ -39,7 +39,7 @@ Auditoría técnica y decisiones arquitectónicas orientadas a **Principal Front
 │  0xRYUKAMI_ENGINEERING // ARCHITECTURE & APPSEC BLUEPRINT (2026 AUDIT)      │
 └─────────────────────────────────────────────────────────────────────────────┘
   ⚡ PERFORMANCE       : Astro 7.4 + Tailwind CSS 4.3 + TS 7 (Build: ~1.23s - 2.9s)
-  📦 NETWORK ASSETS    : 0 KiB Google Fonts (Self-hosted WOFF2 via Astro Fonts API)
+  📦 NETWORK ASSETS    : 0 KiB Google Fonts (Self-hosted WOFF2 en /public/fonts/)
   🔒 SUPPLY CHAIN      : SHA-256 Per-Module Integrity + Anti-Path Traversal CLI
   🛡️ DOM HARDENING     : Zero-innerHTML in 0xSCORCH_SHELL + Strict Regex Theme Engine
   ♿ ACCESSIBILITY      : 100% WAI-ARIA Keyboard Traversal ([ - ][ □ ][ × ], tabs, modals)
@@ -49,7 +49,7 @@ Auditoría técnica y decisiones arquitectónicas orientadas a **Principal Front
 
 ### 1. Rendimiento Extremo & Cero Dependencias de Terceros en Runtime
 - **Compilación en ~1.23s:** Orquestado con **Astro 7.4.0** (Vite 8), **Tailwind CSS 4.3.3** (`@tailwindcss/vite` CSS-first engine) y **TypeScript 7.0.2** (compilador nativo en Go).
-- **Astro Built-in Fonts API (Zero External Fonts):** Se eliminaron los preloads y hojas de estilo externas a `fonts.googleapis.com` y `fonts.gstatic.com`. Las fuentes (`Press Start 2P`, `Tiny5`, `JetBrains Mono`) se empaquetan localmente en `dist/_astro/fonts/` como archivos WOFF2 inmutables con hash criptográfico, eliminando bloqueos de renderizado y variaciones de hash entre compilaciones.
+- **Fuentes 100% Auto-Alojadas (Zero External Requests):** Se eliminaron las peticiones a `fonts.googleapis.com` y `fonts.gstatic.com`. Las fuentes (`Press Start 2P`, `Tiny5`, `JetBrains Mono`, `VT323`) se sirven directamente en local (`public/fonts/*.woff2`) con reglas `@font-face` canónicas y preload en `<head>`, garantizando el renderizado fiel e imponente del pixel art en el título `RYUKAMI × SCORCH`.
 - **Auditoría Lighthouse Calibrada:**
   - **Performance:** **96 / 100** (FCP: 0.8s, LCP: 1.1s, Speed Index: 0.9s, TBT: 0ms, CLS: 0.000).
   - **Accessibility:** **100 / 100** (Cumplimiento riguroso WCAG AA, contraste Carmesí Scorch `#D62436` de 5.04:1 sobre blanco).

@@ -2,7 +2,6 @@
 import Header from '../components/Header.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import ToastContainer from '../components/ToastContainer.astro';
-import Font from 'astro/components/Font.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -50,11 +49,9 @@ const {
   <meta name="twitter:image" content="https://ryukami-ui.pages.dev/scorch-dragon-banner.jpg" />
   <meta name="twitter:image:alt" content="Ryukami-UI // Retro TUI & Neo-Brutalism Component Library" />
 
-  <!-- Built-in Fonts API (Astro 7.4) - Fuentes servidas localmente desde el mismo origen (self) -->
-  <Font cssVariable="--font-pixel" preload />
-  <Font cssVariable="--font-sub" />
-  <Font cssVariable="--font-mono" />
-  <Font cssVariable="--font-vt323" />
+  <!-- Fuentes Locales Scorch 8-Bit & Mono (Self-hosted WOFF2, Zero External Requests) -->
+  <link rel="preload" href="/fonts/PressStart2P-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
 </head>
 <body class="p-3 sm:p-4 md:p-8 pt-0 sm:pt-0 md:pt-0 max-w-6xl mx-auto space-y-8 sm:space-y-12">
   <!-- Enlace de salto accesible para navegación por teclado (Vercel Web Interface Guidelines) -->
