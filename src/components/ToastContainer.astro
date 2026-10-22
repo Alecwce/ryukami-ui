@@ -51,6 +51,8 @@
     }
 
     const toast = document.createElement('div');
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-atomic', 'true');
     toast.className =
       'pointer-events-auto bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-200 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] rounded-none overflow-hidden transition-all duration-150 translate-y-2 opacity-0';
 

@@ -215,6 +215,13 @@ const {
     }
 
     window.playMechanicalClick = function() {
+      // Pulso háptico táctil en móviles para emular pulsación mecánica Cherry MX (8ms)
+      try {
+        if ('vibrate' in navigator) {
+          navigator.vibrate(8);
+        }
+      } catch (e) {}
+
       if (!soundEnabled) return;
       try {
         initAudio();

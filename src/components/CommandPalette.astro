@@ -82,6 +82,14 @@ import Kbd from './Kbd.astro';
       });
     }
 
+    let lastActiveElement = null;
+
+    dialog.addEventListener('close', () => {
+      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+        lastActiveElement.focus();
+      }
+    });
+
     const commands = [
       {
         id: 'nav-components',
@@ -293,6 +301,7 @@ import Kbd from './Kbd.astro';
     }
 
     window.openPalette = function () {
+      lastActiveElement = document.activeElement;
       if (window.playTerminalBeep) window.playTerminalBeep(740, 0.05);
       searchInput.value = '';
       filteredCommands = [...commands];
