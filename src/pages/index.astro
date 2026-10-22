@@ -302,7 +302,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   </section>
 
   <!-- 2. QUICK INSTALL (CLI) -->
-  <section class="tui-window">
+  <section id="quickstart" class="tui-window">
     <div class="tui-header">
       <span>QUICK_START // RYUKAMI-UI CLI INSTALLER</span>
       <span>27 MODULES // /r/registry.json</span>
@@ -334,17 +334,17 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <!-- BARRA DE SALTO RÁPIDO PARA MÓVILES / TABLETS -->
   <nav
     aria-label="Navegación rápida móvil"
-    class="lg:hidden tui-window p-2.5 flex items-center gap-2 overflow-x-auto font-mono text-xs"
+    class="lg:hidden tui-window p-2.5 flex items-center gap-1.5 overflow-x-auto font-mono text-xs"
   >
     <span class="bg-black text-scorch-gold px-2 py-1 font-extrabold text-[10px] shrink-0">IR A:</span>
-    <a href="#comp-button" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">01.Core</a>
-    <a href="#comp-progress" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">Progress</a>
-    <a href="#comp-input" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">02.Forms</a>
-    <a href="#comp-select" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">Select/Slider</a>
-    <a href="#comp-tabs" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">03.Tabs/Acc</a>
-    <a href="#comp-alert" class="px-2.5 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">Modals</a>
-    <a href="#live-shell" class="px-2.5 py-1 border border-black bg-scorch-crimson text-white font-bold shrink-0">0xShell</a>
-    <a href="#theme-studio" class="px-2.5 py-1 border border-black bg-scorch-cyan text-black font-bold shrink-0">Studio</a>
+    <a href="#components" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[01_CORE]</a>
+    <a href="#forms" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[02_FORMS]</a>
+    <a href="#alerts" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[03_MODALS]</a>
+    <a href="#live-shell" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[04_SHELL]</a>
+    <a href="#tables" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[05_TABLES]</a>
+    <a href="#theme-studio" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[06_STUDIO]</a>
+    <a href="#ascii-forge" class="px-2 py-1 border border-black dark:border-slate-600 bg-slate-100 dark:bg-slate-800 font-bold shrink-0">[07_ASCII]</a>
+    <a href="#install-docs" class="px-2 py-1 border border-black bg-scorch-crimson text-white font-bold shrink-0">[08_CLI]</a>
   </nav>
 
   <!-- BARRA DE ENLACE AL WORKSPACE SIMÉTRICO (DIVISOR PORTADA / COMPONENTES) -->
@@ -358,7 +358,9 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       <a href="#forms" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[02_FORMS]</a>
       <a href="#alerts" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[03_MODALS]</a>
       <a href="#live-shell" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[04_SHELL]</a>
-      <a href="#theme-studio" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[05_STUDIO]</a>
+      <a href="#tables" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[05_TABLES]</a>
+      <a href="#theme-studio" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[06_STUDIO]</a>
+      <a href="#ascii-forge" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[07_ASCII]</a>
       <a href="#install-docs" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[08_CLI]</a>
     </div>
   </div>
@@ -381,7 +383,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <h2 class="font-pixel text-xs sm:text-sm tracking-wider uppercase text-white truncate">// 01_NUCLEO &amp; TELEMETRIA TUI</h2>
       </div>
       <span class="font-mono text-[10px] bg-black text-scorch-cyan border border-slate-700 px-2 py-0.5 font-bold shrink-0">
-        5 COMPONENTES BASE
+        5 PREVIEWS // 7 COMPONENTES
       </span>
     </div>
     <div class="p-4 sm:p-6 space-y-10 bg-white dark:bg-slate-900/60">
@@ -545,7 +547,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <h2 class="font-pixel text-xs sm:text-sm tracking-wider uppercase text-white truncate">// 02_SUITE DE FORMULARIOS</h2>
       </div>
       <span class="font-mono text-[10px] bg-black text-scorch-gold border border-slate-700 px-2 py-0.5 font-bold shrink-0">
-        4 CONTROLES TUI
+        4 PREVIEWS // 7 CONTROLES TUI
       </span>
     </div>
     <div class="p-4 sm:p-6 space-y-10 bg-white dark:bg-slate-900/60">
@@ -756,7 +758,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <h2 class="font-pixel text-xs sm:text-sm tracking-wider uppercase text-white truncate">// 03_NAVEGACION, MODALES &amp; ALERTAS</h2>
       </div>
       <span class="font-mono text-[10px] bg-black text-emerald-400 border border-slate-700 px-2 py-0.5 font-bold shrink-0">
-        4 MÓDULOS DE NAVEGACIÓN
+        5 PREVIEWS // 9 MODULOS TUI
       </span>
     </div>
     <div class="p-4 sm:p-6 space-y-10 bg-white dark:bg-slate-900/60">
@@ -1018,7 +1020,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <!-- 7. TABLA DE DATOS TUI -->
   <section id="tables" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
-      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 05_REGISTRO_TUI_ASCII</h2>
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 05_TELEMETRIA_Y_TABLAS_TUI</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
@@ -1161,6 +1163,11 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
   <!-- 11. ATAJOS DE TECLADO KBD -->
   <section id="shortcuts" class="space-y-4 pb-8">
+    <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
+      <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 09_ATAJOS_DE_TECLADO</h2>
+      <div class="h-0.5 bg-current flex-1 min-w-2"></div>
+    </div>
+
     <Card title="KEYBOARD_SHORTCUTS" status="ACCESSIBILITY">
       <div class="flex flex-wrap items-center gap-4 text-xs font-mono">
         <div class="flex items-center gap-1.5">
