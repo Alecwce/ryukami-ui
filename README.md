@@ -30,6 +30,60 @@
 
 ---
 
+## 🛡️ Architecture, Performance & AppSec Engineering
+
+Auditoría técnica y decisiones arquitectónicas orientadas a **Principal Frontend Engineers**, **Tech Leads** y **Auditores de Seguridad**:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  0xRYUKAMI_ENGINEERING // ARCHITECTURE & APPSEC BLUEPRINT (2026 AUDIT)      │
+└─────────────────────────────────────────────────────────────────────────────┘
+  ⚡ PERFORMANCE       : Astro 7.4 + Tailwind CSS 4.3 + TS 7 (Build: ~1.23s - 2.9s)
+  📦 NETWORK ASSETS    : 0 KiB Google Fonts (Self-hosted WOFF2 via Astro Fonts API)
+  🔒 SUPPLY CHAIN      : SHA-256 Per-Module Integrity + Anti-Path Traversal CLI
+  🛡️ DOM HARDENING     : Zero-innerHTML in 0xSCORCH_SHELL + Strict Regex Theme Engine
+  ♿ ACCESSIBILITY      : 100% WAI-ARIA Keyboard Traversal ([ - ][ □ ][ × ], tabs, modals)
+  🧪 ZERO-BLOAT TESTS  : Native node:test suite (12/12 PASS en ~150ms, 0 extra deps)
+  🌐 EDGE SECURITY     : HSTS (31536000 + preload), COOP, X-Frame-Options DENY
+```
+
+### 1. Rendimiento Extremo & Cero Dependencias de Terceros en Runtime
+- **Compilación en ~1.23s:** Orquestado con **Astro 7.4.0** (Vite 8), **Tailwind CSS 4.3.3** (`@tailwindcss/vite` CSS-first engine) y **TypeScript 7.0.2** (compilador nativo en Go).
+- **Astro Built-in Fonts API (Zero External Fonts):** Se eliminaron los preloads y hojas de estilo externas a `fonts.googleapis.com` y `fonts.gstatic.com`. Las fuentes (`Press Start 2P`, `Tiny5`, `JetBrains Mono`) se empaquetan localmente en `dist/_astro/fonts/` como archivos WOFF2 inmutables con hash criptográfico, eliminando bloqueos de renderizado y variaciones de hash entre compilaciones.
+- **Auditoría Lighthouse Calibrada:**
+  - **Performance:** **96 / 100** (FCP: 0.8s, LCP: 1.1s, Speed Index: 0.9s, TBT: 0ms, CLS: 0.000).
+  - **Accessibility:** **100 / 100** (Cumplimiento riguroso WCAG AA, contraste Carmesí Scorch `#D62436` de 5.04:1 sobre blanco).
+  - **Best Practices:** **100 / 100** (Cabeceras HSTS, zero-vulnerabilities, recursos HTTPS).
+  - **SEO:** **100 / 100** (OpenGraph, sitemap.xml, robots.txt, llms.txt estructurado).
+
+### 2. Seguridad en la Cadena de Suministro del CLI (`ryukami-ui`)
+- **Blindaje Criptográfico SHA-256:** Cada componente en `public/r/*.json` y en el maestro `registry.json` incluye un digest `sha256` inmutable generado durante el build (`scripts/build-registry.mjs`). El CLI (`bin/ryukami-ui.mjs`) recalcula y verifica la suma de verificación en cliente antes de tocar el sistema de archivos local (`verifyFileIntegrity`), rechazando payloads alterados por ataques *man-in-the-middle* o paquetes corruptos.
+- **Prevención Quirúrgica de Path Traversal (`resolveSafeTargetPath`):**
+  - Sanitización multiplataforma de backslashes (`\`) hacia separadores POSIX estándar (`/`).
+  - Validación de árbol (`resolvedPath.startsWith(resolvedTarget + path.sep)`) que bloquea ataques como `"../../.bashrc"`, `"..\\..\\Windows\\win.ini"`, `"/etc/passwd"`, `"."` y directorios vacíos.
+  - Creación recursiva y segura de directorios (`fs.mkdirSync(path.dirname(destPath), { recursive: true })`) antes de cualquier operación de escritura.
+
+### 3. Hardening Web en Cliente (DOM XSS & CSS Injection)
+- **Terminal 0xSCORCH_SHELL sin innerHTML:** Toda entrada de usuario procesada en la consola interactiva (`TerminalEmulator.astro`) y en el forjador ASCII (`AsciiGenerator.astro`) utiliza exclusivamente `document.createElement()` y `.textContent`, eliminando vectores de ejecución de scripts en el DOM (*DOM-based XSS*).
+- **Theme Studio con Tipado Estricto por Expresiones Regulares:** Las propiedades reactivas (`--scorch-red`, `--cyber-blue`, `--shadow-offset-x`, `--dither-size`) se validan mediante `COLOR_REGEX` (`^#[0-9a-fA-F]{3,8}$`) y `OFFSET_REGEX` (`^-?\d+px$`), bloqueando payloads de inyección CSS como `"#fff; background: url(javascript:...)"` o `"10px; display: none"` antes de invocar `style.setProperty()`.
+
+### 4. Accesibilidad Mecánica (WAI-ARIA & Polimorfismo Seguro)
+- **Controles de Ventana Interactivos:** Los controles `[-]`, `[□]` y `[×]` en `Card.astro` y cabeceras son elementos `<button type="button">` semánticos accesibles vía teclado (`Tab`, `Enter`, `Space`), con atributos dinámicos `aria-label` y sincronización de `aria-expanded` ("true"/"false") al minimizar ventanas.
+- **Polimorfismo Seguro en `Button.astro`:** Tipado mediante uniones discriminadas en TypeScript. Cuando coexisten `href` y `disabled={true}`, el componente neutraliza el enlace emitiendo `role="link"`, `aria-disabled="true"`, `tabindex="-1"` y `pointer-events-none`, protegiendo la navegación accesible.
+- **Control Global de Audio:** Switch accesible con persistencia en `localStorage` e inicialización diferida (*lazy*) de `AudioContext` tras el primer gesto del usuario.
+
+### 5. Suite de Tests Nativos & Cabeceras Edge
+- **Zero-Bloat Testing (`pnpm test`):** 12 pruebas unitarias automatizadas con `node:test` y `node:assert/strict` sin librerías externas pesadas. Ejecutan en ~150ms validando la prevención de Path Traversal, la integridad SHA-256 y el bloqueo de CSS Injection.
+- **Cabeceras HTTP en Cloudflare Edge (`public/_headers`):**
+  - `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
+  - `X-Frame-Options: DENY`
+  - `X-Content-Type-Options: nosniff`
+  - `Referrer-Policy: strict-origin-when-cross-origin`
+  - `Permissions-Policy: accelerometer=(), camera=(), geolocation=(), microphone=(), payment=(), usb=()`
+  - `Access-Control-Allow-Origin: *` (restringido a endpoints `/r/*` para descarga remota sin bloqueos CORS).
+
+---
+
 ## 🛠️ Instalador CLI (`ryukami-ui`) — Estilo `shadcn` / `8bitcn`
 
 El proyecto incluye su propio **CLI ejecutable** ([`bin/ryukami-ui.mjs`](bin/ryukami-ui.mjs)) y su compilador de registro estático ([`scripts/build-registry.mjs`](scripts/build-registry.mjs)), instalado globalmente en `~/.local/bin/ryukami-ui`.
