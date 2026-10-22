@@ -94,6 +94,14 @@ const {
   />
 </head>
 <body class="p-3 sm:p-4 md:p-8 max-w-6xl mx-auto space-y-12">
+  <!-- Enlace de salto accesible para navegación por teclado (Vercel Web Interface Guidelines) -->
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-scorch-crimson focus:text-white focus:border-2 focus:border-black focus:shadow-brutal focus:font-mono focus:text-xs focus:font-extrabold focus:outline-none"
+  >
+    &gt; [ SALTAR AL CONTENIDO PRINCIPAL ]
+  </a>
+
   <!-- Barra de Progreso de Lectura Superior (100% GPU scaleX) -->
   <div class="fixed top-0 left-0 right-0 h-1 bg-black/20 z-50 pointer-events-none" aria-hidden="true">
     <div
@@ -105,7 +113,7 @@ const {
 
   <Header />
 
-  <main class="space-y-16">
+  <main id="main-content" class="space-y-16">
     <slot />
   </main>
 

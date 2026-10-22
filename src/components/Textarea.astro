@@ -32,7 +32,7 @@ const areaId = `scorch-textarea-${Math.random().toString(36).substring(2, 9)}`;
     </span>
   </div>
 
-  <div class="border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] overflow-hidden">
+  <div class="border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] overflow-hidden focus-within:border-scorch-crimson focus-within:ring-2 focus-within:ring-scorch-crimson">
     <div class="px-3 py-1 bg-slate-100 dark:bg-slate-950 border-b-2 border-black dark:border-slate-700 flex justify-between items-center text-[10px] font-bold text-slate-700 dark:text-slate-300">
       <span>BUFFER // UTF-8</span>
       <span data-line-counter>LINES: {value ? value.split('\n').length : 1}</span>
@@ -43,7 +43,7 @@ const areaId = `scorch-textarea-${Math.random().toString(36).substring(2, 9)}`;
       rows={rows}
       maxlength={maxLength}
       placeholder={placeholder}
-      class="w-full p-3 bg-transparent font-mono text-xs text-slate-900 dark:text-slate-100 outline-none resize-y placeholder:text-slate-500"
+      class="w-full p-3 bg-transparent font-mono text-xs text-slate-900 dark:text-slate-100 focus:outline-none resize-y placeholder:text-slate-500"
     >{value}</textarea>
   </div>
 

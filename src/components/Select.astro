@@ -30,7 +30,7 @@ const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
     {label}
   </label>
 
-  <div class="relative flex items-stretch border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] transition-transform duration-75 focus-within:translate-x-[1px] focus-within:-translate-y-[1px]">
+  <div class="relative flex items-stretch border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] transition-transform duration-75 focus-within:translate-x-[1px] focus-within:-translate-y-[1px] focus-within:border-scorch-crimson focus-within:ring-2 focus-within:ring-scorch-crimson">
     {prefix && (
       <span class="px-2.5 py-2 bg-black text-scorch-cyan font-extrabold border-r-2 border-black dark:border-slate-700 flex items-center select-none shrink-0">
         {prefix}
@@ -39,7 +39,7 @@ const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
     <select
       id={selectId}
       name={name}
-      class="w-full appearance-none bg-transparent px-3 py-2.5 pr-10 font-mono text-xs font-bold text-slate-900 dark:text-slate-100 outline-none cursor-pointer"
+      class="w-full appearance-none bg-transparent px-3 py-2.5 pr-10 font-mono text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer"
       onchange="window.playMechanicalClick && window.playMechanicalClick()"
     >
       {options.map((opt) => (
