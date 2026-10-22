@@ -27,6 +27,22 @@ import SidebarNav from '../components/SidebarNav.astro';
 import ThemeStudio from '../components/ThemeStudio.astro';
 import AsciiGenerator from '../components/AsciiGenerator.astro';
 import Icon from '../components/Icon.astro';
+import {
+  buttonProps,
+  badgeProps,
+  cardProps,
+  progressProps,
+  avatarSkeletonProps,
+  inputProps,
+  selectSliderProps,
+  toggleProps,
+  textareaRadioProps,
+  tabsProps,
+  accordionProps,
+  navPrimitivesProps,
+  alertProps,
+  modalToastProps,
+} from '../data/component-props';
 
 // Snippets de código para el visor [Preview | Code]
 const buttonSnippet = `import Button from '@/components/Button.astro';
@@ -359,7 +375,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Botones con física de pulsación mecánica hacia la izquierda-abajo y sonido táctil Web Audio API incorporado.
       </p>
 
-      <ComponentPreview title="BUTTON_VARIANTS" code={buttonSnippet} status="5 STYLES" cli="ryukami-ui add button">
+      <ComponentPreview title="BUTTON_VARIANTS" code={buttonSnippet} status="5 STYLES" cli="ryukami-ui add button" propsDoc={buttonProps}>
         <div class="flex flex-wrap items-center gap-4 py-2">
           <Button variant="crimson">Carmesí Scorch</Button>
           <Button variant="cyan">Cian Eléctrico</Button>
@@ -380,7 +396,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Etiquetas de estado de nodo, protocolos de red y categorías técnicas.
       </p>
 
-      <ComponentPreview title="BADGE_STATUS" code={badgeSnippet} status="ASCII READY" cli="ryukami-ui add badge">
+      <ComponentPreview title="BADGE_STATUS" code={badgeSnippet} status="ASCII READY" cli="ryukami-ui add badge" propsDoc={badgeProps}>
         <div class="flex flex-wrap items-center gap-3 py-2">
           <Badge variant="crimson">● SYSTEM_ALERT</Badge>
           <Badge variant="cyan">◆ RE_ENGINEERING</Badge>
@@ -401,7 +417,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Haz clic en los controles geométricos <code>[-]</code> para minimizar/restaurar la ventana, <code>[□]</code> para resaltar el borde o <code>[×]</code> para probar la protección del kernel.
       </p>
 
-      <ComponentPreview title="TUI_WINDOW_CONSOLE" code={cardSnippet} status="INTERACTIVE" cli="ryukami-ui add card">
+      <ComponentPreview title="TUI_WINDOW_CONSOLE" code={cardSnippet} status="INTERACTIVE" cli="ryukami-ui add card" propsDoc={cardProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
           <Card title="0xSERVER // NODE_2" status="ONLINE">
             <div class="space-y-3">
@@ -450,7 +466,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Barras de carga segmentadas estilo monitor BIOS con lectura matricial <code>[████████░░░░]</code> sincronizada y animación en GPU (<code>scaleX</code>).
       </p>
 
-      <ComponentPreview title="BIOS_PROGRESS_METERS" code={progressSnippet} status="GPU SCALEX" cli="ryukami-ui add progress-bar">
+      <ComponentPreview title="BIOS_PROGRESS_METERS" code={progressSnippet} status="GPU SCALEX" cli="ryukami-ui add progress-bar" propsDoc={progressProps}>
         <div class="space-y-5 w-full py-1" id="telemetry-demo-stack">
           <ProgressBar label="Núcleo Térmico Velgrynd" value={92} variant="crimson" status="8,940 °C" />
           <ProgressBar label="Memoria RAM Contenedor Node_2" value={64} variant="cyan" status="1.28 GB / 2.0 GB" />
@@ -470,7 +486,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Identificadores cuadrados de operador con indicador de estado en vivo, buffers de carga matricial ASCII y teclas mecánicas 3D.
       </p>
 
-      <ComponentPreview title="OPERATOR_AVATARS_AND_BUFFERS" code={avatarSkeletonSnippet} status="TUI IDENTITY" cli="ryukami-ui add avatar skeleton kbd">
+      <ComponentPreview title="OPERATOR_AVATARS_AND_BUFFERS" code={avatarSkeletonSnippet} status="TUI IDENTITY" cli="ryukami-ui add avatar skeleton kbd" propsDoc={avatarSkeletonProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full py-2">
           <div class="space-y-3">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Avatares de Operador</h4>
@@ -517,7 +533,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Inputs de texto brutalistas con prefijo de terminal, sombra hacia la izquierda y foco de alta visibilidad.
       </p>
 
-      <ComponentPreview title="TEXT_INPUTS" code={inputSnippet} status="FORM CONTROLS" cli="ryukami-ui add input">
+      <ComponentPreview title="TEXT_INPUTS" code={inputSnippet} status="FORM CONTROLS" cli="ryukami-ui add input" propsDoc={inputProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
           <Input
             label="Comando de Terminal"
@@ -556,7 +572,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Listas desplegables con indicador mecánico y sliders de rango con barra de progreso en caracteres ASCII <code>[========|-------]</code> en tiempo real.
       </p>
 
-      <ComponentPreview title="SELECT_AND_ASCII_SLIDER" code={selectSliderSnippet} status="INTERACTIVE" cli="ryukami-ui add select slider">
+      <ComponentPreview title="SELECT_AND_ASCII_SLIDER" code={selectSliderSnippet} status="INTERACTIVE" cli="ryukami-ui add select slider" propsDoc={selectSliderProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
           <div class="space-y-4">
             <Select
@@ -615,7 +631,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Casillas de selección cuadradas con marca pixel-art y deslizadores táctiles ON/OFF.
       </p>
 
-      <ComponentPreview title="TOGGLES_AND_CHECKS" code={toggleSnippet} status="INTERACTIVE" cli="ryukami-ui add checkbox switch">
+      <ComponentPreview title="TOGGLES_AND_CHECKS" code={toggleSnippet} status="INTERACTIVE" cli="ryukami-ui add checkbox switch" propsDoc={toggleProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
           <div class="space-y-4">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Checkboxes Cuadrados</h4>
@@ -665,7 +681,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Editor de texto de consola con contador de líneas/bytes en vivo y selectores de opción única estilo TUI <code>( • )</code>.
       </p>
 
-      <ComponentPreview title="TEXTAREA_AND_RADIO_GROUP" code={textareaRadioSnippet} status="UTF-8 BUFFER" cli="ryukami-ui add textarea radio-group">
+      <ComponentPreview title="TEXTAREA_AND_RADIO_GROUP" code={textareaRadioSnippet} status="UTF-8 BUFFER" cli="ryukami-ui add textarea radio-group" propsDoc={textareaRadioProps}>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full py-2">
           <Textarea
             label="Payload de Configuración JSON / YAML"
@@ -722,7 +738,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Navegación por pestañas con soporte de flechas de teclado (<code>←</code> / <code>→</code>), badges de estado y sonido mecánico.
       </p>
 
-      <ComponentPreview title="MULTI_VIEW_TABS" code={tabsSnippet} status="KEYBOARD NAV" cli="ryukami-ui add tabs">
+      <ComponentPreview title="MULTI_VIEW_TABS" code={tabsSnippet} status="KEYBOARD NAV" cli="ryukami-ui add tabs" propsDoc={tabsProps}>
         <Tabs
           title="0xARCHITECTURE // SPECS"
           tabs={[
@@ -762,7 +778,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Construido con elementos <code>&lt;details name="..."&gt;</code> mutuamente exclusivos del estándar HTML moderno: indexable por buscadores y compatible con búsqueda en página (<code>Ctrl+F</code>).
       </p>
 
-      <ComponentPreview title="EXCLUSIVE_ACCORDION" code={accordionSnippet} status="HTML5 DETAILS" cli="ryukami-ui add accordion">
+      <ComponentPreview title="EXCLUSIVE_ACCORDION" code={accordionSnippet} status="HTML5 DETAILS" cli="ryukami-ui add accordion" propsDoc={accordionProps}>
         <Accordion
           name="scorch-architecture-faq"
           items={[
@@ -797,7 +813,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Jerarquía de directorios estilo filesystem Unix (<code>~/ryukami/core</code>) y selector interactivo de páginas de memoria.
       </p>
 
-      <ComponentPreview title="UNIX_BREADCRUMB_AND_PAGINATION" code={navPrimitivesSnippet} status="FILESYSTEM NAV" cli="ryukami-ui add breadcrumb pagination">
+      <ComponentPreview title="UNIX_BREADCRUMB_AND_PAGINATION" code={navPrimitivesSnippet} status="FILESYSTEM NAV" cli="ryukami-ui add breadcrumb pagination" propsDoc={navPrimitivesProps}>
         <div class="space-y-5 w-full py-2">
           <div class="space-y-2">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Ruta de Directorio (Breadcrumb.astro)</h4>
@@ -829,7 +845,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Callouts y cajas de advertencia brutalistas con indicadores de estado de severidad.
       </p>
 
-      <ComponentPreview title="SYSTEM_ALERTS" code={alertSnippet} status="CALLOUTS" cli="ryukami-ui add alert">
+      <ComponentPreview title="SYSTEM_ALERTS" code={alertSnippet} status="CALLOUTS" cli="ryukami-ui add alert" propsDoc={alertProps}>
         <div class="space-y-4 w-full">
           <Alert variant="crimson" title="SOBRECALENTAMIENTO DE NÚCLEO">
             Frecuencia de CPU al 98%. Temperatura en 89°C. Se activan ventiladores secundarios de enfriamiento.
@@ -860,7 +876,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         Notificaciones emergentes con barra de progreso, Popovers nativos Top-Layer (`popover="auto"`) y diálogos HTML5 con soporte `closedby="any"`.
       </p>
 
-      <ComponentPreview title="TOASTS_POPOVER_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO" cli="ryukami-ui add modal popover toast-container command-palette">
+      <ComponentPreview title="TOASTS_POPOVER_AND_MODALS" code={modalToastSnippet} status="INTERACTIVE AUDIO" cli="ryukami-ui add modal popover toast-container command-palette" propsDoc={modalToastProps}>
         <div class="space-y-6 w-full py-2">
           <div class="space-y-2">
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// 1. Disparar Notificaciones Toast con Sonido</h4>

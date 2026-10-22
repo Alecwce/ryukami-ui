@@ -293,9 +293,10 @@
 
         const headerOffset = 116;
         const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({
           top: Math.max(0, elementPosition - headerOffset),
-          behavior: 'smooth',
+          behavior: prefersReduced ? 'auto' : 'smooth',
         });
 
         targetEl.classList.add('ring-2', 'ring-scorch-crimson', 'ring-offset-4');

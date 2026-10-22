@@ -188,9 +188,10 @@ import Icon from './Icon.astro';
       const totalOffset = headerTop + headerHeight + 12;
 
       const elementPos = targetEl.getBoundingClientRect().top + window.scrollY;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({
         top: Math.max(0, elementPos - totalOffset),
-        behavior: 'smooth',
+        behavior: prefersReduced ? 'auto' : 'smooth',
       });
 
       setActive(targetId);

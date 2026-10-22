@@ -1,14 +1,16 @@
 ---
 import Icon from './Icon.astro';
+import type { PropItem } from '../data/component-props';
 
 interface Props {
   title: string;
   code: string;
   status?: string;
   cli?: string;
+  propsDoc?: PropItem[];
 }
 
-const { title, code, status = "ASCII READY", cli } = Astro.props;
+const { title, code, status = "ASCII READY", cli, propsDoc } = Astro.props;
 const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
@@ -49,6 +51,15 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         >
           CODE
         </button>
+        {propsDoc && propsDoc.length > 0 && (
+          <button
+            type="button"
+            class="tab-btn px-2.5 py-1 font-bold text-slate-200 hover:text-white cursor-pointer"
+            data-tab="props"
+          >
+            PROPS
+          </button>
+        )}
       </div>
 
       <!-- Copy Button -->
@@ -74,6 +85,56 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
   <div class="code-content hidden p-4 bg-slate-950 text-slate-100 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
     <pre class="whitespace-pre"><code>{code}</code></pre>
   </div>
+
+  <!-- Vista Props Container (Oculto por defecto) -->
+  {propsDoc && propsDoc.length > 0 && (
+    <div class="props-content hidden p-4 bg-white dark:bg-slate-950 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
+      <div class="overflow-x-auto w-full">
+        <table class="w-full border-collapse border-2 border-black dark:border-slate-700 text-left">
+          <thead>
+            <tr class="bg-black text-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700 text-[11px] uppercase tracking-wider">
+              <th class="p-2.5 font-extrabold border-r border-slate-800 dark:border-slate-700">Prop</th>
+              <th class="p-2.5 font-extrabold border-r border-slate-800 dark:border-slate-700">Tipo TypeScript</th>
+              <th class="p-2.5 font-extrabold border-r border-slate-800 dark:border-slate-700">Default</th>
+              <th class="p-2.5 font-extrabold border-r border-slate-800 dark:border-slate-700">Descripción</th>
+              <th class="p-2.5 font-extrabold">Variantes</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-black/20 dark:divide-slate-800 text-[11px]">
+            {propsDoc.map((item) => (
+              <tr class="hover:bg-scorch-crimson/5 dark:hover:bg-scorch-crimson/10 transition-colors">
+                <td class="p-2.5 font-extrabold text-scorch-crimson dark:text-scorch-cyan border-r border-black/10 dark:border-slate-800 whitespace-nowrap">
+                  {item.name}
+                </td>
+                <td class="p-2.5 border-r border-black/10 dark:border-slate-800 text-sky-800 dark:text-sky-300 font-bold whitespace-nowrap">
+                  <code>{item.type}</code>
+                </td>
+                <td class="p-2.5 border-r border-black/10 dark:border-slate-800 text-slate-600 dark:text-slate-400 whitespace-nowrap">
+                  {item.default ? <code>{item.default}</code> : <span class="opacity-50">—</span>}
+                </td>
+                <td class="p-2.5 border-r border-black/10 dark:border-slate-800 text-slate-800 dark:text-slate-200">
+                  {item.description}
+                </td>
+                <td class="p-2.5 text-slate-700 dark:text-slate-300">
+                  {item.variants && item.variants.length > 0 ? (
+                    <div class="flex flex-wrap gap-1">
+                      {item.variants.map((v) => (
+                        <span class="bg-slate-100 dark:bg-slate-900 px-1.5 py-0.5 border border-black/40 dark:border-slate-700 text-[10px] font-bold">
+                          {v}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <span class="opacity-50">—</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
 </div>
 
 <script>
@@ -82,6 +143,7 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
     const tabBtns = container.querySelectorAll('.tab-btn');
     const previewContent = container.querySelector('.preview-content');
     const codeContent = container.querySelector('.code-content');
+    const propsContent = container.querySelector('.props-content');
     const copyBtn = container.querySelector('.copy-btn');
     const cliCopyBtn = container.querySelector('.cli-copy-btn');
 
@@ -103,9 +165,15 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         if (targetTab === 'preview') {
           previewContent.classList.remove('hidden');
           codeContent.classList.add('hidden');
-        } else {
+          if (propsContent) propsContent.classList.add('hidden');
+        } else if (targetTab === 'code') {
           previewContent.classList.add('hidden');
           codeContent.classList.remove('hidden');
+          if (propsContent) propsContent.classList.add('hidden');
+        } else if (targetTab === 'props') {
+          previewContent.classList.add('hidden');
+          codeContent.classList.add('hidden');
+          if (propsContent) propsContent.classList.remove('hidden');
         }
       });
     });

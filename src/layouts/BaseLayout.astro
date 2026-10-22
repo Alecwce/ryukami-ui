@@ -203,9 +203,27 @@ const {
       );
     }
 
-    // Web Audio API Synthesis (Item 4: Desactivado por defecto)
+    // Web Audio API Synthesis (Persistencia en localStorage)
+    const SOUND_STORAGE_KEY = 'ryukami-sound-enabled';
     let audioCtx = null;
-    let soundEnabled = false;
+    let soundEnabled = localStorage.getItem(SOUND_STORAGE_KEY) === 'true';
+
+    function actualizarBotonSonido(enabled) {
+      const offIcon = document.getElementById('sound-icon-off');
+      const onIcon = document.getElementById('sound-icon-on');
+      const label = document.getElementById('sound-label');
+      if (label) {
+        label.innerText = enabled ? 'SND: ON' : 'SND: OFF';
+      }
+      if (offIcon && onIcon) {
+        offIcon.classList.toggle('hidden', enabled);
+        onIcon.classList.toggle('hidden', !enabled);
+      }
+    }
+
+    if (soundEnabled) {
+      actualizarBotonSonido(true);
+    }
 
     function initAudio() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -267,15 +285,10 @@ const {
 
     window.toggleSound = function() {
       soundEnabled = !soundEnabled;
-      const offIcon = document.getElementById('sound-icon-off');
-      const onIcon = document.getElementById('sound-icon-on');
-      const label = document.getElementById('sound-label');
-      if (label) {
-        label.innerText = soundEnabled ? 'SND: ON' : 'SND: OFF';
-      }
-      if (offIcon && onIcon) {
-        offIcon.classList.toggle('hidden', soundEnabled);
-        onIcon.classList.toggle('hidden', !soundEnabled);
+      localStorage.setItem(SOUND_STORAGE_KEY, soundEnabled ? 'true' : 'false');
+      actualizarBotonSonido(soundEnabled);
+      if (soundEnabled) {
+        window.playTerminalBeep(980, 0.06);
       }
     };
 
