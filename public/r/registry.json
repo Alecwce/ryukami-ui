@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-28T17:34:44.084Z",
+  "updatedAt": "2026-10-28T23:44:21.847Z",
   "totalItems": 35,
   "items": [
     {
@@ -82,7 +82,7 @@
       "category": "01_CORE_UI",
       "description": "Tarjeta de métrica KPI con delta porcentual (▲/▼) y sparkline ASCII [▁▂▃▅▆▇█].",
       "registryDependencies": [],
-      "sha256": "61139c3cf299bf38fe04d930aafb0d4d73ecebdf589d638f24a62d5c2f8837ff",
+      "sha256": "b28dedac2539ebb4d8eb8450596a654d0382e04f78ef3d5f267f3152eec09763",
       "endpoint": "/r/stat-card.json",
       "target": "src/components/StatCard.astro"
     },
@@ -338,7 +338,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.",
       "registryDependencies": [],
-      "sha256": "aa3a093d4d75797d69e94d583ee5d715ceffed92bf1d1c3e0588dabaf8dc41e1",
+      "sha256": "90e8a179c0578e129fc3a29332898d08bc49d0876f0530f27453a3f32d801c6e",
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"
     },

@@ -5,7 +5,7 @@ HOOK_PATH=".git/hooks/pre-push"
 cat << 'EOF' > "$HOOK_PATH"
 #!/usr/bin/env bash
 set -e
-echo "⚡ [RYUKAMI AUTO-DEPLOY] Compilando 27 módulos + Astro y desplegando a Cloudflare Pages..."
+echo "⚡ [RYUKAMI AUTO-DEPLOY] Compilando 35 módulos + Astro y desplegando a Cloudflare Pages..."
 pnpm run pages:deploy
 echo "✅ [RYUKAMI AUTO-DEPLOY] Producción sincronizada en https://ryukami-ui.pages.dev"
 EOF

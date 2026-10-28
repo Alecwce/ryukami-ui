@@ -17,9 +17,9 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 <div class="tui-window overflow-hidden" id={uniqueId}>
   <!-- Header con Tabs y Controles -->
   <div class="tui-header flex flex-wrap gap-2 justify-between items-center">
-    <div class="flex items-center gap-2">
-      <span class="bg-black text-scorch-cyan px-2 py-0.5 border border-black font-extrabold">&gt; {title}</span>
-      <span class="bg-black text-slate-200 text-[10px] border border-slate-700 px-1.5 py-0.5">{status}</span>
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="bg-black text-scorch-cyan px-2 py-0.5 border border-black font-extrabold truncate max-w-full">&gt; {title}</span>
+      <span class="bg-black text-slate-200 text-[10px] border border-slate-700 px-1.5 py-0.5 shrink-0">{status}</span>
     </div>
 
     <div class="flex flex-wrap items-center gap-2">
