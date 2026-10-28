@@ -1,0 +1,37 @@
+---
+export interface Props {
+  text: string;
+  position?: 'top' | 'bottom';
+  variant?: 'dark' | 'crimson' | 'cyan' | 'gold';
+  class?: string;
+}
+
+const {
+  text,
+  position = 'top',
+  variant = 'dark',
+  class: className = '',
+} = Astro.props;
+
+const posMap = {
+  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
+  bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
+};
+
+const variantMap = {
+  dark: 'bg-black text-white border-black dark:bg-slate-950 dark:border-scorch-crimson',
+  crimson: 'bg-scorch-crimson text-white border-black',
+  cyan: 'bg-scorch-cyan text-black border-black',
+  gold: 'bg-scorch-gold text-black border-black',
+};
+---
+
+<span class={`relative inline-flex items-center group font-mono ${className}`} tabindex="0">
+  <slot />
+  <span
+    role="tooltip"
+    class={`pointer-events-none absolute z-30 ${posMap[position]} ${variantMap[variant]} px-2.5 py-1 text-[11px] font-extrabold whitespace-nowrap border-2 shadow-brutal-sm opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-focus-within:opacity-100 group-focus-within:scale-100 transition-transform duration-75`}
+  >
+    {text}
+  </span>
+</span>

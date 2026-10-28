@@ -5,7 +5,9 @@
   "type": "registry:ui",
   "category": "03_LAYOUT_AND_MODALS",
   "description": "Globo flotante de telemetría con API nativa popover=\"auto\" sin dependencias JS.",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
   "sha256": "aecd6ed4f115e2a263ff6c9f6f75879d328006b51bff4809c613d071ab1204d5",
   "files": [
     {

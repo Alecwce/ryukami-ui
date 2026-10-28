@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "drawer",
+  "title": "Drawer (Side Sheet Dialog)",
+  "type": "registry:ui",
+  "category": "03_LAYOUT_AND_MODALS",
+  "description": "Panel lateral deslizante nativo <dialog closedby=\"any\"> con posición izquierda o derecha.",
+  "registryDependencies": [],
+  "sha256": "c338a6c715dc6453b8b3a3bc2728d609ccbcd51047282c2427f7f9c39052d866",
+  "files": [
+    {
+      "path": "src/components/Drawer.astro",
+      "type": "registry:component",
+      "sha256": "c338a6c715dc6453b8b3a3bc2728d609ccbcd51047282c2427f7f9c39052d866",
+      "content": "---\nexport interface Props {\n  id: string;\n  title?: string;\n  position?: 'right' | 'left';\n  status?: string;\n  triggerLabel?: string;\n}\n\nconst {\n  id,\n  title = '0xDRAWER // SIDE_PANEL',\n  position = 'right',\n  status = 'ACTIVE',\n  triggerLabel,\n} = Astro.props;\n\nconst posClasses =\n  position === 'left'\n    ? 'mr-auto ml-0 h-full max-h-screen w-[calc(100vw-2.5rem)] max-w-md border-r-2'\n    : 'ml-auto mr-0 h-full max-h-screen w-[calc(100vw-2.5rem)] max-w-md border-l-2';\n---\n\n{\n  triggerLabel && (\n    <button\n      type=\"button\"\n      onclick={`document.getElementById('${id}').showModal()`}\n      class=\"btn-brutal bg-scorch-cyan text-black px-4 py-2 text-xs font-extrabold\"\n    >\n      <span>{triggerLabel}</span>\n    </button>\n  )\n}\n\n<dialog\n  id={id}\n  closedby=\"any\"\n  aria-labelledby={`${id}-title`}\n  class={`tui-window ${posClasses} my-0 p-0 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border-2 border-black dark:border-slate-200 shadow-brutal-xl font-mono text-xs`}\n>\n  <div class=\"flex flex-col h-full max-h-screen\">\n    <div class=\"tui-header bg-black dark:bg-scorch-crimson text-white shrink-0\">\n      <span id={`${id}-title`} class=\"flex items-center gap-2 truncate\">\n        <span class=\"inline-block w-2 h-2 bg-scorch-gold border border-black shrink-0\"></span>\n        <span class=\"truncate\">{title}</span>\n      </span>\n      <div class=\"flex items-center gap-2 shrink-0\">\n        <span class=\"bg-black text-scorch-cyan px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold\">\n          {status}\n        </span>\n        <form method=\"dialog\" class=\"inline-flex\">\n          <button\n            type=\"submit\"\n            aria-label=\"Cerrar panel lateral\"\n            class=\"w-5 h-5 inline-flex items-center justify-center border border-current bg-scorch-crimson text-white hover:bg-white hover:text-black cursor-pointer\"\n          >\n            <svg class=\"w-2.5 h-2.5 stroke-current stroke-[2.2]\" viewBox=\"0 0 10 10\" fill=\"none\" aria-hidden=\"true\">\n              <path d=\"M1.5 1.5L8.5 8.5M8.5 1.5L1.5 8.5\" stroke-linecap=\"square\" />\n            </svg>\n          </button>\n        </form>\n      </div>\n    </div>\n\n    <div class=\"p-5 overflow-y-auto flex-1 space-y-4 leading-relaxed\">\n      <slot />\n    </div>\n\n    <div class=\"px-4 py-2.5 border-t-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-[11px] shrink-0\">\n      <span class=\"opacity-75\">ESC O CLIC FUERA PARA CERRAR</span>\n      <form method=\"dialog\">\n        <button type=\"submit\" class=\"btn-brutal bg-scorch-crimson text-white px-3 py-1 text-[11px]\">\n          CERRAR [×]\n        </button>\n      </form>\n    </div>\n  </div>\n</dialog>\n"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * 🐉 Ryukami-UI // Static Registry Builder (8bitcn / shadcn architecture)
- * Compila src/components/*.astro y src/styles/global.css en endpoints JSON estáticos en public/r/
+ * Compila src/components/*.astro, src/styles/global.css y tokens.json en endpoints JSON estáticos en public/r/
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -68,6 +68,22 @@ const ITEMS = [
     category: '01_CORE_UI',
     description: 'Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.',
     file: 'src/components/Skeleton.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'stat-card',
+    title: 'StatCard (Telemetry KPI)',
+    category: '01_CORE_UI',
+    description: 'Tarjeta de métrica KPI con delta porcentual (▲/▼) y sparkline ASCII [▁▂▃▅▆▇█].',
+    file: 'src/components/StatCard.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'tooltip',
+    title: 'Tooltip',
+    category: '01_CORE_UI',
+    description: 'Etiqueta emergente accesible por teclado y hover con sombra dura -2px 2px.',
+    file: 'src/components/Tooltip.astro',
     registryDependencies: [],
   },
   {
@@ -164,7 +180,7 @@ const ITEMS = [
     category: '03_LAYOUT_AND_MODALS',
     description: 'Globo flotante de telemetría con API nativa popover="auto" sin dependencias JS.',
     file: 'src/components/Popover.astro',
-    registryDependencies: [],
+    registryDependencies: ['icon'],
   },
   {
     name: 'alert',
@@ -175,11 +191,27 @@ const ITEMS = [
     registryDependencies: [],
   },
   {
+    name: 'callout',
+    title: 'Callout (Obsidian Scorch)',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Callout canónico compatible con Obsidian ([!dragon], [!scorch], [!terminal], [!tui], [!summary]).',
+    file: 'src/components/Callout.astro',
+    registryDependencies: [],
+  },
+  {
     name: 'modal',
     title: 'Modal (HTML5 Dialog)',
     category: '03_LAYOUT_AND_MODALS',
     description: 'Diálogo modal nativo <dialog closedby="any"> con bloqueo de scroll de fondo.',
     file: 'src/components/Modal.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'drawer',
+    title: 'Drawer (Side Sheet Dialog)',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Panel lateral deslizante nativo <dialog closedby="any"> con posición izquierda o derecha.',
+    file: 'src/components/Drawer.astro',
     registryDependencies: [],
   },
   {
@@ -199,6 +231,38 @@ const ITEMS = [
     registryDependencies: ['kbd'],
   },
   {
+    name: 'bento-grid',
+    title: 'BentoGrid',
+    category: '03_LAYOUT_AND_MODALS',
+    description: 'Sistema modular de grillas Neo-Brutalistas (1x, 2x, 3x) con telemetría y cabeceras TUI.',
+    file: 'src/components/BentoGrid.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'data-table',
+    title: 'DataTable (Interactive TUI Grid)',
+    category: '04_SCORCH_STUDIO',
+    description: 'Tabla de datos interactiva con filtrado en vivo, ordenamiento por columna y badges de estado.',
+    file: 'src/components/DataTable.astro',
+    registryDependencies: ['badge'],
+  },
+  {
+    name: 'code-block',
+    title: 'CodeBlock (Diff & Copy)',
+    category: '04_SCORCH_STUDIO',
+    description: 'Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.',
+    file: 'src/components/CodeBlock.astro',
+    registryDependencies: [],
+  },
+  {
+    name: 'audio-synth',
+    title: 'AudioSynth (8-Bit Oscillator)',
+    category: '04_SCORCH_STUDIO',
+    description: 'Sintetizador interactivo de 4 pads acústicos Web Audio API (Cherry MX, Pip, Ack, Scorch Pulse).',
+    file: 'src/components/AudioSynth.astro',
+    registryDependencies: [],
+  },
+  {
     name: 'terminal-emulator',
     title: 'TerminalEmulator (0xSCORCH_SHELL)',
     category: '04_SCORCH_STUDIO',
@@ -210,7 +274,7 @@ const ITEMS = [
     name: 'component-preview',
     title: 'ComponentPreview',
     category: '04_SCORCH_STUDIO',
-    description: 'Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.',
+    description: 'Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.',
     file: 'src/components/ComponentPreview.astro',
     registryDependencies: [],
   },
@@ -305,9 +369,104 @@ fs.writeFileSync(
   'utf-8'
 );
 
+// W3C Design Tokens sincronizados con la bóveda Obsidian (Scorch v4.1)
+const designTokens = {
+  $schema: 'https://tr.designtokens.org/format/',
+  meta: {
+    name: 'Scorch-CLI Design System (Velgrynd Edition)',
+    version: '4.1.0',
+    uiVersion: '2.4.0',
+    author: 'Ryukami Labs (Alecwce)',
+    license: 'MIT',
+    updatedAt: '2026-10-28',
+    aesthetic: [
+      'Neo-Brutalism',
+      'Retro TUI / CLI',
+      'ASCII Matrix Art',
+      '8-Bit Pixel Display',
+      'Velgrynd Scorch Lore',
+    ],
+  },
+  themes: {
+    light_paper: {
+      bg_canvas: '#F5F7FA',
+      bg_surface: '#FFFFFF',
+      bg_terminal_header: '#0A0E14',
+      text_primary: '#111111',
+      text_secondary: '#334155',
+      text_inverted: '#FFFFFF',
+      border_color: '#000000',
+      shadow_color: '#000000',
+      dither_dots: '#94A3B8',
+      ascii_color: '#D62436',
+    },
+    dark_hacker: {
+      bg_canvas: '#0B0F17',
+      bg_surface: '#111827',
+      bg_terminal_header: '#D62436',
+      text_primary: '#F8FAFC',
+      text_secondary: '#CBD5E1',
+      text_inverted: '#FFFFFF',
+      border_color: '#E2E8F0',
+      shadow_color: '#D62436',
+      dither_dots: '#1E293B',
+      ascii_color: '#FF4D5A',
+    },
+  },
+  velgrynd_palette: {
+    scorch_crimson: {
+      value: '#D62436',
+      contrast_white: '5.04:1 (WCAG AA)',
+      description: 'Fuego primordial calibrado WCAG AA, botones primarios, alertas, sombra en modo oscuro',
+    },
+    scale_dark_red: {
+      value: '#9B1B30',
+      description: 'Sombra interna de escamas y gradientes de matriz ASCII',
+    },
+    whisker_cyan: {
+      value: '#4DA3FF',
+      description: 'Bigotes de dragón, acento técnico, badges RE_ENGINEERING, enlaces',
+    },
+    eye_gold: {
+      value: '#F4D35E',
+      description: 'Ojos brillantes de Velgrynd, advertencias, toggles de estado',
+    },
+    eye_gold_contrast: {
+      value: '#B45309',
+      description: 'Variación ámbar de alto contraste WCAG (7.09:1) para texto en modo claro',
+    },
+  },
+  typography: {
+    font_display: "'Press Start 2P', 'VT323', monospace",
+    font_sub: "'Tiny5', 'VT323', monospace",
+    font_mono: "'JetBrains Mono', monospace",
+    text_transform_headings: 'uppercase',
+    letter_spacing_sub: '0.14em',
+  },
+  layout_and_physics: {
+    border_width: '2px',
+    border_radius: '0px',
+    shadow_direction: 'bottom-left',
+    shadow_default: '-4px 4px 0px 0px var(--shadow-color)',
+    shadow_hover: '-6px 6px 0px 0px var(--shadow-color)',
+    shadow_active: '0px 0px 0px 0px var(--shadow-color)',
+    shadow_badge: '-2px 2px 0px 0px var(--shadow-color)',
+    transform_hover: 'translate(2px, -2px)',
+    transform_active: 'translate(-4px, 4px)',
+    ease_mechanical: 'cubic-bezier(0.23, 1, 0.32, 1)',
+    transition_mechanical: 'transform 75ms cubic-bezier(0.23, 1, 0.32, 1)',
+  },
+};
+
+fs.writeFileSync(
+  path.join(OUT_DIR, 'tokens.json'),
+  JSON.stringify(designTokens, null, 2),
+  'utf-8'
+);
+
 const masterRegistry = {
   name: 'ryukami-ui',
-  version: '2.3.0',
+  version: '2.4.0',
   edition: 'Scorch Dragon // Velgrynd Tribute Edition',
   stack: 'Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0',
   updatedAt: new Date().toISOString(),
@@ -321,4 +480,4 @@ fs.writeFileSync(
   'utf-8'
 );
 
-console.log(`⚡ [RYUKAMI-REGISTRY] Compilados ${registryIndex.length} componentes + styles.json en public/r/`);
+console.log(`⚡ [RYUKAMI-REGISTRY] Compilados ${registryIndex.length} componentes + styles.json + tokens.json en public/r/`);

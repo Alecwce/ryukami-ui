@@ -1,10 +1,10 @@
 {
   "name": "ryukami-ui",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-22T05:40:22.181Z",
-  "totalItems": 27,
+  "updatedAt": "2026-10-28T17:34:44.084Z",
+  "totalItems": 35,
   "items": [
     {
       "name": "button",
@@ -75,6 +75,26 @@
       "sha256": "9cba1bb3e88baa74e3c68cd1c78bac6c93d3501ac56e8d5c257f876f080ae6c3",
       "endpoint": "/r/skeleton.json",
       "target": "src/components/Skeleton.astro"
+    },
+    {
+      "name": "stat-card",
+      "title": "StatCard (Telemetry KPI)",
+      "category": "01_CORE_UI",
+      "description": "Tarjeta de métrica KPI con delta porcentual (▲/▼) y sparkline ASCII [▁▂▃▅▆▇█].",
+      "registryDependencies": [],
+      "sha256": "61139c3cf299bf38fe04d930aafb0d4d73ecebdf589d638f24a62d5c2f8837ff",
+      "endpoint": "/r/stat-card.json",
+      "target": "src/components/StatCard.astro"
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "category": "01_CORE_UI",
+      "description": "Etiqueta emergente accesible por teclado y hover con sombra dura -2px 2px.",
+      "registryDependencies": [],
+      "sha256": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
+      "endpoint": "/r/tooltip.json",
+      "target": "src/components/Tooltip.astro"
     },
     {
       "name": "input",
@@ -191,7 +211,9 @@
       "title": "Popover (HTML5 Popover API)",
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Globo flotante de telemetría con API nativa popover=\"auto\" sin dependencias JS.",
-      "registryDependencies": [],
+      "registryDependencies": [
+        "icon"
+      ],
       "sha256": "aecd6ed4f115e2a263ff6c9f6f75879d328006b51bff4809c613d071ab1204d5",
       "endpoint": "/r/popover.json",
       "target": "src/components/Popover.astro"
@@ -207,6 +229,16 @@
       "target": "src/components/Alert.astro"
     },
     {
+      "name": "callout",
+      "title": "Callout (Obsidian Scorch)",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Callout canónico compatible con Obsidian ([!dragon], [!scorch], [!terminal], [!tui], [!summary]).",
+      "registryDependencies": [],
+      "sha256": "7a6c0cc4b81997d8642f4483b1e793c777363c0945c6a5435dc44a2dde560531",
+      "endpoint": "/r/callout.json",
+      "target": "src/components/Callout.astro"
+    },
+    {
       "name": "modal",
       "title": "Modal (HTML5 Dialog)",
       "category": "03_LAYOUT_AND_MODALS",
@@ -215,6 +247,16 @@
       "sha256": "6a3d7538b9fa67d400e6821f2698b381949be4fc5003c06c23bae66749758ce9",
       "endpoint": "/r/modal.json",
       "target": "src/components/Modal.astro"
+    },
+    {
+      "name": "drawer",
+      "title": "Drawer (Side Sheet Dialog)",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Panel lateral deslizante nativo <dialog closedby=\"any\"> con posición izquierda o derecha.",
+      "registryDependencies": [],
+      "sha256": "c338a6c715dc6453b8b3a3bc2728d609ccbcd51047282c2427f7f9c39052d866",
+      "endpoint": "/r/drawer.json",
+      "target": "src/components/Drawer.astro"
     },
     {
       "name": "toast-container",
@@ -234,9 +276,51 @@
       "registryDependencies": [
         "kbd"
       ],
-      "sha256": "2f8f1a99e27b97b288f3d6216dd5ffcd46636359dbf967d9196d622a5bc6a043",
+      "sha256": "5e0562cf6388c9671db0c974e024b19aa413acb72ad74d46a7f13abcf1d990e9",
       "endpoint": "/r/command-palette.json",
       "target": "src/components/CommandPalette.astro"
+    },
+    {
+      "name": "bento-grid",
+      "title": "BentoGrid",
+      "category": "03_LAYOUT_AND_MODALS",
+      "description": "Sistema modular de grillas Neo-Brutalistas (1x, 2x, 3x) con telemetría y cabeceras TUI.",
+      "registryDependencies": [],
+      "sha256": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
+      "endpoint": "/r/bento-grid.json",
+      "target": "src/components/BentoGrid.astro"
+    },
+    {
+      "name": "data-table",
+      "title": "DataTable (Interactive TUI Grid)",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Tabla de datos interactiva con filtrado en vivo, ordenamiento por columna y badges de estado.",
+      "registryDependencies": [
+        "badge"
+      ],
+      "sha256": "4cb1a0f8520cb8dedd398a6b5f00f03b9f74005b2c670722aca1b7deaa336270",
+      "endpoint": "/r/data-table.json",
+      "target": "src/components/DataTable.astro"
+    },
+    {
+      "name": "code-block",
+      "title": "CodeBlock (Diff & Copy)",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.",
+      "registryDependencies": [],
+      "sha256": "795af8934da9bc6edf04fd1e7afe28efb41d2deb0823ebbc2f24d0d073bd9120",
+      "endpoint": "/r/code-block.json",
+      "target": "src/components/CodeBlock.astro"
+    },
+    {
+      "name": "audio-synth",
+      "title": "AudioSynth (8-Bit Oscillator)",
+      "category": "04_SCORCH_STUDIO",
+      "description": "Sintetizador interactivo de 4 pads acústicos Web Audio API (Cherry MX, Pip, Ack, Scorch Pulse).",
+      "registryDependencies": [],
+      "sha256": "19dbc772f25deaad6e5404a57876aac22bc6453867b6c80d4799696846210820",
+      "endpoint": "/r/audio-synth.json",
+      "target": "src/components/AudioSynth.astro"
     },
     {
       "name": "terminal-emulator",
@@ -244,7 +328,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
-      "sha256": "f7eb1a57170af268b971d05fade463ba791d2c13a8044eb8c6425a8a38420c9c",
+      "sha256": "5612e38976c8d74d2ebb6c446228a3c5f87be778b81af860548137f1b486aca5",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },
@@ -252,7 +336,7 @@
       "name": "component-preview",
       "title": "ComponentPreview",
       "category": "04_SCORCH_STUDIO",
-      "description": "Visor interactivo [ PREVIEW | CODE ] con botón de copiado de CLI y código en 1 clic.",
+      "description": "Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.",
       "registryDependencies": [],
       "sha256": "aa3a093d4d75797d69e94d583ee5d715ceffed92bf1d1c3e0588dabaf8dc41e1",
       "endpoint": "/r/component-preview.json",

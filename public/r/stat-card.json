@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "stat-card",
+  "title": "StatCard (Telemetry KPI)",
+  "type": "registry:ui",
+  "category": "01_CORE_UI",
+  "description": "Tarjeta de métrica KPI con delta porcentual (▲/▼) y sparkline ASCII [▁▂▃▅▆▇█].",
+  "registryDependencies": [],
+  "sha256": "61139c3cf299bf38fe04d930aafb0d4d73ecebdf589d638f24a62d5c2f8837ff",
+  "files": [
+    {
+      "path": "src/components/StatCard.astro",
+      "type": "registry:component",
+      "sha256": "61139c3cf299bf38fe04d930aafb0d4d73ecebdf589d638f24a62d5c2f8837ff",
+      "content": "---\nexport interface Props {\n  label: string;\n  value: string;\n  delta?: string;\n  trend?: 'up' | 'down' | 'neutral';\n  sparkline?: string;\n  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';\n  class?: string;\n}\n\nconst {\n  label,\n  value,\n  delta = '+0.0%',\n  trend = 'up',\n  sparkline = '▁▂▃▅▆▇█',\n  variant = 'crimson',\n  class: className = '',\n} = Astro.props;\n\nconst accentMap = {\n  crimson: 'border-t-4 border-t-scorch-crimson',\n  cyan: 'border-t-4 border-t-scorch-cyan',\n  gold: 'border-t-4 border-t-scorch-gold',\n  emerald: 'border-t-4 border-t-emerald-500',\n};\n\nconst trendBadgeMap = {\n  up: 'bg-emerald-400 text-black border-black',\n  down: 'bg-scorch-crimson text-white border-black',\n  neutral: 'bg-scorch-gold text-black border-black',\n};\n\nconst trendGlyph = trend === 'up' ? '▲' : trend === 'down' ? '▼' : '◆';\n---\n\n<div\n  class={`tui-window p-4 font-mono space-y-3 ${accentMap[variant]} ${className}`}\n>\n  <div class=\"flex items-center justify-between gap-2\">\n    <span class=\"text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 truncate\">\n      // {label}\n    </span>\n    <span class={`px-1.5 py-0.5 text-[10px] font-extrabold border ${trendBadgeMap[trend]} shadow-brutal-sm shrink-0`}>\n      {trendGlyph} {delta}\n    </span>\n  </div>\n\n  <div class=\"flex items-baseline justify-between gap-3 pt-1\">\n    <div class=\"text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white\">\n      {value}\n    </div>\n    <div\n      class=\"text-xs font-extrabold tracking-widest text-scorch-crimson dark:text-scorch-cyan select-none\"\n      aria-hidden=\"true\"\n      title=\"ASCII Sparkline Telemetry\"\n    >\n      [{sparkline}]\n    </div>\n  </div>\n</div>\n"
+    }
+  ]
+}

@@ -1,217 +1,45 @@
-# Design System Master File
+# Design System Master File — Ryukami-UI (Scorch v4.1)
 
-> **LOGIC:** When building a specific page, first check `design-system/pages/[page-name].md`.
-> If that file exists, its rules **override** this Master file.
-> If not, strictly follow the rules below.
+> **LOGIC:** Este archivo define la verdad canónica del sistema de diseño **Scorch Dragon // Velgrynd Edition v4.1**, sincronizado con `src/styles/global.css`, `/r/tokens.json` y la bóveda de Obsidian `ryukami-labs`.
 
 ---
 
-**Project:** Ryukami UI
-**Generated:** 2026-10-21 20:38:38
-**Category:** Design System/Component Library
-**Design Dials:** Variance 9/10 (Bold / Asymmetric) | Density 8/10 (Dense / Dashboard)
+**Project:** Ryukami-UI (`v2.4.0` — 35 Modules)
+**Updated:** 2026-10-28
+**Category:** Neo-Brutalist & Retro TUI Component Library + CLI & MCP Server
+**Design Dials:** Variance 9/10 (Tactical / Mechanical) | Density 8/10 (Console / Dashboard)
 
 ---
 
-## Global Rules
+## Global Rules (5 Reglas Inviolables)
 
-### Color Palette
-
-| Role | Hex | CSS Variable |
-|------|-----|--------------|
-| Primary | `#4F46E5` | `--color-primary` |
-| On Primary | `#FFFFFF` | `--color-on-primary` |
-| Secondary | `#6366F1` | `--color-secondary` |
-| On Secondary | `#000000` | `--color-on-secondary` |
-| Accent/CTA | `#EA580C` | `--color-accent` |
-| On Accent/CTA | `#000000` | `--color-on-accent` |
-| Background | `#EEF2FF` | `--color-background` |
-| Foreground | `#312E81` | `--color-foreground` |
-| Card | `#FFFFFF` | `--color-card` |
-| Card Foreground | `#312E81` | `--color-card-foreground` |
-| Muted | `#EBEEF8` | `--color-muted` |
-| Muted Foreground | `#475569` | `--color-muted-foreground` |
-| Border | `#C7D2FE` | `--color-border` |
-| Destructive | `#DC2626` | `--color-destructive` |
-| On Destructive | `#FFFFFF` | `--color-on-destructive` |
-| Ring | `#4F46E5` | `--color-ring` |
-
-**Color Notes:** Indigo brand + doc hierarchy [Accent adjusted from #F97316]
-
-### Typography
-
-- **Heading Font:** Space Grotesk
-- **Body Font:** Space Grotesk
-- **Mood:** neo brutalism, pop art, loud, bold, heavy, stickers, mechanical, high contrast, cream, gen-z
-- **Google Fonts:** [Space Grotesk + Space Grotesk](https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap)
-
-**CSS Import:**
-```css
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap');
-```
-
-### Spacing Variables
-
-*Density: 8/10 — Dense / Dashboard*
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-xs` | `2px` / `0.125rem` | Tight gaps |
-| `--space-sm` | `4px` / `0.25rem` | Icon gaps, inline spacing |
-| `--space-md` | `8px` / `0.5rem` | Standard padding |
-| `--space-lg` | `12px` / `0.75rem` | Section padding |
-| `--space-xl` | `16px` / `1rem` | Large gaps |
-| `--space-2xl` | `24px` / `1.5rem` | Section margins |
-| `--space-3xl` | `32px` / `2rem` | Hero padding |
-
-### Shadow Depths
-
-| Level | Value | Usage |
-|-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
-
----
-
-## Component Specs
-
-### Buttons
-
-```css
-/* Primary Button */
-.btn-primary {
-  background: #EA580C;
-  color: #000000;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #4F46E5;
-  border: 2px solid #4F46E5;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-```
-
-### Cards
-
-```css
-.card {
-  background: #EEF2FF;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #4F46E5;
-  outline: none;
-  box-shadow: 0 0 0 3px #4F46E520;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
-}
-```
-
----
-
-## Style Guidelines
-
-**Style:** Brutalism
-
-**Keywords:** Raw, unpolished, stark, high contrast, plain text, default fonts, visible borders, asymmetric, anti-design
-
-**Best For:** Design portfolios, artistic projects, counter-culture brands, editorial/media sites, tech blogs
-
-**Key Effects:** No smooth transitions (instant), sharp corners (0px), bold typography (700+), visible grid, large blocks
-
-### Page Pattern
-
-**Pattern Name:** FAQ/Documentation Landing
-
-- **Conversion Strategy:** Reduce support tickets. Track search analytics. Show related articles. Contact escalation path.
-- **CTA Placement:** Search bar prominent + Contact CTA for unresolved questions
-- **Section Order:** Hero with search bar > Popular categories > FAQ accordion > Contact/support CTA
-
----
-
-## Anti-Patterns (Do NOT Use)
-
-- ❌ Poor documentation
-- ❌ No live preview
-
-### Additional Forbidden Patterns
-
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
+1. **Zero Border Radius (`border-radius: 0px`):** Prohibido usar `rounded-*`. Toda tarjeta, botón, input, modal o badge es estrictamente rectangular con bordes sólidos de `2px` (`border-2 border-black`).
+2. **Bottom-Left Hard Shadows (`0px` Blur):**
+   - Estándar (`.tui-window`, `.btn-brutal`): `-4px 4px 0px 0px var(--shadow-color)`
+   - Pequeña (`Badge`, `Kbd`, `Tooltip`): `-2px 2px 0px 0px var(--shadow-color)`
+   - Hover: `transform: translate(2px, -2px); box-shadow: -6px 6px 0px 0px var(--shadow-color)`
+   - Active: `transform: translate(-4px, 4px); box-shadow: 0px 0px 0px 0px var(--shadow-color)`
+3. **Typography Stack (Self-Hosted WOFF2 in `/public/fonts/`):**
+   - Display H1 (`.title-8bit`): `'Press Start 2P', 'VT323', monospace`
+   - Subtitles H2 (`.subtitle-pixel`): `'Tiny5', 'VT323', monospace` (`letter-spacing: 0.14em`)
+   - Body & Code: `'JetBrains Mono', monospace`
+4. **WCAG AA Calibrated Palette (≥ 4.5:1):**
+   - Scorch Crimson (`--color-scorch-crimson` / `--scorch-red`): `#D62436` (Ratio **5.04:1** sobre `#FFFFFF`)
+   - Scale Dark Red (`--color-scorch-dark`): `#9B1B30`
+   - Whisker Cyan (`--color-scorch-cyan`): `#4DA3FF` (`#0369A1` / `text-sky-700` para texto sobre blanco)
+   - Eye Gold (`--color-scorch-gold`): `#F4D35E` (`#B45309` / `text-amber-800` para texto sobre blanco)
+5. **Dual Theme Identity:**
+   - **Light (Paper Brutalism):** Canvas `#F5F7FA`, Surface `#FFFFFF`, Header `#0A0E14`, Shadow `#000000`
+   - **Dark (Hacker CRT):** Canvas `#0B0F17`, Surface `#111827`, Header `#D62436`, Shadow `#D62436`
 
 ---
 
 ## Pre-Delivery Checklist
 
-Before delivering any UI code, verify:
-
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons from consistent icon set (Heroicons/Lucide)
-- [ ] `cursor-pointer` on all clickable elements
-- [ ] Hover states with smooth transitions (150-300ms)
-- [ ] Light mode: text contrast 4.5:1 minimum
-- [ ] Focus states visible for keyboard navigation
-- [ ] `prefers-reduced-motion` respected
-- [ ] Responsive: 375px, 768px, 1024px, 1440px
-- [ ] No content hidden behind fixed navbars
-- [ ] No horizontal scroll on mobile
+- [x] Zero `rounded-*` classes (`border-radius: 0px` everywhere)
+- [x] Hard bottom-left shadows (`-4px 4px 0px 0px`) with zero blur
+- [x] Geometric `20x20px` window controls `[ - ][ □ ][ × ]` with `aria-label`
+- [x] GPU composited transitions (`transform 75ms cubic-bezier(0.23, 1, 0.32, 1)`)
+- [x] Light & Dark mode contrast ≥ 4.5:1 (WCAG AA)
+- [x] `prefers-reduced-motion` respected
+- [x] Responsive without horizontal scroll at 375px, 768px, 1024px, 1440px

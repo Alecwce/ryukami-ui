@@ -1,8 +1,8 @@
 {
   "name": "ryukami-ui",
   "type": "module",
-  "version": "2.3.0",
-  "description": "Retro TUI & Neo-Brutalist Component Library + CLI Installer (27 Modules) inspired by Velgrynd Scorch Lore. Built with Astro 7, Tailwind CSS 4 & TypeScript 7.",
+  "version": "2.4.0",
+  "description": "Retro TUI & Neo-Brutalist Component Library + CLI Installer & MCP Server (35 Modules) inspired by Velgrynd Scorch Lore. Built with Astro 7, Tailwind CSS 4 & TypeScript 7.",
   "author": "Ryukami Labs (Alecwce)",
   "license": "MIT",
   "repository": {

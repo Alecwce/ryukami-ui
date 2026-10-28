@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "tooltip",
+  "title": "Tooltip",
+  "type": "registry:ui",
+  "category": "01_CORE_UI",
+  "description": "Etiqueta emergente accesible por teclado y hover con sombra dura -2px 2px.",
+  "registryDependencies": [],
+  "sha256": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
+  "files": [
+    {
+      "path": "src/components/Tooltip.astro",
+      "type": "registry:component",
+      "sha256": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
+      "content": "---\nexport interface Props {\n  text: string;\n  position?: 'top' | 'bottom';\n  variant?: 'dark' | 'crimson' | 'cyan' | 'gold';\n  class?: string;\n}\n\nconst {\n  text,\n  position = 'top',\n  variant = 'dark',\n  class: className = '',\n} = Astro.props;\n\nconst posMap = {\n  top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',\n  bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',\n};\n\nconst variantMap = {\n  dark: 'bg-black text-white border-black dark:bg-slate-950 dark:border-scorch-crimson',\n  crimson: 'bg-scorch-crimson text-white border-black',\n  cyan: 'bg-scorch-cyan text-black border-black',\n  gold: 'bg-scorch-gold text-black border-black',\n};\n---\n\n<span class={`relative inline-flex items-center group font-mono ${className}`} tabindex=\"0\">\n  <slot />\n  <span\n    role=\"tooltip\"\n    class={`pointer-events-none absolute z-30 ${posMap[position]} ${variantMap[variant]} px-2.5 py-1 text-[11px] font-extrabold whitespace-nowrap border-2 shadow-brutal-sm opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 group-focus-within:opacity-100 group-focus-within:scale-100 transition-transform duration-75`}\n  >\n    {text}\n  </span>\n</span>\n"
+    }
+  ]
+}

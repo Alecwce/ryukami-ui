@@ -176,4 +176,19 @@ describe('💉 CSS Injection Prevention (Theme Studio Regex Hardening)', () => {
       );
     }
   });
+
+  test('validateRegistryPayload debe validar tokens.json W3C y registry.json de 35 módulos', () => {
+    assert.doesNotThrow(() => {
+      validateRegistryPayload(
+        {
+          meta: { name: 'Scorch-CLI', version: '4.1.0' },
+          velgrynd_palette: { scorch_crimson: { value: '#D62436' } },
+        },
+        'tokens.json'
+      );
+    });
+    assert.throws(() => {
+      validateRegistryPayload({ invalid: true }, 'tokens.json');
+    });
+  });
 });

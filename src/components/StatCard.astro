@@ -1,0 +1,62 @@
+---
+export interface Props {
+  label: string;
+  value: string;
+  delta?: string;
+  trend?: 'up' | 'down' | 'neutral';
+  sparkline?: string;
+  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';
+  class?: string;
+}
+
+const {
+  label,
+  value,
+  delta = '+0.0%',
+  trend = 'up',
+  sparkline = '▁▂▃▅▆▇█',
+  variant = 'crimson',
+  class: className = '',
+} = Astro.props;
+
+const accentMap = {
+  crimson: 'border-t-4 border-t-scorch-crimson',
+  cyan: 'border-t-4 border-t-scorch-cyan',
+  gold: 'border-t-4 border-t-scorch-gold',
+  emerald: 'border-t-4 border-t-emerald-500',
+};
+
+const trendBadgeMap = {
+  up: 'bg-emerald-400 text-black border-black',
+  down: 'bg-scorch-crimson text-white border-black',
+  neutral: 'bg-scorch-gold text-black border-black',
+};
+
+const trendGlyph = trend === 'up' ? '▲' : trend === 'down' ? '▼' : '◆';
+---
+
+<div
+  class={`tui-window p-4 font-mono space-y-3 ${accentMap[variant]} ${className}`}
+>
+  <div class="flex items-center justify-between gap-2">
+    <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 truncate">
+      // {label}
+    </span>
+    <span class={`px-1.5 py-0.5 text-[10px] font-extrabold border ${trendBadgeMap[trend]} shadow-brutal-sm shrink-0`}>
+      {trendGlyph} {delta}
+    </span>
+  </div>
+
+  <div class="flex items-baseline justify-between gap-3 pt-1">
+    <div class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+      {value}
+    </div>
+    <div
+      class="text-xs font-extrabold tracking-widest text-scorch-crimson dark:text-scorch-cyan select-none"
+      aria-hidden="true"
+      title="ASCII Sparkline Telemetry"
+    >
+      [{sparkline}]
+    </div>
+  </div>
+</div>

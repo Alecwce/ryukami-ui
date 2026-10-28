@@ -1,0 +1,91 @@
+---
+export interface BentoItem {
+  id?: string;
+  title: string;
+  subtitle?: string;
+  badge?: string;
+  metric?: string;
+  description: string;
+  span?: '1' | '2' | '3';
+  variant?: 'crimson' | 'cyan' | 'gold' | 'dark';
+}
+
+export interface Props {
+  columns?: 2 | 3 | 4;
+  items?: BentoItem[];
+  class?: string;
+}
+
+const {
+  columns = 3,
+  items = [],
+  class: className = '',
+} = Astro.props;
+
+const gridColsMap = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-3',
+  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+};
+
+const spanMap = {
+  '1': 'md:col-span-1',
+  '2': 'md:col-span-2',
+  '3': 'md:col-span-3',
+};
+
+const headerVariantMap = {
+  crimson: 'bg-scorch-crimson text-white',
+  cyan: 'bg-scorch-cyan text-black',
+  gold: 'bg-scorch-gold text-black',
+  dark: 'bg-black text-white dark:bg-slate-800',
+};
+---
+
+<div class={`grid ${gridColsMap[columns]} gap-4 font-mono text-xs ${className}`}>
+  {
+    items.length > 0 ? (
+      items.map((item) => {
+        const spanClass = spanMap[item.span || '1'];
+        const headerClass = headerVariantMap[item.variant || 'dark'];
+        return (
+          <article
+            class={`tui-window flex flex-col justify-between transition-transform duration-75 hover:translate-x-0.5 hover:-translate-y-0.5 ${spanClass}`}
+          >
+            <div>
+              <div class={`tui-header ${headerClass}`}>
+                <span class="truncate font-extrabold uppercase">{item.title}</span>
+                {item.badge && (
+                  <span class="px-1.5 py-0.5 text-[10px] border border-current font-extrabold shrink-0">
+                    {item.badge}
+                  </span>
+                )}
+              </div>
+              <div class="p-4 space-y-2.5">
+                {item.subtitle && (
+                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson dark:text-scorch-cyan">
+                    // {item.subtitle}
+                  </div>
+                )}
+                {item.metric && (
+                  <div class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                    {item.metric}
+                  </div>
+                )}
+                <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+            <div class="px-4 py-2 border-t-2 border-black/15 dark:border-white/15 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-[10px] font-bold">
+              <span>BENTO_CELL // {item.span || '1'}X</span>
+              <span class="text-scorch-crimson dark:text-scorch-cyan">● ACTIVE</span>
+            </div>
+          </article>
+        );
+      })
+    ) : (
+      <slot />
+    )
+  }
+</div>

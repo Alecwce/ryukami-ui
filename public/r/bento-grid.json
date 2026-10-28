@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ryukami-ui.dev/schema/registry-item.json",
+  "name": "bento-grid",
+  "title": "BentoGrid",
+  "type": "registry:ui",
+  "category": "03_LAYOUT_AND_MODALS",
+  "description": "Sistema modular de grillas Neo-Brutalistas (1x, 2x, 3x) con telemetría y cabeceras TUI.",
+  "registryDependencies": [],
+  "sha256": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
+  "files": [
+    {
+      "path": "src/components/BentoGrid.astro",
+      "type": "registry:component",
+      "sha256": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
+      "content": "---\nexport interface BentoItem {\n  id?: string;\n  title: string;\n  subtitle?: string;\n  badge?: string;\n  metric?: string;\n  description: string;\n  span?: '1' | '2' | '3';\n  variant?: 'crimson' | 'cyan' | 'gold' | 'dark';\n}\n\nexport interface Props {\n  columns?: 2 | 3 | 4;\n  items?: BentoItem[];\n  class?: string;\n}\n\nconst {\n  columns = 3,\n  items = [],\n  class: className = '',\n} = Astro.props;\n\nconst gridColsMap = {\n  2: 'grid-cols-1 md:grid-cols-2',\n  3: 'grid-cols-1 md:grid-cols-3',\n  4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',\n};\n\nconst spanMap = {\n  '1': 'md:col-span-1',\n  '2': 'md:col-span-2',\n  '3': 'md:col-span-3',\n};\n\nconst headerVariantMap = {\n  crimson: 'bg-scorch-crimson text-white',\n  cyan: 'bg-scorch-cyan text-black',\n  gold: 'bg-scorch-gold text-black',\n  dark: 'bg-black text-white dark:bg-slate-800',\n};\n---\n\n<div class={`grid ${gridColsMap[columns]} gap-4 font-mono text-xs ${className}`}>\n  {\n    items.length > 0 ? (\n      items.map((item) => {\n        const spanClass = spanMap[item.span || '1'];\n        const headerClass = headerVariantMap[item.variant || 'dark'];\n        return (\n          <article\n            class={`tui-window flex flex-col justify-between transition-transform duration-75 hover:translate-x-0.5 hover:-translate-y-0.5 ${spanClass}`}\n          >\n            <div>\n              <div class={`tui-header ${headerClass}`}>\n                <span class=\"truncate font-extrabold uppercase\">{item.title}</span>\n                {item.badge && (\n                  <span class=\"px-1.5 py-0.5 text-[10px] border border-current font-extrabold shrink-0\">\n                    {item.badge}\n                  </span>\n                )}\n              </div>\n              <div class=\"p-4 space-y-2.5\">\n                {item.subtitle && (\n                  <div class=\"text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson dark:text-scorch-cyan\">\n                    // {item.subtitle}\n                  </div>\n                )}\n                {item.metric && (\n                  <div class=\"text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white\">\n                    {item.metric}\n                  </div>\n                )}\n                <p class=\"text-xs leading-relaxed text-slate-700 dark:text-slate-300\">\n                  {item.description}\n                </p>\n              </div>\n            </div>\n            <div class=\"px-4 py-2 border-t-2 border-black/15 dark:border-white/15 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-[10px] font-bold\">\n              <span>BENTO_CELL // {item.span || '1'}X</span>\n              <span class=\"text-scorch-crimson dark:text-scorch-cyan\">● ACTIVE</span>\n            </div>\n          </article>\n        );\n      })\n    ) : (\n      <slot />\n    )\n  }\n</div>\n"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+---
+import Icon from './Icon.astro';
+
+export interface Props {
+  title?: string;
+  class?: string;
+}
+
+const {
+  title = '0xAUDIO_SYNTH // 8-BIT_TUI_OSCILLATOR',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`tui-window overflow-hidden font-mono text-xs ${className}`} data-scorch-audiosynth>
+  <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
+    <span class="flex items-center gap-2 min-w-0">
+      <Icon name="volume-2" class="w-3.5 h-3.5 text-scorch-gold shrink-0" />
+      <span class="truncate">{title}</span>
+    </span>
+    <span class="px-1.5 py-0.5 text-[10px] bg-black text-scorch-cyan border border-slate-700 font-bold shrink-0">
+      ZERO_MP3 // WEB_AUDIO
+    </span>
+  </div>
+
+  <div class="p-4 space-y-4">
+    <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-700 dark:text-slate-300">
+      <span>Sintetizador matemático Web Audio API en tiempo real (0 KiB de archivos externos):</span>
+      <span class="font-extrabold text-scorch-crimson dark:text-scorch-gold" data-synth-readout>
+        FREQ: 880Hz // WAVE: SQUARE
+      </span>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+      <button
+        type="button"
+        data-synth-pad="cherry"
+        class="btn-brutal bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 py-2.5 text-xs flex flex-col items-start gap-1"
+      >
+        <span class="text-[10px] text-scorch-crimson font-extrabold">[PAD_01]</span>
+        <span>CHERRY MX CLICK</span>
+      </button>
+
+      <button
+        type="button"
+        data-synth-pad="pip"
+        class="btn-brutal bg-scorch-cyan text-black px-3 py-2.5 text-xs flex flex-col items-start gap-1"
+      >
+        <span class="text-[10px] font-extrabold opacity-80">[PAD_02]</span>
+        <span>TERMINAL PIP</span>
+      </button>
+
+      <button
+        type="button"
+        data-synth-pad="ack"
+        class="btn-brutal bg-scorch-gold text-black px-3 py-2.5 text-xs flex flex-col items-start gap-1"
+      >
+        <span class="text-[10px] font-extrabold opacity-80">[PAD_03]</span>
+        <span>TELEMETRY ACK</span>
+      </button>
+
+      <button
+        type="button"
+        data-synth-pad="dragon"
+        class="btn-brutal bg-scorch-crimson text-white px-3 py-2.5 text-xs flex flex-col items-start gap-1"
+      >
+        <span class="text-[10px] text-scorch-gold font-extrabold">[PAD_04]</span>
+        <span>SCORCH PULSE</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('[data-scorch-audiosynth]').forEach((root) => {
+      if (root.hasAttribute('data-synth-bound')) return;
+      root.setAttribute('data-synth-bound', 'true');
+
+      const readout = root.querySelector('[data-synth-readout]');
+      let ctx = null;
+
+      function getCtx() {
+        if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (ctx.state === 'suspended') ctx.resume();
+        return ctx;
+      }
+
+      root.querySelectorAll('[data-synth-pad]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mode = btn.getAttribute('data-synth-pad');
+          try {
+            const audio = getCtx();
+            const now = audio.currentTime;
+            const osc = audio.createOscillator();
+            const gain = audio.createGain();
+
+            if (mode === 'cherry') {
+              osc.type = 'triangle';
+              osc.frequency.setValueAtTime(180, now);
+              osc.frequency.exponentialRampToValueAtTime(45, now + 0.035);
+              gain.gain.setValueAtTime(0.28, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+              osc.connect(gain);
+              gain.connect(audio.destination);
+              osc.start(now);
+              osc.stop(now + 0.035);
+              if (readout) readout.textContent = 'FREQ: 180→45Hz // WAVE: TRIANGLE (35ms)';
+            } else if (mode === 'pip') {
+              osc.type = 'square';
+              osc.frequency.setValueAtTime(880, now);
+              gain.gain.setValueAtTime(0.12, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+              osc.connect(gain);
+              gain.connect(audio.destination);
+              osc.start(now);
+              osc.stop(now + 0.06);
+              if (readout) readout.textContent = 'FREQ: 880Hz // WAVE: SQUARE (60ms)';
+            } else if (mode === 'ack') {
+              osc.type = 'square';
+              osc.frequency.setValueAtTime(660, now);
+              osc.frequency.setValueAtTime(990, now + 0.055);
+              gain.gain.setValueAtTime(0.12, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+              osc.connect(gain);
+              gain.connect(audio.destination);
+              osc.start(now);
+              osc.stop(now + 0.12);
+              if (readout) readout.textContent = 'FREQ: 660→990Hz // WAVE: DUAL_ACK (120ms)';
+            } else if (mode === 'dragon') {
+              osc.type = 'sawtooth';
+              osc.frequency.setValueAtTime(110, now);
+              osc.frequency.exponentialRampToValueAtTime(440, now + 0.09);
+              osc.frequency.exponentialRampToValueAtTime(85, now + 0.22);
+              gain.gain.setValueAtTime(0.18, now);
+              gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+              osc.connect(gain);
+              gain.connect(audio.destination);
+              osc.start(now);
+              osc.stop(now + 0.22);
+              if (readout) readout.textContent = 'FREQ: 110→440→85Hz // WAVE: SAWTOOTH (220ms)';
+            }
+          } catch (e) {}
+        });
+      });
+    });
+  })();
+</script>

@@ -478,3 +478,134 @@ export const modalToastProps: PropItem[] = [
     variants: ['crimson', 'cyan', 'gold', 'emerald'],
   },
 ];
+
+export const statCardTooltipProps: PropItem[] = [
+  {
+    name: 'label (StatCard)',
+    type: 'string',
+    default: 'undefined',
+    description: 'Etiqueta de métrica de telemetría o KPI (ej. LATENCIA_EDGE).',
+  },
+  {
+    name: 'value (StatCard)',
+    type: 'string',
+    default: 'undefined',
+    description: 'Valor numérico o métrica principal destacada.',
+  },
+  {
+    name: 'delta / trend (StatCard)',
+    type: "string / 'up' | 'down' | 'neutral'",
+    default: "'+0.0%' / 'up'",
+    description: 'Variación porcentual e indicador direccional ▲/▼/◆.',
+    variants: ['up', 'down', 'neutral'],
+  },
+  {
+    name: 'sparkline (StatCard)',
+    type: 'string',
+    default: "'▁▂▃▅▆▇█'",
+    description: 'Micro-gráfica en caracteres de bloque ASCII.',
+  },
+  {
+    name: 'text (Tooltip)',
+    type: 'string',
+    default: 'undefined',
+    description: 'Texto emergente mostrado al enfocar o pasar el cursor.',
+  },
+  {
+    name: 'position / variant (Tooltip)',
+    type: "'top' | 'bottom' / 'dark' | 'crimson' | 'cyan' | 'gold'",
+    default: "'top' / 'dark'",
+    description: 'Ubicación y tema cromático del tooltip.',
+    variants: ['dark', 'crimson', 'cyan', 'gold'],
+  },
+];
+
+export const calloutBentoProps: PropItem[] = [
+  {
+    name: 'type (Callout)',
+    type: "'dragon' | 'scorch' | 'terminal' | 'tui' | 'summary'",
+    default: "'dragon'",
+    description: 'Tipo de callout canónico sincronizado con Obsidian Scorch v4.1.',
+    variants: ['dragon', 'scorch', 'terminal', 'tui', 'summary'],
+  },
+  {
+    name: 'title / badge (Callout)',
+    type: 'string',
+    default: "'0xCALLOUT // SYSTEM_DIRECTIVE'",
+    description: 'Encabezado y pastilla opcional en la barra del callout.',
+  },
+  {
+    name: 'foldable (Callout)',
+    type: 'boolean',
+    default: 'false',
+    description: 'Si es true, renderiza un bloque <details> plegable nativo.',
+  },
+  {
+    name: 'columns (BentoGrid)',
+    type: '2 | 3 | 4',
+    default: '3',
+    description: 'Cantidad de columnas responsivas en la grilla Bento.',
+  },
+  {
+    name: 'items (BentoGrid)',
+    type: 'BentoItem[]',
+    default: '[]',
+    description: 'Celdas modulares con { title, subtitle?, metric?, badge?, description, span?, variant? }.',
+  },
+];
+
+export const drawerCodeSynthProps: PropItem[] = [
+  {
+    name: 'id / position (Drawer)',
+    type: "string / 'right' | 'left'",
+    default: "'right'",
+    description: 'ID del <dialog closedby="any"> lateral y lado de apertura.',
+    variants: ['right', 'left'],
+  },
+  {
+    name: 'filename / language (CodeBlock)',
+    type: 'string',
+    default: "'src/kernel/scorch.ts' / 'TS // DIFF'",
+    description: 'Nombre de archivo y lenguaje en la cabecera del visor de código.',
+  },
+  {
+    name: 'code (CodeBlock)',
+    type: 'string',
+    default: "''",
+    description: 'Código fuente con soporte automático para líneas diff (+ / -) y botón COPIAR.',
+  },
+  {
+    name: 'title (AudioSynth)',
+    type: 'string',
+    default: "'0xAUDIO_SYNTH // 8-BIT_TUI_OSCILLATOR'",
+    description: 'Título de la consola sintetizadora de 4 pads Web Audio API.',
+  },
+];
+
+export const dataTableProps: PropItem[] = [
+  {
+    name: 'title',
+    type: 'string',
+    default: "'0xDATA_GRID // TUI_EXPLORER'",
+    description: 'Título de la ventana de tabla interactiva.',
+  },
+  {
+    name: 'columns',
+    type: '{ key: string; label: string; sortable?: boolean }[]',
+    default: '[]',
+    description: 'Definición de columnas con soporte de ordenamiento ascendente/descendente.',
+  },
+  {
+    name: 'rows',
+    type: 'Record<string, string | number>[]',
+    default: '[]',
+    description: 'Filas de datos con renderizado automático de Badges en columnas de estado.',
+  },
+  {
+    name: 'searchable',
+    type: 'boolean',
+    default: 'true',
+    description: 'Habilita la barra de filtrado instantáneo en tiempo real.',
+  },
+];
+

@@ -1,26 +1,22 @@
-# Dependencies & Build Output
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Astro build output
 dist/
 .astro/
 
-# Cloudflare Wrangler & Local Secrets
-.wrangler/
-.dev.vars
-.dev.vars.*
+# Environment variables
 .env
 .env.*
 !.env.example
-*.pem
-*.key
 
-# Logs & Package Managers
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# OS & Editor Artifacts
+# OS & Editor artifacts
 .DS_Store
 Thumbs.db
-*.swp
-*~
+.vscode/
+.idea/
+*.log
+
+# Local Lighthouse temp reports
+lighthouse-report.*

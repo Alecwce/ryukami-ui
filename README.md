@@ -1,15 +1,16 @@
 # 🐉 Ryukami-UI (Scorch Dragon // Velgrynd Tribute Edition)
 
 [![CI](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml)
-[![Version](https://img.shields.io/badge/version-v2.3.0-D62436.svg)](https://github.com/Alecwce/ryukami-ui/releases/tag/v2.3.0)
+[![Version](https://img.shields.io/badge/version-v2.4.0-D62436.svg)](https://github.com/Alecwce/ryukami-ui/releases/tag/v2.4.0)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-96%20%7C%20100%20%7C%20100%20%7C%20100-success.svg)](https://ryukami-ui.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> **Retro TUI & Neo-Brutalist Component Library + CLI Installer for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
+> **Retro TUI & Neo-Brutalist Component Library + CLI Installer & MCP Server (35 Modules) for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
 > Inspired by oriental dragon lore, 8-bit CRT terminals, and raw mechanical engineering aesthetics.
 
 - 🌐 **Live Production (Cloudflare Pages):** [**https://ryukami-ui.pages.dev**](https://ryukami-ui.pages.dev)  
 - 📦 **Live Open-Code JSON Registry:** [**https://ryukami-ui.pages.dev/r/registry.json**](https://ryukami-ui.pages.dev/r/registry.json)  
+- 🎨 **W3C Design Tokens v4.1:** [**https://ryukami-ui.pages.dev/r/tokens.json**](https://ryukami-ui.pages.dev/r/tokens.json)  
 - 🤖 **AI Agent Manifest (llms.txt):** [**https://ryukami-ui.pages.dev/llms.txt**](https://ryukami-ui.pages.dev/llms.txt)  
 - 🐙 **GitHub Repository:** [**https://github.com/Alecwce/ryukami-ui**](https://github.com/Alecwce/ryukami-ui)
 
@@ -24,7 +25,7 @@
 | **Framework** | [Astro 7.4.0](https://astro.build) | Motor **Vite 8 + Rolldown**, HTML comprimido y **0 KiB de bundles JS externos**. |
 | **Estilos** | [Tailwind CSS 4.3.3](https://tailwindcss.com) | Configuración CSS-first (`@import "tailwindcss";`, `@theme`, `@custom-variant dark`). |
 | **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes. |
-| **CLI & Registry** | **`ryukami-ui` v2.3.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Registro estático JSON en `/public/r/*.json` (**27 módulos**). |
+| **CLI & Registry** | **`ryukami-ui` v2.4.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Servidor MCP (`stdio`) + Registro estático JSON en `/public/r/*.json` (**35 módulos**). |
 | **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos `.mp3`. |
 | **Auditoría Real** | **Lighthouse Verified** | **96** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
 
@@ -144,7 +145,7 @@ Los endpoints JSON en `https://ryukami-ui.pages.dev/r/*.json` cuentan con cabece
 
 ---
 
-## 🧩 Catálogo Completo (27 Componentes & Herramientas Instalables por CLI)
+## 🧩 Catálogo Completo (35 Componentes & Herramientas Instalables por CLI)
 
 | ID en CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
 | :--- | :--- | :--- | :--- |
@@ -155,6 +156,8 @@ Los endpoints JSON en `https://ryukami-ui.pages.dev/r/*.json` cuentan con cabece
 | `progress-bar` | `ProgressBar.astro` | `01_CORE_UI` | Barra de progreso segmentada BIOS con lectura ASCII `[████████░░░░]`. |
 | `avatar` | `Avatar.astro` | `01_CORE_UI` | Identificador cuadrado de operador TUI con indicador de estado (`ONLINE`/`BUSY`/`IDLE`). |
 | `skeleton` | `Skeleton.astro` | `01_CORE_UI` | Bloque de carga de búfer ASCII (`[ ░░░ SYNC ░░░ ]`) con `role="status"`. |
+| `stat-card` | `StatCard.astro` | `01_CORE_UI` | Tarjeta KPI de telemetría con delta porcentual (`▲/▼`) y sparkline ASCII `[▁▂▃▅▆▇█]`. |
+| `tooltip` | `Tooltip.astro` | `01_CORE_UI` | Etiqueta emergente accesible por teclado y hover con sombra dura `-2px 2px`. |
 | `input` | `Input.astro` | `02_FORM_CONTROLS` | Input brutalista con prefijo de terminal (`$`, `tcp://`), hints y error. |
 | `textarea` | `Textarea.astro` | `02_FORM_CONTROLS` | Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes. |
 | `select` | `Select.astro` | `02_FORM_CONTROLS` | Selector desplegable brutalista con prefijo `OPT //` e indicador mecánico. |
@@ -168,11 +171,17 @@ Los endpoints JSON en `https://ryukami-ui.pages.dev/r/*.json` cuentan con cabece
 | `pagination` | `Pagination.astro` | `03_LAYOUT_AND_MODALS` | Barra de paginación mecánica TUI (`[ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]`). |
 | `popover` | `Popover.astro` | `03_LAYOUT_AND_MODALS` | Globo flotante de telemetría con API nativa `popover="auto"` Top-Layer sin JS. |
 | `alert` | `Alert.astro` | `03_LAYOUT_AND_MODALS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
+| `callout` | `Callout.astro` | `03_LAYOUT_AND_MODALS` | Callout canónico compatible con Obsidian (`[!dragon]`, `[!scorch]`, `[!terminal]`, `[!tui]`, `[!summary]`). |
 | `modal` | `Modal.astro` | `03_LAYOUT_AND_MODALS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
+| `drawer` | `Drawer.astro` | `03_LAYOUT_AND_MODALS` | Panel lateral deslizante nativo `<dialog closedby="any">` (`left` / `right`). |
 | `toast-container` | `ToastContainer.astro` | `03_LAYOUT_AND_MODALS` | Notificaciones flotantes con frecuencia acústica por severidad. |
 | `command-palette` | `CommandPalette.astro` | `03_LAYOUT_AND_MODALS` | Paleta de comandos (`Ctrl+K`) con buscador en vivo (`deps: kbd`). |
+| `bento-grid` | `BentoGrid.astro` | `03_LAYOUT_AND_MODALS` | Sistema modular de grillas Neo-Brutalistas (`1x`, `2x`, `3x`) con cabeceras TUI. |
+| `data-table` | `DataTable.astro` | `04_SCORCH_STUDIO` | Tabla de datos interactiva con filtrado en vivo, ordenamiento y badges (`deps: badge`). |
+| `code-block` | `CodeBlock.astro` | `04_SCORCH_STUDIO` | Visor de código TUI con numeración de líneas, resaltado diff (`+`/`-`) y botón COPIAR. |
+| `audio-synth` | `AudioSynth.astro` | `04_SCORCH_STUDIO` | Sintetizador interactivo de 4 pads acústicos Web Audio API (0 KiB MP3). |
 | `terminal-emulator` | `TerminalEmulator.astro` | `04_SCORCH_STUDIO` | Consola interactiva en vivo (`0xSCORCH_SHELL`) con comandos (`neofetch`, `status`, `dragon`, `cli`, `theme`). |
-| `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Visor `[ PREVIEW | CODE ]` con copia de CLI y código en 1 clic. |
+| `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Visor `[ PREVIEW | CODE | PROPS ]` con copia de CLI y código en 1 clic. |
 | `theme-studio` | `ThemeStudio.astro` | `04_SCORCH_STUDIO` | Laboratorio en vivo de colores, sombras, dither y exportador CSS. |
 | `ascii-generator` | `AsciiGenerator.astro` | `04_SCORCH_STUDIO` | Forja de banners ASCII 8-bit y emblema del Dragón Scorch. |
 

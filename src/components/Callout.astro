@@ -1,0 +1,126 @@
+---
+export interface Props {
+  type?: 'dragon' | 'scorch' | 'terminal' | 'tui' | 'summary';
+  title?: string;
+  foldable?: boolean;
+  defaultOpen?: boolean;
+  badge?: string;
+  class?: string;
+}
+
+const {
+  type = 'dragon',
+  title = '0xCALLOUT // SYSTEM_DIRECTIVE',
+  foldable = false,
+  defaultOpen = true,
+  badge,
+  class: className = '',
+} = Astro.props;
+
+const themes = {
+  dragon: {
+    border: 'border-scorch-crimson',
+    headerBg: 'bg-scorch-crimson text-white',
+    bodyBg: 'bg-white dark:bg-slate-900',
+    glyph: '🐉',
+    tag: '[!dragon]',
+    badgeBg: 'bg-black text-scorch-gold border-black',
+  },
+  scorch: {
+    border: 'border-scorch-crimson',
+    headerBg: 'bg-black dark:bg-scorch-crimson text-white',
+    bodyBg: 'bg-red-50/50 dark:bg-slate-900',
+    glyph: '◆',
+    tag: '[!scorch]',
+    badgeBg: 'bg-scorch-gold text-black border-black',
+  },
+  terminal: {
+    border: 'border-black dark:border-scorch-cyan',
+    headerBg: 'bg-[#0A0E14] text-scorch-cyan',
+    bodyBg: 'bg-[#070A0F] text-slate-100',
+    glyph: '>_',
+    tag: '[!terminal]',
+    badgeBg: 'bg-scorch-cyan text-black border-black',
+  },
+  tui: {
+    border: 'border-black dark:border-scorch-gold',
+    headerBg: 'bg-scorch-gold text-black',
+    bodyBg: 'bg-amber-50/40 dark:bg-slate-900',
+    glyph: '★',
+    tag: '[!tui]',
+    badgeBg: 'bg-black text-scorch-gold border-black',
+  },
+  summary: {
+    border: 'border-black dark:border-slate-300',
+    headerBg: 'bg-slate-900 text-white dark:bg-slate-800',
+    bodyBg: 'bg-slate-50 dark:bg-slate-900',
+    glyph: '■',
+    tag: '[!summary]',
+    badgeBg: 'bg-scorch-crimson text-white border-black',
+  },
+};
+
+const current = themes[type] || themes.dragon;
+---
+
+{
+  foldable ? (
+    <details
+      open={defaultOpen}
+      class={`group border-2 ${current.border} ${current.bodyBg} shadow-brutal font-mono text-xs ${className}`}
+    >
+      <summary
+        class={`px-3.5 py-2 font-extrabold uppercase flex items-center justify-between gap-2 cursor-pointer select-none list-none border-b-2 border-transparent group-open:border-black dark:group-open:border-slate-700 ${current.headerBg}`}
+      >
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="shrink-0 font-mono text-xs" aria-hidden="true">
+            {current.glyph}
+          </span>
+          <span class="opacity-80 text-[10px] shrink-0">{current.tag}</span>
+          <span class="truncate">{title}</span>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          {badge && (
+            <span class={`px-1.5 py-0.5 text-[10px] border ${current.badgeBg} font-extrabold`}>
+              {badge}
+            </span>
+          )}
+          <span
+            class="w-5 h-5 inline-flex items-center justify-center border border-current text-[10px] transition-transform duration-75 group-open:rotate-90"
+            aria-hidden="true"
+          >
+            ►
+          </span>
+        </div>
+      </summary>
+      <div class="p-4 leading-relaxed space-y-2">
+        <slot />
+      </div>
+    </details>
+  ) : (
+    <aside
+      class={`border-2 ${current.border} ${current.bodyBg} shadow-brutal font-mono text-xs ${className}`}
+      aria-label={title}
+    >
+      <div
+        class={`px-3.5 py-2 font-extrabold uppercase flex items-center justify-between gap-2 border-b-2 border-black dark:border-slate-700 ${current.headerBg}`}
+      >
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="shrink-0 font-mono text-xs" aria-hidden="true">
+            {current.glyph}
+          </span>
+          <span class="opacity-80 text-[10px] shrink-0">{current.tag}</span>
+          <span class="truncate">{title}</span>
+        </div>
+        {badge && (
+          <span class={`px-1.5 py-0.5 text-[10px] border ${current.badgeBg} font-extrabold shrink-0`}>
+            {badge}
+          </span>
+        )}
+      </div>
+      <div class="p-4 leading-relaxed space-y-2">
+        <slot />
+      </div>
+    </aside>
+  )
+}

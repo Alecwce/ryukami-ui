@@ -1,0 +1,94 @@
+---
+import Icon from './Icon.astro';
+
+export interface Props {
+  filename?: string;
+  language?: string;
+  code: string;
+  showLineNumbers?: boolean;
+  class?: string;
+}
+
+const {
+  filename = 'src/kernel/scorch.ts',
+  language = 'TS // DIFF',
+  code = '',
+  showLineNumbers = true,
+  class: className = '',
+} = Astro.props;
+
+const lines = code.trim().split('\n');
+---
+
+<div class={`tui-window overflow-hidden font-mono text-xs ${className}`} data-scorch-codeblock>
+  <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
+    <div class="flex items-center gap-2 min-w-0">
+      <span class="inline-block w-2.5 h-2.5 bg-scorch-gold border border-black shrink-0"></span>
+      <span class="truncate font-extrabold">{filename}</span>
+      <span class="px-1.5 py-0.5 text-[10px] bg-black/50 text-scorch-cyan border border-current shrink-0">
+        {language}
+      </span>
+    </div>
+    <div class="flex items-center gap-2 shrink-0">
+      <button
+        type="button"
+        data-copy-code
+        aria-label={`Copiar código de ${filename}`}
+        class="px-2 py-0.5 bg-scorch-cyan text-black border border-black font-extrabold text-[10px] inline-flex items-center gap-1 cursor-pointer hover:bg-white transition-transform duration-75 active:translate-y-0.5"
+      >
+        <Icon name="copy" class="w-3 h-3 shrink-0" />
+        <span data-copy-label>COPIAR</span>
+      </button>
+    </div>
+  </div>
+
+  <pre
+    class="p-3.5 bg-[#070A0F] text-slate-100 overflow-x-auto leading-relaxed text-[11px] sm:text-xs"
+  ><code data-raw-code={code.trim()}>{lines.map((line, i) => {
+    const isAdded = line.startsWith('+');
+    const isRemoved = line.startsWith('-');
+    const rowClass = isAdded
+      ? 'bg-emerald-500/15 text-emerald-300 border-l-2 border-emerald-400 pl-2 -ml-2 block'
+      : isRemoved
+        ? 'bg-red-500/15 text-[#FF6B78] border-l-2 border-scorch-crimson pl-2 -ml-2 block'
+        : 'block';
+    return (
+      <span class={rowClass}>
+        {showLineNumbers && (
+          <span class="inline-block w-7 select-none opacity-40 text-right pr-2.5">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+        )}
+        <span>{line}</span>
+      </span>
+    );
+  })}</code></pre>
+</div>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('[data-scorch-codeblock]').forEach((block) => {
+      if (block.hasAttribute('data-code-bound')) return;
+      block.setAttribute('data-code-bound', 'true');
+
+      const btn = block.querySelector('[data-copy-code]');
+      const label = block.querySelector('[data-copy-label]');
+      const codeEl = block.querySelector('[data-raw-code]');
+      if (!btn || !codeEl) return;
+
+      btn.addEventListener('click', async () => {
+        const raw = codeEl.getAttribute('data-raw-code') || '';
+        try {
+          await navigator.clipboard.writeText(raw);
+          if (label) label.textContent = '✓ COPIADO';
+          if (window.showToast) {
+            window.showToast('BUFFER // COPIADO', 'Fragmento de código copiado al portapapeles.', 'emerald', 1800);
+          }
+          setTimeout(() => {
+            if (label) label.textContent = 'COPIAR';
+          }, 1600);
+        } catch (err) {}
+      });
+    });
+  })();
+</script>

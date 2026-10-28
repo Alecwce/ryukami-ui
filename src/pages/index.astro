@@ -27,6 +27,14 @@ import SidebarNav from '../components/SidebarNav.astro';
 import ThemeStudio from '../components/ThemeStudio.astro';
 import AsciiGenerator from '../components/AsciiGenerator.astro';
 import Icon from '../components/Icon.astro';
+import StatCard from '../components/StatCard.astro';
+import Tooltip from '../components/Tooltip.astro';
+import Callout from '../components/Callout.astro';
+import BentoGrid from '../components/BentoGrid.astro';
+import Drawer from '../components/Drawer.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import AudioSynth from '../components/AudioSynth.astro';
+import DataTable from '../components/DataTable.astro';
 import {
   buttonProps,
   badgeProps,
@@ -42,6 +50,10 @@ import {
   navPrimitivesProps,
   alertProps,
   modalToastProps,
+  statCardTooltipProps,
+  calloutBentoProps,
+  drawerCodeSynthProps,
+  dataTableProps,
 } from '../data/component-props';
 
 // Snippets de código para el visor [Preview | Code]
@@ -210,34 +222,96 @@ import Button from '@/components/Button.astro';
   <p>Diagnóstico cuántico completado sin anomalías.</p>
 </Modal>`;
 
+const statCardTooltipSnippet = `import StatCard from '@/components/StatCard.astro';
+import Tooltip from '@/components/Tooltip.astro';
+import Badge from '@/components/Badge.astro';
+
+<StatCard label="LATENCIA_EDGE" value="11.4 ms" delta="-18.2%" trend="up" sparkline="▇▆▅▃▂▁▁" variant="cyan" />
+<StatCard label="THROUGHPUT_RPS" value="48,920" delta="+24.5%" trend="up" sparkline="▁▂▃▄▆▇█" variant="crimson" />
+
+<Tooltip text="Ratio WCAG AA: 5.04:1 sobre #FFFFFF" variant="crimson">
+  <Badge variant="crimson">HOVER TOOLTIP</Badge>
+</Tooltip>`;
+
+const calloutBentoSnippet = `import Callout from '@/components/Callout.astro';
+import BentoGrid from '@/components/BentoGrid.astro';
+
+<Callout type="dragon" title="REGLA INVIOLABLE DE ARQUITECTURA" badge="SCORCH v4.1">
+  Cero border-radius (0px), bordes sólidos de 2px y sombras duras hacia abajo-izquierda.
+</Callout>
+
+<BentoGrid
+  columns={3}
+  items={[
+    { title: '0xVAULT // SYNC', subtitle: 'OBSIDIAN BRIDGE', metric: '35 MODS', badge: 'W3C', description: 'Sincronizado con design-tokens.json y scorch-vault.css.', span: '2', variant: 'crimson' },
+    { title: '0xMCP // STDIO', subtitle: 'AI AGENTS', metric: 'JSON-RPC', badge: 'NEW', description: 'Servidor MCP integrado en el CLI (ryukami-ui mcp).', span: '1', variant: 'cyan' },
+  ]}
+/>`;
+
+const drawerCodeSynthSnippet = `import Drawer from '@/components/Drawer.astro';
+import CodeBlock from '@/components/CodeBlock.astro';
+import AudioSynth from '@/components/AudioSynth.astro';
+
+<Drawer id="inspect-drawer" title="0xDRAWER // TELEMETRY_SHEET" triggerLabel="ABRIR DRAWER LATERAL">
+  <p>Panel lateral con HTML5 <dialog closedby="any">.</p>
+</Drawer>
+
+<CodeBlock
+  filename="src/styles/global.css"
+  language="CSS // DIFF"
+  code="- border-radius: 8px;\\n+ border-radius: 0px;\\n+ box-shadow: -4px 4px 0px 0px var(--shadow-color);"
+/>
+
+<AudioSynth />`;
+
+const dataTableSnippet = `import DataTable from '@/components/DataTable.astro';
+
+<DataTable
+  title="0xCLUSTER // ACTIVE_NODES_GRID"
+  columns={[
+    { key: 'service', label: 'Servicio' },
+    { key: 'endpoint', label: 'Endpoint' },
+    { key: 'uptime', label: 'Uptime' },
+    { key: 'status', label: 'Estado' },
+  ]}
+  rows={[
+    { service: 'PostgreSQL 17', endpoint: 'tcp://5432', uptime: '99.98%', status: 'ONLINE' },
+    { service: 'Cloudflare Pages Edge', endpoint: 'https://ryukami-ui.pages.dev', uptime: '100.0%', status: 'ONLINE' },
+  ]}
+/>`;
+
 const installAstroSnippet = `# 1. Obtener el CLI desde el repositorio de GitHub (bin/ryukami-ui.mjs)
 # Se instala en ~/.local/bin/ryukami-ui para usarlo como comando global:
 git clone https://github.com/Alecwce/ryukami-ui.git ~/.local/share/ryukami-ui
 ln -sf ~/.local/share/ryukami-ui/bin/ryukami-ui.mjs ~/.local/bin/ryukami-ui
 chmod +x ~/.local/bin/ryukami-ui
 
-# 2. Inicializar tokens CSS (Tailwind v4) y ryukami.json en tu proyecto
-ryukami-ui init --dir ./mi-proyecto-astro
+# 2. Inicializar tokens CSS (Tailwind v4), ryukami.json y tokens W3C opcionales (--obsidian)
+ryukami-ui init --obsidian --dir ./mi-proyecto-astro
 
-# 3. Listar los 27 componentes disponibles en el registro
+# 3. Listar los 35 componentes disponibles o verificar integridad SHA-256
 ryukami-ui list
+ryukami-ui diff --dir ./mi-proyecto-astro
 
 # 4. Instalar componentes específicos (resuelve dependencias automáticamente)
-ryukami-ui add button card avatar skeleton textarea radio-group breadcrumb pagination popover --dir ./mi-proyecto-astro
+ryukami-ui add button card callout bento-grid data-table code-block drawer --dir ./mi-proyecto-astro
 
-# 5. O instalar los 27 componentes del catálogo de una sola vez
-ryukami-ui add --all --dir ./mi-proyecto-astro`;
+# 5. O instalar los 35 componentes del catálogo de una sola vez
+ryukami-ui add --all --dir ./mi-proyecto-astro
+
+# 6. Iniciar servidor MCP (stdio JSON-RPC 2.0) para Agentes de IA (Antigravity / OpenCode / Claude)
+ryukami-ui mcp`;
 ---
 
 <BaseLayout
   title="🐉 Ryukami-UI // Retro TUI & Neo-Brutalism Component Library"
-  description="Librería completa de 27 componentes retro TUI e instalador CLI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
+  description="Librería completa de 35 componentes retro TUI, servidor MCP e instalador CLI inspirada en Velgrynd Scorch Lore para Astro 7 & Tailwind 4."
 >
 
   <!-- 1. HERO SHOWCASE -->
   <section id="hero" class="space-y-6 text-center md:text-left">
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
-      <Badge variant="crimson">v2.3.0 // 27 MODULES + CLI</Badge>
+      <Badge variant="crimson">v2.4.0 // 35 MODULES + CLI + MCP</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
       <Badge variant="gold">LIGHTHOUSE 96 / 100 / 100 / 100</Badge>
     </div>
@@ -250,7 +324,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         </h1>
 
         <p class="subtitle-pixel text-base sm:text-xl md:text-2xl font-bold tracking-normal sm:tracking-widest">
-          27 COMPONENTES RETRO TUI, CONSOLA EN VIVO &amp; CLI PARA LA WEB MODERNA
+          35 COMPONENTES RETRO TUI, SERVIDOR MCP &amp; CLI PARA LA WEB MODERNA
         </p>
 
         <p class="text-sm md:text-base leading-relaxed text-slate-800 dark:text-slate-200 max-w-xl">
@@ -259,7 +333,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
 
         <div class="flex flex-wrap gap-4 pt-2 justify-center md:justify-start">
           <Button variant="crimson" size="lg" href="#components">
-            &gt; EXPLORAR 27 MÓDULOS
+            &gt; EXPLORAR 35 MÓDULOS
           </Button>
           <Button variant="cyan" size="lg" href="#live-shell">
             <Icon name="terminal" class="w-4 h-4 shrink-0 inline-block mr-1.5" />
@@ -305,7 +379,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <section id="quickstart" class="tui-window">
     <div class="tui-header">
       <span>QUICK_START // RYUKAMI-UI CLI INSTALLER</span>
-      <span>27 MODULES // /r/registry.json</span>
+      <span>35 MODULES // /r/registry.json</span>
     </div>
     <div class="p-5 flex flex-col sm:flex-row gap-3 items-center">
       <div class="flex-1 w-full bg-slate-900 text-slate-100 p-3 border-2 border-black dark:border-slate-700 font-mono text-xs sm:text-sm flex items-center justify-between gap-2">
@@ -351,7 +425,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
   <div class="tui-window p-3 bg-white dark:bg-slate-900 flex flex-wrap items-center justify-between gap-3 border-2 border-black dark:border-slate-700 shadow-brutal">
     <div class="flex items-center gap-2 min-w-0">
       <span class="px-2 py-0.5 bg-scorch-crimson text-white font-mono text-xs font-bold border border-black shrink-0">WORKSPACE // OS</span>
-      <span class="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 truncate">Suite Modular de Componentes (27 Mods)</span>
+      <span class="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 truncate">Suite Modular de Componentes (35 Mods)</span>
     </div>
     <div class="flex items-center gap-1.5 flex-wrap text-xs font-mono font-bold">
       <a href="#components" class="px-2 py-0.5 border border-black bg-slate-100 dark:bg-slate-800 hover:bg-scorch-crimson hover:text-white transition-colors">[01_CORE]</a>
@@ -383,7 +457,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <h2 class="font-pixel text-xs sm:text-sm tracking-wider uppercase text-white truncate">// 01_NUCLEO &amp; TELEMETRIA TUI</h2>
       </div>
       <span class="font-mono text-[10px] bg-black text-scorch-cyan border border-slate-700 px-2 py-0.5 font-bold shrink-0">
-        5 PREVIEWS // 7 COMPONENTES
+        6 PREVIEWS // 9 COMPONENTES
       </span>
     </div>
     <div class="p-4 sm:p-6 space-y-10 bg-white dark:bg-slate-900/60">
@@ -532,6 +606,40 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
             <h4 class="font-extrabold text-xs uppercase text-slate-700 dark:text-slate-300">// Buffers de Carga (Skeleton.astro)</h4>
             <Skeleton lines={2} label="SYNCING_SCORCH_REGISTRY" variant="crimson" />
             <Skeleton lines={1} label="DECRYPTING_SSH_HANDSHAKE" variant="cyan" showAscii={false} />
+          </div>
+        </div>
+      </ComponentPreview>
+    </div>
+
+    <!-- F) TARJETAS KPI STATCARD Y TOOLTIPS TUI (NUEVO v2.4) -->
+    <div id="comp-statcard" class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-gold border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Tarjetas KPI &amp; Tooltips TUI (StatCard.astro &amp; Tooltip.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm opacity-80">
+        Tarjetas de telemetría cuantitativa con sparklines ASCII <code>[▁▂▃▅▆▇█]</code> y tooltips emergentes accesibles por teclado y hover sin dependencias JS.
+      </p>
+
+      <ComponentPreview title="STAT_CARDS_AND_TOOLTIPS" code={statCardTooltipSnippet} status="KPI & TOOLTIP" cli="ryukami-ui add stat-card tooltip" propsDoc={statCardTooltipProps}>
+        <div class="space-y-5 w-full py-2">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <StatCard label="LATENCIA_EDGE" value="11.4 ms" delta="-18.2%" trend="up" sparkline="▇▆▅▃▂▁▁" variant="cyan" />
+            <StatCard label="THROUGHPUT_RPS" value="48,920" delta="+24.5%" trend="up" sparkline="▁▂▃▄▆▇█" variant="crimson" />
+            <StatCard label="LIGHTHOUSE_CWV" value="100/100" delta="CLS 0.000" trend="neutral" sparkline="███████" variant="gold" />
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4 pt-2 border-t-2 border-black/15 dark:border-white/15">
+            <span class="text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300">// Pasa el cursor o enfoca con Tab:</span>
+            <Tooltip text="Contraste WCAG AA: 5.04:1 sobre #FFFFFF" variant="crimson">
+              <Badge variant="crimson">HOVER: #D62436 WCAG</Badge>
+            </Tooltip>
+            <Tooltip text="Servidor MCP JSON-RPC 2.0 en stdio" variant="cyan">
+              <Badge variant="cyan">HOVER: RYUKAMI-UI MCP</Badge>
+            </Tooltip>
+            <Tooltip text="Sincronizado con bóveda Obsidian v4.1" variant="gold" position="bottom">
+              <Badge variant="gold">HOVER: OBSIDIAN SYNC</Badge>
+            </Tooltip>
           </div>
         </div>
       </ComponentPreview>
@@ -758,7 +866,7 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         <h2 class="font-pixel text-xs sm:text-sm tracking-wider uppercase text-white truncate">// 03_NAVEGACION, MODALES &amp; ALERTAS</h2>
       </div>
       <span class="font-mono text-[10px] bg-black text-emerald-400 border border-slate-700 px-2 py-0.5 font-bold shrink-0">
-        5 PREVIEWS // 9 MODULOS TUI
+        7 PREVIEWS // 14 MODULOS TUI
       </span>
     </div>
     <div class="p-4 sm:p-6 space-y-10 bg-white dark:bg-slate-900/60">
@@ -1001,6 +1109,108 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
         </div>
       </Modal>
     </div>
+
+    <!-- E) CALLOUTS OBSIDIAN SCORCH Y BENTO GRID (NUEVO v2.4) -->
+    <div id="comp-callout-bento" class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Callouts Obsidian &amp; Bento Grid (Callout.astro &amp; BentoGrid.astro)</h3>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+        Callouts 100% compatibles con tu bóveda Obsidian (<code>[!dragon]</code>, <code>[!scorch]</code>, <code>[!terminal]</code>, <code>[!tui]</code>) y grillas modulares Bento con cabeceras TUI.
+      </p>
+
+      <ComponentPreview title="OBSIDIAN_CALLOUTS_AND_BENTO" code={calloutBentoSnippet} status="VAULT SYNC" cli="ryukami-ui add callout bento-grid" propsDoc={calloutBentoProps}>
+        <div class="space-y-6 w-full py-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Callout type="dragon" title="REGLA CRÍTICA DE ARQUITECTURA" badge="SCORCH v4.1">
+              Los archivos planos y el registro JSON abierto son la única fuente de verdad. Cero border-radius (0px) y sombras duras hacia abajo-izquierda.
+            </Callout>
+            <Callout type="terminal" title="SERVIDOR MCP NATIVO PARA AGENTES" badge="STDIO" foldable defaultOpen>
+              Ejecuta <code>ryukami-ui mcp</code> para exponer los 35 módulos vía JSON-RPC 2.0 a Antigravity, OpenCode 2.0 o Claude sin gastar tokens.
+            </Callout>
+          </div>
+
+          <BentoGrid
+            columns={3}
+            items={[
+              {
+                title: '0xVAULT // OBSIDIAN_BRIDGE',
+                subtitle: 'W3C DESIGN TOKENS',
+                metric: '35 MÓDULOS',
+                badge: 'SYNCED',
+                description: 'Sincronización directa entre ryukami-ui (/r/tokens.json) y la bóveda ryukami-labs.',
+                span: '2',
+                variant: 'crimson',
+              },
+              {
+                title: '0xSHA256 // GUARD',
+                subtitle: 'SUPPLY CHAIN',
+                metric: '100% PASS',
+                badge: 'VERIFIED',
+                description: 'Auditoría local de integridad con ryukami-ui diff.',
+                span: '1',
+                variant: 'cyan',
+              },
+            ]}
+          />
+        </div>
+      </ComponentPreview>
+    </div>
+
+    <!-- F) DRAWER LATERAL, VISOR DIFF CODEBLOCK Y SINTETIZADOR 8-BIT (NUEVO v2.4) -->
+    <div id="comp-drawer-code" class="space-y-4">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-cyan border border-black"></span>
+        <h3 class="font-extrabold text-lg uppercase font-mono">Drawer Lateral, CodeBlock Diff &amp; AudioSynth 8-Bit</h3>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+        Panel lateral deslizante (<code>Drawer.astro</code> con <code>&lt;dialog closedby="any"&gt;</code>), visor de código con resaltado diff (<code>CodeBlock.astro</code>) y consola de osciladores Web Audio API (<code>AudioSynth.astro</code>).
+      </p>
+
+      <ComponentPreview title="DRAWER_CODEBLOCK_AND_SYNTH" code={drawerCodeSynthSnippet} status="STUDIO TOOLS" cli="ryukami-ui add drawer code-block audio-synth" propsDoc={drawerCodeSynthProps}>
+        <div class="space-y-6 w-full py-2">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <span class="text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300">// 1. Panel Lateral HTML5 Dialog (Drawer.astro)</span>
+            <Drawer id="demo-scorch-drawer" title="0xDRAWER // NODE_INSPECTOR" status="SIDE_SHEET" triggerLabel="ABRIR DRAWER LATERAL ⊞">
+              <div class="space-y-4">
+                <Callout type="tui" title="TELEMETRÍA DE CONTENEDOR" badge="NODE_02">
+                  Panel lateral nativo construido sobre <code>&lt;dialog closedby="any"&gt;</code> con bloqueo de scroll de fondo y transición GPU.
+                </Callout>
+                <div class="space-y-2 text-xs">
+                  <div class="flex justify-between border-b border-black/20 dark:border-white/20 pb-1">
+                    <span class="font-bold">Versión del Registro:</span>
+                    <span class="text-scorch-crimson font-extrabold">v2.4.0 (35 Módulos)</span>
+                  </div>
+                  <div class="flex justify-between border-b border-black/20 dark:border-white/20 pb-1">
+                    <span class="font-bold">Protocolo MCP:</span>
+                    <span class="text-sky-700 dark:text-scorch-cyan font-extrabold">stdio // JSON-RPC 2.0</span>
+                  </div>
+                  <div class="flex justify-between border-b border-black/20 dark:border-white/20 pb-1">
+                    <span class="font-bold">Integridad Criptográfica:</span>
+                    <span class="text-emerald-700 dark:text-emerald-400 font-extrabold">SHA-256 VERIFIED</span>
+                  </div>
+                </div>
+              </div>
+            </Drawer>
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300 block">// 2. Visor de Código y Diff (CodeBlock.astro)</span>
+            <CodeBlock
+              filename="src/styles/global.css"
+              language="CSS // SCORCH_DIFF"
+              code={`  /* Calibración Neo-Brutalista Scorch v4.1 */\n- border-radius: 8px;\n- box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);\n+ border-radius: 0px;\n+ border: 2px solid var(--border-main);\n+ box-shadow: -4px 4px 0px 0px var(--shadow-color);`}
+            />
+          </div>
+
+          <div class="space-y-2">
+            <span class="text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300 block">// 3. Sintetizador Acústico 8-Bit (AudioSynth.astro)</span>
+            <AudioSynth />
+          </div>
+        </div>
+      </ComponentPreview>
+    </div>
     </div>
   </section>
 
@@ -1017,57 +1227,34 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
     <TerminalEmulator />
   </section>
 
-  <!-- 7. TABLA DE DATOS TUI -->
+  <!-- 7. TABLA DE DATOS TUI INTERACTIVA (DATATABLE.ASTRO) -->
   <section id="tables" class="space-y-4">
     <div class="flex items-center gap-2.5 sm:gap-4 min-w-0">
       <h2 class="subtitle-pixel text-base sm:text-2xl md:text-3xl font-bold tracking-tight sm:tracking-normal break-words min-w-0">// 05_TELEMETRIA_Y_TABLAS_TUI</h2>
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
+    <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">
+       Componente <code>DataTable.astro</code> con filtrado instantáneo en tiempo real, ordenamiento por columna (<code>⇅</code>) y badges automáticos de estado.
+    </p>
 
-    <div class="tui-window overflow-hidden">
-      <div class="tui-header">
-        <span>ACTIVE_SERVICES_REGISTRY</span>
-        <span>4 NODOS OPERATIVOS</span>
-      </div>
-      <div class="overflow-x-auto w-full">
-        <table class="w-full min-w-[500px] border-collapse font-mono text-xs">
-          <thead>
-            <tr class="bg-black text-white dark:bg-scorch-crimson border-b-2 border-black">
-              <th class="p-3 text-left">Módulo</th>
-              <th class="p-3 text-left">Protocolo</th>
-              <th class="p-3 text-left">Uptime</th>
-              <th class="p-3 text-left">Estado</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-black/20 dark:divide-white/20">
-            <tr class="hover:bg-scorch-crimson/10">
-              <td class="p-3 font-bold">PostgreSQL 17</td>
-              <td class="p-3">tcp://5432</td>
-              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">99.98%</td>
-              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-            </tr>
-            <tr class="hover:bg-scorch-crimson/10">
-              <td class="p-3 font-bold">Redis 7.2 LTS</td>
-              <td class="p-3">tcp://6379</td>
-              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">100.0%</td>
-              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-            </tr>
-            <tr class="hover:bg-scorch-crimson/10">
-              <td class="p-3 font-bold">Cloudflare Pages Edge</td>
-              <td class="p-3">https://ryukami-ui.pages.dev</td>
-              <td class="p-3 font-bold text-sky-700 dark:text-scorch-cyan">100.0%</td>
-              <td class="p-3"><Badge variant="cyan">● ONLINE</Badge></td>
-            </tr>
-            <tr class="hover:bg-scorch-crimson/10">
-              <td class="p-3 font-bold">Open-Code Registry CDN</td>
-              <td class="p-3">https://ryukami-ui.pages.dev/r</td>
-              <td class="p-3 font-bold text-amber-800 dark:text-scorch-gold">99.99%</td>
-              <td class="p-3"><Badge variant="gold">● ACTIVE</Badge></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <ComponentPreview title="INTERACTIVE_TUI_DATA_TABLE" code={dataTableSnippet} status="FILTER & SORT" cli="ryukami-ui add data-table" propsDoc={dataTableProps}>
+      <DataTable
+        title="ACTIVE_SERVICES_REGISTRY // 0xCLUSTER"
+        columns={[
+          { key: 'service', label: 'Módulo / Servicio' },
+          { key: 'protocol', label: 'Protocolo / Endpoint' },
+          { key: 'uptime', label: 'Uptime' },
+          { key: 'status', label: 'Estado' },
+        ]}
+        rows={[
+          { service: 'PostgreSQL 17', protocol: 'tcp://5432', uptime: '99.98%', status: 'ONLINE' },
+          { service: 'Redis 7.2 LTS', protocol: 'tcp://6379', uptime: '100.0%', status: 'ONLINE' },
+          { service: 'Cloudflare Pages Edge', protocol: 'https://ryukami-ui.pages.dev', uptime: '100.0%', status: 'ONLINE' },
+          { service: 'Open-Code Registry CDN (35 Mods)', protocol: 'https://ryukami-ui.pages.dev/r', uptime: '99.99%', status: 'ACTIVE' },
+          { service: 'Ryukami MCP Server (stdio)', protocol: 'jsonrpc://ryukami-ui-mcp', uptime: '100.0%', status: 'STABLE' },
+        ]}
+      />
+    </ComponentPreview>
   </section>
 
   <!-- 8. THEME STUDIO EN VIVO -->
@@ -1127,34 +1314,34 @@ ryukami-ui add --all --dir ./mi-proyecto-astro`;
       </a>
     </div>
 
-    <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.3" cli="ryukami-ui init">
+    <ComponentPreview title="RYUKAMI_CLI_WORKFLOW" code={installAstroSnippet} status="CLI v2.4 + MCP" cli="ryukami-ui init">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs font-mono">
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="crimson">PASO 00 // OBTENER</Badge>
           <h3 class="font-extrabold uppercase text-sm">git clone &amp; link</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
-            El CLI vive en <code>bin/ryukami-ui.mjs</code>. Clona el repo y enlázalo a <code>~/.local/bin/ryukami-ui</code> para usarlo como binario global en tu terminal.
+            El CLI vive en <code>bin/ryukami-ui.mjs</code>. Clona el repo y enlázalo a <code>~/.local/bin/ryukami-ui</code> para usarlo como binario global o servidor MCP.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
           <Badge variant="cyan">PASO 01 // INIT</Badge>
           <h3 class="font-extrabold uppercase text-sm">ryukami-ui init</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
-            Inyecta automáticamente <code>src/styles/global.css</code> con los tokens de Tailwind v4 y genera el manifiesto local <code>ryukami.json</code>.
+            Inyecta <code>src/styles/global.css</code>, <code>ryukami.json</code> y opcionalmente <code>design-tokens.json</code> (con <code>--obsidian</code>).
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="gold">PASO 02 // ADD</Badge>
-          <h3 class="font-extrabold uppercase text-sm">ryukami-ui add &lt;comp&gt;</h3>
+          <Badge variant="gold">PASO 02 // ADD &amp; DIFF</Badge>
+          <h3 class="font-extrabold uppercase text-sm">ryukami-ui add / diff</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
-            Descarga e inyecta los componentes solicitados y resuelve sus dependencias internas directamente en <code>src/components/</code>.
+            Instala cualquiera de los 35 componentes resolviendo dependencias y audita su integridad SHA-256 con <code>ryukami-ui diff</code>.
           </p>
         </div>
         <div class="p-4 border-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 space-y-2">
-          <Badge variant="dark">PASO 03 // REGISTRY</Badge>
-          <h3 class="font-extrabold uppercase text-sm">/r/&lt;comp&gt;.json</h3>
+          <Badge variant="dark">PASO 03 // MCP &amp; CDN</Badge>
+          <h3 class="font-extrabold uppercase text-sm">ryukami-ui mcp</h3>
           <p class="text-slate-700 dark:text-slate-300 leading-relaxed text-[11px]">
-            Los 27 módulos exponen su propio endpoint JSON estático en <code>public/r/</code> para consumirse local o remotamente vía CDN.
+            Los 35 módulos se sirven en <code>public/r/</code> y mediante el servidor MCP (<code>ryukami-ui mcp</code>) para agentes IA.
           </p>
         </div>
       </div>

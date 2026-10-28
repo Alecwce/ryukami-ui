@@ -1,22 +1,25 @@
 #!/usr/bin/env node
 /**
- * 🐉 RYUKAMI-UI CLI // Scorch Design System Component Installer
+ * 🐉 RYUKAMI-UI CLI v2.4.0 // Scorch Design System Component Installer & MCP Server
  * Uso:
- *   ryukami-ui init [--dir <ruta>] [--overwrite]
+ *   ryukami-ui init [--dir <ruta>] [--overwrite] [--obsidian]
  *   ryukami-ui list
  *   ryukami-ui add <componente...> [--dir <ruta>] [--overwrite] [--all]
  *   ryukami-ui info <componente>
+ *   ryukami-ui diff [--dir <ruta>]
+ *   ryukami-ui mcp
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const CLI_ROOT = path.resolve(__dirname, '..');
 const LOCAL_REGISTRY_DIR = path.join(CLI_ROOT, 'public', 'r');
-const CLI_USER_AGENT = 'ryukami-ui-cli/2.3.0';
+const CLI_USER_AGENT = 'ryukami-ui-cli/2.4.0';
 
 /**
  * Helper de Ciberseguridad: Prevención de Arbitrary File Write y Path Traversal
@@ -57,6 +60,12 @@ function validateRegistryPayload(payload, expectedName) {
   if (expectedName === 'registry.json') {
     if (!Array.isArray(payload.items)) {
       throw new Error(`El registro maestro registry.json no contiene una lista de items válida.`);
+    }
+    return;
+  }
+  if (expectedName === 'tokens.json') {
+    if (!payload.meta || !payload.velgrynd_palette) {
+      throw new Error(`El archivo tokens.json no contiene la estructura W3C Design Tokens esperada.`);
     }
     return;
   }
@@ -105,7 +114,7 @@ const C = {
 
 function printBanner() {
   console.log('');
-  console.log(`${C.bgRed}${C.bold} 🐉 RYUKAMI-UI CLI v2.3.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH_DRAGON // VELGRYND EDITION ${C.reset}`);
+  console.log(`${C.bgRed}${C.bold} 🐉 RYUKAMI-UI CLI v2.4.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH_DRAGON // VELGRYND EDITION ${C.reset}`);
   console.log(`${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
 }
 
@@ -115,6 +124,7 @@ function parseArgs(argv) {
     dir: process.cwd(),
     overwrite: false,
     all: false,
+    obsidian: false,
     registry: process.env.RYUKAMI_REGISTRY_URL || null,
   };
 
@@ -126,6 +136,8 @@ function parseArgs(argv) {
       flags.overwrite = true;
     } else if (arg === '--all' || arg === '-a') {
       flags.all = true;
+    } else if (arg === '--obsidian') {
+      flags.obsidian = true;
     } else if (arg === '--registry' || arg === '-r') {
       flags.registry = argv[++i];
     } else if (arg === '--help' || arg === '-h') {
@@ -197,20 +209,25 @@ function showHelp() {
   printBanner();
   console.log(`${C.bold}COMANDOS DISPONIBLES:${C.reset}`);
   console.log(`  ${C.cyan}ryukami-ui init${C.reset}                  Inicializa tokens CSS (global.css) y ryukami.json`);
-  console.log(`  ${C.cyan}ryukami-ui list${C.reset}                  Lista los 27 componentes disponibles en el registro`);
+  console.log(`  ${C.cyan}ryukami-ui init --obsidian${C.reset}       Exporta además tokens W3C (design-tokens.json) para Obsidian`);
+  console.log(`  ${C.cyan}ryukami-ui list${C.reset}                  Lista los 35 componentes disponibles en el registro`);
   console.log(`  ${C.cyan}ryukami-ui add <comp...>${C.reset}         Instala uno o varios componentes en tu proyecto`);
-  console.log(`  ${C.cyan}ryukami-ui add --all${C.reset}             Instala el catálogo completo de 27 componentes`);
-  console.log(`  ${C.cyan}ryukami-ui info <comp>${C.reset}           Muestra detalles técnicos y ruta de un componente`);
+  console.log(`  ${C.cyan}ryukami-ui add --all${C.reset}             Instala el catálogo completo de 35 componentes`);
+  console.log(`  ${C.cyan}ryukami-ui info <comp>${C.reset}           Muestra detalles técnicos, SHA-256 y ruta de un componente`);
+  console.log(`  ${C.cyan}ryukami-ui diff${C.reset}                  Verifica integridad SHA-256 de componentes instalados vs registro`);
+  console.log(`  ${C.cyan}ryukami-ui mcp${C.reset}                   Inicia servidor MCP (stdio JSON-RPC 2.0) para Agentes de IA`);
   console.log('');
   console.log(`${C.bold}OPCIONES:${C.reset}`);
   console.log(`  ${C.gold}--dir, -d <ruta>${C.reset}                Directorio destino del proyecto (por defecto: actual)`);
   console.log(`  ${C.gold}--overwrite, -f${C.reset}                 Sobrescribe archivos existentes sin omitirlos`);
+  console.log(`  ${C.gold}--obsidian${C.reset}                      Incluye design-tokens.json en ryukami-ui init`);
   console.log(`  ${C.gold}--registry, -r <url>${C.reset}            URL remota del registro (por defecto: https://ryukami-ui.pages.dev/r)`);
   console.log('');
   console.log(`${C.bold}EJEMPLOS RÁPIDOS:${C.reset}`);
   console.log(`  ${C.red}$${C.reset} ryukami-ui list`);
   console.log(`  ${C.red}$${C.reset} ryukami-ui init --dir ./mi-app-astro`);
-  console.log(`  ${C.red}$${C.reset} ryukami-ui add button card modal command-palette --dir ./mi-app-astro`);
+  console.log(`  ${C.red}$${C.reset} ryukami-ui add button card callout bento-grid data-table --dir ./mi-app-astro`);
+  console.log(`  ${C.red}$${C.reset} ryukami-ui diff --dir ./mi-app-astro`);
   console.log('');
 }
 
@@ -234,7 +251,7 @@ async function cmdList(flags) {
   }
 
   console.log('');
-  console.log(`${C.bold}Instalación rápida:${C.reset} ${C.red}$${C.reset} ryukami-ui add button card modal`);
+  console.log(`${C.bold}Instalación rápida:${C.reset} ${C.red}$${C.reset} ryukami-ui add button card callout bento-grid data-table`);
   console.log('');
 }
 
@@ -258,10 +275,18 @@ async function cmdInit(flags) {
     }
   }
 
+  if (flags.obsidian) {
+    const tokensPayload = await loadRegistryJson('tokens.json', flags.registry);
+    const tokensDest = resolveSafeTargetPath(targetDir, 'design-tokens.json');
+    fs.writeFileSync(tokensDest, JSON.stringify(tokensPayload, null, 2), 'utf-8');
+    console.log(`  ${C.emerald}✓ W3C Design Tokens sincronizados:${C.reset} design-tokens.json`);
+  }
+
   const configPath = path.join(targetDir, 'ryukami.json');
   const configData = {
     $schema: 'https://ryukami-ui.dev/schema.json',
     style: 'scorch-velgrynd-v4.1',
+    version: '2.4.0',
     tailwind: {
       version: '4.3.3',
       css: 'src/styles/global.css',
@@ -278,7 +303,7 @@ async function cmdInit(flags) {
     console.log(`  ${C.gold}⚠ Configuración existente:${C.reset} ryukami.json`);
   }
 
-  console.log(`\n${C.bold}${C.emerald}⚡ ¡Listo! Ahora añade componentes con:${C.reset} ${C.cyan}ryukami-ui add button card modal${C.reset}\n`);
+  console.log(`\n${C.bold}${C.emerald}⚡ ¡Listo! Ahora añade componentes con:${C.reset} ${C.cyan}ryukami-ui add button card callout data-table${C.reset}\n`);
 }
 
 async function cmdAdd(args, flags) {
@@ -294,7 +319,7 @@ async function cmdAdd(args, flags) {
     process.exit(1);
   }
 
-  // Resolver dependencias del registro (ej: command-palette -> kbd)
+  // Resolver dependencias del registro (ej: command-palette -> kbd, data-table -> badge)
   const queue = [...requested];
   const resolvedSet = new Set();
 
@@ -310,7 +335,7 @@ async function cmdAdd(args, flags) {
     const meta = validMap.get(name);
     if (meta.registryDependencies) {
       for (const dep of meta.registryDependencies) {
-        if (!resolvedSet.has(dep)) {
+        if (validMap.has(dep) && !resolvedSet.has(dep)) {
           queue.push(dep);
         }
       }
@@ -361,8 +386,134 @@ async function cmdInfo(args, flags) {
   console.log(`${C.bold}${C.cyan}CATEGORÍA:${C.reset}    ${item.category}`);
   console.log(`${C.bold}${C.cyan}DESCRIPCIÓN:${C.reset}  ${item.description}`);
   console.log(`${C.bold}${C.cyan}DEPENDENCIAS:${C.reset} ${item.registryDependencies.length ? item.registryDependencies.join(', ') : 'Ninguna (Zero-Deps)'}`);
+  console.log(`${C.bold}${C.cyan}SHA-256:${C.reset}      ${item.sha256}`);
   console.log(`${C.bold}${C.cyan}ARCHIVOS:${C.reset}     ${item.files.map((f) => f.path).join(', ')}`);
   console.log(`${C.bold}${C.cyan}ENDPOINT:${C.reset}     /r/${item.name}.json\n`);
+}
+
+async function cmdDiff(flags) {
+  printBanner();
+  const master = await loadRegistryJson('registry.json', flags.registry);
+  console.log(`${C.cyan}▶ Auditando integridad SHA-256 en:${C.reset} ${C.bold}${flags.dir}${C.reset}\n`);
+
+  let synced = 0;
+  let modified = 0;
+  let missing = 0;
+
+  for (const item of master.items) {
+    const destPath = resolveSafeTargetPath(flags.dir, item.target);
+    if (!fs.existsSync(destPath)) {
+      missing++;
+      continue;
+    }
+    const localContent = fs.readFileSync(destPath, 'utf-8');
+    const localHash = crypto.createHash('sha256').update(localContent, 'utf-8').digest('hex');
+    if (localHash === item.sha256) {
+      synced++;
+      console.log(`  ${C.emerald}✓ [SYNCED]${C.reset}   ${item.name.padEnd(20, ' ')} (${item.target})`);
+    } else {
+      modified++;
+      console.log(`  ${C.gold}◆ [MODIFIED]${C.reset} ${item.name.padEnd(20, ' ')} (${item.target}) ${C.dim}— difiere del registro v2.4.0${C.reset}`);
+    }
+  }
+
+  console.log(`\n${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
+  console.log(
+    `${C.bold}RESUMEN:${C.reset} ${C.emerald}${synced} sincronizados${C.reset} · ${C.gold}${modified} personalizados${C.reset} · ${C.dim}${missing} no instalados${C.reset}\n`
+  );
+}
+
+/**
+ * Servidor MCP (Model Context Protocol) JSON-RPC 2.0 sobre stdio
+ * Permite que agentes como Antigravity, OpenCode 2.0 o Claude consulten componentes sin gastar tokens.
+ */
+async function cmdMcp(flags) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    terminal: false,
+  });
+
+  function sendResponse(id, result) {
+    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result }) + '\n');
+  }
+
+  function sendError(id, code, message) {
+    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, error: { code, message } }) + '\n');
+  }
+
+  rl.on('line', async (line) => {
+    if (!line.trim()) return;
+    let msg;
+    try {
+      msg = JSON.parse(line);
+    } catch {
+      return;
+    }
+
+    const { id, method, params } = msg;
+    try {
+      if (method === 'initialize') {
+        sendResponse(id, {
+          protocolVersion: '2024-11-05',
+          capabilities: { tools: {} },
+          serverInfo: { name: 'ryukami-ui-mcp', version: '2.4.0' },
+        });
+      } else if (method === 'tools/list') {
+        sendResponse(id, {
+          tools: [
+            {
+              name: 'list_components',
+              description: 'Lista los 35 componentes Neo-Brutalistas y Retro TUI del registro Ryukami-UI (Scorch v4.1).',
+              inputSchema: { type: 'object', properties: {} },
+            },
+            {
+              name: 'get_component',
+              description: 'Obtiene el código fuente Astro (.astro) y metadatos SHA-256 de un componente de Ryukami-UI.',
+              inputSchema: {
+                type: 'object',
+                properties: {
+                  name: { type: 'string', description: 'ID del componente (ej: button, card, callout, data-table)' },
+                },
+                required: ['name'],
+              },
+            },
+            {
+              name: 'get_design_tokens',
+              description: 'Obtiene los tokens W3C de diseño del sistema Scorch v4.1 (colores WCAG AA, tipografía, sombras).',
+              inputSchema: { type: 'object', properties: {} },
+            },
+          ],
+        });
+      } else if (method === 'tools/call') {
+        const toolName = params?.name;
+        if (toolName === 'list_components') {
+          const master = await loadRegistryJson('registry.json', flags.registry);
+          sendResponse(id, {
+            content: [{ type: 'text', text: JSON.stringify(master, null, 2) }],
+          });
+        } else if (toolName === 'get_component') {
+          const compName = String(params?.arguments?.name || '').toLowerCase();
+          const comp = await loadRegistryJson(`${compName}.json`, flags.registry);
+          sendResponse(id, {
+            content: [{ type: 'text', text: JSON.stringify(comp, null, 2) }],
+          });
+        } else if (toolName === 'get_design_tokens') {
+          const tokens = await loadRegistryJson('tokens.json', flags.registry);
+          sendResponse(id, {
+            content: [{ type: 'text', text: JSON.stringify(tokens, null, 2) }],
+          });
+        } else {
+          sendError(id, -32601, `Herramienta desconocida: ${toolName}`);
+        }
+      } else if (id !== undefined) {
+        sendResponse(id, {});
+      }
+    } catch (err) {
+      if (id !== undefined) {
+        sendError(id, -32000, err.message);
+      }
+    }
+  });
 }
 
 async function main() {
@@ -390,6 +541,13 @@ async function main() {
       case 'info':
       case 'inspect':
         await cmdInfo(args, flags);
+        break;
+      case 'diff':
+      case 'status':
+        await cmdDiff(flags);
+        break;
+      case 'mcp':
+        await cmdMcp(flags);
         break;
       default:
         console.error(`${C.red}✖ Comando no reconocido:${C.reset} "${command}"`);
@@ -422,4 +580,3 @@ export {
   verifyFileIntegrity,
   validateRegistryPayload,
 };
-
