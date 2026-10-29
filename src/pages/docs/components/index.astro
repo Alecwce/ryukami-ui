@@ -1,0 +1,54 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import { REGISTRY_COMPONENTS, CATEGORIES } from '../../../data/registry';
+---
+
+<DocsLayout
+  title="COMPONENTES"
+  description="Catálogo de los 35 módulos y componentes Neo-Brutalistas de Ryukami-UI."
+  activeSlug="components"
+>
+  <div class="space-y-10">
+    <div class="space-y-3 border-b-2 border-black dark:border-slate-700 pb-6">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black inline-block"></span>
+        <span class="text-xs font-mono font-bold uppercase text-scorch-crimson">// REGISTRY_INDEX</span>
+      </div>
+      <h1 class="title-8bit text-2xl sm:text-4xl text-slate-900 dark:text-white">
+        COMPONENTES ({REGISTRY_COMPONENTS.length})
+      </h1>
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+        Explora la lista completa de componentes ordenados por categoría. Haz clic en cualquiera para ver su vista previa en vivo, propiedades de TypeScript y comando de instalación.
+      </p>
+    </div>
+
+    {CATEGORIES.map((cat) => {
+      const items = REGISTRY_COMPONENTS.filter((c) => c.category === cat.id);
+      return (
+        <section class="space-y-4">
+          <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// {cat.label}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+            {items.map((item) => (
+              <a
+                href={`/docs/components/${item.slug}`}
+                class="p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all group flex flex-col justify-between"
+              >
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-extrabold text-sm text-scorch-crimson group-hover:text-scorch-gold">&gt; {item.title}</span>
+                    <span class="text-[10px] px-1.5 py-0.5 border border-current opacity-70">{item.status}</span>
+                  </div>
+                  <p class="text-[11px] opacity-80 leading-relaxed">{item.description}</p>
+                </div>
+                <div class="pt-3 text-[10px] text-slate-500 group-hover:text-slate-300 flex items-center justify-between">
+                  <code>{item.cli}</code>
+                  <span>&rarr;</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      );
+    })}
+  </div>
+</DocsLayout>

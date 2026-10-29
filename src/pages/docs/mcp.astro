@@ -1,0 +1,49 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import Callout from '../../components/Callout.astro';
+---
+
+<DocsLayout
+  title="MCP SERVER"
+  description="Servidor Model Context Protocol (MCP) JSON-RPC 2.0 integrado para agentes de Inteligencia Artificial."
+  activeSlug="mcp"
+>
+  <div class="space-y-8">
+    <div class="space-y-3 border-b-2 border-black dark:border-slate-700 pb-6">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-sky-700 dark:bg-scorch-cyan border border-black inline-block"></span>
+        <span class="text-xs font-mono font-bold uppercase text-sky-700 dark:text-scorch-cyan">// AI_AGENT_INTEGRATION</span>
+      </div>
+      <h1 class="title-8bit text-2xl sm:text-4xl text-slate-900 dark:text-white">
+        SERVIDOR MCP (MODEL CONTEXT PROTOCOL)
+      </h1>
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+        Ryukami-UI incluye un servidor MCP nativo sobre <code>stdio</code> que permite a agentes como Antigravity, OpenCode 2.0 o Claude consultar e instalar componentes sin gastar tokens de contexto.
+      </p>
+    </div>
+
+    <Callout type="terminal" title="PROTOCOL SPECIFICATION" badge="JSON-RPC 2.0">
+      El servidor corre vía stdio y expone tres herramientas: <code>list_components</code>, <code>get_component</code> y <code>get_design_tokens</code>.
+    </Callout>
+
+    <section class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// CONFIGURACIÓN EN TU AGENTE</h2>
+      <CodeBlock
+        filename="antigravity.json // claude_desktop_config.json"
+        language="JSON"
+        code={`{\n  "mcpServers": {\n    "ryukami-ui": {\n      "command": "ryukami-ui",\n      "args": ["mcp"]\n    }\n  }\n}`}
+      />
+    </section>
+
+    <!-- Siguientes pasos -->
+    <div class="flex justify-between items-center pt-6 border-t-2 border-black dark:border-slate-700 font-mono text-xs">
+      <a href="/docs/cli" class="btn-brutal bg-slate-100 dark:bg-slate-800 text-black dark:text-white px-4 py-2 font-bold">
+        &larr; Instalador CLI
+      </a>
+      <a href="/docs/components/button" class="btn-brutal bg-scorch-crimson text-white px-4 py-2 font-bold">
+        Primer Componente: Button &rarr;
+      </a>
+    </div>
+  </div>
+</DocsLayout>

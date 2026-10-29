@@ -1,0 +1,73 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SidebarNav from '../components/SidebarNav.astro';
+import Icon from '../components/Icon.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+  activeSlug?: string;
+}
+
+const {
+  title,
+  description = 'Documentación oficial de componentes y herramientas de Ryukami-UI (Scorch v4.1).',
+  headings = [],
+  activeSlug,
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} - Ryukami-UI`} description={description}>
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-2">
+    <!-- Sidebar Izquierdo (Fijo en desktop, estilo 8bitcn / shadcn) -->
+    <div class="hidden lg:block lg:col-span-3 sticky top-[86px]">
+      <SidebarNav activeSlug={activeSlug} />
+    </div>
+
+    <!-- Contenido Principal Central -->
+    <main class="lg:col-span-9 xl:col-span-7 min-w-0 space-y-8">
+      <!-- Breadcrumb rápido hacia Docs -->
+      <nav aria-label="Ruta de navegación" class="flex items-center gap-2 text-xs font-mono">
+        <a href="/" class="text-slate-500 hover:text-scorch-crimson font-bold">home</a>
+        <span class="text-slate-400">/</span>
+        <a href="/docs" class="text-slate-500 hover:text-scorch-crimson font-bold">docs</a>
+        <span class="text-slate-400">/</span>
+        <span class="text-scorch-crimson font-extrabold uppercase">{title}</span>
+      </nav>
+
+      <slot />
+    </main>
+
+    <!-- Tabla de Contenidos Derecha ("En esta página", solo en XL) -->
+    <aside class="hidden xl:block xl:col-span-2 sticky top-[86px] space-y-3 font-mono text-xs">
+      <div class="tui-window p-3 space-y-2 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700">
+        <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500 block">
+          // EN ESTA PÁGINA
+        </span>
+        <ul class="space-y-1.5 text-[11px] font-bold">
+          <li>
+            <a href="#overview" class="block text-slate-700 dark:text-slate-300 hover:text-scorch-crimson transition-colors">
+              &gt; Vista Previa
+            </a>
+          </li>
+          <li>
+            <a href="#installation" class="block text-slate-700 dark:text-slate-300 hover:text-scorch-crimson transition-colors">
+              &gt; Instalación CLI
+            </a>
+          </li>
+          <li>
+            <a href="#usage" class="block text-slate-700 dark:text-slate-300 hover:text-scorch-crimson transition-colors">
+              &gt; Uso en Astro
+            </a>
+          </li>
+          <li>
+            <a href="#props" class="block text-slate-700 dark:text-slate-300 hover:text-scorch-crimson transition-colors">
+              &gt; Props / TypeScript
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

@@ -1,0 +1,99 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import Button from '../../components/Button.astro';
+import Callout from '../../components/Callout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+import BentoGrid from '../../components/BentoGrid.astro';
+import Icon from '../../components/Icon.astro';
+import { REGISTRY_COMPONENTS } from '../../data/registry';
+---
+
+<DocsLayout
+  title="DOCUMENTACIÓN"
+  description="Guía completa del sistema de diseño Scorch y catálogo de 35 componentes Neo-Brutalistas para Astro."
+  activeSlug="index"
+>
+  <div class="space-y-10">
+    <!-- Encabezado de la página -->
+    <div class="space-y-3 border-b-2 border-black dark:border-slate-700 pb-6">
+      <div class="flex items-center gap-2">
+        <span class="w-3 h-3 bg-scorch-crimson border border-black inline-block"></span>
+        <span class="text-xs font-mono font-bold uppercase text-scorch-crimson">// 00_GETTING_STARTED</span>
+      </div>
+      <h1 class="title-8bit text-2xl sm:text-4xl text-slate-900 dark:text-white">
+        DOCUMENTACIÓN
+      </h1>
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+        Librería Neo-Brutalista y Retro TUI de <strong>35 componentes abiertos</strong> para Astro 7, Tailwind CSS v4 y TypeScript 7. Inspirada en consolas industriales, terminales UNIX y arquitectura shadcn open-code.
+      </p>
+    </div>
+
+    <!-- Reglas de Diseño Scorch v4.1 -->
+    <section class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// FILOSOFÍA DE DISEÑO (SCORCH v4.1)</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal space-y-1.5">
+          <span class="text-scorch-crimson font-extrabold text-[11px] block">01 // CERO BORDES REDONDEADOS</span>
+          <p class="text-slate-600 dark:text-slate-400">Esquinas rectas <code>border-radius: 0px</code> y bordes sólidos de 2px en todos los componentes.</p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal space-y-1.5">
+          <span class="text-scorch-gold-text dark:text-scorch-gold font-extrabold text-[11px] block">02 // SOMBRAS DURAS ABAJO-IZQUIERDA</span>
+          <p class="text-slate-600 dark:text-slate-400">Desplazamiento <code>-4px 4px 0px 0px</code> sin desenfoque (blur 0) para emular interfaces CRT táctiles.</p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal space-y-1.5">
+          <span class="text-sky-700 dark:text-scorch-cyan font-extrabold text-[11px] block">03 // CONTROLES GEOMÉTRICOS</span>
+          <p class="text-slate-600 dark:text-slate-400">Cajas exactas de 20x20px <code>[ - ][ □ ][ × ]</code> con vectores CSS/SVG centrados al píxel.</p>
+        </div>
+        <div class="p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal space-y-1.5">
+          <span class="text-emerald-700 dark:text-emerald-400 font-extrabold text-[11px] block">04 // FÍSICA MECÁNICA ACELERADA POR GPU</span>
+          <p class="text-slate-600 dark:text-slate-400">Transiciones exclusivas en <code>transform 75ms</code> con síntesis de sonido procedural Web Audio API.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inicio Rápido con CLI -->
+    <section class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// INICIO RÁPIDO (CLI RYUKAMI-UI)</h2>
+      <Callout type="terminal" title="INSTALACIÓN EN 1 MINUTO" badge="ASTRO 7 + TAILWIND 4">
+        Puedes inicializar tu proyecto e instalar cualquiera de los 35 módulos mediante el instalador oficial.
+      </Callout>
+
+      <CodeBlock
+        filename="Terminal // Bash"
+        language="BASH"
+        code={`# 1. Inicializar tokens CSS y configuración en tu proyecto Astro\nryukami-ui init --dir ./mi-app\n\n# 2. Instalar componentes específicos (resuelve dependencias automáticamente)\nryukami-ui add button card modal data-table\n\n# 3. O instalar todo el catálogo de 35 módulos de una sola vez\nryukami-ui add --all`}
+      />
+    </section>
+
+    <!-- Enlaces directos a Componentes Populares -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// CATÁLOGO COMPLETO ({REGISTRY_COMPONENTS.length} COMPONENTES)</h2>
+        <a href="/docs/components/button" class="text-xs font-mono font-bold text-scorch-crimson hover:underline">Ver todos &rarr;</a>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
+        {REGISTRY_COMPONENTS.slice(0, 12).map((comp) => (
+          <a
+            href={`/docs/components/${comp.slug}`}
+            class="p-3 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal-sm hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors flex items-center justify-between"
+          >
+            <span class="font-bold truncate">&gt; {comp.title}</span>
+            <span class="text-[10px] opacity-60 shrink-0">{comp.category.split('_')[0]}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Siguientes pasos -->
+    <div class="flex justify-between items-center pt-6 border-t-2 border-black dark:border-slate-700 font-mono text-xs">
+      <div></div>
+      <a
+        href="/docs/cli"
+        class="btn-brutal bg-scorch-crimson text-white px-4 py-2 font-bold inline-flex items-center gap-2"
+      >
+        <span>Instalador CLI &rarr;</span>
+      </a>
+    </div>
+  </div>
+</DocsLayout>

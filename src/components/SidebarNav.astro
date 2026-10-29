@@ -1,5 +1,11 @@
 ---
-// Sidebar de Navegación Categorizado estilo 8bitcn / shadcn con ScrollSpy activo (35 módulos)
+import { REGISTRY_COMPONENTS, CATEGORIES } from '../data/registry';
+
+export interface Props {
+  activeSlug?: string;
+}
+
+const { activeSlug } = Astro.props;
 ---
 
 <aside class="space-y-4 font-mono text-xs" aria-label="Índice de documentación">
@@ -13,7 +19,7 @@
       id="scorch-sidebar-nav"
       class="p-3.5 space-y-4 bg-white dark:bg-slate-900 max-h-[calc(100vh-9rem)] overflow-y-auto"
     >
-      <!-- Grupo 1: Inicio -->
+      <!-- Grupo 0: Empezar -->
       <div class="space-y-1">
         <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson">
           // 00_GETTING_STARTED
@@ -21,368 +27,87 @@
         <ul class="space-y-0.5 pl-1">
           <li>
             <a
-              href="#hero"
-              data-nav-target="hero"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              href="/docs"
+              class={`sidebar-link block px-2 py-1 border-l-2 font-bold transition-colors ${
+                activeSlug === 'index'
+                  ? 'bg-scorch-crimson text-white border-black'
+                  : 'border-transparent hover:bg-scorch-crimson hover:text-white'
+              }`}
             >
-              &gt; Visión General
+              &gt; Introducción
             </a>
           </li>
           <li>
             <a
-              href="#quickstart"
-              data-nav-target="quickstart"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
+              href="/docs/cli"
+              class={`sidebar-link block px-2 py-1 border-l-2 font-bold transition-colors ${
+                activeSlug === 'cli'
+                  ? 'bg-scorch-crimson text-white border-black'
+                  : 'border-transparent hover:bg-scorch-crimson hover:text-white'
+              }`}
             >
-              &gt; Quickstart CLI
+              &gt; Instalador CLI
+            </a>
+          </li>
+          <li>
+            <a
+              href="/docs/mcp"
+              class={`sidebar-link block px-2 py-1 border-l-2 font-bold transition-colors ${
+                activeSlug === 'mcp'
+                  ? 'bg-scorch-crimson text-white border-black'
+                  : 'border-transparent hover:bg-scorch-crimson hover:text-white'
+              }`}
+            >
+              &gt; Servidor MCP (IA)
             </a>
           </li>
         </ul>
       </div>
 
-      <!-- Grupo 2: Componentes Base -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-sky-700 dark:text-scorch-cyan">
-          // 01_CORE_UI
-        </div>
-        <ul class="space-y-0.5 pl-1">
-          <li>
-            <a
-              href="#comp-button"
-              data-nav-target="comp-button"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
-            >
-              &gt; Button.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-badge"
-              data-nav-target="comp-badge"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
-            >
-              &gt; Badge.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-card"
-              data-nav-target="comp-card"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
-            >
-              &gt; Card.astro (TUI)
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-progress"
-              data-nav-target="comp-progress"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
-            >
-              &gt; ProgressBar.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-avatar"
-              data-nav-target="comp-avatar"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center"
-            >
-              <span>&gt; Avatar &amp; Skeleton</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-statcard"
-              data-nav-target="comp-statcard"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center"
-            >
-              <span>&gt; StatCard &amp; Tooltip</span>
-              <span class="bg-scorch-cyan text-black text-[9px] px-1 border border-black">v2.4</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <!-- Categorías de Componentes (Dinámico desde registry.ts) -->
+      {CATEGORIES.map((cat) => {
+        const items = REGISTRY_COMPONENTS.filter((c) => c.category === cat.id);
+        const catColorClass =
+          cat.id === '01_CORE_UI'
+            ? 'text-sky-700 dark:text-scorch-cyan'
+            : cat.id === '02_FORM_CONTROLS'
+            ? 'text-scorch-gold-text dark:text-scorch-gold'
+            : cat.id === '03_LAYOUT_AND_MODALS'
+            ? 'text-emerald-700 dark:text-emerald-400'
+            : 'text-purple-700 dark:text-purple-400';
 
-      <!-- Grupo 3: Formularios -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-gold-text dark:text-scorch-gold">
-          // 02_FORM_CONTROLS
-        </div>
-        <ul class="space-y-0.5 pl-1">
-          <li>
-            <a
-              href="#comp-input"
-              data-nav-target="comp-input"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
-            >
-              &gt; Input.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-select"
-              data-nav-target="comp-select"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
-            >
-              &gt; Select &amp; Slider
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-checkbox"
-              data-nav-target="comp-checkbox"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold"
-            >
-              &gt; Checkbox &amp; Switch
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-textarea"
-              data-nav-target="comp-textarea"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
-            >
-              <span>&gt; Textarea &amp; Radio</span>
-              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">NEW</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Grupo 4: Navegación, Feedback & Modales -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson">
-          // 03_LAYOUT_AND_MODALS
-        </div>
-        <ul class="space-y-0.5 pl-1">
-          <li>
-            <a
-              href="#comp-tabs"
-              data-nav-target="comp-tabs"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; Tabs.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-accordion"
-              data-nav-target="comp-accordion"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; Accordion.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-nav-primitives"
-              data-nav-target="comp-nav-primitives"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
-            >
-              <span>&gt; Breadcrumb &amp; Pager</span>
-              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">NEW</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-alert"
-              data-nav-target="comp-alert"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; Alert.astro
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-toast"
-              data-nav-target="comp-toast"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
-            >
-              <span>&gt; Popover, Modal &amp; Toast</span>
-              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">API</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-callout-bento"
-              data-nav-target="comp-callout-bento"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
-            >
-              <span>&gt; Callout &amp; BentoGrid</span>
-              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">v2.4</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#comp-drawer-code"
-              data-nav-target="comp-drawer-code"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
-            >
-              <span>&gt; Drawer, Code &amp; Synth</span>
-              <span class="bg-scorch-cyan text-black text-[9px] px-1 border border-black">v2.4</span>
-            </a>
-          </li>
-          <li>
-            <button
-              type="button"
-              onclick="window.openPalette && window.openPalette()"
-              class="w-full text-left px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold flex justify-between items-center cursor-pointer"
-            >
-              <span>&gt; CommandPalette</span>
-              <span class="text-[9px] border border-current px-1">⌘K</span>
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Grupo 5: Scorch Labs -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
-          // 04_SCORCH_LABS
-        </div>
-        <ul class="space-y-0.5 pl-1">
-          <li>
-            <a
-              href="#live-shell"
-              data-nav-target="live-shell"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-emerald-500 hover:text-black font-bold flex justify-between items-center"
-            >
-              <span>&gt; 0xSCORCH_SHELL</span>
-              <span class="bg-emerald-400 text-black text-[9px] px-1 border border-black">TTY</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#tables"
-              data-nav-target="tables"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-cyan hover:text-black font-bold"
-            >
-              &gt; Tables &amp; Telemetry
-            </a>
-          </li>
-          <li>
-            <a
-              href="#theme-studio"
-              data-nav-target="theme-studio"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold flex justify-between items-center"
-            >
-              <span>&gt; Theme Studio</span>
-              <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black">LIVE</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="#ascii-forge"
-              data-nav-target="ascii-forge"
-              class="sidebar-link px-2 py-1 border-l-2 border-transparent hover:bg-scorch-gold hover:text-black font-bold flex justify-between items-center"
-            >
-              <span>&gt; ASCII Forge</span>
-              <span class="bg-scorch-gold text-black text-[9px] px-1 border border-black">8BIT</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Grupo 6: Documentación & Sistema -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-scorch-crimson">
-          // 05_SYSTEM_DOCS
-        </div>
-        <ul class="space-y-0.5 pl-1">
-          <li>
-            <a
-              href="#install-docs"
-              data-nav-target="install-docs"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; CLI &amp; Registry CDN
-            </a>
-          </li>
-          <li>
-            <a
-              href="#shortcuts"
-              data-nav-target="shortcuts"
-              class="sidebar-link block px-2 py-1 border-l-2 border-transparent hover:bg-scorch-crimson hover:text-white font-bold"
-            >
-              &gt; Atajos de Teclado
-            </a>
-          </li>
-        </ul>
-      </div>
+        return (
+          <div class="space-y-1">
+            <div class={`text-[10px] font-extrabold uppercase tracking-wider ${catColorClass}`}>
+              // {cat.label}
+            </div>
+            <ul class="space-y-0.5 pl-1">
+              {items.map((item) => {
+                const isActive = activeSlug === item.slug;
+                return (
+                  <li>
+                    <a
+                      href={`/docs/components/${item.slug}`}
+                      class={`sidebar-link block px-2 py-1 border-l-2 font-bold transition-colors flex items-center justify-between ${
+                        isActive
+                          ? 'bg-black text-white dark:bg-white dark:text-black border-scorch-crimson'
+                          : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800'
+                      }`}
+                    >
+                      <span class="truncate">&gt; {item.title}</span>
+                      {['bento-grid', 'drawer', 'data-table', 'stat-card'].includes(item.slug) && (
+                        <span class="bg-scorch-crimson text-white text-[9px] px-1 border border-black shrink-0 ml-1">
+                          v2.4
+                        </span>
+                      )}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      })}
     </nav>
   </div>
 </aside>
-
-<script is:inline>
-  (function () {
-    const nav = document.getElementById('scorch-sidebar-nav');
-    if (!nav) return;
-
-    const links = Array.from(nav.querySelectorAll('a.sidebar-link[data-nav-target]'));
-    const targetIds = links.map((l) => l.getAttribute('data-nav-target')).filter(Boolean);
-
-    function setActiveLink(activeId) {
-      links.forEach((link) => {
-        const isMatch = link.getAttribute('data-nav-target') === activeId;
-        if (isMatch) {
-          link.classList.add('bg-slate-900', 'text-white', 'dark:bg-scorch-crimson', 'border-scorch-crimson', 'dark:border-white');
-          link.classList.remove('border-transparent');
-        } else {
-          link.classList.remove('bg-slate-900', 'text-white', 'dark:bg-scorch-crimson', 'border-scorch-crimson', 'dark:border-white');
-          link.classList.add('border-transparent');
-        }
-      });
-    }
-
-    links.forEach((link) => {
-      link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('data-nav-target');
-        const targetEl = targetId ? document.getElementById(targetId) : null;
-        if (!targetEl) return;
-
-        e.preventDefault();
-        if (window.playMechanicalClick) window.playMechanicalClick();
-
-        setActiveLink(targetId);
-        history.replaceState(null, '', `#${targetId}`);
-
-        const headerOffset = 116;
-        const elementPosition = targetEl.getBoundingClientRect().top + window.scrollY;
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        window.scrollTo({
-          top: Math.max(0, elementPosition - headerOffset),
-          behavior: prefersReduced ? 'auto' : 'smooth',
-        });
-
-        targetEl.classList.add('ring-2', 'ring-scorch-crimson', 'ring-offset-4');
-        setTimeout(() => {
-          targetEl.classList.remove('ring-2', 'ring-scorch-crimson', 'ring-offset-4');
-        }, 900);
-      });
-    });
-
-    const sections = targetIds.map((id) => document.getElementById(id)).filter(Boolean);
-    if ('IntersectionObserver' in window && sections.length > 0) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-          if (visible.length > 0 && visible[0].target.id) {
-            setActiveLink(visible[0].target.id);
-          }
-        },
-        {
-          rootMargin: '-120px 0px -65% 0px',
-          threshold: 0.05,
-        }
-      );
-
-      sections.forEach((sec) => observer.observe(sec));
-    }
-
-    const initialHash = window.location.hash ? window.location.hash.slice(1) : 'hero';
-    setActiveLink(targetIds.includes(initialHash) ? initialHash : 'hero');
-  })();
-</script>

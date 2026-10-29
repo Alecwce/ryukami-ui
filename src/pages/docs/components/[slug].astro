@@ -1,0 +1,438 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+import ComponentPreview from '../../../components/ComponentPreview.astro';
+import CodeBlock from '../../../components/CodeBlock.astro';
+import Callout from '../../../components/Callout.astro';
+import { REGISTRY_COMPONENTS, getComponentNeighbors } from '../../../data/registry';
+
+// Importar todos los 35 componentes de src/components/*.astro para renderizarlos en la vista previa
+import Button from '../../../components/Button.astro';
+import Badge from '../../../components/Badge.astro';
+import Card from '../../../components/Card.astro';
+import Kbd from '../../../components/Kbd.astro';
+import ProgressBar from '../../../components/ProgressBar.astro';
+import Avatar from '../../../components/Avatar.astro';
+import Skeleton from '../../../components/Skeleton.astro';
+import StatCard from '../../../components/StatCard.astro';
+import Tooltip from '../../../components/Tooltip.astro';
+import Input from '../../../components/Input.astro';
+import Textarea from '../../../components/Textarea.astro';
+import Select from '../../../components/Select.astro';
+import Slider from '../../../components/Slider.astro';
+import RadioGroup from '../../../components/RadioGroup.astro';
+import Checkbox from '../../../components/Checkbox.astro';
+import Switch from '../../../components/Switch.astro';
+import Tabs from '../../../components/Tabs.astro';
+import Accordion from '../../../components/Accordion.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import Pagination from '../../../components/Pagination.astro';
+import Popover from '../../../components/Popover.astro';
+import Alert from '../../../components/Alert.astro';
+import CalloutComp from '../../../components/Callout.astro';
+import Modal from '../../../components/Modal.astro';
+import Drawer from '../../../components/Drawer.astro';
+import ToastContainer from '../../../components/ToastContainer.astro';
+import CommandPalette from '../../../components/CommandPalette.astro';
+import BentoGrid from '../../../components/BentoGrid.astro';
+import DataTable from '../../../components/DataTable.astro';
+import CodeBlockComp from '../../../components/CodeBlock.astro';
+import AudioSynth from '../../../components/AudioSynth.astro';
+import TerminalEmulator from '../../../components/TerminalEmulator.astro';
+import ThemeStudio from '../../../components/ThemeStudio.astro';
+import AsciiGenerator from '../../../components/AsciiGenerator.astro';
+
+export async function getStaticPaths() {
+  return REGISTRY_COMPONENTS.map((comp) => ({
+    params: { slug: comp.slug },
+    props: { comp },
+  }));
+}
+
+const { comp } = Astro.props;
+const { prev, next } = getComponentNeighbors(comp.slug);
+---
+
+<DocsLayout
+  title={comp.title}
+  description={comp.description}
+  activeSlug={comp.slug}
+>
+  <div class="space-y-8">
+    <!-- Encabezado del Componente -->
+    <div class="space-y-3 border-b-2 border-black dark:border-slate-700 pb-6">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 bg-scorch-crimson border border-black inline-block"></span>
+          <span class="text-xs font-mono font-bold uppercase text-scorch-crimson">// {comp.category}</span>
+        </div>
+        <span class="bg-black text-scorch-cyan text-[10px] font-mono px-2 py-0.5 border border-slate-700 font-bold">
+          {comp.status}
+        </span>
+      </div>
+
+      <h1 class="title-8bit text-2xl sm:text-4xl text-slate-900 dark:text-white">
+        {comp.title}
+      </h1>
+
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300">
+        {comp.description}
+      </p>
+    </div>
+
+    <!-- 1. Vista Previa Interactiva [PREVIEW | CODE | PROPS] -->
+    <section id="overview" class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// VISTA PREVIA</h2>
+      <ComponentPreview
+        title={comp.title.toUpperCase()}
+        code={comp.codeSnippet}
+        status={comp.status}
+        cli={comp.cli}
+        propsDoc={comp.propsDoc}
+      >
+        <div class="py-4 w-full flex items-center justify-center">
+          {comp.slug === 'button' && (
+            <div class="flex flex-wrap items-center gap-3">
+              <Button variant="crimson">Carmesí Scorch</Button>
+              <Button variant="cyan">Cian Eléctrico</Button>
+              <Button variant="gold">Oro Dragón</Button>
+              <Button variant="dark">Modo Hacker</Button>
+              <Button variant="outline">Contorno Paper</Button>
+            </div>
+          )}
+
+          {comp.slug === 'badge' && (
+            <div class="flex flex-wrap items-center gap-3">
+              <Badge variant="crimson">● SYSTEM_ALERT</Badge>
+              <Badge variant="cyan">◆ RE_ENGINEERING</Badge>
+              <Badge variant="gold">★ VELGRYND_CORE</Badge>
+              <Badge variant="dark">TS TYPESCRIPT 7</Badge>
+              <Badge variant="outline">POSTGRESQL 17</Badge>
+            </div>
+          )}
+
+          {comp.slug === 'card' && (
+            <div class="w-full max-w-md">
+              <Card title="0xSERVER // NODE_2" status="ONLINE">
+                <div class="space-y-3">
+                  <h4 class="font-extrabold text-base uppercase">Botkeep Cloud Container</h4>
+                  <p class="text-xs leading-relaxed opacity-80">
+                    Contenedor asignado con 2 GB de RAM, PostgreSQL 17 y Redis 7.2.
+                  </p>
+                  <Button variant="cyan" size="sm">INSPECCIONAR NODO</Button>
+                </div>
+              </Card>
+            </div>
+          )}
+
+          {comp.slug === 'kbd' && (
+            <div class="flex items-center gap-2 font-mono text-xs">
+              <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+              <span class="text-slate-500 mx-2">|</span>
+              <Kbd>Cmd</Kbd> + <Kbd>Shift</Kbd> + <Kbd>P</Kbd>
+            </div>
+          )}
+
+          {comp.slug === 'progress-bar' && (
+            <div class="w-full space-y-4 max-w-md">
+              <ProgressBar label="Núcleo Térmico Scorch" value={92} variant="crimson" status="CRITICAL" />
+              <ProgressBar label="Memoria RAM Asignada" value={68} variant="cyan" status="1.36 GB / 2 GB" />
+              <ProgressBar label="Sincronización de Paquetes" value={100} variant="emerald" status="NOMINAL" />
+            </div>
+          )}
+
+          {comp.slug === 'avatar' && (
+            <div class="flex flex-wrap items-center gap-4">
+              <Avatar name="0xAlex // Architect" role="CORE LEAD" initials="0X" status="ONLINE" variant="crimson" />
+              <Avatar name="Velgrynd Node" role="DAEMON" initials="VN" status="BUSY" variant="gold" />
+              <Avatar name="Guest Shell" role="CLIENT" initials="GS" status="IDLE" variant="cyan" />
+            </div>
+          )}
+
+          {comp.slug === 'skeleton' && (
+            <div class="w-full max-w-md space-y-3">
+              <Skeleton lines={3} label="FETCHING_TELEMETRY" variant="cyan" />
+            </div>
+          )}
+
+          {comp.slug === 'stat-card' && (
+            <div class="w-full max-w-sm">
+              <StatCard label="THROUGHPUT_RPS" value="48,920" delta="+24.5%" trend="up" sparkline="▁▂▃▄▆▇█" variant="crimson" />
+            </div>
+          )}
+
+          {comp.slug === 'tooltip' && (
+            <Tooltip text="Contraste WCAG AA: 5.04:1 sobre #FFFFFF" variant="crimson">
+              <Button variant="crimson">PASA EL CURSOR SOBRE MÍ</Button>
+            </Tooltip>
+          )}
+
+          {comp.slug === 'input' && (
+            <div class="w-full max-w-md space-y-3">
+              <Input label="Comando CLI" prefix="$" placeholder="ryukami-ui add button" hint="Ejecuta en tu terminal" />
+            </div>
+          )}
+
+          {comp.slug === 'textarea' && (
+            <div class="w-full max-w-md">
+              <Textarea label="Payload de Configuración" value="{\n  &quot;node&quot;: &quot;scorch-02&quot;\n}" rows={4} />
+            </div>
+          )}
+
+          {comp.slug === 'select' && (
+            <div class="w-full max-w-md">
+              <Select
+                label="Motor de Compilación"
+                prefix="ENGINE //"
+                options={[
+                  { value: 'astro-7', label: 'Astro 7.4.0 (Vite 8 + Rolldown)' },
+                  { value: 'next-16', label: 'Next.js 16 App Router (Turbopack)' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'slider' && (
+            <div class="w-full max-w-md">
+              <Slider label="Potencia de Sombreado ASCII" min={0} max={100} value={75} unit="%" variant="crimson" />
+            </div>
+          )}
+
+          {comp.slug === 'radio-group' && (
+            <div class="w-full max-w-md">
+              <RadioGroup
+                label="Modo de Cifrado"
+                name="cipher-mode-doc"
+                value="ed25519"
+                options={[
+                  { value: 'ed25519', label: 'Ed25519 Quantum Key', badge: 'DEFAULT' },
+                  { value: 'rsa4096', label: 'RSA-4096 Legacy' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'checkbox' && (
+            <div class="space-y-2">
+              <Checkbox label="Autenticación Cuántica" description="Requiere llave SSH ed25519 física" checked />
+              <Checkbox label="Modo Paranoide WAF" description="Bloquea User-Agents sin firma SHA-256" />
+            </div>
+          )}
+
+          {comp.slug === 'switch' && (
+            <div class="space-y-3">
+              <Switch label="Vigilancia RF Activa" variant="crimson" checked />
+              <Switch label="Sintetizador Web Audio" variant="cyan" checked />
+              <Switch label="Modo Nocturno CRT" variant="gold" />
+            </div>
+          )}
+
+          {comp.slug === 'tabs' && (
+            <div class="w-full max-w-lg">
+              <Tabs
+                title="0xDEPLOY // TARGETS"
+                tabs={[
+                  { id: 'astro-tab', label: 'ASTRO 7.4', badge: 'DEFAULT', content: 'Compilación estática en 820ms con 0 KiB JS.', code: 'ryukami-ui init && ryukami-ui add --all' },
+                  { id: 'docker-tab', label: 'DOCKER ALPINE', badge: 'PROD', content: 'Contenedor ligero en Botkeep Cloud.', code: 'docker compose up -d --build' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'accordion' && (
+            <div class="w-full max-w-lg">
+              <Accordion
+                name="accordion-demo-doc"
+                items={[
+                  { title: '¿Por qué cero border-radius (0px)?', badge: 'REGLA #1', content: 'El Neo-Brutalismo puro prescinde de curvas suaves para emular terminales mecánicos industriales.', open: true },
+                  { title: '¿Cómo funciona el instalador CLI?', badge: 'OPEN-CODE', content: 'El comando ryukami-ui add inyecta el componente .astro directamente en src/components/.' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'breadcrumb' && (
+            <Breadcrumb
+              items={[
+                { label: 'ryukami-labs', href: '/' },
+                { label: 'docs', href: '/docs' },
+                { label: 'components', href: '/docs' },
+                { label: `${comp.slug}.astro`, active: true },
+              ]}
+            />
+          )}
+
+          {comp.slug === 'pagination' && (
+            <Pagination currentPage={2} totalPages={6} />
+          )}
+
+          {comp.slug === 'popover' && (
+            <Popover id="doc-popover-demo" triggerLabel="INSPECCIONAR POPOVER" title="0xPOPOVER // SPEC">
+              <p>Renderizado en Top-Layer nativo mediante popover="auto".</p>
+            </Popover>
+          )}
+
+          {comp.slug === 'alert' && (
+            <div class="w-full max-w-lg space-y-3">
+              <Alert variant="crimson" title="SOBRECALENTAMIENTO DE NÚCLEO">
+                Frecuencia de CPU al 98%. Temperatura en 89°C.
+              </Alert>
+              <Alert variant="cyan" title="SISTEMA NOMINAL">
+                Núcleo actualizado a Astro 7.4 y Tailwind 4.3.
+              </Alert>
+            </div>
+          )}
+
+          {comp.slug === 'callout' && (
+            <div class="w-full max-w-lg space-y-3">
+              <CalloutComp type="dragon" title="REGLA INVIOLABLE" badge="SCORCH v4.1">
+                Cero border-radius (0px), bordes sólidos de 2px y sombras duras.
+              </CalloutComp>
+            </div>
+          )}
+
+          {comp.slug === 'modal' && (
+            <div>
+              <Button variant="crimson" onclick="document.getElementById('modal-slug-demo').showModal()">
+                ABRIR MODAL TUI
+              </Button>
+              <Modal id="modal-slug-demo" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
+                <p>Diálogo modal nativo &lt;dialog closedby="any"&gt; con light-dismiss.</p>
+              </Modal>
+            </div>
+          )}
+
+          {comp.slug === 'drawer' && (
+            <Drawer id="drawer-slug-demo" title="0xDRAWER // TELEMETRY" triggerLabel="ABRIR DRAWER LATERAL">
+              <p>Panel lateral deslizante nativo con HTML5 Dialog.</p>
+            </Drawer>
+          )}
+
+          {comp.slug === 'toast-container' && (
+            <div class="flex flex-wrap gap-2">
+              <Button variant="crimson" size="sm" onclick="window.showToast && window.showToast('ALERTA', 'Mensaje de severidad alta.', 'crimson')">Toast Carmesí</Button>
+              <Button variant="cyan" size="sm" onclick="window.showToast && window.showToast('INFO', 'Mensaje de telemetría.', 'cyan')">Toast Cian</Button>
+            </div>
+          )}
+
+          {comp.slug === 'command-palette' && (
+            <Button variant="outline" onclick="window.openPalette && window.openPalette()">
+              Abrir Command Palette (Ctrl+K)
+            </Button>
+          )}
+
+          {comp.slug === 'bento-grid' && (
+            <div class="w-full">
+              <BentoGrid
+                columns={2}
+                items={[
+                  { title: '0xVAULT // OBSIDIAN', subtitle: 'W3C TOKENS', metric: '35 MODS', badge: 'SYNCED', span: '1', variant: 'crimson' },
+                  { title: '0xSHA256 // GUARD', subtitle: 'INTEGRITY', metric: '100% PASS', badge: 'VERIFIED', span: '1', variant: 'cyan' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'data-table' && (
+            <div class="w-full">
+              <DataTable
+                title="CLUSTER_NODES"
+                columns={[
+                  { key: 'service', label: 'Servicio' },
+                  { key: 'endpoint', label: 'Endpoint' },
+                  { key: 'status', label: 'Estado' },
+                ]}
+                rows={[
+                  { service: 'PostgreSQL 17', endpoint: 'tcp://5432', status: 'ONLINE' },
+                  { service: 'Redis 7.2', endpoint: 'tcp://6379', status: 'ONLINE' },
+                  { service: 'Cloudflare Pages', endpoint: 'https://ryukami-ui.pages.dev', status: 'ACTIVE' },
+                ]}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'code-block' && (
+            <div class="w-full">
+              <CodeBlockComp
+                filename="src/styles/global.css"
+                language="CSS // DIFF"
+                code={`- border-radius: 8px;\n+ border-radius: 0px;\n+ box-shadow: -4px 4px 0px 0px var(--shadow-color);`}
+              />
+            </div>
+          )}
+
+          {comp.slug === 'audio-synth' && (
+            <div class="w-full">
+              <AudioSynth />
+            </div>
+          )}
+
+          {comp.slug === 'terminal-emulator' && (
+            <div class="w-full">
+              <TerminalEmulator />
+            </div>
+          )}
+
+          {comp.slug === 'component-preview' && (
+            <p class="font-mono text-xs opacity-75">Este contenedor es un ejemplo vivo de ComponentPreview.astro.</p>
+          )}
+
+          {comp.slug === 'theme-studio' && (
+            <div class="w-full">
+              <ThemeStudio />
+            </div>
+          )}
+
+          {comp.slug === 'ascii-generator' && (
+            <div class="w-full">
+              <AsciiGenerator />
+            </div>
+          )}
+        </div>
+      </ComponentPreview>
+    </section>
+
+    <!-- 2. Instalación CLI -->
+    <section id="installation" class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// INSTALACIÓN</h2>
+      <CodeBlock
+        filename="Terminal // Bash"
+        language="BASH"
+        code={`# Instalar con el CLI oficial de Ryukami-UI:\n${comp.cli}`}
+      />
+    </section>
+
+    <!-- 3. Uso en Astro -->
+    <section id="usage" class="space-y-4">
+      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// CÓDIGO DE USO</h2>
+      <CodeBlock
+        filename={`src/pages/ejemplo.astro`}
+        language="ASTRO"
+        code={`---\nimport ${comp.title.replace(/[^a-zA-Z0-9]/g, '')} from '@/components/${comp.title.replace(/[^a-zA-Z0-9]/g, '')}.astro';\n---\n\n${comp.codeSnippet}`}
+      />
+    </section>
+
+    <!-- Navegación Anterior / Siguiente (Estilo 8bitcn / shadcn) -->
+    <div class="flex flex-wrap items-center justify-between gap-4 pt-8 border-t-2 border-black dark:border-slate-700 font-mono text-xs">
+      <div>
+        {prev && (
+          <a
+            href={`/docs/components/${prev.slug}`}
+            class="btn-brutal bg-slate-100 dark:bg-slate-800 text-black dark:text-white px-3.5 py-2 font-bold inline-flex items-center gap-2"
+          >
+            <span>&larr; {prev.title}</span>
+          </a>
+        )}
+      </div>
+      <div>
+        {next && (
+          <a
+            href={`/docs/components/${next.slug}`}
+            class="btn-brutal bg-scorch-crimson text-white px-3.5 py-2 font-bold inline-flex items-center gap-2"
+          >
+            <span>{next.title} &rarr;</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</DocsLayout>
