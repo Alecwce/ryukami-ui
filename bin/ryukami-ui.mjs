@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 🐉 RYUKAMI-UI CLI v2.4.0 // Scorch Design System Component Installer & MCP Server
+ * RYUKAMI-UI CLI v2.4.0 // Scorch Design System Component Installer & MCP Server
  * Uso:
  *   ryukami-ui init [--dir <ruta>] [--overwrite] [--obsidian]
  *   ryukami-ui list
@@ -114,7 +114,7 @@ const C = {
 
 function printBanner() {
   console.log('');
-  console.log(`${C.bgRed}${C.bold} 🐉 RYUKAMI-UI CLI v2.4.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH_DRAGON // VELGRYND EDITION ${C.reset}`);
+  console.log(`${C.bgRed}${C.bold} RYUKAMI-UI CLI v2.4.0 ${C.reset} ${C.bgBlack}${C.bold} SCORCH DESIGN SYSTEM ${C.reset}`);
   console.log(`${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
 }
 
@@ -260,7 +260,7 @@ async function cmdInit(flags) {
   const targetDir = flags.dir;
   const stylesPayload = await loadRegistryJson('styles.json', flags.registry);
 
-  console.log(`${C.cyan}▶ Inicializando Scorch Design System en:${C.reset} ${C.bold}${targetDir}${C.reset}\n`);
+  console.log(`${C.cyan}> Inicializando Scorch Design System en:${C.reset} ${C.bold}${targetDir}${C.reset}\n`);
 
   for (const file of stylesPayload.files) {
     verifyFileIntegrity(file);
@@ -268,10 +268,10 @@ async function cmdInit(flags) {
     fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
     if (fs.existsSync(destPath) && !flags.overwrite) {
-      console.log(`  ${C.gold}⚠ Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para reemplazar)${C.reset}`);
+      console.log(`  ${C.gold}[SKIP] Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para reemplazar)${C.reset}`);
     } else {
       fs.writeFileSync(destPath, file.content, 'utf-8');
-      console.log(`  ${C.emerald}✓ Tokens inyectados e integridad verificada:${C.reset} ${file.path}`);
+      console.log(`  ${C.emerald}[OK] Tokens inyectados e integridad verificada:${C.reset} ${file.path}`);
     }
   }
 
@@ -279,7 +279,7 @@ async function cmdInit(flags) {
     const tokensPayload = await loadRegistryJson('tokens.json', flags.registry);
     const tokensDest = resolveSafeTargetPath(targetDir, 'design-tokens.json');
     fs.writeFileSync(tokensDest, JSON.stringify(tokensPayload, null, 2), 'utf-8');
-    console.log(`  ${C.emerald}✓ W3C Design Tokens sincronizados:${C.reset} design-tokens.json`);
+    console.log(`  ${C.emerald}[OK] W3C Design Tokens sincronizados:${C.reset} design-tokens.json`);
   }
 
   const configPath = path.join(targetDir, 'ryukami.json');
@@ -298,12 +298,12 @@ async function cmdInit(flags) {
 
   if (!fs.existsSync(configPath) || flags.overwrite) {
     fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), 'utf-8');
-    console.log(`  ${C.emerald}✓ Configuración creada:${C.reset} ryukami.json`);
+    console.log(`  ${C.emerald}[OK] Configuración creada:${C.reset} ryukami.json`);
   } else {
-    console.log(`  ${C.gold}⚠ Configuración existente:${C.reset} ryukami.json`);
+    console.log(`  ${C.gold}[SKIP] Configuración existente:${C.reset} ryukami.json`);
   }
 
-  console.log(`\n${C.bold}${C.emerald}⚡ ¡Listo! Ahora añade componentes con:${C.reset} ${C.cyan}ryukami-ui add button card callout data-table${C.reset}\n`);
+  console.log(`\n${C.bold}${C.emerald}[DONE] Ahora añade componentes con:${C.reset} ${C.cyan}ryukami-ui add button card callout data-table${C.reset}\n`);
 }
 
 async function cmdAdd(args, flags) {
@@ -314,7 +314,7 @@ async function cmdAdd(args, flags) {
   let requested = flags.all ? master.items.map((i) => i.name) : args.map((a) => a.toLowerCase());
 
   if (requested.length === 0) {
-    console.error(`${C.red}✖ Error:${C.reset} Especifica al menos un componente o usa ${C.gold}--all${C.reset}.`);
+    console.error(`${C.red}[ERROR]${C.reset} Especifica al menos un componente o usa ${C.gold}--all${C.reset}.`);
     console.log(`  Ejemplo: ${C.cyan}ryukami-ui add button badge card${C.reset}\n`);
     process.exit(1);
   }
@@ -328,7 +328,7 @@ async function cmdAdd(args, flags) {
     if (resolvedSet.has(name)) continue;
 
     if (!validMap.has(name)) {
-      console.error(`${C.red}✖ Componente desconocido:${C.reset} "${name}". Ejecuta ${C.cyan}ryukami-ui list${C.reset} para ver los nombres válidos.\n`);
+      console.error(`${C.red}[ERROR] Componente desconocido:${C.reset} "${name}". Ejecuta ${C.cyan}ryukami-ui list${C.reset} para ver los nombres válidos.\n`);
       process.exit(1);
     }
 
@@ -343,8 +343,8 @@ async function cmdAdd(args, flags) {
     resolvedSet.add(name);
   }
 
-  console.log(`${C.cyan}▶ Destino:${C.reset} ${C.bold}${flags.dir}${C.reset}`);
-  console.log(`${C.cyan}▶ Componentes a instalar (${resolvedSet.size}):${C.reset} ${Array.from(resolvedSet).join(', ')}\n`);
+  console.log(`${C.cyan}> Destino:${C.reset} ${C.bold}${flags.dir}${C.reset}`);
+  console.log(`${C.cyan}> Componentes a instalar (${resolvedSet.size}):${C.reset} ${Array.from(resolvedSet).join(', ')}\n`);
 
   let installedCount = 0;
   let skippedCount = 0;
@@ -357,11 +357,11 @@ async function cmdAdd(args, flags) {
       fs.mkdirSync(path.dirname(destPath), { recursive: true });
 
       if (fs.existsSync(destPath) && !flags.overwrite) {
-        console.log(`  ${C.gold}⚠ Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para sobrescribir)${C.reset}`);
+        console.log(`  ${C.gold}[SKIP] Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para sobrescribir)${C.reset}`);
         skippedCount++;
       } else {
         fs.writeFileSync(destPath, file.content, 'utf-8');
-        console.log(`  ${C.emerald}✓ Instalado e integridad verificada [${name}]:${C.reset} ${file.path}`);
+        console.log(`  ${C.emerald}[OK] Instalado e integridad verificada [${name}]:${C.reset} ${file.path}`);
         installedCount++;
       }
     }
@@ -369,7 +369,7 @@ async function cmdAdd(args, flags) {
 
   console.log(`\n${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
   console.log(
-    `${C.bold}${C.emerald}⚡ Operación completada:${C.reset} ${installedCount} instalado(s), ${skippedCount} omitido(s).\n`
+    `${C.bold}${C.emerald}[DONE] Operación completada:${C.reset} ${installedCount} instalado(s), ${skippedCount} omitido(s).\n`
   );
 }
 
@@ -377,7 +377,7 @@ async function cmdInfo(args, flags) {
   printBanner();
   const name = (args[0] || '').toLowerCase();
   if (!name) {
-    console.error(`${C.red}✖ Especifica el nombre del componente. Ejemplo: ryukami-ui info button${C.reset}\n`);
+    console.error(`${C.red}[ERROR] Especifica el nombre del componente. Ejemplo: ryukami-ui info button${C.reset}\n`);
     process.exit(1);
   }
 
@@ -394,7 +394,7 @@ async function cmdInfo(args, flags) {
 async function cmdDiff(flags) {
   printBanner();
   const master = await loadRegistryJson('registry.json', flags.registry);
-  console.log(`${C.cyan}▶ Auditando integridad SHA-256 en:${C.reset} ${C.bold}${flags.dir}${C.reset}\n`);
+  console.log(`${C.cyan}> Auditando integridad SHA-256 en:${C.reset} ${C.bold}${flags.dir}${C.reset}\n`);
 
   let synced = 0;
   let modified = 0;
@@ -410,10 +410,10 @@ async function cmdDiff(flags) {
     const localHash = crypto.createHash('sha256').update(localContent, 'utf-8').digest('hex');
     if (localHash === item.sha256) {
       synced++;
-      console.log(`  ${C.emerald}✓ [SYNCED]${C.reset}   ${item.name.padEnd(20, ' ')} (${item.target})`);
+      console.log(`  ${C.emerald}[SYNCED]${C.reset}   ${item.name.padEnd(20, ' ')} (${item.target})`);
     } else {
       modified++;
-      console.log(`  ${C.gold}◆ [MODIFIED]${C.reset} ${item.name.padEnd(20, ' ')} (${item.target}) ${C.dim}— difiere del registro v2.4.0${C.reset}`);
+      console.log(`  ${C.gold}[MODIFIED]${C.reset} ${item.name.padEnd(20, ' ')} (${item.target}) ${C.dim}— difiere del registro v2.4.0${C.reset}`);
     }
   }
 
@@ -550,12 +550,12 @@ async function main() {
         await cmdMcp(flags);
         break;
       default:
-        console.error(`${C.red}✖ Comando no reconocido:${C.reset} "${command}"`);
+        console.error(`${C.red}[ERROR] Comando no reconocido:${C.reset} "${command}"`);
         showHelp();
         process.exit(1);
     }
   } catch (err) {
-    console.error(`\n${C.red}✖ Error en RYUKAMI-UI CLI:${C.reset} ${err.message}\n`);
+    console.error(`\n${C.red}[ERROR] RYUKAMI-UI CLI:${C.reset} ${err.message}\n`);
     process.exit(1);
   }
 }

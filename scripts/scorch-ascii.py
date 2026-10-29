@@ -57,7 +57,7 @@ def convert_image_to_ascii(image_path, width=60, ramp=ASCII_RAMP_STANDARD,
     try:
         img = Image.open(image_path)
     except Exception as e:
-        print(f"❌ Error al abrir la imagen '{image_path}': {e}", file=sys.stderr)
+        print(f"[ERROR] No se pudo abrir la imagen '{image_path}': {e}", file=sys.stderr)
         sys.exit(1)
 
     # Convertir a RGB (manejar canal alfa RGBA)
@@ -134,7 +134,7 @@ def convert_image_to_ascii(image_path, width=60, ramp=ASCII_RAMP_STANDARD,
 
 def main():
     parser = argparse.ArgumentParser(
-        description="🐉 Scorch-ASCII: Transforma imágenes en Arte ASCII con la paleta de Velgrynd."
+        description="Scorch-ASCII: Transforma imagenes en Arte ASCII con la paleta de Velgrynd."
     )
     parser.add_argument("image", help="Ruta de la imagen a convertir (PNG, JPG, WEBP...)")
     parser.add_argument("-w", "--width", type=int, default=60, help="Ancho en caracteres de la salida (por defecto: 60)")
@@ -168,7 +168,7 @@ def main():
     if args.output:
         with open(args.output, "w", encoding="utf-8") as f:
             f.write(ascii_result + "\n")
-        print(f"✨ Arte ASCII guardado con éxito en '{args.output}'")
+        print(f"[OK] Arte ASCII guardado en '{args.output}'")
     else:
         print(ascii_result)
 

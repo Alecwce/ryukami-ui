@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 🐉 Ryukami-UI // Static Registry Builder (8bitcn / shadcn architecture)
+ * Ryukami-UI // Static Registry Builder (8bitcn / shadcn architecture)
  * Compila src/components/*.astro, src/styles/global.css y tokens.json en endpoints JSON estáticos en public/r/
  */
 import fs from 'node:fs';
@@ -480,4 +480,4 @@ fs.writeFileSync(
   'utf-8'
 );
 
-console.log(`⚡ [RYUKAMI-REGISTRY] Compilados ${registryIndex.length} componentes + styles.json + tokens.json en public/r/`);
+console.log(`[RYUKAMI-REGISTRY] Compilados ${registryIndex.length} componentes + styles.json + tokens.json en public/r/`);

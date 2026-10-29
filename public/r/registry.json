@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-28T23:44:21.847Z",
+  "updatedAt": "2026-10-29T00:10:25.768Z",
   "totalItems": 35,
   "items": [
     {
@@ -234,7 +234,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callout canónico compatible con Obsidian ([!dragon], [!scorch], [!terminal], [!tui], [!summary]).",
       "registryDependencies": [],
-      "sha256": "7a6c0cc4b81997d8642f4483b1e793c777363c0945c6a5435dc44a2dde560531",
+      "sha256": "a67e0135c2d7559aef69d1e9b84867c55f473478fda13ff31fd67ebcecf5fbfd",
       "endpoint": "/r/callout.json",
       "target": "src/components/Callout.astro"
     },
@@ -328,7 +328,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
-      "sha256": "5612e38976c8d74d2ebb6c446228a3c5f87be778b81af860548137f1b486aca5",
+      "sha256": "09020f9675defc78ffd530cc9baa56d3d51cbbaa13ef9549baaaffa4e21a2cc9",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },
@@ -358,7 +358,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.",
       "registryDependencies": [],
-      "sha256": "8980e68798930b6f5b022d589c9208ebd27f95a1fbf0c4ce2d34e53d34bde2c3",
+      "sha256": "dc3bbe32150475344b83d16a91866820850a178f04bedd63780ea1283aafbe6c",
       "endpoint": "/r/ascii-generator.json",
       "target": "src/components/AsciiGenerator.astro"
     }

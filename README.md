@@ -1,279 +1,227 @@
-# 🐉 Ryukami-UI (Scorch Dragon // Velgrynd Tribute Edition)
+# Ryukami-UI
 
 [![CI](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/Alecwce/ryukami-ui/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/badge/version-v2.4.0-D62436.svg)](https://github.com/Alecwce/ryukami-ui/releases/tag/v2.4.0)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-96%20%7C%20100%20%7C%20100%20%7C%20100-success.svg)](https://ryukami-ui.pages.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-> **Retro TUI & Neo-Brutalist Component Library + CLI Installer & MCP Server (35 Modules) for Astro 7, Tailwind CSS v4 & Modern Web Apps.**  
-> Inspired by oriental dragon lore, 8-bit CRT terminals, and raw mechanical engineering aesthetics.
+> **Librería de 35 componentes Neo-Brutalistas y Retro TUI, instalador CLI y servidor MCP nativo para Astro 7, Tailwind CSS v4 y TypeScript 7.**  
+> Diseñada bajo la especificación **Scorch Design System v4.1**, inspirada en terminales CRT industriales, consolas UNIX y arquitectura open-code sin dependencias de runtime.
 
-- 🌐 **Live Production (Cloudflare Pages):** [**https://ryukami-ui.pages.dev**](https://ryukami-ui.pages.dev)  
-- 📦 **Live Open-Code JSON Registry:** [**https://ryukami-ui.pages.dev/r/registry.json**](https://ryukami-ui.pages.dev/r/registry.json)  
-- 🎨 **W3C Design Tokens v4.1:** [**https://ryukami-ui.pages.dev/r/tokens.json**](https://ryukami-ui.pages.dev/r/tokens.json)  
-- 🤖 **AI Agent Manifest (llms.txt):** [**https://ryukami-ui.pages.dev/llms.txt**](https://ryukami-ui.pages.dev/llms.txt)  
-- 🐙 **GitHub Repository:** [**https://github.com/Alecwce/ryukami-ui**](https://github.com/Alecwce/ryukami-ui)
+- **Producción (Cloudflare Pages):** [https://ryukami-ui.pages.dev](https://ryukami-ui.pages.dev)
+- **Registro Open-Code JSON:** [https://ryukami-ui.pages.dev/r/registry.json](https://ryukami-ui.pages.dev/r/registry.json)
+- **W3C Design Tokens v4.1:** [https://ryukami-ui.pages.dev/r/tokens.json](https://ryukami-ui.pages.dev/r/tokens.json)
+- **Manifiesto para Agentes IA (llms.txt):** [https://ryukami-ui.pages.dev/llms.txt](https://ryukami-ui.pages.dev/llms.txt)
+- **Repositorio Oficial:** [https://github.com/Alecwce/ryukami-ui](https://github.com/Alecwce/ryukami-ui)
 
-![Ryukami Scorch Dragon Banner](public/scorch-dragon-banner.webp)
+![Ryukami-UI Banner](public/scorch-dragon-banner.webp)
 
 ---
 
-## Stack Tecnológico & Rendimiento Auditado (Lighthouse 96 / 100 / 100 / 100)
+## 1. Stack Tecnológico y Rendimiento Auditado
 
 | Capa | Tecnología | Detalles Técnicos |
 | :--- | :--- | :--- |
-| **Framework** | [Astro 7.4.0](https://astro.build) | Motor **Vite 8 + Rolldown**, HTML comprimido y **0 KiB de bundles JS externos**. |
+| **Framework** | [Astro 7.4.0](https://astro.build) | Motor **Vite 8 + Rolldown**, HTML estático comprimido y **0 KiB de bundles JS externos**. |
 | **Estilos** | [Tailwind CSS 4.3.3](https://tailwindcss.com) | Configuración CSS-first (`@import "tailwindcss";`, `@theme`, `@custom-variant dark`). |
-| **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes. |
-| **CLI & Registry** | **`ryukami-ui` v2.4.0** | Instalador CLI estilo `shadcn/ui` & `8bitcn` + Servidor MCP (`stdio`) + Registro estático JSON en `/public/r/*.json` (**35 módulos**). |
-| **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos `.mp3`. |
-| **Auditoría Real** | **Lighthouse Verified** | **96** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
+| **Tipado** | [TypeScript 7.0.2](https://www.typescriptlang.org) | Interfaces estrictas (`export interface Props`) en todos los componentes y datos tipados en `src/data/`. |
+| **CLI & Registry** | **`ryukami-ui` v2.4.0** | Instalador CLI estilo `shadcn/ui` + Servidor MCP (`stdio`) + Registro estático JSON en `/public/r/*.json` (**35 módulos**). |
+| **Audio** | **Web Audio API** | Síntesis procedural en tiempo real de clics mecánicos y alertas sin archivos de audio externos. |
+| **Auditoría** | **Lighthouse Verified** | **96** Performance · **100** Accessibility (WCAG AA) · **100** Best Practices · **100** SEO. |
 
 ---
 
-## 🛡️ Architecture, Performance & AppSec Engineering
-
-Auditoría técnica y decisiones arquitectónicas orientadas a **Principal Frontend Engineers**, **Tech Leads** y **Auditores de Seguridad**:
+## 2. Arquitectura e Ingeniería de Seguridad (AppSec)
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│  0xRYUKAMI_ENGINEERING // ARCHITECTURE & APPSEC BLUEPRINT (2026 AUDIT)      │
+│  0xRYUKAMI_ENGINEERING // ARCHITECTURE & APPSEC BLUEPRINT                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  [PERF]   Astro 7.4 + Tailwind CSS 4.3 + TS 7 (Build estático en ~1.1s)     │
+│  [FONTS]  0 KiB Google Fonts (Fuentes WOFF2 auto-alojadas en /public/fonts) │
+│  [HASH]   Integridad SHA-256 por módulo + CLI Anti-Path Traversal           │
+│  [DOM]    Zero-innerHTML en entradas de usuario + Validación Regex CSS      │
+│  [A11Y]   Navegación por teclado WAI-ARIA, <dialog closedby="any"> y WCAG   │
+│  [TESTS]  Suite nativa node:test (13/13 PASS en <100ms, 0 dependencias)     │
+│  [EDGE]   HSTS (31536000 + preload), COOP, X-Frame-Options DENY             │
 └─────────────────────────────────────────────────────────────────────────────┘
-  ⚡ PERFORMANCE       : Astro 7.4 + Tailwind CSS 4.3 + TS 7 (Build: ~1.23s - 2.9s)
-  📦 NETWORK ASSETS    : 0 KiB Google Fonts (Self-hosted WOFF2 en /public/fonts/)
-  🔒 SUPPLY CHAIN      : SHA-256 Per-Module Integrity + Anti-Path Traversal CLI
-  🛡️ DOM HARDENING     : Zero-innerHTML in 0xSCORCH_SHELL + Strict Regex Theme Engine
-  ♿ ACCESSIBILITY      : 100% WAI-ARIA Keyboard Traversal ([ - ][ □ ][ × ], tabs, modals)
-  🧪 ZERO-BLOAT TESTS  : Native node:test suite (12/12 PASS en ~150ms, 0 extra deps)
-  🌐 EDGE SECURITY     : HSTS (31536000 + preload), COOP, X-Frame-Options DENY
 ```
 
-### 1. Rendimiento Extremo & Cero Dependencias de Terceros en Runtime
-- **Compilación en ~1.23s:** Orquestado con **Astro 7.4.0** (Vite 8), **Tailwind CSS 4.3.3** (`@tailwindcss/vite` CSS-first engine) y **TypeScript 7.0.2** (compilador nativo en Go).
-- **Fuentes 100% Auto-Alojadas (Zero External Requests):** Se eliminaron las peticiones a `fonts.googleapis.com` y `fonts.gstatic.com`. Las fuentes (`Press Start 2P`, `Tiny5`, `JetBrains Mono`, `VT323`) se sirven directamente en local (`public/fonts/*.woff2`) con reglas `@font-face` canónicas y preload en `<head>`, garantizando el renderizado fiel e imponente del pixel art en el título `RYUKAMI × SCORCH`.
-- **Auditoría Lighthouse Calibrada:**
-  - **Performance:** **96 / 100** (FCP: 0.8s, LCP: 1.1s, Speed Index: 0.9s, TBT: 0ms, CLS: 0.000).
-  - **Accessibility:** **100 / 100** (Cumplimiento riguroso WCAG AA, contraste Carmesí Scorch `#D62436` de 5.04:1 sobre blanco).
-  - **Best Practices:** **100 / 100** (Cabeceras HSTS, zero-vulnerabilities, recursos HTTPS).
-  - **SEO:** **100 / 100** (OpenGraph, sitemap.xml, robots.txt, llms.txt estructurado).
+### 2.1 Rendimiento y Cero Peticiones Externas
+- **Fuentes 100% Auto-Alojadas:** Se eliminaron todas las peticiones a servidores de terceros. Las fuentes (`Press Start 2P`, `Tiny5`, `JetBrains Mono`, `VT323`) se sirven localmente desde `public/fonts/*.woff2` con reglas `@font-face` y `preload` en `<head>`.
+- **Métricas Core Web Vitals:** FCP `0.8s`, LCP `1.1s`, TBT `0ms`, CLS `0.000`.
+- **Arquitectura Escalable de Datos:** La lógica visual de los 35 componentes reside en `src/components/`, mientras que la documentación de propiedades (`src/data/component-props.ts`) y los fragmentos de código del catálogo (`src/data/component-snippets.ts`) están desacoplados en módulos TypeScript independientes.
 
-### 2. Seguridad en la Cadena de Suministro del CLI (`ryukami-ui`)
-- **Blindaje Criptográfico SHA-256:** Cada componente en `public/r/*.json` y en el maestro `registry.json` incluye un digest `sha256` inmutable generado durante el build (`scripts/build-registry.mjs`). El CLI (`bin/ryukami-ui.mjs`) recalcula y verifica la suma de verificación en cliente antes de tocar el sistema de archivos local (`verifyFileIntegrity`), rechazando payloads alterados por ataques *man-in-the-middle* o paquetes corruptos.
-- **Prevención Quirúrgica de Path Traversal (`resolveSafeTargetPath`):**
-  - Sanitización multiplataforma de backslashes (`\`) hacia separadores POSIX estándar (`/`).
-  - Validación de árbol (`resolvedPath.startsWith(resolvedTarget + path.sep)`) que bloquea ataques como `"../../.bashrc"`, `"..\\..\\Windows\\win.ini"`, `"/etc/passwd"`, `"."` y directorios vacíos.
-  - Creación recursiva y segura de directorios (`fs.mkdirSync(path.dirname(destPath), { recursive: true })`) antes de cualquier operación de escritura.
+### 2.2 Seguridad en la Cadena de Suministro (`ryukami-ui`)
+- **Verificación Criptográfica SHA-256:** Cada componente compilado en `public/r/*.json` y en `registry.json` incluye su hash `sha256` calculado por `scripts/build-registry.mjs`. El CLI verifica la integridad (`verifyFileIntegrity`) antes de escribir cualquier archivo en disco y permite auditar cambios locales mediante `ryukami-ui diff`.
+- **Prevención de Path Traversal (`resolveSafeTargetPath`):** Normaliza separadores multiplataforma y valida que la ruta final resuelta permanezca estrictamente dentro del directorio del proyecto (`resolvedPath.startsWith(resolvedTarget + path.sep)`), bloqueando vectores como `../../.bashrc`, `..\\..\\Windows\\win.ini` o `/etc/passwd`.
 
-### 3. Hardening Web en Cliente (DOM XSS & CSS Injection)
-- **Terminal 0xSCORCH_SHELL sin innerHTML:** Toda entrada de usuario procesada en la consola interactiva (`TerminalEmulator.astro`) y en el forjador ASCII (`AsciiGenerator.astro`) utiliza exclusivamente `document.createElement()` y `.textContent`, eliminando vectores de ejecución de scripts en el DOM (*DOM-based XSS*).
-- **Theme Studio con Tipado Estricto por Expresiones Regulares:** Las propiedades reactivas (`--scorch-red`, `--cyber-blue`, `--shadow-offset-x`, `--dither-size`) se validan mediante `COLOR_REGEX` (`^#[0-9a-fA-F]{3,8}$`) y `OFFSET_REGEX` (`^-?\d+px$`), bloqueando payloads de inyección CSS como `"#fff; background: url(javascript:...)"` o `"10px; display: none"` antes de invocar `style.setProperty()`.
-
-### 4. Accesibilidad Mecánica (WAI-ARIA & Polimorfismo Seguro)
-- **Controles de Ventana Interactivos:** Los controles `[-]`, `[□]` y `[×]` en `Card.astro` y cabeceras son elementos `<button type="button">` semánticos accesibles vía teclado (`Tab`, `Enter`, `Space`), con atributos dinámicos `aria-label` y sincronización de `aria-expanded` ("true"/"false") al minimizar ventanas.
-- **Polimorfismo Seguro en `Button.astro`:** Tipado mediante uniones discriminadas en TypeScript. Cuando coexisten `href` y `disabled={true}`, el componente neutraliza el enlace emitiendo `role="link"`, `aria-disabled="true"`, `tabindex="-1"` y `pointer-events-none`, protegiendo la navegación accesible.
-- **Control Global de Audio:** Switch accesible con persistencia en `localStorage` e inicialización diferida (*lazy*) de `AudioContext` tras el primer gesto del usuario.
-
-### 5. Suite de Tests Nativos & Cabeceras Edge
-- **Zero-Bloat Testing (`pnpm test`):** 12 pruebas unitarias automatizadas con `node:test` y `node:assert/strict` sin librerías externas pesadas. Ejecutan en ~150ms validando la prevención de Path Traversal, la integridad SHA-256 y el bloqueo de CSS Injection.
-- **Cabeceras HTTP en Cloudflare Edge (`public/_headers`):**
-  - `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`
-  - `X-Frame-Options: DENY`
-  - `X-Content-Type-Options: nosniff`
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-  - `Permissions-Policy: accelerometer=(), camera=(), geolocation=(), microphone=(), payment=(), usb=()`
-  - `Access-Control-Allow-Origin: *` (restringido a endpoints `/r/*` para descarga remota sin bloqueos CORS).
+### 2.3 Hardening en Cliente (DOM XSS y CSS Injection)
+- **Consola `0xSCORCH_SHELL` y Generador ASCII sin `innerHTML`:** Toda entrada del usuario se procesa exclusivamente mediante `document.createElement()` y `.textContent`.
+- **Theme Studio con Validación Regex:** Los tokens CSS dinámicos se validan mediante expresiones regulares estrictas (`COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/` y `OFFSET_REGEX = /^-?\d+px$/`) antes de invocar `style.setProperty()`.
 
 ---
 
-## 🛠️ Instalador CLI (`ryukami-ui`) — Estilo `shadcn` / `8bitcn`
+## 3. Instalador CLI y Servidor MCP (`ryukami-ui` v2.4.0)
 
-El proyecto incluye su propio **CLI ejecutable** ([`bin/ryukami-ui.mjs`](bin/ryukami-ui.mjs)) y su compilador de registro estático ([`scripts/build-registry.mjs`](scripts/build-registry.mjs)), instalado globalmente en `~/.local/bin/ryukami-ui`.
+El binario oficial se encuentra en [`bin/ryukami-ui.mjs`](bin/ryukami-ui.mjs) y consume tanto el registro local (`public/r/`) como el CDN remoto en Cloudflare Pages (`https://ryukami-ui.pages.dev/r`).
 
-### 1. Inicializar Tokens y Configuración en cualquier Proyecto
-Inyecta automáticamente `src/styles/global.css` con la paleta Scorch calibrada para Tailwind v4 y crea `ryukami.json`:
+### 3.1 Inicializar Proyecto y Tokens W3C
+Inyecta `src/styles/global.css` con la configuración de Tailwind CSS v4, crea `ryukami.json` y opcionalmente exporta `design-tokens.json` compatible con Obsidian (`--obsidian`):
 ```bash
-ryukami-ui init --dir ./mi-proyecto-astro
+ryukami-ui init --obsidian --dir ./mi-proyecto-astro
 ```
 
-### 2. Listar todos los Componentes del Registro
-Muestra una tabla TUI en terminal con los **27 módulos** disponibles y sus dependencias:
+### 3.2 Listar e Inspeccionar Componentes
 ```bash
+# Listar los 35 módulos disponibles en el registro
 ryukami-ui list
+
+# Inspeccionar metadatos, dependencias y hash SHA-256 de un componente
+ryukami-ui info data-table
 ```
 
-### 3. Instalar Componentes Específicos (con resolución de dependencias)
-Copia los componentes `.astro` directamente en `src/components/` (por ejemplo, al pedir `command-palette`, instala automáticamente su dependencia `kbd`):
+### 3.3 Instalar Componentes y Auditar Integridad SHA-256
 ```bash
-ryukami-ui add button badge card avatar skeleton textarea radio-group breadcrumb pagination popover modal command-palette --dir ./mi-proyecto-astro
-```
+# Instalar componentes específicos (resuelve dependencias automáticamente, ej: data-table -> badge)
+ryukami-ui add button card callout bento-grid data-table code-block drawer --dir ./mi-proyecto-astro
 
-### 4. Instalar Todo el Catálogo de una Vez o Inspeccionar un Módulo
-```bash
-# Instalar los 27 componentes a la vez
+# Instalar los 35 componentes del catálogo
 ryukami-ui add --all --dir ./mi-proyecto-astro
 
-# Inspeccionar metadatos y endpoint JSON de un componente
-ryukami-ui info command-palette
-
-# Consumir directamente desde el registro remoto en Cloudflare Pages
-ryukami-ui add button --registry https://ryukami-ui.pages.dev/r
+# Auditar integridad SHA-256 de los componentes instalados frente al registro oficial
+ryukami-ui diff --dir ./mi-proyecto-astro
 ```
 
-### 5. Nota sobre Cloudflare Bot Fight Mode & Acceso Automatizado a `/r/*.json`
-
-Los endpoints JSON en `https://ryukami-ui.pages.dev/r/*.json` cuentan con cabeceras `Access-Control-Allow-Origin: *` y están disponibles para consumo web y terminal.
+### 3.4 Servidor MCP para Agentes de IA (`stdio` JSON-RPC 2.0)
+Inicia un servidor **Model Context Protocol (MCP)** sobre `stdio` que expone las herramientas `list_components`, `get_component` y `get_design_tokens` para agentes de IA:
+```bash
+ryukami-ui mcp
+```
 
 > [!NOTE]
-> **Error HTTP 403 (Error 1010 de Cloudflare)**: Si intentas consumir los archivos JSON usando librerías de scraping o clientes HTTP sin un User-Agent de navegador (por ejemplo `curl` sin cabeceras o librerías estándar como `Python-urllib/*`), el sistema de seguridad en el Edge de Cloudflare (**Browser Integrity Check / Bot Fight Mode**) interceptará la conexión respondiendo con código `403 Forbidden` (`error code: 1010`).
->
-> **Cómo resolverlo:**
-> - **En scripts y automatizaciones:** Especifica siempre una cabecera `User-Agent` descriptiva (el CLI nativo `ryukami-ui` en Node.js y navegadores acceden con código 200 sin problemas):
->   ```bash
->   curl -A "Ryukami-CLI/2.3.0" https://ryukami-ui.pages.dev/r/registry.json
->   ```
-> - **En el panel de Cloudflare (Dashboard):** Si deseas permitir clientes sin User-Agent, ve a **Security > Bots** en Cloudflare Dashboard y desactiva *Bot Fight Mode*, o crea una regla WAF personalizada para la ruta `/r/*`. Esta configuración opera a nivel de proxy DNS/WAF y no puede alterarse únicamente desde el repositorio estático.
+> **Acceso HTTP Automatizado a `/r/*.json` en Cloudflare:** Si consumes los endpoints JSON remotos desde scripts personalizados (`curl` o Python), incluye siempre una cabecera `User-Agent` descriptiva para evitar bloqueos del *Browser Integrity Check* de Cloudflare:
+> ```bash
+> curl -A "ryukami-ui-cli/2.4.0" https://ryukami-ui.pages.dev/r/registry.json
+> ```
 
 ---
 
-## 🏛️ Reglas de Diseño (Scorch Design System v4.1)
+## 4. Reglas de Diseño (Scorch Design System v4.1)
 
-1. **Neo-Brutalismo Puro (`0px` Radius):** Bordes sólidos de `2px`, esquinas de `0px` y sombras duras hacia abajo-izquierda (`-4px 4px 0px 0px`).
-2. **Controles Geométricos de Ventana (`[ - ][ □ ][ × ]`):** Cajas cuadradas exactas de `20×20 px` (`w-5 h-5`) con vectores centrados al píxel.
-3. **Física Táctil Acelerada por GPU:** Transiciones exclusivas en `transform: translate(-2px, 2px)` (`75ms ease-out`) para evitar repintados de CPU.
-4. **Contraste Calibrado WCAG AA:** Carmesí Scorch (`#D62436`, ratio **5.04:1** sobre blanco), Cian Eléctrico (`#4DA3FF`) y Oro Dragón (`#F4D35E`).
-5. **Doble Tema Nativo:** Modo **Paper (`#F5F7FA`)** de alto contraste diurno y Modo **Hacker (`#0B0F17`)** con opción *Crimson Soft (Nocturno Pro)* en el Theme Studio.
+1. **Cero Bordes Redondeados (`0px` Radius):** Esquinas rectas en todos los elementos (`border-radius: 0px`) y bordes sólidos de `2px` (`border-2 border-black`).
+2. **Sombras Duras Abajo-Izquierda (`0px` Blur):** Desplazamiento estándar `-4px 4px 0px 0px var(--shadow-color)` (`shadow-brutal`) y `-2px 2px 0px 0px var(--shadow-color)` (`shadow-brutal-sm`).
+3. **Controles Geométricos de Ventana (`[ - ][ □ ][ × ]`):** Cajas cuadradas de `20×20 px` (`w-5 h-5`) con vectores CSS/SVG centrados y atributos `aria-label`.
+4. **Física Mecánica Acelerada por GPU:** Transiciones exclusivas en `transform` (`75ms cubic-bezier(0.23, 1, 0.32, 1)`) sin `transition-all`.
+5. **Contraste Calibrado WCAG AA (≥ 4.5:1):** Carmesí Scorch (`#D62436`, ratio **5.04:1** sobre `#FFFFFF`), Cian Eléctrico (`#4DA3FF`) y Oro (`#F4D35E`), con soporte nativo para **Modo Paper (`#F5F7FA`)** y **Modo Hacker (`#0B0F17`)**.
 
 ---
 
-## 🧩 Catálogo Completo (35 Componentes & Herramientas Instalables por CLI)
+## 5. Catálogo Completo (35 Módulos)
 
-| ID en CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
+| ID CLI (`ryukami-ui add <id>`) | Archivo Astro | Categoría | Descripción |
 | :--- | :--- | :--- | :--- |
-| `button` | `Button.astro` | `01_CORE_UI` | Botón mecánico con 5 variantes y clic Web Audio. |
-| `badge` | `Badge.astro` | `01_CORE_UI` | Pastillas de estado y telemetría (`-2px 2px 0px`). |
+| `button` | `Button.astro` | `01_CORE_UI` | Botón mecánico con 5 variantes, polimorfismo seguro y síntesis Web Audio. |
+| `badge` | `Badge.astro` | `01_CORE_UI` | Etiquetas de estado y telemetría con sombra dura `-2px 2px`. |
 | `card` | `Card.astro` | `01_CORE_UI` | Ventana de consola TUI interactiva con controles `[ - ][ □ ][ × ]`. |
-| `kbd` | `Kbd.astro` | `01_CORE_UI` | Teclas físicas de atajos mecánicos (`[Ctrl] + [K]`). |
-| `progress-bar` | `ProgressBar.astro` | `01_CORE_UI` | Barra de progreso segmentada BIOS con lectura ASCII `[████████░░░░]`. |
-| `avatar` | `Avatar.astro` | `01_CORE_UI` | Identificador cuadrado de operador TUI con indicador de estado (`ONLINE`/`BUSY`/`IDLE`). |
+| `kbd` | `Kbd.astro` | `01_CORE_UI` | Teclas físicas para visualización de atajos (`[Ctrl] + [K]`). |
+| `progress-bar` | `ProgressBar.astro` | `01_CORE_UI` | Barra de progreso segmentada con lectura ASCII `[████████░░░░]`. |
+| `avatar` | `Avatar.astro` | `01_CORE_UI` | Identificador cuadrado de operador TUI con estado (`ONLINE`/`BUSY`/`IDLE`). |
 | `skeleton` | `Skeleton.astro` | `01_CORE_UI` | Bloque de carga de búfer ASCII (`[ ░░░ SYNC ░░░ ]`) con `role="status"`. |
-| `stat-card` | `StatCard.astro` | `01_CORE_UI` | Tarjeta KPI de telemetría con delta porcentual (`▲/▼`) y sparkline ASCII `[▁▂▃▅▆▇█]`. |
+| `stat-card` | `StatCard.astro` | `01_CORE_UI` | Tarjeta KPI de telemetría con delta porcentual y sparkline ASCII `[▁▂▃▅▆▇█]`. |
 | `tooltip` | `Tooltip.astro` | `01_CORE_UI` | Etiqueta emergente accesible por teclado y hover con sombra dura `-2px 2px`. |
-| `input` | `Input.astro` | `02_FORM_CONTROLS` | Input brutalista con prefijo de terminal (`$`, `tcp://`), hints y error. |
-| `textarea` | `Textarea.astro` | `02_FORM_CONTROLS` | Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes. |
+| `input` | `Input.astro` | `02_FORM_CONTROLS` | Campo de entrada brutalista con prefijo de terminal (`$`, `tcp://`) y validación. |
+| `textarea` | `Textarea.astro` | `02_FORM_CONTROLS` | Editor multilínea UTF-8 con contador en vivo de líneas y bytes. |
 | `select` | `Select.astro` | `02_FORM_CONTROLS` | Selector desplegable brutalista con prefijo `OPT //` e indicador mecánico. |
-| `slider` | `Slider.astro` | `02_FORM_CONTROLS` | Slider de rango con barra ASCII `[====|----]` en vivo y pulso de audio. |
+| `slider` | `Slider.astro` | `02_FORM_CONTROLS` | Control deslizante de rango con barra ASCII `[====|----]` en tiempo real. |
 | `radio-group` | `RadioGroup.astro` | `02_FORM_CONTROLS` | Selector exclusivo de opciones con indicadores de terminal `( • )` y `(   )`. |
-| `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla cuadrada con marca pixel-art `✕`. |
+| `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla de verificación cuadrada con marca geométrica `✕`. |
 | `switch` | `Switch.astro` | `02_FORM_CONTROLS` | Interruptor táctil deslizante (`role="switch"`). |
 | `tabs` | `Tabs.astro` | `03_LAYOUT_AND_MODALS` | Pestañas multipanel TUI con navegación por flechas (`←` / `→`). |
-| `accordion` | `Accordion.astro` | `03_LAYOUT_AND_MODALS` | Acordeón exclusivo nativo con `<details name="...">` HTML5. |
+| `accordion` | `Accordion.astro` | `03_LAYOUT_AND_MODALS` | Acordeón exclusivo nativo sobre `<details name="...">`. |
 | `breadcrumb` | `Breadcrumb.astro` | `03_LAYOUT_AND_MODALS` | Ruta de navegación estilo sistema de archivos Unix (`~/ryukami/core/nodes`). |
 | `pagination` | `Pagination.astro` | `03_LAYOUT_AND_MODALS` | Barra de paginación mecánica TUI (`[ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]`). |
-| `popover` | `Popover.astro` | `03_LAYOUT_AND_MODALS` | Globo flotante de telemetría con API nativa `popover="auto"` Top-Layer sin JS. |
-| `alert` | `Alert.astro` | `03_LAYOUT_AND_MODALS` | Callouts de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
+| `popover` | `Popover.astro` | `03_LAYOUT_AND_MODALS` | Globo flotante de telemetría con API nativa `popover="auto"` Top-Layer. |
+| `alert` | `Alert.astro` | `03_LAYOUT_AND_MODALS` | Bloques de alerta de sistema (`crimson`, `gold`, `cyan`, `emerald`). |
 | `callout` | `Callout.astro` | `03_LAYOUT_AND_MODALS` | Callout canónico compatible con Obsidian (`[!dragon]`, `[!scorch]`, `[!terminal]`, `[!tui]`, `[!summary]`). |
-| `modal` | `Modal.astro` | `03_LAYOUT_AND_MODALS` | Diálogo HTML5 `<dialog closedby="any">` con light-dismiss. |
+| `modal` | `Modal.astro` | `03_LAYOUT_AND_MODALS` | Diálogo modal nativo `<dialog closedby="any">` con light-dismiss. |
 | `drawer` | `Drawer.astro` | `03_LAYOUT_AND_MODALS` | Panel lateral deslizante nativo `<dialog closedby="any">` (`left` / `right`). |
-| `toast-container` | `ToastContainer.astro` | `03_LAYOUT_AND_MODALS` | Notificaciones flotantes con frecuencia acústica por severidad. |
-| `command-palette` | `CommandPalette.astro` | `03_LAYOUT_AND_MODALS` | Paleta de comandos (`Ctrl+K`) con buscador en vivo (`deps: kbd`). |
+| `toast-container` | `ToastContainer.astro` | `03_LAYOUT_AND_MODALS` | Motor de notificaciones flotantes con síntesis acústica por severidad. |
+| `command-palette` | `CommandPalette.astro` | `03_LAYOUT_AND_MODALS` | Paleta de comandos (`Ctrl+K`) con filtrado en tiempo real (`deps: kbd`). |
 | `bento-grid` | `BentoGrid.astro` | `03_LAYOUT_AND_MODALS` | Sistema modular de grillas Neo-Brutalistas (`1x`, `2x`, `3x`) con cabeceras TUI. |
 | `data-table` | `DataTable.astro` | `04_SCORCH_STUDIO` | Tabla de datos interactiva con filtrado en vivo, ordenamiento y badges (`deps: badge`). |
-| `code-block` | `CodeBlock.astro` | `04_SCORCH_STUDIO` | Visor de código TUI con numeración de líneas, resaltado diff (`+`/`-`) y botón COPIAR. |
-| `audio-synth` | `AudioSynth.astro` | `04_SCORCH_STUDIO` | Sintetizador interactivo de 4 pads acústicos Web Audio API (0 KiB MP3). |
-| `terminal-emulator` | `TerminalEmulator.astro` | `04_SCORCH_STUDIO` | Consola interactiva en vivo (`0xSCORCH_SHELL`) con comandos (`neofetch`, `status`, `dragon`, `cli`, `theme`). |
-| `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Visor `[ PREVIEW | CODE | PROPS ]` con copia de CLI y código en 1 clic. |
-| `theme-studio` | `ThemeStudio.astro` | `04_SCORCH_STUDIO` | Laboratorio en vivo de colores, sombras, dither y exportador CSS. |
-| `ascii-generator` | `AsciiGenerator.astro` | `04_SCORCH_STUDIO` | Forja de banners ASCII 8-bit y emblema del Dragón Scorch. |
+| `code-block` | `CodeBlock.astro` | `04_SCORCH_STUDIO` | Visor de código TUI con numeración de líneas, resaltado diff (`+`/`-`) y copia en 1 clic. |
+| `audio-synth` | `AudioSynth.astro` | `04_SCORCH_STUDIO` | Sintetizador interactivo de 4 pads acústicos Web Audio API. |
+| `terminal-emulator` | `TerminalEmulator.astro` | `04_SCORCH_STUDIO` | Consola interactiva en vivo (`0xSCORCH_SHELL`) con comandos integrados. |
+| `component-preview` | `ComponentPreview.astro` | `04_SCORCH_STUDIO` | Contenedor de documentación `[ PREVIEW | CODE | PROPS ]`. |
+| `theme-studio` | `ThemeStudio.astro` | `04_SCORCH_STUDIO` | Laboratorio en vivo de variables CSS, sombras, trama dither y exportación. |
+| `ascii-generator` | `AsciiGenerator.astro` | `04_SCORCH_STUDIO` | Generador en tiempo real de banners en matriz ASCII 8-bit. |
 
 ---
 
-## 🚀 Desarrollo y Servidor Local
-
-```bash
-# 1. Instalar dependencias
-pnpm install
-
-# 2. Regenerar el registro JSON estático (public/r/*.json)
-pnpm registry:build
-
-# 3. Servidor de desarrollo (http://localhost:4321)
-pnpm dev
-
-# 4. Compilar para producción (regenera el registro + genera dist/)
-pnpm build
-
-# 5. Previsualizar compilación de producción optimizada
-pnpm preview --port 4321 --host
-
-# 6. Previsualizar o desplegar en Cloudflare Pages con Wrangler
-pnpm pages:dev      # Emulador local de Cloudflare Pages (puerto 8788)
-pnpm pages:deploy   # Despliega ./dist a Cloudflare Pages (proyecto: ryukami-ui)
-```
-
----
-
-## ☁️ Despliegue en Cloudflare Pages (`wrangler`)
-
-El repositorio incluye configuración lista para producción en [`wrangler.jsonc`](wrangler.jsonc) y cabeceras de seguridad/CORS/caché en [`public/_headers`](public/_headers) (que expone `/r/*.json` con `Access-Control-Allow-Origin: *` para que el CLI funcione desde tu dominio de Cloudflare Pages).
-
-```bash
-# 1. Autenticarse en Cloudflare (solo la primera vez)
-npx wrangler login
-
-# 2. Crear el proyecto en Cloudflare Pages (solo la primera vez)
-npx wrangler pages project create ryukami-ui --production-branch=main
-
-# 3. Compilar los 27 módulos + Astro y desplegar a producción
-pnpm pages:deploy
-```
-
----
-
-## ⌨️ Atajos Globales en la Web
-
-| Atajo | Acción |
-| :--- | :--- |
-| `Ctrl + K` / `Cmd + K` | Abrir / cerrar la **Command Palette** interactiva |
-| `Ctrl + D` | Alternar entre **Modo Paper (Claro)** y **Modo Hacker (Oscuro)** |
-| `←` / `→` | Cambiar pestañas activas en `Tabs.astro` |
-| `↑` / `↓` / `Enter` | Navegar y ejecutar comandos dentro de la Command Palette |
-| `Esc` | Cerrar cualquier modal, popover o paleta activa |
-
----
-
-## 📁 Estructura del Proyecto
+## 6. Estructura del Proyecto
 
 ```text
 ryukami-ui/
 ├── bin/
-│   └── ryukami-ui.mjs          # Ejecutable CLI oficial (init, list, add, info)
+│   └── ryukami-ui.mjs             # CLI oficial (init, list, add, info, diff, mcp)
 ├── scripts/
-│   ├── build-registry.mjs      # Compilador estático de 27 módulos a public/r/*.json
-│   └── scorch-ascii.py         # Convertidor Python de imágenes a arte ASCII Velgrynd
-├── examples/
-│   └── legacy-prototype.html   # Prototipo HTML estático inicial de referencia
+│   ├── build-registry.mjs         # Compilador de los 35 módulos + styles.json + tokens.json
+│   ├── scorch-ascii.py            # Utilidad Python para conversión de imágenes a ASCII
+│   └── setup-hooks.sh             # Instalador del hook pre-push para despliegue continuo
 ├── public/
-│   ├── _headers                # Cabeceras Cloudflare Pages (Seguridad, Cache Immutable y CORS /r/*)
-│   ├── r/                      # 27 endpoints JSON del registro (registry.json, button.json, etc.)
-│   └── scorch-dragon-banner.*  # Banners WebP responsivos (480w, 800w, 1376w)
+│   ├── _headers                   # Cabeceras HTTP de seguridad, caché inmutable y CORS (/r/*)
+│   ├── favicon.svg                # Icono vectorial minimalista de terminal ([>_])
+│   ├── llms.txt                   # Manifiesto estructurado para agentes de IA y LLMs
+│   └── r/                         # 35 endpoints JSON + registry.json + styles.json + tokens.json
 ├── src/
-│   ├── components/             # 29 componentes Astro (.astro)
+│   ├── components/                # 37 componentes Astro (.astro) con tipado estricto
+│   ├── data/
+│   │   ├── component-props.ts     # Especificación tipada de propiedades para el catálogo
+│   │   └── component-snippets.ts  # Snippets de código desacoplados para las vistas previas
 │   ├── layouts/
-│   │   └── BaseLayout.astro    # Layout maestro, preload LCP y carga asíncrona de fuentes
+│   │   └── BaseLayout.astro       # Layout base, metadatos SEO, tema y síntesis Web Audio
 │   ├── pages/
-│   │   └── index.astro         # Showcase interactivo + 0xSCORCH_SHELL + Docs + Labs
+│   │   ├── index.astro            # Documentación interactiva y catálogo de los 35 módulos
+│   │   └── 404.astro              # Página de diagnóstico de rutas inexistentes
 │   └── styles/
-│       └── global.css          # Tokens @theme de Tailwind v4 y utilidades brutalistas
-├── AGENTS.md                   # Guía rápida de contexto y reglas para agentes IA
-├── LICENSE                     # Licencia MIT oficial (Ryukami Labs)
-├── astro.config.mjs            # Configuración Astro 7 (compressHTML, Vite 8)
-├── wrangler.jsonc              # Configuración oficial de despliegue para Cloudflare Pages
+│       └── global.css             # Tokens @theme de Tailwind CSS v4 y reglas Neo-Brutalistas
+├── tests/
+│   └── security.test.mjs          # Suite nativa node:test (Path Traversal, SHA-256, CSS Regex)
+├── AGENTS.md                      # Reglas de arquitectura y diseño para agentes de IA
+├── astro.config.mjs               # Configuración de Astro 7 + Vite 8 + Tailwind v4
+├── tsconfig.json                  # Configuración estricta de TypeScript 7
+├── wrangler.jsonc                 # Configuración de despliegue en Cloudflare Pages
 └── package.json
 ```
 
 ---
 
-## ⚖️ Licencia y Propiedad Intelectual
+## 7. Desarrollo, Pruebas y Despliegue
 
-Distribuido bajo licencia **[MIT License](LICENSE)**.  
-**Ryukami Labs** (*竜神 - Dios Dragón*) · *Velgrynd Tribute Edition* (homenaje artístico y estético de código abierto).
+```bash
+# 1. Instalar dependencias
+pnpm install
+
+# 2. Compilar el registro estático JSON (public/r/*.json)
+pnpm registry:build
+
+# 3. Iniciar servidor de desarrollo en http://localhost:4321
+pnpm dev
+
+# 4. Ejecutar la suite de pruebas de seguridad e integridad (node:test)
+pnpm test
+
+# 5. Compilar registro y sitio estático de producción en ./dist
+pnpm build
+
+# 6. Desplegar a Cloudflare Pages
+pnpm pages:deploy
+```
+
+---
+
+## 8. Licencia
+
+Distribuido bajo la licencia **[MIT License](LICENSE)**.  
+Copyright (c) 2026 **Ryukami Labs**.

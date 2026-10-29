@@ -13,7 +13,7 @@ const COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/;
 const OFFSET_REGEX = /^-?\d+px$/;
 const DITHER_REGEX = /^\d+px$/;
 
-describe('🛡️ Ryukami-UI Supply Chain & Path Traversal Prevention', () => {
+describe('[SEC-01] Ryukami-UI Supply Chain & Path Traversal Prevention', () => {
   const dummyTarget = '/app/workspace/my-project';
 
   test('debe bloquear intentos de Path Traversal relativos tipo Unix ("../../.bashrc")', () => {
@@ -64,7 +64,7 @@ describe('🛡️ Ryukami-UI Supply Chain & Path Traversal Prevention', () => {
   });
 });
 
-describe('🔒 SHA-256 Cryptographic Integrity Verification', () => {
+describe('[SEC-02] SHA-256 Cryptographic Integrity Verification', () => {
   test('debe aceptar archivos cuyo hash SHA-256 coincide exactamente con el contenido', () => {
     const rawContent = 'export default function Button() { return "SCORCH_V4"; }';
     const validHash = crypto.createHash('sha256').update(rawContent, 'utf-8').digest('hex');
@@ -98,7 +98,7 @@ describe('🔒 SHA-256 Cryptographic Integrity Verification', () => {
   });
 });
 
-describe('💉 CSS Injection Prevention (Theme Studio Regex Hardening)', () => {
+describe('[SEC-03] CSS Injection Prevention (Theme Studio Regex Hardening)', () => {
   test('COLOR_REGEX debe bloquear payloads maliciosos de inyección CSS y JavaScript', () => {
     const maliciousColorPayloads = [
       '#fff; background: url(javascript:...);',
