@@ -88,7 +88,7 @@ import {
     <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
       <Badge variant="crimson">v2.4.0 // 35 MODULES + CLI + MCP</Badge>
       <Badge variant="cyan">ASTRO 7.4 + TAILWIND 4.3</Badge>
-      <Badge variant="gold">LIGHTHOUSE 96 / 100 / 100 / 100</Badge>
+      <Badge variant="gold">TYPESCRIPT 7.0 // ZERO-DEPS</Badge>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-2">
@@ -401,7 +401,7 @@ import {
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <StatCard label="LATENCIA_EDGE" value="11.4 ms" delta="-18.2%" trend="up" sparkline="▇▆▅▃▂▁▁" variant="cyan" />
             <StatCard label="THROUGHPUT_RPS" value="48,920" delta="+24.5%" trend="up" sparkline="▁▂▃▄▆▇█" variant="crimson" />
-            <StatCard label="LIGHTHOUSE_CWV" value="100/100" delta="CLS 0.000" trend="neutral" sparkline="███████" variant="gold" />
+            <StatCard label="REGISTRY_SHA256" value="35 MODS" delta="VERIFIED" trend="neutral" sparkline="███████" variant="gold" />
           </div>
 
           <div class="flex flex-wrap items-center gap-4 pt-2 border-t-2 border-black/15 dark:border-white/15">
@@ -664,7 +664,7 @@ import {
               id: 'astro',
               label: '01 // ASTRO 7.4',
               badge: 'SSG',
-              content: 'Compilación estática ultrarrápida impulsada por Vite 8 y Rolldown. Cero JavaScript innecesario en el cliente y alto rendimiento auditado en Lighthouse.',
+              content: 'Compilación estática ultrarrápida impulsada por Vite 8 y Rolldown. Cero JavaScript innecesario en el cliente y arquitectura de islas.',
               code: '$ ryukami-ui init && ryukami-ui add button card tabs accordion',
             },
             {
@@ -712,8 +712,8 @@ import {
               content: 'Al ejecutar "ryukami-ui add <componente>", el CLI lee el registro JSON estático (/r/<componente>.json), resuelve sus dependencias internas e inyecta el archivo .astro directamente en tu carpeta src/components/.',
             },
             {
-              title: '¿Cómo logra puntuaciones de élite en Performance y Accessibility en Lighthouse?',
-              badge: 'CWV AUDITED',
+              title: '¿Cómo logra cero dependencias y máximo rendimiento en el navegador?',
+              badge: 'ZERO-BLOAT',
               content: 'Imágenes WebP responsivas con preload y fetchpriority="high", 0 KiB de bundles JS externos, animaciones exclusivas en GPU (transform) y contraste cromático calibrado WCAG AA (>= 4.5:1).',
             },
           ]}

@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T00:10:25.768Z",
+  "updatedAt": "2026-10-29T00:33:18.820Z",
   "totalItems": 35,
   "items": [
     {
@@ -328,7 +328,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
-      "sha256": "09020f9675defc78ffd530cc9baa56d3d51cbbaa13ef9549baaaffa4e21a2cc9",
+      "sha256": "1b1d2a7aa66eb3c10c1c7344622acd8a9cffee449a11902f9fa2f3257231b6d0",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },

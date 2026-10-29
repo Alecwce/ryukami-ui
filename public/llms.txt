@@ -6,7 +6,6 @@
 - **Framework:** Astro 7.4.0 (Vite 8 + Rolldown, 0 KiB JS bundles externos).
 - **Estilos:** Tailwind CSS 4.3.3 (`@theme`, variables reactivas en tiempo real, `@custom-variant dark`).
 - **Diseño:** Neo-Brutalismo con esquinas de `0px`, bordes negros de `2px`, sombras duras de `-4px 4px 0px 0px`, controles de ventana geométricos `[ - ][ □ ][ × ]`.
-- **Rendimiento Verificado:** Lighthouse 96 Performance / 100 Accessibility / 100 Best Practices / 100 SEO.
 - **Repositorio Oficial:** https://github.com/Alecwce/ryukami-ui
 - **Sitio en Producción:** https://ryukami-ui.pages.dev
 
