@@ -11,13 +11,40 @@ export interface Props {
 
 const {
   filename = 'src/kernel/scorch.ts',
-  language = 'TS // DIFF',
+  language = 'TS',
   code = '',
   showLineNumbers = true,
   class: className = '',
 } = Astro.props;
 
+const isDiff = language.toUpperCase().includes('DIFF');
 const lines = code.trim().split('\n');
+
+function getRowStyle(line: string) {
+  if (!isDiff) return '';
+  if (line.startsWith('+')) {
+    return 'bg-emerald-500/15 text-emerald-300 border-l-2 border-emerald-400 pl-2 -ml-2';
+  }
+  if (line.startsWith('-')) {
+    return 'bg-red-500/15 text-[#FF6B78] border-l-2 border-scorch-crimson pl-2 -ml-2';
+  }
+  return '';
+}
+
+function getLineColor(line: string) {
+  if (isDiff) return '';
+  const trimmed = line.trim();
+  if (trimmed.startsWith('//') || trimmed.startsWith('#') || trimmed.startsWith('/*') || trimmed.startsWith('*')) {
+    return 'text-slate-400 italic';
+  }
+  if (trimmed.startsWith('---')) {
+    return 'text-scorch-gold font-bold';
+  }
+  if (trimmed.startsWith('import ') || trimmed.startsWith('export ') || trimmed.startsWith('from ')) {
+    return 'text-sky-300';
+  }
+  return 'text-slate-200';
+}
 ---
 
 <div class={`tui-window overflow-hidden font-mono text-xs ${className}`} data-scorch-codeblock>
@@ -42,27 +69,23 @@ const lines = code.trim().split('\n');
     </div>
   </div>
 
-  <pre
-    class="p-3.5 bg-[#070A0F] text-slate-100 overflow-x-auto leading-relaxed text-[11px] sm:text-xs"
-  ><code data-raw-code={code.trim()}>{lines.map((line, i) => {
-    const isAdded = line.startsWith('+');
-    const isRemoved = line.startsWith('-');
-    const rowClass = isAdded
-      ? 'bg-emerald-500/15 text-emerald-300 border-l-2 border-emerald-400 pl-2 -ml-2 block'
-      : isRemoved
-        ? 'bg-red-500/15 text-[#FF6B78] border-l-2 border-scorch-crimson pl-2 -ml-2 block'
-        : 'block';
-    return (
-      <span class={rowClass}>
-        {showLineNumbers && (
-          <span class="inline-block w-7 select-none opacity-40 text-right pr-2.5">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-        )}
-        <span>{line}</span>
-      </span>
-    );
-  })}</code></pre>
+  <div
+    class="p-4 bg-[#070A0F] text-slate-100 overflow-x-auto text-[11px] sm:text-xs font-mono"
+    data-raw-code={code.trim()}
+  >
+    <div class="min-w-full inline-block">
+      {lines.map((line, i) => (
+        <div class={`flex items-baseline leading-5 font-mono ${getRowStyle(line)}`}>
+          {showLineNumbers && (
+            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+          )}
+          <span class={`whitespace-pre font-mono flex-1 min-w-0 ${getLineColor(line)}`}>{line || '\u00A0'}</span>
+        </div>
+      ))}
+    </div>
+  </div>
 </div>
 
 <script is:inline>
@@ -73,16 +96,17 @@ const lines = code.trim().split('\n');
 
       const btn = block.querySelector('[data-copy-code]');
       const label = block.querySelector('[data-copy-label]');
-      const codeEl = block.querySelector('[data-raw-code]');
-      if (!btn || !codeEl) return;
+      const codeContainer = block.querySelector('[data-raw-code]');
+      if (!btn || !codeContainer) return;
 
       btn.addEventListener('click', async () => {
-        const raw = codeEl.getAttribute('data-raw-code') || '';
+        const raw = codeContainer.getAttribute('data-raw-code') || '';
         try {
           await navigator.clipboard.writeText(raw);
-          if (label) label.textContent = '✓ COPIADO';
+          if (label) label.textContent = 'COPIADO';
+          if (window.playMechanicalClick) window.playMechanicalClick();
           if (window.showToast) {
-            window.showToast('BUFFER // COPIADO', 'Fragmento de código copiado al portapapeles.', 'emerald', 1800);
+            window.showToast('CÓDIGO COPIADO', 'Fragmento copiado al portapapeles.', 'emerald', 1800);
           }
           setTimeout(() => {
             if (label) label.textContent = 'COPIAR';

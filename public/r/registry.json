@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T11:43:11.561Z",
+  "updatedAt": "2026-10-29T12:41:19.399Z",
   "totalItems": 35,
   "items": [
     {
@@ -150,7 +150,7 @@
       "name": "checkbox",
       "title": "Checkbox",
       "category": "02_FORM_CONTROLS",
-      "description": "Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.",
+      "description": "Casilla de verificación cuadrada con marca pixel-art (X) y descripción.",
       "registryDependencies": [],
       "sha256": "cb7814bbef696f68f16baddc84579cae28b6d487d9a04fd8fb99286eef602e84",
       "endpoint": "/r/checkbox.json",
@@ -308,7 +308,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.",
       "registryDependencies": [],
-      "sha256": "795af8934da9bc6edf04fd1e7afe28efb41d2deb0823ebbc2f24d0d073bd9120",
+      "sha256": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
       "endpoint": "/r/code-block.json",
       "target": "src/components/CodeBlock.astro"
     },
@@ -338,7 +338,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.",
       "registryDependencies": [],
-      "sha256": "90e8a179c0578e129fc3a29332898d08bc49d0876f0530f27453a3f32d801c6e",
+      "sha256": "9625e5221e673eff6372b91bb444533922d4c05b4370ee268723053046b20033",
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"
     },

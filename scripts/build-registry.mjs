@@ -130,7 +130,7 @@ const ITEMS = [
     name: 'checkbox',
     title: 'Checkbox',
     category: '02_FORM_CONTROLS',
-    description: 'Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.',
+    description: 'Casilla de verificación cuadrada con marca pixel-art (X) y descripción.',
     file: 'src/components/Checkbox.astro',
     registryDependencies: [],
   },

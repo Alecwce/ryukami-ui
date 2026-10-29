@@ -4,7 +4,7 @@
   "title": "Checkbox",
   "type": "registry:ui",
   "category": "02_FORM_CONTROLS",
-  "description": "Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.",
+  "description": "Casilla de verificación cuadrada con marca pixel-art (X) y descripción.",
   "registryDependencies": [],
   "sha256": "cb7814bbef696f68f16baddc84579cae28b6d487d9a04fd8fb99286eef602e84",
   "files": [

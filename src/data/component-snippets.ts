@@ -10,7 +10,7 @@ export const badgeSnippet = `import Badge from '@/components/Badge.astro';
 
 <Badge variant="crimson">● SYSTEM_ALERT</Badge>
 <Badge variant="cyan">◆ RE_ENGINEERING</Badge>
-<Badge variant="gold">★ VELGRYND_CORE</Badge>
+<Badge variant="gold">[*] VELGRYND_CORE</Badge>
 <Badge variant="dark">TS TYPESCRIPT 7</Badge>
 <Badge variant="outline">POSTGRESQL 17</Badge>`;
 

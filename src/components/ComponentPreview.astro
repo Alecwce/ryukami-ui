@@ -82,8 +82,17 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
   </div>
 
   <!-- Vista Código Container (Oculto por defecto) -->
-  <div class="code-content hidden p-4 bg-slate-950 text-slate-100 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
-    <pre class="whitespace-pre"><code>{code}</code></pre>
+  <div class="code-content hidden p-4 bg-[#070A0F] text-slate-100 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
+    <div class="min-w-full inline-block">
+      {code.trim().split('\n').map((line, i) => (
+        <div class="flex items-baseline leading-5 font-mono">
+          <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
+        </div>
+      ))}
+    </div>
   </div>
 
   <!-- Vista Props Container (Oculto por defecto) -->
@@ -190,7 +199,7 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
           const cliText = cliCopyBtn.querySelector('.cli-text');
           if (cliText) {
             const orig = cliText.textContent;
-            cliText.textContent = '✓ COPIADO AL PORTAPAPELES';
+            cliText.textContent = 'COPIADO AL PORTAPAPELES';
             setTimeout(() => {
               cliText.textContent = orig;
             }, 1800);
@@ -219,14 +228,11 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
           if (copyText && copyIcon) {
             const originalText = copyText.textContent;
-            const originalIconHtml = copyIcon.innerHTML;
-            copyText.textContent = '¡COPIADO!';
-            copyIcon.textContent = '✓';
+            copyText.textContent = 'COPIADO';
             copyBtn.classList.add('bg-emerald-400');
 
             setTimeout(() => {
               copyText.textContent = originalText;
-              copyIcon.innerHTML = originalIconHtml;
               copyBtn.classList.remove('bg-emerald-400');
             }, 2000);
           }

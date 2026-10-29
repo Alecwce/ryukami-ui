@@ -50,6 +50,57 @@ export async function getStaticPaths() {
 
 const { comp } = Astro.props;
 const { prev, next } = getComponentNeighbors(comp.slug);
+
+function getComponentImportName(slug: string): string {
+  const overrides: Record<string, string> = {
+    'stat-card': 'StatCard',
+    'progress-bar': 'ProgressBar',
+    'radio-group': 'RadioGroup',
+    'toast-container': 'ToastContainer',
+    'command-palette': 'CommandPalette',
+    'bento-grid': 'BentoGrid',
+    'data-table': 'DataTable',
+    'code-block': 'CodeBlock',
+    'audio-synth': 'AudioSynth',
+    'terminal-emulator': 'TerminalEmulator',
+    'component-preview': 'ComponentPreview',
+    'theme-studio': 'ThemeStudio',
+    'ascii-generator': 'AsciiGenerator',
+  };
+  if (overrides[slug]) return overrides[slug];
+  return slug
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('');
+}
+
+function getCleanUsageSnippet(slug: string, rawSnippet: string): string {
+  const componentName = getComponentImportName(slug);
+  const importStatement = `import ${componentName} from '@/components/${componentName}.astro';`;
+
+  const rawLines = rawSnippet.split('\n');
+  const importLines: string[] = [];
+  const nonImportLines: string[] = [];
+
+  for (const line of rawLines) {
+    if (line.trim().startsWith('import ')) {
+      importLines.push(line.trim());
+    } else {
+      nonImportLines.push(line);
+    }
+  }
+
+  if (!importLines.some((l) => l.includes(`import ${componentName}`))) {
+    importLines.unshift(importStatement);
+  }
+
+  const uniqueImports = Array.from(new Set(importLines));
+  const bodyCode = nonImportLines.join('\n').trim();
+
+  return `---\n${uniqueImports.join('\n')}\n---\n\n${bodyCode}`;
+}
+
+const cleanUsageCode = getCleanUsageSnippet(comp.slug, comp.codeSnippet);
 ---
 
 <DocsLayout
@@ -84,7 +135,7 @@ const { prev, next } = getComponentNeighbors(comp.slug);
       <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// VISTA PREVIA</h2>
       <ComponentPreview
         title={comp.title.toUpperCase()}
-        code={comp.codeSnippet}
+        code={cleanUsageCode}
         status={comp.status}
         cli={comp.cli}
         propsDoc={comp.propsDoc}
@@ -104,7 +155,7 @@ const { prev, next } = getComponentNeighbors(comp.slug);
             <div class="flex flex-wrap items-center gap-3">
               <Badge variant="crimson">● SYSTEM_ALERT</Badge>
               <Badge variant="cyan">◆ RE_ENGINEERING</Badge>
-              <Badge variant="gold">★ VELGRYND_CORE</Badge>
+              <Badge variant="gold">[*] VELGRYND_CORE</Badge>
               <Badge variant="dark">TS TYPESCRIPT 7</Badge>
               <Badge variant="outline">POSTGRESQL 17</Badge>
             </div>
@@ -392,22 +443,30 @@ const { prev, next } = getComponentNeighbors(comp.slug);
     </section>
 
     <!-- 2. Instalación CLI -->
-    <section id="installation" class="space-y-4">
-      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// INSTALACIÓN</h2>
+    <section id="installation" class="space-y-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 bg-scorch-gold border border-black inline-block"></span>
+        <h2 class="font-mono font-extrabold text-sm uppercase text-slate-900 dark:text-white">// INSTALACIÓN</h2>
+      </div>
       <CodeBlock
         filename="Terminal // Bash"
         language="BASH"
-        code={`# Instalar con el CLI oficial de Ryukami-UI:\n${comp.cli}`}
+        showLineNumbers={false}
+        code={comp.cli}
       />
     </section>
 
     <!-- 3. Uso en Astro -->
-    <section id="usage" class="space-y-4">
-      <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// CÓDIGO DE USO</h2>
+    <section id="usage" class="space-y-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
+        <h2 class="font-mono font-extrabold text-sm uppercase text-slate-900 dark:text-white">// CÓDIGO DE USO</h2>
+      </div>
       <CodeBlock
-        filename={`src/pages/ejemplo.astro`}
+        filename="src/pages/ejemplo.astro"
         language="ASTRO"
-        code={`---\nimport ${comp.title.replace(/[^a-zA-Z0-9]/g, '')} from '@/components/${comp.title.replace(/[^a-zA-Z0-9]/g, '')}.astro';\n---\n\n${comp.codeSnippet}`}
+        showLineNumbers={true}
+        code={cleanUsageCode}
       />
     </section>
 
