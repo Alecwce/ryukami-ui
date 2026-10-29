@@ -49,105 +49,89 @@ import Icon from './Icon.astro';
     </div>
   </div>
 
-  <div class="px-2.5 sm:px-3 py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2 flex-nowrap overflow-x-clip bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
-    <div class="flex items-center gap-1.5 shrink-0 min-w-0">
-      <a href="#hero" class="flex items-center gap-1.5 shrink-0" title="Ir al inicio (~/scorch-components)">
+  <div class="px-2 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-3 flex-nowrap overflow-x-clip bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
+    <div class="flex items-center gap-3 lg:gap-5 shrink-0 min-w-0">
+      <a href="#hero" class="flex items-center gap-2 shrink-0" title="Ir al inicio (Ryukami-UI)">
         <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider shrink-0 select-none">
           RYUKAMI // UI
         </span>
       </a>
+
+      <!-- Nav Links estilo 8bitcn / shadcn (Docs, Components, Blocks, Shell, Themes) -->
+      <nav
+        aria-label="Navegación principal"
+        id="header-nav-list"
+        class="hidden md:flex items-center gap-0.5 lg:gap-1.5 text-[11px] lg:text-xs font-bold uppercase shrink-0"
+      >
+        <a
+          href="#install-docs"
+          data-header-nav="install-docs"
+          class="header-nav-link px-1.5 lg:px-2 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
+        >
+          Docs
+        </a>
+        <a
+          href="#components"
+          data-header-nav="components"
+          class="header-nav-link px-1.5 lg:px-2 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
+        >
+          Components
+        </a>
+        <a
+          href="#alerts"
+          data-header-nav="alerts"
+          class="header-nav-link px-1.5 lg:px-2 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
+        >
+          Blocks
+        </a>
+        <a
+          href="#live-shell"
+          data-header-nav="live-shell"
+          class="header-nav-link px-1.5 lg:px-2 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
+        >
+          Shell
+        </a>
+        <a
+          href="#theme-studio"
+          data-header-nav="theme-studio"
+          class="header-nav-link px-1.5 lg:px-2 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
+        >
+          Themes
+        </a>
+      </nav>
     </div>
 
-    <!-- Nav Links con ScrollSpy (Oculto bajo lg, visible en escritorio) -->
-    <nav
-      aria-label="Navegación principal"
-      id="header-nav-list"
-      class="hidden lg:flex items-center gap-0.5 xl:gap-1 text-[10px] xl:text-[11px] font-bold uppercase shrink-0"
-    >
-      <a
-        href="#components"
-        data-header-nav="components"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [01_CORE]
-      </a>
-      <a
-        href="#forms"
-        data-header-nav="forms"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [02_FORMS]
-      </a>
-      <a
-        href="#alerts"
-        data-header-nav="alerts"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [03_MODALS]
-      </a>
-      <a
-        href="#live-shell"
-        data-header-nav="live-shell"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [04_SHELL]
-      </a>
-      <a
-        href="#tables"
-        data-header-nav="tables"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [05_TABLES]
-      </a>
-      <a
-        href="#theme-studio"
-        data-header-nav="theme-studio"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [06_STUDIO]
-      </a>
-      <a
-        href="#ascii-forge"
-        data-header-nav="ascii-forge"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [07_ASCII]
-      </a>
-      <a
-        href="#install-docs"
-        data-header-nav="install-docs"
-        class="header-nav-link px-1 xl:px-1.5 py-1 whitespace-nowrap transition-colors border border-transparent hover:text-scorch-crimson"
-      >
-        [08_CLI]
-      </a>
-    </nav>
-
     <!-- 4 Acciones con altura idéntica h-8, leading-none e iconos w-3.5 h-3.5 alineados al pixel -->
-    <div class="flex items-center gap-1.5 shrink-0 flex-nowrap">
+    <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 flex-nowrap">
+      <!-- Botón Buscador / Command Palette (estilo 8bitcn Search docs... Cmd+K) -->
+      <button
+        type="button"
+        onclick="window.openPalette && window.openPalette()"
+        class="btn-brutal h-8 w-8 lg:w-auto px-0 lg:px-2.5 text-[11px] font-bold leading-none inline-flex items-center justify-center lg:justify-between gap-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
+        title="Buscar documentación y componentes (Ctrl+K)"
+        aria-label="Buscar documentación y componentes (Ctrl+K)"
+      >
+        <span class="inline-flex items-center gap-1.5">
+          <Icon name="command" class="w-3.5 h-3.5 block shrink-0 text-scorch-crimson dark:text-scorch-cyan" />
+          <span class="hidden lg:inline leading-none">Search docs...</span>
+        </span>
+        <span class="hidden lg:inline-block bg-black text-scorch-gold px-1.5 py-0.5 text-[10px] border border-black leading-none">
+          CMD+K
+        </span>
+      </button>
+
       <!-- GitHub Repo Link -->
       <a
         href="https://github.com/Alecwce/ryukami-ui"
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1 bg-black text-white dark:bg-white dark:text-black shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
+        class="btn-brutal h-8 w-8 lg:w-auto px-0 lg:px-2.5 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-black text-white dark:bg-white dark:text-black shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
         aria-label="Repositorio oficial en GitHub"
         title="Ver repositorio en GitHub (Alecwce/ryukami-ui)"
       >
         <Icon name="github" class="w-3.5 h-3.5 block shrink-0" />
-        <span class="hidden xl:inline leading-none">GITHUB</span>
+        <span class="hidden lg:inline leading-none">GITHUB</span>
       </a>
-
-      <!-- Botón Command Palette -->
-      <button
-        type="button"
-        onclick="window.openPalette && window.openPalette()"
-        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1 bg-scorch-cyan text-black shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
-        title="Abrir paleta de comandos (Ctrl+K)"
-        aria-label="Abrir paleta de comandos (Ctrl+K)"
-      >
-        <Icon name="command" class="w-3.5 h-3.5 block shrink-0" />
-        <span class="hidden xl:inline leading-none">CMD+K</span>
-      </button>
 
       <!-- Toggle Audio -->
       <button
@@ -171,7 +155,7 @@ import Icon from './Icon.astro';
       <button
         type="button"
         onclick="window.toggleTheme && window.toggleTheme()"
-        class="btn-brutal h-8 w-8 xl:w-auto px-0 xl:px-2 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1 bg-scorch-gold text-black shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
+        class="btn-brutal h-8 w-8 lg:w-auto px-0 lg:px-2.5 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-scorch-gold text-black shrink-0 relative after:absolute after:-inset-1.5 after:content-['']"
         id="theme-btn"
         title="Alternar modo claro / modo oscuro"
         aria-label="Alternar modo claro / modo oscuro"
@@ -180,7 +164,7 @@ import Icon from './Icon.astro';
           <span id="theme-icon-sun" class="block"><Icon name="sun" class="w-3.5 h-3.5 block shrink-0" /></span>
           <span id="theme-icon-moon" class="hidden"><Icon name="moon" class="w-3.5 h-3.5 block shrink-0" /></span>
         </span>
-        <span id="theme-label" class="hidden xl:inline leading-none">PAPER</span>
+        <span id="theme-label" class="hidden lg:inline leading-none">PAPER</span>
       </button>
     </div>
   </div>
