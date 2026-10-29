@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Button from '../components/Button.astro';
 import Badge from '../components/Badge.astro';
 import Icon from '../components/Icon.astro';
+import ArcadeGame from '../components/ArcadeGame.astro';
 ---
 
 <BaseLayout
@@ -67,6 +68,20 @@ import Icon from '../components/Icon.astro';
             <span class="text-slate-500 block text-[10px] uppercase font-bold">ACCIÓN SUGERIDA</span>
             <span class="text-scorch-gold font-extrabold text-sm">REINICIAR TTY</span>
           </div>
+        </div>
+
+        <!-- Easter Egg: Mini-Juego Arcade 8-Bit (Fase 7) -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-800 pb-2 font-mono">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 bg-scorch-gold border border-black inline-block"></span>
+              <h2 class="font-extrabold text-xs sm:text-sm uppercase text-slate-900 dark:text-white">
+                // EASTER EGG RETRO ARCADE (SCORCH DEFENDER)
+              </h2>
+            </div>
+            <span class="text-[10px] text-slate-500 font-bold hidden sm:inline">DEFENSA DE SISTEMA 404</span>
+          </div>
+          <ArcadeGame />
         </div>
 
         <!-- Botones de Acción -->
