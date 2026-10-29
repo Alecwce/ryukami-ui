@@ -52,6 +52,83 @@ const {
   <!-- Fuentes Locales Scorch 8-Bit & Mono (Self-hosted WOFF2, Zero External Requests) -->
   <link rel="preload" href="/fonts/PressStart2P-Regular.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Rehidratacion Inmediata de Tema y Paleta Preset (Zero-FOUC) -->
+  <script is:inline>
+    (function () {
+      try {
+        // 1. Modo Oscuro / Claro
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+
+        // 2. Rehidratar Paleta Scorch Preset
+        const THEMES = {
+          'scorch': { name: 'Scorch Crimson', primary: '#D62436', whisker: '#4DA3FF', gold: '#F4D35E', dark: '#9B1B30' },
+          'matrix': { name: 'Phosphor CRT', primary: '#10B981', whisker: '#34D399', gold: '#F59E0B', dark: '#065F46' },
+          'amber': { name: 'Dungeon Gold', primary: '#D97706', whisker: '#38BDF8', gold: '#FBBF24', dark: '#78350F' },
+          'paper': { name: 'Paper Brutalism', primary: '#0F172A', whisker: '#64748B', gold: '#94A3B8', dark: '#020617' },
+          'cyber': { name: 'Cyber Neon', primary: '#DB2777', whisker: '#06B6D4', gold: '#F59E0B', dark: '#831843' },
+          'emperor': { name: 'Velgrynd Flame', primary: '#E11D48', whisker: '#0284C7', gold: '#EA580C', dark: '#4C0519' }
+        };
+
+        window.THEME_PRESETS_MAP = THEMES;
+
+        window.getCurrentThemePreset = function () {
+          return document.documentElement.getAttribute('data-theme-preset') || localStorage.getItem('ryukami-theme-preset') || 'scorch';
+        };
+
+        window.applyThemePreset = function (presetId, notify = true) {
+          const p = THEMES[presetId] || THEMES['scorch'];
+          const root = document.documentElement;
+
+          root.style.setProperty('--scorch-red', p.primary);
+          root.style.setProperty('--color-scorch-crimson', p.primary);
+          root.style.setProperty('--scorch-dark', p.dark);
+          root.style.setProperty('--color-scorch-dark', p.dark);
+          root.style.setProperty('--cyber-blue', p.whisker);
+          root.style.setProperty('--color-scorch-cyan', p.whisker);
+          root.style.setProperty('--eye-gold', p.gold);
+          root.style.setProperty('--color-scorch-gold', p.gold);
+          root.style.setProperty('--shadow-color', p.primary);
+          root.setAttribute('data-theme-preset', presetId);
+
+          try {
+            localStorage.setItem('ryukami-theme-preset', presetId);
+          } catch (e) {}
+
+          window.dispatchEvent(new CustomEvent('ryukami:theme-change', {
+            detail: { presetId, theme: p }
+          }));
+
+          if (window.playTerminalBeep) window.playTerminalBeep(720, 0.05);
+
+          if (notify && window.showToast) {
+            window.showToast('PALETA APLICADA', `Tema "${p.name || presetId}" activado globalmente.`, 'emerald', 2000);
+          }
+        };
+
+        const presetId = localStorage.getItem('ryukami-theme-preset') || 'scorch';
+        const p = THEMES[presetId] || THEMES['scorch'];
+        const root = document.documentElement;
+
+        root.style.setProperty('--scorch-red', p.primary);
+        root.style.setProperty('--color-scorch-crimson', p.primary);
+        root.style.setProperty('--scorch-dark', p.dark);
+        root.style.setProperty('--color-scorch-dark', p.dark);
+        root.style.setProperty('--cyber-blue', p.whisker);
+        root.style.setProperty('--color-scorch-cyan', p.whisker);
+        root.style.setProperty('--eye-gold', p.gold);
+        root.style.setProperty('--color-scorch-gold', p.gold);
+        root.style.setProperty('--shadow-color', p.primary);
+        root.setAttribute('data-theme-preset', presetId);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body class="p-3 sm:p-4 md:p-8 pt-0 sm:pt-0 md:pt-0 max-w-6xl mx-auto space-y-8 sm:space-y-12">
   <!-- Enlace de salto accesible para navegación por teclado (Vercel Web Interface Guidelines) -->

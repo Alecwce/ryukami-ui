@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T12:41:19.399Z",
+  "updatedAt": "2026-10-29T13:55:01.364Z",
   "totalItems": 35,
   "items": [
     {
@@ -152,7 +152,7 @@
       "category": "02_FORM_CONTROLS",
       "description": "Casilla de verificación cuadrada con marca pixel-art (X) y descripción.",
       "registryDependencies": [],
-      "sha256": "cb7814bbef696f68f16baddc84579cae28b6d487d9a04fd8fb99286eef602e84",
+      "sha256": "02a46d97160f2bc78090086e95f7f16dda82a5ed9d7d46cab26d8b90f01a1045",
       "endpoint": "/r/checkbox.json",
       "target": "src/components/Checkbox.astro"
     },
@@ -224,7 +224,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
       "registryDependencies": [],
-      "sha256": "7d7f7c56d8abb9d7d6a63f84e81ad3803babc18a8048f89e897b5b15ee706030",
+      "sha256": "492f7133b7e4bf42628c767cc835ac8c7b7018c07f4083458d24a1e46e25f03a",
       "endpoint": "/r/alert.json",
       "target": "src/components/Alert.astro"
     },
@@ -234,7 +234,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callout canónico compatible con Obsidian ([!dragon], [!scorch], [!terminal], [!tui], [!summary]).",
       "registryDependencies": [],
-      "sha256": "a67e0135c2d7559aef69d1e9b84867c55f473478fda13ff31fd67ebcecf5fbfd",
+      "sha256": "99a3e2e0ccea9fe4e21b1807721ca08024aec514b27d08d584dce8d43358ad86",
       "endpoint": "/r/callout.json",
       "target": "src/components/Callout.astro"
     },
@@ -264,7 +264,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
       "registryDependencies": [],
-      "sha256": "de81ff08be6f20cf20f90cf6ff77ac3383a0ba4e9532f92d7088ed5b425f00e8",
+      "sha256": "0d4b12b32c31ca5b3e641b89ef0569d1780c435aacd83a2967980c1b9d6fe841",
       "endpoint": "/r/toast-container.json",
       "target": "src/components/ToastContainer.astro"
     },
@@ -328,7 +328,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
-      "sha256": "1b1d2a7aa66eb3c10c1c7344622acd8a9cffee449a11902f9fa2f3257231b6d0",
+      "sha256": "ca27cf0969af8e19d86ea068895ff81e55fa0dbf1e8f10388550e039e0dbcc1a",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },
@@ -348,7 +348,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.",
       "registryDependencies": [],
-      "sha256": "80dba92eab62c0e9b77badd5670bd977c9f1f0a3161cf99543087e7aef09cb10",
+      "sha256": "919e2e0ccf907c39c8b70ec5be6a379273e5c6e712bf503059edf32f28ca849d",
       "endpoint": "/r/theme-studio.json",
       "target": "src/components/ThemeStudio.astro"
     },

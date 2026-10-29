@@ -2,6 +2,7 @@
 import Button from './Button.astro';
 import Kbd from './Kbd.astro';
 import Icon from './Icon.astro';
+import { THEME_PRESETS } from '../data/theme-presets';
 ---
 
 <header class="tui-window sticky top-0 z-40 mb-8 sm:mb-10">
@@ -49,7 +50,7 @@ import Icon from './Icon.astro';
     </div>
   </div>
 
-  <div class="px-2 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-3 flex-nowrap overflow-x-clip bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
+  <div class="px-2 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-3 flex-nowrap relative bg-white dark:bg-slate-900 border-b-2 border-black dark:border-slate-700">
     <div class="flex items-center gap-3 lg:gap-5 shrink-0 min-w-0">
       <a href="#hero" class="flex items-center gap-2 shrink-0" title="Ir al inicio (Ryukami-UI)">
         <span class="bg-scorch-crimson text-white border-2 border-black px-2 py-0.5 text-xs font-extrabold tracking-wider shrink-0 select-none">
@@ -145,6 +146,66 @@ import Icon from './Icon.astro';
         </span>
         <span id="sound-label" class="hidden xl:inline leading-none">SND: OFF</span>
       </button>
+
+      <!-- Quick Palette Picker (Fase 5) -->
+      <div class="relative shrink-0" id="palette-picker-container">
+        <button
+          type="button"
+          id="palette-dropdown-btn"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-label="Seleccionar paleta de colores del sistema"
+          title="Seleccionar paleta de colores Scorch"
+          class="btn-brutal h-8 w-8 sm:w-auto px-0 sm:px-2 text-[11px] font-bold leading-none inline-flex items-center justify-center gap-1.5 bg-slate-100 dark:bg-slate-800 text-black dark:text-white shrink-0 relative after:absolute after:-inset-1.5 after:content-[''] cursor-pointer"
+        >
+          <span id="palette-swatch" class="w-3 h-3 border border-black inline-block shrink-0 bg-scorch-crimson"></span>
+          <span id="palette-label" class="hidden sm:inline font-mono leading-none">SCORCH</span>
+          <svg class="w-2.5 h-2.5 stroke-current stroke-[2.2] hidden sm:block shrink-0" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <path d="M2 3.5L5 6.5L8 3.5" stroke-linecap="square" />
+          </svg>
+        </button>
+
+        <!-- Menu Desplegable Brutalista -->
+        <div
+          id="palette-dropdown-menu"
+          role="menu"
+          aria-label="Paletas de color disponibles"
+          class="hidden absolute right-0 top-full mt-2 w-56 sm:w-64 bg-white dark:bg-slate-900 border-2 border-black dark:border-white shadow-brutal z-50 font-mono text-xs select-none"
+        >
+          <div class="tui-header bg-black dark:bg-scorch-crimson text-white px-2.5 py-1 text-[10px] font-extrabold flex items-center justify-between border-b-2 border-black">
+            <span>0xPALETTE // PRESETS</span>
+            <span class="opacity-75">6 TEMAS</span>
+          </div>
+          <div class="p-1 space-y-0.5" id="palette-menu-items">
+            {THEME_PRESETS.map((p) => (
+              <button
+                type="button"
+                role="menuitem"
+                data-preset-id={p.id}
+                data-preset-name={p.name}
+                data-preset-color={p.colors.primary}
+                class="palette-item w-full text-left px-2 py-1.5 flex items-center justify-between text-xs border border-transparent hover:border-black hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                aria-label={`Activar paleta ${p.name}`}
+              >
+                <span class="flex items-center gap-2 min-w-0">
+                  <span class="w-3 h-3 border border-black inline-block shrink-0" style={`background-color: ${p.colors.primary};`}></span>
+                  <span class="font-bold truncate text-[11px] sm:text-xs text-slate-800 dark:text-slate-100">{p.name}</span>
+                </span>
+                <span class="flex items-center gap-1.5 shrink-0">
+                  <span class="text-[9px] px-1 py-0.2 border border-black bg-black text-white dark:bg-white dark:text-black font-extrabold">{p.tag}</span>
+                  <span class="palette-check hidden text-[10px] font-extrabold text-scorch-crimson dark:text-scorch-cyan">&gt;</span>
+                </span>
+              </button>
+            ))}
+          </div>
+          <div class="p-2 border-t-2 border-black/10 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-[10px]">
+            <span class="text-slate-600 dark:text-slate-400">Tokens personalizados</span>
+            <a href="/themes#studio" class="underline font-bold text-scorch-crimson hover:text-black dark:hover:text-white">
+              STUDIO &gt;
+            </a>
+          </div>
+        </div>
+      </div>
 
       <!-- Toggle Theme -->
       <button
@@ -249,5 +310,102 @@ import Icon from './Icon.astro';
       );
       sections.forEach((sec) => observer.observe(sec));
     }
+  })();
+
+  // Quick Palette Picker Dropdown Controller (Fase 5)
+  (function () {
+    const btn = document.getElementById('palette-dropdown-btn');
+    const menu = document.getElementById('palette-dropdown-menu');
+    const swatch = document.getElementById('palette-swatch');
+    const label = document.getElementById('palette-label');
+    const items = menu ? Array.from(menu.querySelectorAll('.palette-item')) : [];
+
+    const PRESET_SHORT_NAMES = {
+      'scorch': 'SCORCH',
+      'matrix': 'MATRIX',
+      'amber': 'DUNGEON',
+      'paper': 'PAPER',
+      'cyber': 'CYBER',
+      'emperor': 'VELGRYND'
+    };
+
+    function updateHeaderPaletteUI(presetId, primaryColor) {
+      if (swatch && primaryColor) {
+        swatch.style.backgroundColor = primaryColor;
+      }
+      if (label) {
+        label.textContent = PRESET_SHORT_NAMES[presetId] || presetId.toUpperCase();
+      }
+      items.forEach((item) => {
+        const id = item.getAttribute('data-preset-id');
+        const isCurrent = id === presetId;
+        item.classList.toggle('bg-slate-200', isCurrent);
+        item.classList.toggle('dark:bg-slate-800', isCurrent);
+        item.classList.toggle('border-black', isCurrent);
+        item.classList.toggle('font-extrabold', isCurrent);
+        const check = item.querySelector('.palette-check');
+        if (check) check.classList.toggle('hidden', !isCurrent);
+      });
+    }
+
+    const currentPresetId = localStorage.getItem('ryukami-theme-preset') || 'scorch';
+    const activeItem = items.find((i) => i.getAttribute('data-preset-id') === currentPresetId);
+    if (activeItem) {
+      updateHeaderPaletteUI(currentPresetId, activeItem.getAttribute('data-preset-color'));
+    }
+
+    if (btn && menu) {
+      function openMenu() {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+
+      function closeMenu() {
+        menu.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !menu.classList.contains('hidden');
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menu.classList.contains('hidden') && !menu.contains(e.target) && !btn.contains(e.target)) {
+          closeMenu();
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !menu.classList.contains('hidden')) {
+          closeMenu();
+          btn.focus();
+        }
+      });
+
+      items.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const presetId = item.getAttribute('data-preset-id');
+          const presetColor = item.getAttribute('data-preset-color');
+          if (window.applyThemePreset) {
+            window.applyThemePreset(presetId);
+          }
+          updateHeaderPaletteUI(presetId, presetColor);
+          closeMenu();
+        });
+      });
+    }
+
+    window.addEventListener('ryukami:theme-change', (e) => {
+      if (e.detail && e.detail.presetId && e.detail.theme) {
+        updateHeaderPaletteUI(e.detail.presetId, e.detail.theme.primary);
+      }
+    });
   })();
 </script>

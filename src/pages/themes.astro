@@ -10,111 +10,7 @@ import ProgressBar from '../components/ProgressBar.astro';
 import StatCard from '../components/StatCard.astro';
 import Icon from '../components/Icon.astro';
 import CodeBlock from '../components/CodeBlock.astro';
-
-const THEME_PRESETS = [
-  {
-    id: 'scorch',
-    name: 'Scorch Crimson',
-    edition: 'Velgrynd Original // Canonical',
-    tag: 'CANONICAL',
-    badgeVariant: 'crimson' as const,
-    description: 'Fuego primordial calibrado para superar WCAG AA (5.04:1). La paleta insignia del Scorch Design System.',
-    contrast: '5.04:1 (WCAG AA)',
-    colors: {
-      primary: '#D62436',
-      whisker: '#4DA3FF',
-      gold: '#F4D35E',
-      dark: '#9B1B30',
-      canvasLight: '#F5F7FA',
-      canvasDark: '#0B0F17',
-    },
-  },
-  {
-    id: 'matrix',
-    name: 'Phosphor CRT',
-    edition: 'Matrix Emerald // Phosphor 525',
-    tag: 'CRT RETRO',
-    badgeVariant: 'emerald' as const,
-    description: 'Emulación de fósforo P1 verde clásico de monitores VT100 y consolas mainframe IBM.',
-    contrast: '5.12:1 (WCAG AA)',
-    colors: {
-      primary: '#10B981',
-      whisker: '#34D399',
-      gold: '#F59E0B',
-      dark: '#065F46',
-      canvasLight: '#F0FDF4',
-      canvasDark: '#022C22',
-    },
-  },
-  {
-    id: 'amber',
-    name: 'Dungeon Gold',
-    edition: 'Amber Glow // Dragon Hoard',
-    tag: 'RPG GOLD',
-    badgeVariant: 'gold' as const,
-    description: 'Tonos ámbar cálidos y bronce forjado, evocando terminales de plasma y juegos de rol clásicos.',
-    contrast: '5.28:1 (WCAG AA)',
-    colors: {
-      primary: '#D97706',
-      whisker: '#38BDF8',
-      gold: '#FBBF24',
-      dark: '#78350F',
-      canvasLight: '#FFFBEB',
-      canvasDark: '#1C1917',
-    },
-  },
-  {
-    id: 'paper',
-    name: 'Paper Brutalism',
-    edition: 'Swiss Mono Noir // Print Ink',
-    tag: 'EDITORIAL',
-    badgeVariant: 'cyan' as const,
-    description: 'Arquitectura monocrómica suiza de máximo contraste y tinta negra cruda sobre papel marfil.',
-    contrast: '14.2:1 (WCAG AAA)',
-    colors: {
-      primary: '#0F172A',
-      whisker: '#64748B',
-      gold: '#94A3B8',
-      dark: '#020617',
-      canvasLight: '#FFFFFF',
-      canvasDark: '#0B0F17',
-    },
-  },
-  {
-    id: 'cyber',
-    name: 'Cyber Neon',
-    edition: 'Neo-Tokyo Sunset // Synthwave TUI',
-    tag: 'SYNTHWAVE',
-    badgeVariant: 'crimson' as const,
-    description: 'Fucsia láser y azul ciberpunk de alto impacto para tableros de mando futuristas.',
-    contrast: '4.86:1 (WCAG AA)',
-    colors: {
-      primary: '#DB2777',
-      whisker: '#06B6D4',
-      gold: '#F59E0B',
-      dark: '#831843',
-      canvasLight: '#FDF2F8',
-      canvasDark: '#0F172A',
-    },
-  },
-  {
-    id: 'emperor',
-    name: 'Velgrynd Flame',
-    edition: 'Emperor Supreme // Dragon Flare',
-    tag: 'SUPREME',
-    badgeVariant: 'gold' as const,
-    description: 'Matiz carmesí ardiente combinado con reflejos de plasma solar e interferometría de iones.',
-    contrast: '5.35:1 (WCAG AA)',
-    colors: {
-      primary: '#E11D48',
-      whisker: '#0284C7',
-      gold: '#EA580C',
-      dark: '#4C0519',
-      canvasLight: '#FFF1F2',
-      canvasDark: '#18040A',
-    },
-  },
-];
+import { THEME_PRESETS } from '../data/theme-presets';
 ---
 
 <BaseLayout
@@ -329,51 +225,35 @@ const THEME_PRESETS = [
     </section>
   </div>
 
-  <!-- Script del Selector de Temas con Prevención de CSS Injection -->
+  <!-- Script del Selector de Temas con Sincronizacion Global -->
   <script is:inline>
     (function () {
       const themesGrid = document.getElementById('themes-grid');
       const activeThemeLabel = document.getElementById('active-theme-name');
-      const COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/;
 
       if (!themesGrid) return;
 
-      const themeCards = themesGrid.querySelectorAll('.theme-card');
+      const themeCards = Array.from(themesGrid.querySelectorAll('.theme-card'));
+
+      function syncActiveTheme(activeId) {
+        themeCards.forEach((card) => {
+          const id = card.getAttribute('data-theme-id');
+          const isCurrent = id === activeId;
+          card.classList.toggle('border-scorch-crimson', isCurrent);
+          card.classList.toggle('dark:border-scorch-crimson', isCurrent);
+          card.classList.toggle('shadow-[-6px_6px_0px_var(--shadow-color)]', isCurrent);
+          if (isCurrent && activeThemeLabel) {
+            const name = card.querySelector('span')?.textContent?.trim() || activeId;
+            activeThemeLabel.textContent = `${name} (ACTIVO)`;
+          }
+        });
+      }
 
       themeCards.forEach((card) => {
         const themeId = card.getAttribute('data-theme-id');
         const primary = card.getAttribute('data-theme-primary');
         const whisker = card.getAttribute('data-theme-whisker');
         const gold = card.getAttribute('data-theme-gold');
-        const dark = card.getAttribute('data-theme-dark');
-
-        function applyTheme() {
-          if (!COLOR_REGEX.test(primary) || !COLOR_REGEX.test(whisker) || !COLOR_REGEX.test(gold)) {
-            console.error('[SECURITY ALERT] Token de color no válido detectado.');
-            return;
-          }
-
-          const root = document.documentElement;
-          root.style.setProperty('--scorch-red', primary);
-          root.style.setProperty('--color-scorch-crimson', primary);
-          root.style.setProperty('--cyber-blue', whisker);
-          root.style.setProperty('--eye-gold', gold);
-          root.style.setProperty('--shadow-color', primary);
-
-          if (activeThemeLabel) {
-            activeThemeLabel.textContent = `${card.querySelector('span')?.textContent?.trim() || themeId} (ACTIVO)`;
-          }
-
-          if (window.playMechanicalClick) window.playMechanicalClick();
-          if (window.showToast) {
-            window.showToast(
-              'TEMA APLICADO',
-              `Paleta "${themeId}" inyectada en variables CSS del núcleo.`,
-              'emerald',
-              2200
-            );
-          }
-        }
 
         card.addEventListener('click', (e) => {
           const target = e.target;
@@ -387,9 +267,21 @@ const THEME_PRESETS = [
             });
             return;
           }
-          applyTheme();
+
+          if (window.applyThemePreset) {
+            window.applyThemePreset(themeId);
+          }
         });
       });
+
+      window.addEventListener('ryukami:theme-change', (e) => {
+        if (e.detail && e.detail.presetId) {
+          syncActiveTheme(e.detail.presetId);
+        }
+      });
+
+      const currentId = (window.getCurrentThemePreset && window.getCurrentThemePreset()) || 'scorch';
+      syncActiveTheme(currentId);
     })();
   </script>
 </BaseLayout>

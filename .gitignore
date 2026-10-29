@@ -20,3 +20,6 @@ Thumbs.db
 
 # Local Lighthouse temp reports
 lighthouse-report.*
+
+# Playwright artifacts
+.playwright-cli/

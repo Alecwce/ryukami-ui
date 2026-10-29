@@ -199,7 +199,7 @@ export const REGISTRY_COMPONENTS: RegistryComponent[] = [
     name: 'checkbox',
     title: 'Checkbox',
     category: '02_FORM_CONTROLS',
-    description: 'Casilla de verificación cuadrada con marca geométrica (✕) y descripción.',
+    description: 'Casilla de verificación cuadrada con marca geométrica [X] y descripción.',
     propsDoc: props.toggleProps.filter(p => !['role'].includes(p.name)),
     codeSnippet: `<Checkbox label="Autenticación Cuántica" description="Requiere llave SSH ed25519 física" checked />`,
     status: 'FORM TOGGLE',
