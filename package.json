@@ -42,7 +42,7 @@
     "cli": "node bin/ryukami-ui.mjs",
     "pages:dev": "pnpm build && npx --yes wrangler pages dev dist --port 8788",
     "pages:deploy": "pnpm build && npx --yes wrangler pages deploy dist --project-name=ryukami-ui --branch=main --commit-dirty=true",
-    "hooks:setup": "node -e 'fs.writeFileSync(\".git/hooks/pre-push\", \"#!/usr/bin/env bash\\nset -e\\necho \\\"[RYUKAMI AUTO-DEPLOY] Compilando 35 modulos + Astro y desplegando a Cloudflare Pages...\\\"\\npnpm run pages:deploy\\necho \\\"[RYUKAMI AUTO-DEPLOY] Produccion sincronizada en https://ryukami-ui.pages.dev\\\"\\n\"); fs.chmodSync(\".git/hooks/pre-push\", 0o755); console.log(\"[OK] Hook de Auto-Deploy pre-push instalado\");'",
+    "hooks:setup": "node -e 'fs.writeFileSync(\".git/hooks/pre-push\", \"#!/usr/bin/env bash\\necho \\\"[RYUKAMI AUTO-DEPLOY] Compilando 35 modulos + Astro y desplegando a Cloudflare Pages...\\\"\\nif pnpm run pages:deploy; then\\n  echo \\\"[RYUKAMI AUTO-DEPLOY] Produccion sincronizada en https://ryukami-ui.pages.dev\\\"\\nelse\\n  echo \\\"[RYUKAMI AUTO-DEPLOY] Advertencia: Despliegue directo no disponible (auth/red), continuando push.\\\"\\nfi\\n\"); fs.chmodSync(\".git/hooks/pre-push\", 0o755); console.log(\"[OK] Hook de Auto-Deploy pre-push instalado con tolerancia a fallos\");'",
     "ship": "git push origin main",
     "astro": "astro"
   },
