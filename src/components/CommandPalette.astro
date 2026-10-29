@@ -1,5 +1,25 @@
 ---
 import Kbd from './Kbd.astro';
+import { REGISTRY_COMPONENTS } from '../data/registry.ts';
+import { BLOCKS_DATA } from '../data/blocks.ts';
+
+const serializedComponents = REGISTRY_COMPONENTS.map((c) => ({
+  id: `comp-${c.slug}`,
+  category: 'COMPONENTS',
+  label: `${c.title} — ${c.description}`,
+  url: `/docs/components/${c.slug}`,
+  shortcut: c.status,
+  keywords: `${c.name} ${c.title} ${c.slug} ${c.category} ${c.description} componente`,
+}));
+
+const serializedBlocks = BLOCKS_DATA.map((b) => ({
+  id: `block-${b.id}`,
+  category: 'BLOCKS',
+  label: `${b.title} (${b.name}) — ${b.description}`,
+  url: `/blocks#${b.id}`,
+  shortcut: b.category,
+  keywords: `${b.id} ${b.name} ${b.title} ${b.category} ${b.description} bloque plantilla template`,
+}));
 ---
 
 <dialog
@@ -7,6 +27,8 @@ import Kbd from './Kbd.astro';
   closedby="any"
   aria-labelledby="cmdPaletteTitle"
   class="tui-window w-[calc(100vw-2rem)] max-w-xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 border-2 border-black dark:border-slate-200 shadow-[-8px_8px_0px_0px_var(--shadow-color,#000000)] p-0 font-mono"
+  data-components={JSON.stringify(serializedComponents)}
+  data-blocks={JSON.stringify(serializedBlocks)}
 >
   <!-- Cabecera de Consola -->
   <div class="tui-header bg-black dark:bg-scorch-crimson text-white">
@@ -36,7 +58,7 @@ import Kbd from './Kbd.astro';
     <input
       id="cmd-search-input"
       type="text"
-      placeholder="Buscar componente o ejecutar comando (ej: boton, tema, toast, form)…"
+      placeholder="Buscar entre 35 componentes, 10 bloques, temas o comandos (Ctrl+K)..."
       autocomplete="off"
       class="w-full bg-transparent text-xs sm:text-sm font-mono focus:outline-none placeholder:opacity-50 text-slate-900 dark:text-slate-100"
     />
@@ -51,7 +73,7 @@ import Kbd from './Kbd.astro';
   <div class="px-3 py-2 border-t-2 border-black dark:border-slate-700 bg-slate-50 dark:bg-slate-950 flex flex-wrap justify-between items-center gap-2 text-[11px] opacity-80">
     <div class="flex items-center gap-3">
       <span><Kbd>↑</Kbd> <Kbd>↓</Kbd> Navegar</span>
-      <span><Kbd>Enter</Kbd> Ejecutar</span>
+      <span><Kbd>Enter</Kbd> Abrir</span>
       <span><Kbd>Esc</Kbd> Salir</span>
     </div>
     <span class="text-scorch-crimson font-bold">RYUKAMI // v2.4.0</span>
@@ -66,7 +88,7 @@ import Kbd from './Kbd.astro';
 
     if (!dialog || !searchInput || !cmdList) return;
 
-    // Fallback obligatorio para navegadores sin soporte nativo de closedby="any"
+    // Fallback para navegadores sin closedBy="any"
     if (!('closedBy' in HTMLDialogElement.prototype)) {
       dialog.addEventListener('click', (event) => {
         if (event.target !== dialog) return;
@@ -90,103 +112,90 @@ import Kbd from './Kbd.astro';
       }
     });
 
-    const commands = [
+    // Cargar datos estáticos de componentes y bloques desde data-attributes
+    let componentItems = [];
+    let blockItems = [];
+    try {
+      componentItems = JSON.parse(dialog.getAttribute('data-components') || '[]');
+      blockItems = JSON.parse(dialog.getAttribute('data-blocks') || '[]');
+    } catch (e) {
+      console.error('Error parseando datos de componentes para CommandPalette:', e);
+    }
+
+    const navigationGuides = [
       {
-        id: 'nav-components',
-        category: 'NAVEGACIÓN',
-        label: 'Ir a: Catálogo Base (Button, Badge, Card, ProgressBar, Avatar, Skeleton)',
-        shortcut: '#01',
-        keywords: 'botones button badge card progressbar avatar skeleton kbd barra componentes catalogo',
-        action: () => {
-          location.hash = '#components';
-        },
-      },
-      {
-        id: 'nav-forms',
-        category: 'NAVEGACIÓN',
-        label: 'Ir a: Suite de Formularios (Input, Select, Slider, Checkbox, Switch, Textarea, RadioGroup)',
-        shortcut: '#02',
-        keywords: 'formularios forms input select slider range checkbox switch textarea radio-group radiogroup texto',
-        action: () => {
-          location.hash = '#forms';
-        },
-      },
-      {
-        id: 'nav-tabs-acc',
-        category: 'NAVEGACIÓN',
-        label: 'Ir a: Navegación TUI (Tabs, Accordion, Breadcrumb & Pagination)',
-        shortcut: '#03A',
-        keywords: 'tabs pestañas accordion acordeon breadcrumb pagination rutas paginacion details',
-        action: () => {
-          location.hash = '#comp-tabs';
-        },
-      },
-      {
-        id: 'nav-alerts',
-        category: 'NAVEGACIÓN',
-        label: 'Ir a: Feedback, Modales y Alertas (Alert, Toast, Popover, Modal)',
-        shortcut: '#03B',
-        keywords: 'alertas callouts feedback modal popover toast notificaciones',
-        action: () => {
-          location.hash = '#comp-alert';
-        },
-      },
-      {
-        id: 'nav-shell',
-        category: 'STUDIO',
-        label: 'Ir a: Consola Interactiva en Vivo (0xSCORCH_SHELL)',
-        shortcut: 'TTY',
-        keywords: 'terminal shell consola interactiva zsh neofetch comandos',
-        action: () => {
-          location.hash = '#live-shell';
-        },
-      },
-      {
-        id: 'nav-tables',
-        category: 'NAVEGACIÓN',
-        label: 'Ir a: Tablas de Datos TUI ASCII (Table & Kbd)',
-        shortcut: '#04',
-        keywords: 'tabla table ascii datos registros kbd',
-        action: () => {
-          location.hash = '#tables';
-        },
-      },
-      {
-        id: 'nav-theme-studio',
-        category: 'STUDIO',
-        label: 'Ir a: Theme Studio en Vivo (Personalizador de Paletas)',
-        shortcut: '#05',
-        keywords: 'theme studio paleta colores sombras dither customizer',
-        action: () => {
-          location.hash = '#theme-studio';
-        },
-      },
-      {
-        id: 'nav-ascii-forge',
-        category: 'STUDIO',
-        label: 'Ir a: Generador de Arte ASCII Scorch en Vivo',
-        shortcut: '#06',
-        keywords: 'ascii forge generador dragon matriz texto arte',
-        action: () => {
-          location.hash = '#ascii-forge';
-        },
-      },
-      {
-        id: 'nav-install-docs',
+        id: 'guide-docs',
         category: 'DOCS',
-        label: 'Ir a: Guía del CLI ryukami-ui & Registro JSON',
-        shortcut: '#07',
-        keywords: 'instalar guia docs setup cli ryukami-ui registry json',
-        action: () => {
-          location.hash = '#install-docs';
-        },
+        label: 'Documentación Oficial // Comenzar',
+        shortcut: 'DOCS',
+        url: '/docs',
+        keywords: 'documentacion introduccion inicio guia docs',
       },
+      {
+        id: 'guide-components',
+        category: 'DOCS',
+        label: 'Catálogo Completo de Componentes (35 Módulos)',
+        shortcut: 'CATALOG',
+        url: '/docs/components',
+        keywords: 'componentes catalogo lista todos módulos componentes',
+      },
+      {
+        id: 'guide-cli',
+        category: 'DOCS',
+        label: 'Guía del CLI ryukami-ui // Instalación & Diff',
+        shortcut: 'CLI',
+        url: '/docs/cli',
+        keywords: 'cli terminal instalador add diff init list comandos',
+      },
+      {
+        id: 'guide-mcp',
+        category: 'DOCS',
+        label: 'Servidor MCP // Integración con Agentes de IA',
+        shortcut: 'MCP',
+        url: '/docs/mcp',
+        keywords: 'mcp model context protocol jsonrpc ia agents claude antigravity',
+      },
+      {
+        id: 'guide-blocks',
+        category: 'DOCS',
+        label: 'Galería de Bloques & Plantillas Modulares (10 Bloques)',
+        shortcut: 'BLOCKS',
+        url: '/blocks',
+        keywords: 'bloques templates plantillas hero login faq cta bento',
+      },
+      {
+        id: 'guide-themes',
+        category: 'DOCS',
+        label: 'Laboratorio de Temas & Tokens W3C (6 Presets)',
+        shortcut: 'THEMES',
+        url: '/themes',
+        keywords: 'temas themes tokens colores paleta dither sombras',
+      },
+      {
+        id: 'guide-tokens-json',
+        category: 'API',
+        label: 'Ver W3C Design Tokens JSON (/r/tokens.json)',
+        shortcut: 'JSON',
+        url: '/r/tokens.json',
+        keywords: 'tokens json w3c variables css api',
+      },
+      {
+        id: 'guide-registry-json',
+        category: 'API',
+        label: 'Ver Registro Maestro JSON (/r/registry.json)',
+        shortcut: 'API',
+        url: '/r/registry.json',
+        keywords: 'registry registro json modulos sha256 api',
+      },
+    ];
+
+    const systemActions = [
       {
         id: 'act-theme',
         category: 'SISTEMA',
-        label: 'Alternar Tema: Modo Paper / Modo Hacker Nocturno',
+        label: 'Alternar Modo Nocturno / Modo Claro',
         shortcut: 'Ctrl+D',
-        keywords: 'tema dark light oscuro claro hacker paper color',
+        keywords: 'tema dark light oscuro claro color hacker paper',
         action: () => {
           if (window.toggleTheme) window.toggleTheme();
           if (window.showToast) {
@@ -202,9 +211,9 @@ import Kbd from './Kbd.astro';
       {
         id: 'act-sound',
         category: 'SISTEMA',
-        label: 'Alternar Sintetizador de Audio Mecánico (ON / OFF)',
+        label: 'Alternar Sintetizador Acústico Web Audio (Cherry MX)',
         shortcut: 'AUDIO',
-        keywords: 'sonido audio mute silencio click beep',
+        keywords: 'sonido audio mute silencio click cherry sintetizador',
         action: () => {
           if (window.toggleSound) window.toggleSound();
         },
@@ -212,9 +221,9 @@ import Kbd from './Kbd.astro';
       {
         id: 'act-copy-cli',
         category: 'CLI',
-        label: 'Copiar Instalación CLI (git clone & symlink en ~/.local/bin)',
+        label: 'Copiar Comando de Instalación CLI',
         shortcut: 'INSTALL',
-        keywords: 'copiar instalar cli repo git bin ryukami-ui symlink global clone',
+        keywords: 'copiar instalar cli repo git bin ryukami-ui symlink global',
         action: async () => {
           const cliInstallCmd =
             'git clone https://github.com/Alecwce/ryukami-ui.git ~/.local/share/ryukami-ui && ln -sf ~/.local/share/ryukami-ui/bin/ryukami-ui.mjs ~/.local/bin/ryukami-ui && chmod +x ~/.local/bin/ryukami-ui';
@@ -222,7 +231,7 @@ import Kbd from './Kbd.astro';
           if (window.showToast) {
             window.showToast(
               'CLI COPIADO',
-              'Flujo de instalación CLI copiado al portapapeles (git clone + symlink a ~/.local/bin)',
+              'Comando de instalación enlazado a ~/.local/bin.',
               'emerald'
             );
           }
@@ -231,7 +240,7 @@ import Kbd from './Kbd.astro';
       {
         id: 'act-test-toast',
         category: 'DEMO',
-        label: 'Disparar Alerta Flotante de Prueba (Scorch Dragon)',
+        label: 'Disparar Notificación de Prueba (Scorch Dragon)',
         shortcut: 'TOAST',
         keywords: 'toast prueba test dragon alerta velgrynd',
         action: () => {
@@ -246,6 +255,13 @@ import Kbd from './Kbd.astro';
       },
     ];
 
+    const commands = [
+      ...systemActions,
+      ...navigationGuides,
+      ...blockItems,
+      ...componentItems,
+    ];
+
     let filteredCommands = [...commands];
     let selectedIndex = 0;
 
@@ -255,7 +271,7 @@ import Kbd from './Kbd.astro';
       if (filteredCommands.length === 0) {
         cmdList.innerHTML = `
           <div class="p-6 text-center text-xs opacity-60">
-            &gt; [404] No se encontraron comandos para "${searchInput.value}"
+            &gt; [404] No se encontraron resultados para "${searchInput.value}"
           </div>
         `;
         return;
@@ -265,25 +281,38 @@ import Kbd from './Kbd.astro';
         const isSelected = idx === selectedIndex;
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `w-full text-left px-3 py-2.5 flex items-center justify-between gap-3 text-xs transition-colors border ${
+        btn.className = `w-full text-left px-3 py-2 flex items-center justify-between gap-3 text-xs transition-colors border ${
           isSelected
             ? 'bg-scorch-crimson text-white border-black font-extrabold'
             : 'border-transparent hover:bg-slate-200 dark:hover:bg-slate-800'
         }`;
 
+        let badgeBg = 'opacity-70';
+        if (isSelected) {
+          badgeBg = 'bg-black text-scorch-gold';
+        } else if (cmd.category === 'COMPONENTS') {
+          badgeBg = 'bg-scorch-cyan/20 text-sky-800 dark:text-scorch-cyan border-scorch-cyan';
+        } else if (cmd.category === 'BLOCKS') {
+          badgeBg = 'bg-scorch-gold/20 text-scorch-gold-text dark:text-scorch-gold border-scorch-gold';
+        } else if (cmd.category === 'DOCS') {
+          badgeBg = 'bg-emerald-500/20 text-emerald-800 dark:text-emerald-400 border-emerald-500';
+        }
+
         btn.innerHTML = `
-          <div class="flex items-center gap-2.5 truncate">
-            <span class="px-1.5 py-0.5 text-[10px] font-extrabold border border-current ${
-              isSelected ? 'bg-black text-scorch-gold' : 'opacity-70'
-            }">${cmd.category}</span>
+          <div class="flex items-center gap-2.5 truncate min-w-0">
+            <span class="px-1.5 py-0.5 text-[9px] font-extrabold border shrink-0 ${badgeBg}">${cmd.category}</span>
             <span class="truncate">${cmd.label}</span>
           </div>
-          <span class="text-[10px] font-mono px-1.5 py-0.5 border border-current opacity-80 shrink-0">${cmd.shortcut}</span>
+          <span class="text-[10px] font-mono px-1.5 py-0.5 border border-current opacity-80 shrink-0">${cmd.shortcut || ''}</span>
         `;
 
         btn.addEventListener('mouseenter', () => {
           selectedIndex = idx;
-          renderList();
+          const prev = cmdList.querySelector('.bg-scorch-crimson');
+          if (prev) {
+            prev.className = prev.className.replace('bg-scorch-crimson text-white border-black font-extrabold', 'border-transparent hover:bg-slate-200 dark:hover:bg-slate-800');
+          }
+          btn.className = `w-full text-left px-3 py-2 flex items-center justify-between gap-3 text-xs transition-colors border bg-scorch-crimson text-white border-black font-extrabold`;
         });
 
         btn.addEventListener('click', () => {
@@ -297,7 +326,11 @@ import Kbd from './Kbd.astro';
     function executeCommand(cmd) {
       if (!cmd) return;
       dialog.close();
-      cmd.action();
+      if (cmd.url) {
+        window.location.href = cmd.url;
+      } else if (typeof cmd.action === 'function') {
+        cmd.action();
+      }
     }
 
     window.openPalette = function () {
@@ -317,7 +350,7 @@ import Kbd from './Kbd.astro';
         (c) =>
           c.label.toLowerCase().includes(q) ||
           c.category.toLowerCase().includes(q) ||
-          c.keywords.toLowerCase().includes(q)
+          (c.keywords && c.keywords.toLowerCase().includes(q))
       );
       selectedIndex = 0;
       renderList();
@@ -329,12 +362,14 @@ import Kbd from './Kbd.astro';
         if (filteredCommands.length > 0) {
           selectedIndex = (selectedIndex + 1) % filteredCommands.length;
           renderList();
+          scrollSelectedIntoView();
         }
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         if (filteredCommands.length > 0) {
           selectedIndex = (selectedIndex - 1 + filteredCommands.length) % filteredCommands.length;
           renderList();
+          scrollSelectedIntoView();
         }
       } else if (e.key === 'Enter') {
         e.preventDefault();
@@ -343,6 +378,13 @@ import Kbd from './Kbd.astro';
         }
       }
     });
+
+    function scrollSelectedIntoView() {
+      const buttons = cmdList.querySelectorAll('button');
+      if (buttons[selectedIndex]) {
+        buttons[selectedIndex].scrollIntoView({ block: 'nearest' });
+      }
+    }
 
     // Atajos de teclado globales: Ctrl+K / Cmd+K y Ctrl+D
     document.addEventListener('keydown', (e) => {

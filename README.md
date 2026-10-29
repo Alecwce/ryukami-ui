@@ -9,6 +9,10 @@
 > Diseñada bajo la especificación **Scorch Design System v4.1**, inspirada en terminales CRT industriales, consolas UNIX y arquitectura open-code sin dependencias de runtime.
 
 - **Producción (Cloudflare Pages):** [https://ryukami-ui.pages.dev](https://ryukami-ui.pages.dev)
+- **Documentación Oficial:** [https://ryukami-ui.pages.dev/docs](https://ryukami-ui.pages.dev/docs)
+- **Catálogo de Componentes (35):** [https://ryukami-ui.pages.dev/docs/components](https://ryukami-ui.pages.dev/docs/components)
+- **Bloques & Plantillas (10):** [https://ryukami-ui.pages.dev/blocks](https://ryukami-ui.pages.dev/blocks)
+- **Temas & Presets (6):** [https://ryukami-ui.pages.dev/themes](https://ryukami-ui.pages.dev/themes)
 - **Registro Open-Code JSON:** [https://ryukami-ui.pages.dev/r/registry.json](https://ryukami-ui.pages.dev/r/registry.json)
 - **W3C Design Tokens v4.1:** [https://ryukami-ui.pages.dev/r/tokens.json](https://ryukami-ui.pages.dev/r/tokens.json)
 - **Manifiesto para Agentes IA (llms.txt):** [https://ryukami-ui.pages.dev/llms.txt](https://ryukami-ui.pages.dev/llms.txt)
@@ -135,7 +139,7 @@ ryukami-ui mcp
 | `select` | `Select.astro` | `02_FORM_CONTROLS` | Selector desplegable brutalista con prefijo `OPT //` e indicador mecánico. |
 | `slider` | `Slider.astro` | `02_FORM_CONTROLS` | Control deslizante de rango con barra ASCII `[====|----]` en tiempo real. |
 | `radio-group` | `RadioGroup.astro` | `02_FORM_CONTROLS` | Selector exclusivo de opciones con indicadores de terminal `( • )` y `(   )`. |
-| `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla de verificación cuadrada con marca geométrica `✕`. |
+| `checkbox` | `Checkbox.astro` | `02_FORM_CONTROLS` | Casilla de verificación cuadrada con marca geométrica `X`. |
 | `switch` | `Switch.astro` | `02_FORM_CONTROLS` | Interruptor táctil deslizante (`role="switch"`). |
 | `tabs` | `Tabs.astro` | `03_LAYOUT_AND_MODALS` | Pestañas multipanel TUI con navegación por flechas (`←` / `→`). |
 | `accordion` | `Accordion.astro` | `03_LAYOUT_AND_MODALS` | Acordeón exclusivo nativo sobre `<details name="...">`. |
@@ -173,16 +177,30 @@ ryukami-ui/
 │   ├── _headers                   # Cabeceras HTTP de seguridad, caché inmutable y CORS (/r/*)
 │   ├── favicon.svg                # Icono vectorial minimalista de terminal ([>_])
 │   ├── llms.txt                   # Manifiesto estructurado para agentes de IA y LLMs
+│   ├── sitemap.xml                # Mapa de sitio XML completo (43 URLs)
 │   └── r/                         # 35 endpoints JSON + registry.json + styles.json + tokens.json
 ├── src/
+│   ├── blocks/                    # 6 bloques modulares de página (Hero, Features, CTA, FAQ, Login, Footer)
 │   ├── components/                # 37 componentes Astro (.astro) con tipado estricto
 │   ├── data/
+│   │   ├── blocks.ts              # Catálogo tipado de los 10 bloques y plantillas
+│   │   ├── registry.ts            # Fuente centralizada de los 35 componentes del registro
 │   │   ├── component-props.ts     # Especificación tipada de propiedades para el catálogo
 │   │   └── component-snippets.ts  # Snippets de código desacoplados para las vistas previas
 │   ├── layouts/
-│   │   └── BaseLayout.astro       # Layout base, metadatos SEO, tema y síntesis Web Audio
+│   │   ├── BaseLayout.astro       # Layout base con buscador global CommandPalette y audio
+│   │   └── DocsLayout.astro       # Layout de documentación con barra lateral SidebarNav
 │   ├── pages/
-│   │   ├── index.astro            # Documentación interactiva y catálogo de los 35 módulos
+│   │   ├── index.astro            # Portada interactiva
+│   │   ├── blocks.astro           # Galería de 10 bloques con filtrado por categoría
+│   │   ├── themes.astro           # Laboratorio de 6 presets de temas y tokens W3C
+│   │   ├── docs/
+│   │   │   ├── index.astro        # Documentación de inicio rápido
+│   │   │   ├── cli.astro          # Guía del CLI ryukami-ui
+│   │   │   ├── mcp.astro          # Guía del servidor MCP para IA
+│   │   │   └── components/
+│   │   │       ├── index.astro    # Índice de los 35 componentes
+│   │   │       └── [slug].astro   # Rutas dinámicas por componente (/docs/components/[slug])
 │   │   └── 404.astro              # Página de diagnóstico de rutas inexistentes
 │   └── styles/
 │       └── global.css             # Tokens @theme de Tailwind CSS v4 y reglas Neo-Brutalistas

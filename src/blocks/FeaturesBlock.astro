@@ -1,0 +1,85 @@
+---
+import Badge from '../components/Badge.astro';
+
+export interface Feature {
+  title: string;
+  tag: string;
+  description: string;
+  glyph?: string;
+  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';
+}
+
+export interface Props {
+  title?: string;
+  features?: Feature[];
+  class?: string;
+}
+
+const {
+  title = 'CARACTERÍSTICAS DEL SISTEMA // CAPABILITIES',
+  features = [
+    {
+      title: 'ZERO BORDER RADIUS',
+      tag: '0px RADIUS',
+      description: 'Estética mecánica cruda sin curvas decorativas. Bordes sólidos de 2px y contraste WCAG AA.',
+      glyph: '[01]',
+      variant: 'crimson',
+    },
+    {
+      title: 'SOMBRAS DURAS BRUTALISTAS',
+      tag: '-4px 4px',
+      description: 'Sombras proyectadas abajo-izquierda con 0px de desenfoque y animación de click acelerada por GPU.',
+      glyph: '[02]',
+      variant: 'cyan',
+    },
+    {
+      title: 'SÍNTESIS WEB AUDIO API',
+      tag: '0 KiB ASSETS',
+      description: 'Síntesis acústica procedural en tiempo real emulando pulsadores Cherry MX mecánicos sin archivos MP3.',
+      glyph: '[03]',
+      variant: 'gold',
+    },
+    {
+      title: 'CLI & INTEGRIDAD SHA-256',
+      tag: 'APPSEC',
+      description: 'Instalador autónomo con verificación de firma hash y prevención estricta de Path Traversal.',
+      glyph: '[04]',
+      variant: 'emerald',
+    },
+  ],
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`space-y-4 font-mono text-xs ${className}`}>
+  <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 bg-emerald-500 border border-black inline-block"></span>
+      <Badge variant="emerald">FEATURE_MATRIX</Badge>
+    </div>
+    <span class="text-[10px] text-slate-500 font-bold">{features.length} FEATURES</span>
+  </div>
+
+  <h3 class="font-extrabold text-base sm:text-lg uppercase text-slate-900 dark:text-white">
+    {title}
+  </h3>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {features.map((f) => (
+      <div class="tui-window p-4 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 shadow-brutal space-y-3 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-mono font-bold">{f.glyph}</span>
+            <Badge variant={f.variant || 'crimson'}>{f.tag}</Badge>
+          </div>
+          <h4 class="font-extrabold text-sm uppercase text-slate-900 dark:text-white">
+            {f.title}
+          </h4>
+          <p class="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
+            {f.description}
+          </p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

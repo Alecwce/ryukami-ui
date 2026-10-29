@@ -2,33 +2,394 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemeStudio from '../components/ThemeStudio.astro';
 import Callout from '../components/Callout.astro';
+import Button from '../components/Button.astro';
+import Badge from '../components/Badge.astro';
+import Kbd from '../components/Kbd.astro';
+import Input from '../components/Input.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import StatCard from '../components/StatCard.astro';
+import Icon from '../components/Icon.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const THEME_PRESETS = [
+  {
+    id: 'scorch',
+    name: 'Scorch Crimson',
+    edition: 'Velgrynd Original // Canonical',
+    tag: 'CANONICAL',
+    badgeVariant: 'crimson' as const,
+    description: 'Fuego primordial calibrado para superar WCAG AA (5.04:1). La paleta insignia del Scorch Design System.',
+    contrast: '5.04:1 (WCAG AA)',
+    colors: {
+      primary: '#D62436',
+      whisker: '#4DA3FF',
+      gold: '#F4D35E',
+      dark: '#9B1B30',
+      canvasLight: '#F5F7FA',
+      canvasDark: '#0B0F17',
+    },
+  },
+  {
+    id: 'matrix',
+    name: 'Phosphor CRT',
+    edition: 'Matrix Emerald // Phosphor 525',
+    tag: 'CRT RETRO',
+    badgeVariant: 'emerald' as const,
+    description: 'Emulación de fósforo P1 verde clásico de monitores VT100 y consolas mainframe IBM.',
+    contrast: '5.12:1 (WCAG AA)',
+    colors: {
+      primary: '#10B981',
+      whisker: '#34D399',
+      gold: '#F59E0B',
+      dark: '#065F46',
+      canvasLight: '#F0FDF4',
+      canvasDark: '#022C22',
+    },
+  },
+  {
+    id: 'amber',
+    name: 'Dungeon Gold',
+    edition: 'Amber Glow // Dragon Hoard',
+    tag: 'RPG GOLD',
+    badgeVariant: 'gold' as const,
+    description: 'Tonos ámbar cálidos y bronce forjado, evocando terminales de plasma y juegos de rol clásicos.',
+    contrast: '5.28:1 (WCAG AA)',
+    colors: {
+      primary: '#D97706',
+      whisker: '#38BDF8',
+      gold: '#FBBF24',
+      dark: '#78350F',
+      canvasLight: '#FFFBEB',
+      canvasDark: '#1C1917',
+    },
+  },
+  {
+    id: 'paper',
+    name: 'Paper Brutalism',
+    edition: 'Swiss Mono Noir // Print Ink',
+    tag: 'EDITORIAL',
+    badgeVariant: 'cyan' as const,
+    description: 'Arquitectura monocrómica suiza de máximo contraste y tinta negra cruda sobre papel marfil.',
+    contrast: '14.2:1 (WCAG AAA)',
+    colors: {
+      primary: '#0F172A',
+      whisker: '#64748B',
+      gold: '#94A3B8',
+      dark: '#020617',
+      canvasLight: '#FFFFFF',
+      canvasDark: '#0B0F17',
+    },
+  },
+  {
+    id: 'cyber',
+    name: 'Cyber Neon',
+    edition: 'Neo-Tokyo Sunset // Synthwave TUI',
+    tag: 'SYNTHWAVE',
+    badgeVariant: 'crimson' as const,
+    description: 'Fucsia láser y azul ciberpunk de alto impacto para tableros de mando futuristas.',
+    contrast: '4.86:1 (WCAG AA)',
+    colors: {
+      primary: '#DB2777',
+      whisker: '#06B6D4',
+      gold: '#F59E0B',
+      dark: '#831843',
+      canvasLight: '#FDF2F8',
+      canvasDark: '#0F172A',
+    },
+  },
+  {
+    id: 'emperor',
+    name: 'Velgrynd Flame',
+    edition: 'Emperor Supreme // Dragon Flare',
+    tag: 'SUPREME',
+    badgeVariant: 'gold' as const,
+    description: 'Matiz carmesí ardiente combinado con reflejos de plasma solar e interferometría de iones.',
+    contrast: '5.35:1 (WCAG AA)',
+    colors: {
+      primary: '#E11D48',
+      whisker: '#0284C7',
+      gold: '#EA580C',
+      dark: '#4C0519',
+      canvasLight: '#FFF1F2',
+      canvasDark: '#18040A',
+    },
+  },
+];
 ---
 
 <BaseLayout
-  title="Themes - Ryukami-UI"
-  description="Laboratorio en vivo de temas, paleta de colores Scorch y tokens W3C para Ryukami-UI."
+  title="Themes & Token Presets - Ryukami-UI"
+  description="Paletas de color, temas nombrados, laboratorio en vivo y tokens de diseño W3C para Ryukami-UI (Scorch v4.1)."
 >
-  <div class="space-y-10">
+  <div class="space-y-12">
+    <!-- Encabezado de Temas -->
     <section class="space-y-4 border-b-2 border-black dark:border-slate-700 pb-8 text-center md:text-left">
       <div class="flex items-center justify-center md:justify-start gap-2">
         <span class="w-3 h-3 bg-scorch-crimson border border-black inline-block"></span>
-        <span class="text-xs font-mono font-bold uppercase text-scorch-crimson">// THEME_ENGINE_STUDIO</span>
+        <span class="text-xs font-mono font-bold uppercase text-scorch-crimson">// 03_THEMES_AND_COLOR_ENGINE</span>
       </div>
       <h1 class="title-8bit text-3xl sm:text-5xl text-slate-900 dark:text-white">
         THEMES &amp; TOKENS
       </h1>
-      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 max-w-2xl">
-        Ajusta la paleta cromática en tiempo real, calibrada para superar WCAG AA (5.04:1). Exporta tus tokens directamente en CSS o JSON compatible con Obsidian.
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 max-w-3xl">
+        Colección de temas retro-industriales y TUI inspirados en consolas CRT, interfaces táctiles y papel brutalista. Haz clic en cualquier tema para aplicarlo en vivo a toda la web o copiar los tokens CSS.
       </p>
     </section>
 
-    <Callout type="scorch" title="W3C DESIGN TOKENS INTEGRATION" badge="v4.1.0">
-      Los tokens están disponibles en <a href="/r/tokens.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/tokens.json</a> e integrados con el comando <code>ryukami-ui init --obsidian</code>.
+    <!-- BANNER DE INTEGRACIÓN W3C -->
+    <Callout type="scorch" title="W3C DESIGN TOKENS & OBSIDIAN READY" badge="v4.1.0">
+      Todos los tokens cumplen con la especificación W3C Design Tokens Community Group. Disponibles en <a href="/r/tokens.json" target="_blank" class="underline font-bold text-scorch-crimson">/r/tokens.json</a> y compatibles directamente con Obsidian usando <code>ryukami-ui init --obsidian</code>.
     </Callout>
 
-    <!-- ThemeStudio Component -->
+    <!-- 1. GALERÍA DE PRESETS NOMBRADOS -->
     <section class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black dark:border-slate-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
+          <h2 class="font-mono font-extrabold text-sm sm:text-base uppercase text-slate-900 dark:text-white">
+            // PRESETS DE SISTEMA (6 PALETAS NOMBRADAS)
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-slate-500 font-bold">HAZ CLIC EN CUALQUIERA PARA APLICAR</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="themes-grid">
+        {THEME_PRESETS.map((t) => (
+          <div
+            data-theme-id={t.id}
+            data-theme-primary={t.colors.primary}
+            data-theme-whisker={t.colors.whisker}
+            data-theme-gold={t.colors.gold}
+            data-theme-dark={t.colors.dark}
+            class="theme-card tui-window p-5 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 shadow-brutal flex flex-col justify-between space-y-4 cursor-pointer hover:-translate-x-0.5 hover:-translate-y-0.5 transition-transform duration-75"
+          >
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="font-mono font-extrabold text-sm uppercase text-slate-900 dark:text-white">
+                  {t.name}
+                </span>
+                <Badge variant={t.badgeVariant}>{t.tag}</Badge>
+              </div>
+
+              <p class="font-mono text-[10px] text-slate-500 font-bold">
+                // {t.edition}
+              </p>
+
+              <!-- Color Swatches Bar -->
+              <div class="space-y-1.5 pt-1">
+                <div class="flex items-center gap-1.5">
+                  <span
+                    class="w-6 h-6 border-2 border-black inline-block shadow-brutal-sm"
+                    style={`background-color: ${t.colors.primary};`}
+                    title={`Primary: ${t.colors.primary}`}
+                  ></span>
+                  <span
+                    class="w-6 h-6 border-2 border-black inline-block shadow-brutal-sm"
+                    style={`background-color: ${t.colors.whisker};`}
+                    title={`Whisker: ${t.colors.whisker}`}
+                  ></span>
+                  <span
+                    class="w-6 h-6 border-2 border-black inline-block shadow-brutal-sm"
+                    style={`background-color: ${t.colors.gold};`}
+                    title={`Gold: ${t.colors.gold}`}
+                  ></span>
+                  <span
+                    class="w-6 h-6 border-2 border-black inline-block shadow-brutal-sm"
+                    style={`background-color: ${t.colors.dark};`}
+                    title={`Dark Scale: ${t.colors.dark}`}
+                  ></span>
+                </div>
+                <div class="flex justify-between font-mono text-[10px] text-slate-600 dark:text-slate-400">
+                  <span>{t.colors.primary}</span>
+                  <span class="font-bold text-emerald-600 dark:text-emerald-400">{t.contrast}</span>
+                </div>
+              </div>
+
+              <p class="font-mono text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
+                {t.description}
+              </p>
+            </div>
+
+            <!-- Acciones Rápidas -->
+            <div class="flex items-center gap-2 pt-2 border-t border-black/10 dark:border-white/10">
+              <button
+                type="button"
+                data-action="apply"
+                class="apply-theme-btn btn-brutal bg-black text-white dark:bg-white dark:text-black px-3 py-1.5 text-xs font-extrabold flex-1 text-center justify-center"
+              >
+                APLICAR
+              </button>
+              <button
+                type="button"
+                data-action="copy-css"
+                class="copy-css-btn btn-brutal bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-2.5 py-1.5 text-xs font-bold"
+                title="Copiar tokens CSS al portapapeles"
+                aria-label={`Copiar CSS de ${t.name}`}
+              >
+                <Icon name="copy" class="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- 2. LIVE INTERACTIVE SANDBOX // REACTS TO SELECTED THEME -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-scorch-gold border border-black inline-block"></span>
+          <h2 class="font-mono font-extrabold text-sm sm:text-base uppercase text-slate-900 dark:text-white">
+            // INTERACTIVE COMPONENT PLAYGROUND (VISTA EN VIVO)
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-slate-500 font-bold hidden sm:inline">REACTS IN REALTIME</span>
+      </div>
+
+      <div class="tui-window p-6 sm:p-8 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 shadow-brutal space-y-6">
+        <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="bg-scorch-crimson text-white px-2 py-0.5 border border-black font-extrabold text-xs">
+              0xPLAYGROUND
+            </span>
+            <span id="active-theme-name" class="font-mono text-xs font-extrabold text-scorch-crimson">
+              SCORCH CRIMSON (ACTIVO)
+            </span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="w-5 h-5 inline-flex items-center justify-center border border-current text-xs">_</span>
+            <span class="w-5 h-5 inline-flex items-center justify-center border border-current text-xs">□</span>
+            <span class="w-5 h-5 inline-flex items-center justify-center border border-current text-xs">×</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+          <!-- Botones y Acciones -->
+          <div class="space-y-3">
+            <span class="text-[10px] text-slate-500 font-bold uppercase">// BUTTONS &amp; ACTIONS</span>
+            <div class="flex flex-wrap gap-2">
+              <Button variant="crimson" size="sm">PRIMARIO</Button>
+              <Button variant="cyan" size="sm">CYAN ACCENT</Button>
+              <Button variant="gold" size="sm">GOLD EYE</Button>
+              <Button variant="outline" size="sm">OUTLINE</Button>
+            </div>
+          </div>
+
+          <!-- Badges & Kbd -->
+          <div class="space-y-3">
+            <span class="text-[10px] text-slate-500 font-bold uppercase">// BADGES &amp; KEYCAPS</span>
+            <div class="flex flex-wrap items-center gap-2">
+              <Badge variant="crimson">ONLINE</Badge>
+              <Badge variant="cyan">TTY_V4</Badge>
+              <Badge variant="gold">GPU_ACCEL</Badge>
+              <Badge variant="emerald">PASS</Badge>
+              <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd>
+            </div>
+          </div>
+
+          <!-- KPI Metric Card -->
+          <div class="space-y-3">
+            <span class="text-[10px] text-slate-500 font-bold uppercase">// TELEMETRY KPI</span>
+            <StatCard
+              title="VELGRYND CONTRAST"
+              value="5.04:1"
+              unit="RATIO"
+              trend="up"
+              trendValue="WCAG AA"
+              sparkline="[ ▂▃▅▆▇█]"
+            />
+          </div>
+        </div>
+
+        <!-- Barra de Progreso y Campo de Entrada -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 font-mono text-xs">
+          <div>
+            <ProgressBar label="BUFFER DOCKER COMPILATION" value={78} />
+          </div>
+          <div>
+            <Input label="Terminal Connection" placeholder="cluster.ryukami.internal:9021" prefix="tcp://" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. PERSONALIZADOR GRANULAR (THEME STUDIO) -->
+    <section class="space-y-4">
+      <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-sky-500 border border-black inline-block"></span>
+          <h2 class="font-mono font-extrabold text-sm sm:text-base uppercase text-slate-900 dark:text-white">
+            // LABORATORIO DE AJUSTE FINO (THEME STUDIO)
+          </h2>
+        </div>
+        <span class="font-mono text-xs text-slate-500 font-bold hidden sm:inline">CUSTOM CSS GENERATOR</span>
+      </div>
+
       <ThemeStudio />
     </section>
   </div>
+
+  <!-- Script del Selector de Temas con Prevención de CSS Injection -->
+  <script is:inline>
+    (function () {
+      const themesGrid = document.getElementById('themes-grid');
+      const activeThemeLabel = document.getElementById('active-theme-name');
+      const COLOR_REGEX = /^#[0-9a-fA-F]{3,8}$/;
+
+      if (!themesGrid) return;
+
+      const themeCards = themesGrid.querySelectorAll('.theme-card');
+
+      themeCards.forEach((card) => {
+        const themeId = card.getAttribute('data-theme-id');
+        const primary = card.getAttribute('data-theme-primary');
+        const whisker = card.getAttribute('data-theme-whisker');
+        const gold = card.getAttribute('data-theme-gold');
+        const dark = card.getAttribute('data-theme-dark');
+
+        function applyTheme() {
+          if (!COLOR_REGEX.test(primary) || !COLOR_REGEX.test(whisker) || !COLOR_REGEX.test(gold)) {
+            console.error('[SECURITY ALERT] Token de color no válido detectado.');
+            return;
+          }
+
+          const root = document.documentElement;
+          root.style.setProperty('--scorch-red', primary);
+          root.style.setProperty('--color-scorch-crimson', primary);
+          root.style.setProperty('--cyber-blue', whisker);
+          root.style.setProperty('--eye-gold', gold);
+          root.style.setProperty('--shadow-color', primary);
+
+          if (activeThemeLabel) {
+            activeThemeLabel.textContent = `${card.querySelector('span')?.textContent?.trim() || themeId} (ACTIVO)`;
+          }
+
+          if (window.playMechanicalClick) window.playMechanicalClick();
+          if (window.showToast) {
+            window.showToast(
+              'TEMA APLICADO',
+              `Paleta "${themeId}" inyectada en variables CSS del núcleo.`,
+              'emerald',
+              2200
+            );
+          }
+        }
+
+        card.addEventListener('click', (e) => {
+          const target = e.target;
+          if (target && target.closest('.copy-css-btn')) {
+            e.stopPropagation();
+            const cssTokens = `:root {\n  --scorch-red: ${primary};\n  --color-scorch-crimson: ${primary};\n  --cyber-blue: ${whisker};\n  --eye-gold: ${gold};\n  --shadow-color: ${primary};\n  --border-width: 2px;\n  --border-radius: 0px;\n}`;
+            navigator.clipboard.writeText(cssTokens).then(() => {
+              if (window.showToast) {
+                window.showToast('CSS COPIADO', `Variables :root para "${themeId}" copiadas.`, 'cyan');
+              }
+            });
+            return;
+          }
+          applyTheme();
+        });
+      });
+    })();
+  </script>
 </BaseLayout>

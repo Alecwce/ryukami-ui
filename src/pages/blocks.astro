@@ -1,120 +1,406 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroBlock from '../blocks/HeroBlock.astro';
+import CtaBlock from '../blocks/CtaBlock.astro';
+import FaqBlock from '../blocks/FaqBlock.astro';
+import FeaturesBlock from '../blocks/FeaturesBlock.astro';
+import LoginBlock from '../blocks/LoginBlock.astro';
+import FooterBlock from '../blocks/FooterBlock.astro';
 import BentoGrid from '../components/BentoGrid.astro';
 import DataTable from '../components/DataTable.astro';
 import TerminalEmulator from '../components/TerminalEmulator.astro';
 import AsciiGenerator from '../components/AsciiGenerator.astro';
-import Callout from '../components/Callout.astro';
-import Button from '../components/Button.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import Badge from '../components/Badge.astro';
+import Icon from '../components/Icon.astro';
+import { BLOCKS_DATA } from '../data/blocks.ts';
 ---
 
 <BaseLayout
-  title="Blocks - Ryukami-UI"
-  description="Bloques modulares de página, pantallas de consola TUI y plantillas listas para copiar en Ryukami-UI."
+  title="Blocks & Templates - Ryukami-UI"
+  description="Bloques modulares de interfaz, autenticación, telemetría y plantillas de página completas listas para copiar en Ryukami-UI."
 >
   <div class="space-y-12">
     <!-- Encabezado de Bloques -->
     <section class="space-y-4 border-b-2 border-black dark:border-slate-700 pb-8 text-center md:text-left">
       <div class="flex items-center justify-center md:justify-start gap-2">
         <span class="w-3 h-3 bg-scorch-gold border border-black inline-block"></span>
-        <span class="text-xs font-mono font-bold uppercase text-scorch-gold-text dark:text-scorch-gold">// MODULAR_PAGE_BLOCKS</span>
+        <span class="text-xs font-mono font-bold uppercase text-scorch-gold-text dark:text-scorch-gold">// 02_MODULAR_BLOCKS_LIBRARY</span>
       </div>
       <h1 class="title-8bit text-3xl sm:text-5xl text-slate-900 dark:text-white">
-        BLOCKS &amp; SHELL
+        BLOCKS &amp; TEMPLATES
       </h1>
-      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 max-w-2xl">
-        Secciones completas de interfaz, dashboards de telemetría y herramientas integradas al estilo 8bitcn para ensamblar páginas completas en minutos.
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-300 max-w-3xl">
+        Pantallas completas, formularios de autenticación, matrices de características, paneles de telemetría y pies de página listos para copiar y pegar estilo <code>8bitcn / shadcn blocks</code>.
       </p>
+
+      <!-- Barra de Filtrado Rápido y Salto de Secciones -->
+      <div class="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 font-mono text-xs">
+        <div class="flex flex-wrap items-center gap-1.5" id="blocks-filter-bar">
+          <button
+            type="button"
+            data-filter="ALL"
+            class="filter-btn btn-brutal bg-scorch-crimson text-white px-3 py-1.5 font-extrabold text-[11px]"
+          >
+            TODOS ({BLOCKS_DATA.length})
+          </button>
+          <button
+            type="button"
+            data-filter="MARKETING"
+            class="filter-btn btn-brutal bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-1.5 font-bold text-[11px]"
+          >
+            MARKETING (4)
+          </button>
+          <button
+            type="button"
+            data-filter="APPLICATION"
+            class="filter-btn btn-brutal bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-1.5 font-bold text-[11px]"
+          >
+            APLICACIÓN (4)
+          </button>
+          <button
+            type="button"
+            data-filter="STUDIO"
+            class="filter-btn btn-brutal bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-1.5 font-bold text-[11px]"
+          >
+            STUDIO &amp; TUI (2)
+          </button>
+        </div>
+
+        <span class="text-[11px] text-slate-600 dark:text-slate-400 font-bold">
+          TOTAL: 10 PLANTILLAS LISTAS
+        </span>
+      </div>
+
+      <!-- Quick Jump Index Pills -->
+      <div class="flex flex-wrap items-center gap-1.5 pt-2">
+        <span class="text-[10px] font-mono uppercase text-slate-500 font-bold shrink-0">IR A:</span>
+        {BLOCKS_DATA.map((block) => (
+          <a
+            href={`#${block.id}`}
+            class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 border border-black dark:border-slate-700 text-[10px] font-mono hover:bg-scorch-gold hover:text-black transition-colors"
+          >
+            #{block.id}
+          </a>
+        ))}
+      </div>
     </section>
 
-    <!-- Block 1: Bento Grid Dashboard -->
-    <section class="space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// BLOCK 01: BENTO TELEMETRY DASHBOARD</h2>
-        <span class="text-xs font-mono bg-black text-scorch-gold px-2 py-0.5 border border-slate-700 font-bold">READY TO USE</span>
-      </div>
-      <BentoGrid
-        columns={3}
-        items={[
-          {
-            title: '0xVAULT // OBSIDIAN_BRIDGE',
-            subtitle: 'W3C DESIGN TOKENS',
-            metric: '35 MÓDULOS',
-            badge: 'SYNCED',
-            description: 'Sincronización bidireccional entre ryukami-ui (/r/tokens.json) y tu bóveda de notas.',
-            span: '2',
-            variant: 'crimson',
-          },
-          {
-            title: '0xSHA256 // INTEGRITY',
-            subtitle: 'SUPPLY CHAIN',
-            metric: '100% PASS',
-            badge: 'VERIFIED',
-            description: 'Auditoría local de integridad criptográfica con ryukami-ui diff.',
-            span: '1',
-            variant: 'cyan',
-          },
-          {
-            title: '0xMCP // AI_SERVER',
-            subtitle: 'JSON-RPC 2.0',
-            metric: 'STDIO READY',
-            badge: 'AGENT',
-            description: 'Servidor MCP integrado para agentes de inteligencia artificial.',
-            span: '1',
-            variant: 'gold',
-          },
-          {
-            title: '0xSCORCH // ZERO_JS',
-            subtitle: 'HTML5 NATIVE DIALOGS',
-            metric: '0 KiB BUNDLE',
-            badge: 'PERF',
-            description: 'Componentes accesibles con dialog nativo y aceleración por GPU.',
-            span: '2',
-            variant: 'emerald',
-          },
-        ]}
-      />
-    </section>
+    <!-- LISTADO DE BLOQUES -->
+    <div id="blocks-container" class="space-y-16">
+      <!-- BLOCK 1: HERO SECTION BLOCK -->
+      <section id="hero" data-category="MARKETING" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-scorch-crimson">// BLOCK 01: HERO HEADER SECTION</span>
+            <Badge variant="crimson">MARKETING</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: button, badge, icon</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">HeroBlock.astro</span>
+          </div>
+        </div>
+        <HeroBlock />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/HeroBlock.astro"
+            language="ASTRO"
+            code={`import HeroBlock from '@/blocks/HeroBlock.astro';\n\n<HeroBlock\n  tag="v2.4 // PRODUCTION READY"\n  title="CONSOLA TUI & SISTEMA NEO-BRUTALISTA"\n  primaryCtaText="EXPLORAR COMPONENTES"\n  primaryCtaHref="/docs/components"\n/>`}
+          />
+        </div>
+      </section>
 
-    <!-- Block 2: Data Table Cluster -->
-    <section class="space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// BLOCK 02: TUI SERVICE REGISTRY TABLE</h2>
-        <span class="text-xs font-mono bg-black text-scorch-cyan px-2 py-0.5 border border-slate-700 font-bold">FILTER &amp; SORT</span>
-      </div>
-      <DataTable
-        title="ACTIVE_CLUSTER_NODES // 0xGRID"
-        columns={[
-          { key: 'service', label: 'Módulo / Servicio' },
-          { key: 'protocol', label: 'Protocolo' },
-          { key: 'uptime', label: 'Uptime' },
-          { key: 'status', label: 'Estado' },
-        ]}
-        rows={[
-          { service: 'PostgreSQL 17.2', protocol: 'tcp://5432', uptime: '99.98%', status: 'ONLINE' },
-          { service: 'Redis 7.2 LTS', protocol: 'tcp://6379', uptime: '100.0%', status: 'ONLINE' },
-          { service: 'Cloudflare Pages CDN', protocol: 'https://ryukami-ui.pages.dev', uptime: '100.0%', status: 'ONLINE' },
-          { service: 'Ryukami MCP Server', protocol: 'jsonrpc://ryukami-ui-mcp', uptime: '100.0%', status: 'STABLE' },
-        ]}
-      />
-    </section>
+      <!-- BLOCK 2: FEATURES MATRIX BLOCK -->
+      <section id="features" data-category="MARKETING" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-emerald-700 dark:text-emerald-400">// BLOCK 02: FEATURES GRID MATRIX</span>
+            <Badge variant="emerald">MARKETING</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">FeaturesBlock.astro</span>
+          </div>
+        </div>
+        <FeaturesBlock />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/FeaturesBlock.astro"
+            language="ASTRO"
+            code={`import FeaturesBlock from '@/blocks/FeaturesBlock.astro';\n\n<FeaturesBlock title="CAPACIDADES DEL NÚCLEO" />`}
+          />
+        </div>
+      </section>
 
-    <!-- Block 3: Interactive TUI Terminal -->
-    <section id="shell" class="space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// BLOCK 03: INTERACTIVE 0xSCORCH_SHELL</h2>
-        <span class="text-xs font-mono bg-black text-emerald-400 px-2 py-0.5 border border-slate-700 font-bold">LIVE CONSOLE</span>
-      </div>
-      <TerminalEmulator />
-    </section>
+      <!-- BLOCK 3: CTA NEWSLETTER & TERMINAL BROADCAST -->
+      <section id="cta" data-category="MARKETING" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-scorch-gold-text dark:text-scorch-gold">// BLOCK 03: CTA CONVERSIÓN &amp; NEWSLETTER</span>
+            <Badge variant="gold">MARKETING</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: button, input, badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">CtaBlock.astro</span>
+          </div>
+        </div>
+        <CtaBlock />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/CtaBlock.astro"
+            language="ASTRO"
+            code={`import CtaBlock from '@/blocks/CtaBlock.astro';\n\n<CtaBlock title="CONVIÉRTETE EN OPERADOR" buttonText="REGISTRAR TTY" />`}
+          />
+        </div>
+      </section>
 
-    <!-- Block 4: ASCII Matrix Forge -->
-    <section class="space-y-4">
-      <div class="flex items-center justify-between">
-        <h2 class="font-pixel text-sm uppercase text-slate-900 dark:text-white">// BLOCK 04: 8-BIT ASCII FORGE</h2>
-        <span class="text-xs font-mono bg-black text-scorch-gold px-2 py-0.5 border border-slate-700 font-bold">ASCII ENGINE</span>
-      </div>
-      <AsciiGenerator />
-    </section>
+      <!-- BLOCK 4: FAQ ACCORDION BLOCK -->
+      <section id="faq" data-category="APPLICATION" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-sky-700 dark:text-scorch-cyan">// BLOCK 04: ACCORDION FAQ BLOCK</span>
+            <Badge variant="cyan">APPLICATION</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: accordion, badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">FaqBlock.astro</span>
+          </div>
+        </div>
+        <FaqBlock />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/FaqBlock.astro"
+            language="ASTRO"
+            code={`import FaqBlock from '@/blocks/FaqBlock.astro';\n\n<FaqBlock />`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 5: AUTHENTICATION / LOGIN BLOCK -->
+      <section id="login" data-category="APPLICATION" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-purple-700 dark:text-purple-400">// BLOCK 05: LOGIN / OPERATOR AUTH FORM</span>
+            <Badge variant="gold">APPLICATION</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: input, button, checkbox, badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">LoginBlock.astro</span>
+          </div>
+        </div>
+        <LoginBlock />
+        <div class="pt-2 max-w-md mx-auto">
+          <CodeBlock
+            filename="src/blocks/LoginBlock.astro"
+            language="ASTRO"
+            code={`import LoginBlock from '@/blocks/LoginBlock.astro';\n\n<LoginBlock title="0xAUTH // ACCESO OPERADOR" />`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 6: BENTO DASHBOARD BLOCK -->
+      <section id="bento" data-category="APPLICATION" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-scorch-crimson">// BLOCK 06: BENTO DASHBOARD MATRIX</span>
+            <Badge variant="crimson">APPLICATION</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: bento-grid</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">BentoGrid.astro</span>
+          </div>
+        </div>
+        <BentoGrid
+          columns={3}
+          items={[
+            {
+              title: '0xVAULT // OBSIDIAN_BRIDGE',
+              subtitle: 'W3C DESIGN TOKENS',
+              metric: '35 MÓDULOS',
+              badge: 'SYNCED',
+              description: 'Sincronización directa entre ryukami-ui y tu bóveda de notas.',
+              span: '2',
+              variant: 'crimson',
+            },
+            {
+              title: '0xSHA256 // INTEGRITY',
+              subtitle: 'SUPPLY CHAIN',
+              metric: '100% PASS',
+              badge: 'VERIFIED',
+              description: 'Auditoría local de integridad con ryukami-ui diff.',
+              span: '1',
+              variant: 'cyan',
+            },
+            {
+              title: '0xMCP // AI_SERVER',
+              subtitle: 'JSON-RPC 2.0',
+              metric: 'STDIO READY',
+              badge: 'AGENT',
+              description: 'Servidor MCP integrado para agentes de inteligencia artificial.',
+              span: '1',
+              variant: 'gold',
+            },
+            {
+              title: '0xSCORCH // ZERO_JS',
+              subtitle: 'HTML5 NATIVE DIALOGS',
+              metric: '0 KiB BUNDLE',
+              badge: 'PERF',
+              description: 'Componentes accesibles con dialog nativo y aceleración por GPU.',
+              span: '2',
+              variant: 'emerald',
+            },
+          ]}
+        />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/components/BentoGrid.astro"
+            language="ASTRO"
+            code={`import BentoGrid from '@/components/BentoGrid.astro';\n\n<BentoGrid\n  columns={3}\n  items={[\n    { title: '0xVAULT', metric: '35 MÓDULOS', span: '2', variant: 'crimson' },\n    { title: '0xSHA256', metric: '100% PASS', span: '1', variant: 'cyan' },\n  ]}\n/>`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 7: DATA TABLE CLUSTER -->
+      <section id="table" data-category="APPLICATION" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-sky-700 dark:text-scorch-cyan">// BLOCK 07: TUI SERVICE REGISTRY TABLE</span>
+            <Badge variant="cyan">APPLICATION</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: data-table, badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">DataTable.astro</span>
+          </div>
+        </div>
+        <DataTable
+          title="ACTIVE_CLUSTER_NODES // 0xGRID"
+          columns={[
+            { key: 'service', label: 'Módulo / Servicio' },
+            { key: 'protocol', label: 'Protocolo' },
+            { key: 'uptime', label: 'Uptime' },
+            { key: 'status', label: 'Estado' },
+          ]}
+          rows={[
+            { service: 'PostgreSQL 17.2', protocol: 'tcp://5432', uptime: '99.98%', status: 'ONLINE' },
+            { service: 'Redis 7.2 LTS', protocol: 'tcp://6379', uptime: '100.0%', status: 'ONLINE' },
+            { service: 'Cloudflare Pages CDN', protocol: 'https://ryukami-ui.pages.dev', uptime: '100.0%', status: 'ONLINE' },
+            { service: 'Ryukami MCP Server', protocol: 'jsonrpc://ryukami-ui-mcp', uptime: '100.0%', status: 'STABLE' },
+          ]}
+        />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/components/DataTable.astro"
+            language="ASTRO"
+            code={`import DataTable from '@/components/DataTable.astro';\n\n<DataTable\n  title="ACTIVE_CLUSTER_NODES"\n  columns={[{ key: 'service', label: 'Servicio' }, { key: 'status', label: 'Estado' }]}\n  rows={[{ service: 'PostgreSQL 17.2', status: 'ONLINE' }]}\n/>`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 8: INTERACTIVE TUI TERMINAL -->
+      <section id="shell" data-category="STUDIO" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-emerald-700 dark:text-emerald-400">// BLOCK 08: LIVE TUI 0xSCORCH_SHELL</span>
+            <Badge variant="emerald">STUDIO</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: terminal-emulator</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">TerminalEmulator.astro</span>
+          </div>
+        </div>
+        <TerminalEmulator />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/components/TerminalEmulator.astro"
+            language="ASTRO"
+            code={`import TerminalEmulator from '@/components/TerminalEmulator.astro';\n\n<TerminalEmulator />`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 9: ASCII FORGE -->
+      <section id="ascii" data-category="STUDIO" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-scorch-gold-text dark:text-scorch-gold">// BLOCK 09: 8-BIT ASCII FORGE ENGINE</span>
+            <Badge variant="gold">STUDIO</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: ascii-generator</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">AsciiGenerator.astro</span>
+          </div>
+        </div>
+        <AsciiGenerator />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/components/AsciiGenerator.astro"
+            language="ASTRO"
+            code={`import AsciiGenerator from '@/components/AsciiGenerator.astro';\n\n<AsciiGenerator />`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 10: BRUTALIST FOOTER -->
+      <section id="footer" data-category="MARKETING" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-slate-700 dark:text-slate-300">// BLOCK 10: NEO-BRUTALIST MULTI-COLUMN FOOTER</span>
+            <Badge variant="cyan">MARKETING</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: badge</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">FooterBlock.astro</span>
+          </div>
+        </div>
+        <FooterBlock />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/FooterBlock.astro"
+            language="ASTRO"
+            code={`import FooterBlock from '@/blocks/FooterBlock.astro';\n\n<FooterBlock version="v2.4.0" />`}
+          />
+        </div>
+      </section>
+    </div>
   </div>
+
+  <!-- Script de Filtrado Interactivo de Bloques -->
+  <script is:inline>
+    (function () {
+      const filterBar = document.getElementById('blocks-filter-bar');
+      const cards = document.querySelectorAll('.block-card');
+      if (!filterBar || cards.length === 0) return;
+
+      const filterBtns = filterBar.querySelectorAll('.filter-btn');
+
+      filterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (window.playMechanicalClick) window.playMechanicalClick();
+
+          const targetFilter = btn.getAttribute('data-filter') || 'ALL';
+
+          // Actualizar estado visual de los botones
+          filterBtns.forEach((b) => {
+            if (b === btn) {
+              b.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-slate-100', 'font-bold');
+              b.classList.add('bg-scorch-crimson', 'text-white', 'font-extrabold');
+            } else {
+              b.classList.remove('bg-scorch-crimson', 'text-white', 'font-extrabold');
+              b.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-900', 'dark:text-slate-100', 'font-bold');
+            }
+          });
+
+          // Filtrar las tarjetas de bloques
+          cards.forEach((card) => {
+            const cardCategory = card.getAttribute('data-category') || '';
+            if (targetFilter === 'ALL' || cardCategory === targetFilter) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    })();
+  </script>
 </BaseLayout>

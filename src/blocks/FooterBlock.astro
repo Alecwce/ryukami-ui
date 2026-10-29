@@ -1,0 +1,65 @@
+---
+import Badge from '../components/Badge.astro';
+
+export interface Props {
+  version?: string;
+  class?: string;
+}
+
+const {
+  version = 'v2.4.0',
+  class: className = '',
+} = Astro.props;
+---
+
+<footer class={`tui-window p-6 sm:p-8 font-mono text-xs space-y-6 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 shadow-brutal ${className}`}>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 border-b-2 border-black dark:border-slate-700 pb-6">
+    <div class="space-y-2 md:col-span-1">
+      <div class="flex items-center gap-2">
+        <span class="bg-scorch-crimson text-white px-2 py-0.5 border border-black font-extrabold text-[11px]">
+          RYUKAMI-UI
+        </span>
+        <Badge variant="gold">{version}</Badge>
+      </div>
+      <p class="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed">
+        Librería Neo-Brutalista y Retro TUI para Astro 7, Tailwind v4 y TypeScript 7.
+      </p>
+    </div>
+
+    <div class="space-y-2">
+      <h4 class="font-extrabold text-xs uppercase text-scorch-crimson">// NAVEGACIÓN</h4>
+      <ul class="space-y-1 text-[11px]">
+        <li><a href="/docs" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Documentación</a></li>
+        <li><a href="/docs/components" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Componentes (35)</a></li>
+        <li><a href="/blocks" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Bloques</a></li>
+        <li><a href="/themes" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Temas</a></li>
+      </ul>
+    </div>
+
+    <div class="space-y-2">
+      <h4 class="font-extrabold text-xs uppercase text-sky-700 dark:text-scorch-cyan">// RECURSOS</h4>
+      <ul class="space-y-1 text-[11px]">
+        <li><a href="/r/registry.json" target="_blank" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Registry JSON</a></li>
+        <li><a href="/r/tokens.json" target="_blank" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; W3C Tokens</a></li>
+        <li><a href="/llms.txt" target="_blank" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; llms.txt (IA)</a></li>
+        <li><a href="/docs/mcp" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Servidor MCP</a></li>
+      </ul>
+    </div>
+
+    <div class="space-y-2">
+      <h4 class="font-extrabold text-xs uppercase text-emerald-700 dark:text-emerald-400">// COMUNIDAD</h4>
+      <ul class="space-y-1 text-[11px]">
+        <li><a href="https://github.com/Alecwce/ryukami-ui" target="_blank" rel="noopener noreferrer" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; GitHub Repository</a></li>
+        <li><a href="https://github.com/Alecwce/ryukami-ui/issues" target="_blank" rel="noopener noreferrer" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; Reportar Issue</a></li>
+        <li><a href="/docs/cli" class="hover:underline font-bold text-slate-700 dark:text-slate-300">&gt; ryukami-ui CLI</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-slate-600 dark:text-slate-400">
+    <p>MIT License 2026 · Ryukami Labs (竜神) · Scorch Design System v4.1</p>
+    <a href="#hero" class="btn-brutal bg-slate-100 dark:bg-slate-800 text-black dark:text-white px-2.5 py-1 text-[10px] font-extrabold">
+      ^ VOLVER ARRIBA
+    </a>
+  </div>
+</footer>

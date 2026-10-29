@@ -1,0 +1,68 @@
+---
+import Accordion from '../components/Accordion.astro';
+import Badge from '../components/Badge.astro';
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  badge?: string;
+  open?: boolean;
+}
+
+export interface Props {
+  title?: string;
+  items?: FaqItem[];
+  class?: string;
+}
+
+const {
+  title = 'PREGUNTAS FRECUENTES (FAQ)',
+  items = [
+    {
+      question: '¿Por qué cero border-radius (0px) en todo el sistema?',
+      badge: 'REGLA #1',
+      answer: 'El Neo-Brutalismo prescinde de curvas para emular la precisión táctil de consolas industriales y terminales CRT clásicas.',
+      open: true,
+    },
+    {
+      question: '¿Cómo funciona la instalación vía CLI ryukami-ui?',
+      badge: 'CLI ENGINE',
+      answer: 'Ejecutas "ryukami-ui add <componente>" y el CLI descarga el código Astro directamente a tu directorio src/components/ verificando su hash criptográfico SHA-256.',
+    },
+    {
+      question: '¿Se requiere JavaScript en el cliente para los diálogos?',
+      badge: 'NATIVE HTML5',
+      answer: 'No. Componentes como Modal, Drawer y Popover utilizan las APIs estándar <dialog closedby="any"> y popover="auto" con cero dependencias externas.',
+    },
+    {
+      question: '¿Cómo se integra el servidor MCP con agentes de IA?',
+      badge: 'MCP PROTOCOL',
+      answer: 'Corriendo "ryukami-ui mcp", el CLI expone un servidor JSON-RPC 2.0 por stdio para herramientas como Claude, Antigravity y OpenCode.',
+    },
+  ],
+  class: className = '',
+} = Astro.props;
+
+const accordionItems = items.map((i) => ({
+  title: i.question,
+  badge: i.badge,
+  content: i.answer,
+  open: i.open,
+}));
+---
+
+<div class={`space-y-4 font-mono text-xs ${className}`}>
+  <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 bg-scorch-cyan border border-black inline-block"></span>
+      <Badge variant="cyan">FAQ_DATABASE</Badge>
+    </div>
+    <span class="text-[10px] text-slate-500 font-bold">{items.length} ITEMS // ACCESSIBLE</span>
+  </div>
+
+  <h3 class="font-extrabold text-base sm:text-lg uppercase text-slate-900 dark:text-white">
+    {title}
+  </h3>
+
+  <Accordion name="blocks-faq-accordion" items={accordionItems} />
+</div>

@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T02:14:11.396Z",
+  "updatedAt": "2026-10-29T11:43:11.561Z",
   "totalItems": 35,
   "items": [
     {
@@ -276,7 +276,7 @@
       "registryDependencies": [
         "kbd"
       ],
-      "sha256": "5e0562cf6388c9671db0c974e024b19aa413acb72ad74d46a7f13abcf1d990e9",
+      "sha256": "8aa6881d29a909183849ba09b91778fb5772d2e7ccf325fde33af3c228657c65",
       "endpoint": "/r/command-palette.json",
       "target": "src/components/CommandPalette.astro"
     },

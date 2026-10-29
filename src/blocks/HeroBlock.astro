@@ -1,0 +1,61 @@
+---
+import Button from '../components/Button.astro';
+import Badge from '../components/Badge.astro';
+import Icon from '../components/Icon.astro';
+
+export interface Props {
+  tag?: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  primaryCtaText?: string;
+  primaryCtaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  class?: string;
+}
+
+const {
+  tag = 'v2.4 // PRODUCTION READY',
+  title = 'CONSOLA TUI & SISTEMA NEO-BRUTALISTA',
+  subtitle = 'ARQUITECTURA DE SOFTWARE MODERNO',
+  description = 'Componentes sólidos con esquinas de 0px, bordes de 2px, sombras duras hacia abajo-izquierda y síntesis acústica en tiempo real con Web Audio API.',
+  primaryCtaText = 'EXPLORAR COMPONENTES',
+  primaryCtaHref = '/docs/components',
+  secondaryCtaText = 'VER GUÍA CLI',
+  secondaryCtaHref = '/docs/cli',
+  class: className = '',
+} = Astro.props;
+---
+
+<div class={`tui-window p-6 sm:p-10 font-mono text-xs space-y-6 ${className}`}>
+  <div class="flex items-center justify-between border-b-2 border-black dark:border-slate-700 pb-3">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
+      <Badge variant="crimson">{tag}</Badge>
+    </div>
+    <span class="text-[10px] text-slate-500 font-bold hidden sm:inline">HERO_BLOCK // 01</span>
+  </div>
+
+  <div class="space-y-4 max-w-3xl">
+    <h2 class="title-8bit text-2xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white leading-tight">
+      {title}
+    </h2>
+    <p class="subtitle-pixel text-xs sm:text-sm text-scorch-crimson font-extrabold tracking-wider">
+      // {subtitle}
+    </p>
+    <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+      {description}
+    </p>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-3 pt-2">
+    <Button variant="crimson" size="md" href={primaryCtaHref}>
+      <span>&gt; {primaryCtaText}</span>
+    </Button>
+    <Button variant="outline" size="md" href={secondaryCtaHref}>
+      <Icon name="terminal" class="w-3.5 h-3.5 mr-1 inline-block" />
+      <span>{secondaryCtaText}</span>
+    </Button>
+  </div>
+</div>

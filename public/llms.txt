@@ -1,6 +1,6 @@
 # Ryukami-UI (v2.4.0)
 
-> Librería de 35 componentes Neo-Brutalistas y Retro TUI inspirada en Velgrynd Scorch Lore para Astro 7, Tailwind CSS v4 y TypeScript 7. Incluye CLI propio de instalación (`ryukami-ui`), verificador SHA-256 (`ryukami-ui diff`), servidor MCP nativo (`ryukami-ui mcp`) y registro estático en formato JSON (`/r/registry.json` y `/r/tokens.json`).
+> Librería de 35 componentes Neo-Brutalistas, 10 bloques de página modulares y 6 temas con presets de color para Astro 7, Tailwind CSS v4 y TypeScript 7. Incluye CLI propio (`ryukami-ui`), servidor MCP nativo (`ryukami-ui mcp`), auditor de integridad SHA-256 (`ryukami-ui diff`) y endpoints W3C (`/r/tokens.json`).
 
 ## Resumen y Filosofía
 - **Framework:** Astro 7.4.0 (Vite 8 + Rolldown, 0 KiB JS bundles externos).
@@ -8,6 +8,16 @@
 - **Diseño:** Neo-Brutalismo con esquinas de `0px`, bordes negros de `2px`, sombras duras de `-4px 4px 0px 0px`, controles de ventana geométricos `[ - ][ □ ][ × ]`.
 - **Repositorio Oficial:** https://github.com/Alecwce/ryukami-ui
 - **Sitio en Producción:** https://ryukami-ui.pages.dev
+
+## Arquitectura de Rutas Web (Paridad 8bitcn / shadcn)
+- `/` — Portada interactiva con terminal y catálogo en vivo.
+- `/docs` — Introducción y guía de inicio rápido.
+- `/docs/cli` — Referencia completa del CLI (`init`, `add`, `list`, `diff`, `mcp`).
+- `/docs/mcp` — Especificación de integración del protocolo MCP para agentes de IA.
+- `/docs/components` — Catálogo navegable de los 35 componentes con vista previa y propiedades.
+- `/docs/components/[slug]` — Páginas dedicadas por componente (`/button`, `/modal`, `/drawer`, `/bento-grid`, etc.).
+- `/blocks` — Galería de 10 bloques modulares (Hero, Features, CTA, FAQ, Login, Bento, DataTable, Shell, ASCII, Footer).
+- `/themes` — Laboratorio de temas y 6 presets nombrados con copiado de tokens CSS y W3C tokens.
 
 ## Instalación del CLI, Registro y Servidor MCP
 
@@ -64,7 +74,7 @@ ryukami-ui mcp
 12. `select` (`src/components/Select.astro`): Selector desplegable brutalista con prefijo OPT // e indicador mecánico.
 13. `slider` (`src/components/Slider.astro`): Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.
 14. `radio-group` (`src/components/RadioGroup.astro`): Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).
-15. `checkbox` (`src/components/Checkbox.astro`): Casilla de verificación cuadrada con marca pixel-art (✕) y descripción.
+15. `checkbox` (`src/components/Checkbox.astro`): Casilla de verificación cuadrada con marca pixel-art (X) y descripción.
 16. `switch` (`src/components/Switch.astro`): Interruptor táctil deslizante (role="switch") con variantes crimson, cyan y gold.
 17. `tabs` (`src/components/Tabs.astro`): Paneles multipestaña TUI con navegación por flechas de teclado y sonido mecánico.
 18. `accordion` (`src/components/Accordion.astro`): Acordeón exclusivo nativo con `<details name="...">` accesible y buscable en página.
@@ -85,3 +95,15 @@ ryukami-ui mcp
 33. `component-preview` (`src/components/ComponentPreview.astro`): Visor interactivo `[ PREVIEW | CODE | PROPS ]` con botón de copiado de CLI y código en 1 clic.
 34. `theme-studio` (`src/components/ThemeStudio.astro`): Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.
 35. `ascii-generator` (`src/components/AsciiGenerator.astro`): Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.
+
+## Galería de Bloques Modulares (`src/blocks/` y `/blocks`)
+1. `HeroBlock` (`src/blocks/HeroBlock.astro`): Sección de cabecera con llamadas de acción dobles y badges TUI.
+2. `FeaturesBlock` (`src/blocks/FeaturesBlock.astro`): Cuadrícula de capacidades con glifos geométricos.
+3. `CtaBlock` (`src/blocks/CtaBlock.astro`): Boletín y suscripción de terminal con validación en vivo.
+4. `FaqBlock` (`src/blocks/FaqBlock.astro`): Preguntas frecuentes con HTML5 details nativo.
+5. `LoginBlock` (`src/blocks/LoginBlock.astro`): Formulario de autenticación de operador con prefijos id:// y key://.
+6. `BentoGrid`: Tablero bento asimétrico de telemetría.
+7. `DataTable`: Clúster de servicios con filtrado y ordenamiento interactivo.
+8. `TerminalEmulator`: Consola de comandos TUI con respuesta inmediata.
+9. `AsciiGenerator`: Motor de generación ASCII con copiado al portapapeles.
+10. `FooterBlock` (`src/blocks/FooterBlock.astro`): Pie de página neo-brutalista de 4 columnas.
