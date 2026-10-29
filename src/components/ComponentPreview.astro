@@ -1,16 +1,20 @@
 ---
 import Icon from './Icon.astro';
 import type { PropItem } from '../data/component-props';
+import { getMultiFrameworkSnippets, FRAMEWORK_METADATA } from '../data/multi-framework';
 
 interface Props {
   title: string;
   code: string;
+  slug?: string;
   status?: string;
   cli?: string;
   propsDoc?: PropItem[];
 }
 
-const { title, code, status = "ASCII READY", cli, propsDoc } = Astro.props;
+const { title, code, slug: propSlug, status = "ASCII READY", cli, propsDoc } = Astro.props;
+const derivedSlug = propSlug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const snippets = getMultiFrameworkSnippets(derivedSlug, code);
 const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
@@ -81,17 +85,89 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
     </div>
   </div>
 
-  <!-- Vista Código Container (Oculto por defecto) -->
-  <div class="code-content hidden p-4 bg-[#070A0F] text-slate-100 font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800">
-    <div class="min-w-full inline-block">
-      {code.trim().split('\n').map((line, i) => (
-        <div class="flex items-baseline leading-5 font-mono">
-          <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
-            {String(i + 1).padStart(2, '0')}
-          </span>
-          <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
+  <!-- Vista Código Multi-Framework Container (Oculto por defecto) -->
+  <div
+    class="code-content hidden bg-[#070A0F] font-mono text-xs overflow-x-auto border-t-2 border-black dark:border-slate-800"
+    data-astro-code={snippets.astro}
+    data-react-code={snippets.react}
+    data-html-code={snippets.html}
+    data-astro-file={FRAMEWORK_METADATA.astro.getFilename(derivedSlug)}
+    data-react-file={FRAMEWORK_METADATA.react.getFilename(derivedSlug)}
+    data-html-file={FRAMEWORK_METADATA.html.getFilename(derivedSlug)}
+  >
+    <!-- Selector de Framework (Astro / React TSX / Tailwind HTML) -->
+    <div class="code-framework-bar px-3 py-2 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] select-none">
+      <div class="flex items-center gap-2">
+        <span class="text-slate-500 font-bold uppercase text-[10px]">// FRAMEWORK:</span>
+        <div class="inline-flex bg-black border border-slate-700 p-0.5">
+          <button
+            type="button"
+            class="framework-tab-btn active px-2.5 py-0.5 font-bold text-white bg-scorch-crimson border border-black cursor-pointer text-[10px]"
+            data-framework="astro"
+          >
+            ASTRO
+          </button>
+          <button
+            type="button"
+            class="framework-tab-btn px-2.5 py-0.5 font-bold text-slate-300 hover:text-white cursor-pointer text-[10px]"
+            data-framework="react"
+          >
+            REACT (TSX)
+          </button>
+          <button
+            type="button"
+            class="framework-tab-btn px-2.5 py-0.5 font-bold text-slate-300 hover:text-white cursor-pointer text-[10px]"
+            data-framework="html"
+          >
+            HTML / CSS
+          </button>
         </div>
-      ))}
+      </div>
+      <span class="framework-filename text-[10px] text-slate-400 font-bold hidden sm:inline">
+        {FRAMEWORK_METADATA.astro.getFilename(derivedSlug)}
+      </span>
+    </div>
+
+    <!-- 1. Astro Code Pane -->
+    <div class="framework-pane framework-pane-astro p-4">
+      <div class="min-w-full inline-block">
+        {snippets.astro.trim().split('\n').map((line, i) => (
+          <div class="flex items-baseline leading-5 font-mono">
+            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 2. React Code Pane -->
+    <div class="framework-pane framework-pane-react hidden p-4">
+      <div class="min-w-full inline-block">
+        {snippets.react.trim().split('\n').map((line, i) => (
+          <div class="flex items-baseline leading-5 font-mono">
+            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- 3. HTML Code Pane -->
+    <div class="framework-pane framework-pane-html hidden p-4">
+      <div class="min-w-full inline-block">
+        {snippets.html.trim().split('\n').map((line, i) => (
+          <div class="flex items-baseline leading-5 font-mono">
+            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 
@@ -217,8 +293,10 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
 
         try {
           await navigator.clipboard.writeText(textToCopy);
+          const currentFw = localStorage.getItem('ryukami-framework') || 'astro';
+          const fwLabel = currentFw === 'react' ? 'React (TSX)' : currentFw === 'html' ? 'HTML / Tailwind' : 'Astro';
           if ((window as any).showToast) {
-            (window as any).showToast('SNIPPET COPIADO', 'Código Astro copiado al portapapeles.', 'emerald', 2800);
+            (window as any).showToast('SNIPPET COPIADO', `Código ${fwLabel} copiado al portapapeles.`, 'emerald', 2800);
           } else if ((window as any).playTerminalBeep) {
             (window as any).playTerminalBeep(980, 0.08);
           }
@@ -241,5 +319,74 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
         }
       });
     }
+
+    // Controlador Multi-Framework (Astro / React TSX / Tailwind HTML)
+    const frameworkBtns = container.querySelectorAll('.framework-tab-btn');
+    const frameworkPanes: Record<string, Element | null> = {
+      astro: container.querySelector('.framework-pane-astro'),
+      react: container.querySelector('.framework-pane-react'),
+      html: container.querySelector('.framework-pane-html'),
+    };
+    const frameworkFilename = container.querySelector('.framework-filename');
+
+    function switchFramework(fw: string) {
+      frameworkBtns.forEach((btn) => {
+        const isCurrent = btn.getAttribute('data-framework') === fw;
+        btn.classList.toggle('active', isCurrent);
+        btn.classList.toggle('bg-scorch-crimson', isCurrent);
+        btn.classList.toggle('text-white', isCurrent);
+        btn.classList.toggle('border', isCurrent);
+        btn.classList.toggle('border-black', isCurrent);
+        btn.classList.toggle('text-slate-300', !isCurrent);
+      });
+
+      Object.keys(frameworkPanes).forEach((key) => {
+        const pane = frameworkPanes[key];
+        if (pane) {
+          pane.classList.toggle('hidden', key !== fw);
+        }
+      });
+
+      if (codeContent) {
+        const codeMap: Record<string, string | null> = {
+          astro: codeContent.getAttribute('data-astro-code'),
+          react: codeContent.getAttribute('data-react-code'),
+          html: codeContent.getAttribute('data-html-code'),
+        };
+        const fileMap: Record<string, string | null> = {
+          astro: codeContent.getAttribute('data-astro-file'),
+          react: codeContent.getAttribute('data-react-file'),
+          html: codeContent.getAttribute('data-html-file'),
+        };
+        if (copyBtn && codeMap[fw]) {
+          copyBtn.setAttribute('data-code', codeMap[fw] || '');
+        }
+        if (frameworkFilename && fileMap[fw]) {
+          frameworkFilename.textContent = fileMap[fw] || '';
+        }
+      }
+    }
+
+    frameworkBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const fw = btn.getAttribute('data-framework');
+        if (!fw) return;
+        if ((window as any).playMechanicalClick) (window as any).playMechanicalClick();
+        switchFramework(fw);
+        try {
+          localStorage.setItem('ryukami-framework', fw);
+        } catch (e) {}
+        window.dispatchEvent(new CustomEvent('ryukami:framework-change', { detail: { framework: fw } }));
+      });
+    });
+
+    const savedFw = localStorage.getItem('ryukami-framework') || 'astro';
+    switchFramework(savedFw);
+
+    window.addEventListener('ryukami:framework-change', (e: any) => {
+      if (e.detail && e.detail.framework) {
+        switchFramework(e.detail.framework);
+      }
+    });
   });
 </script>

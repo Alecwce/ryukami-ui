@@ -4,6 +4,7 @@ import ComponentPreview from '../../../components/ComponentPreview.astro';
 import CodeBlock from '../../../components/CodeBlock.astro';
 import Callout from '../../../components/Callout.astro';
 import { REGISTRY_COMPONENTS, getComponentNeighbors } from '../../../data/registry';
+import { getMultiFrameworkSnippets, FRAMEWORK_METADATA } from '../../../data/multi-framework';
 
 // Importar todos los 35 componentes de src/components/*.astro para renderizarlos en la vista previa
 import Button from '../../../components/Button.astro';
@@ -101,6 +102,7 @@ function getCleanUsageSnippet(slug: string, rawSnippet: string): string {
 }
 
 const cleanUsageCode = getCleanUsageSnippet(comp.slug, comp.codeSnippet);
+const snippetsByFramework = getMultiFrameworkSnippets(comp.slug, cleanUsageCode);
 ---
 
 <DocsLayout
@@ -136,6 +138,7 @@ const cleanUsageCode = getCleanUsageSnippet(comp.slug, comp.codeSnippet);
       <ComponentPreview
         title={comp.title.toUpperCase()}
         code={cleanUsageCode}
+        slug={comp.slug}
         status={comp.status}
         cli={comp.cli}
         propsDoc={comp.propsDoc}
@@ -456,19 +459,128 @@ const cleanUsageCode = getCleanUsageSnippet(comp.slug, comp.codeSnippet);
       />
     </section>
 
-    <!-- 3. Uso en Astro -->
+    <!-- 3. Código de Uso Multi-Framework (Astro / React TSX / Tailwind HTML) -->
     <section id="usage" class="space-y-3">
-      <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
-        <h2 class="font-mono font-extrabold text-sm uppercase text-slate-900 dark:text-white">// CÓDIGO DE USO</h2>
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-black dark:border-slate-700 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>
+          <h2 class="font-mono font-extrabold text-sm uppercase text-slate-900 dark:text-white">// CÓDIGO DE USO</h2>
+        </div>
+        <div class="inline-flex bg-black border border-slate-700 p-0.5 text-xs font-mono" id="doc-framework-switcher">
+          <button
+            type="button"
+            class="doc-framework-btn active px-2.5 py-1 font-bold text-white bg-scorch-crimson border border-black cursor-pointer text-[11px]"
+            data-target="astro"
+          >
+            ASTRO
+          </button>
+          <button
+            type="button"
+            class="doc-framework-btn px-2.5 py-1 font-bold text-slate-300 hover:text-white cursor-pointer text-[11px]"
+            data-target="react"
+          >
+            REACT (TSX)
+          </button>
+          <button
+            type="button"
+            class="doc-framework-btn px-2.5 py-1 font-bold text-slate-300 hover:text-white cursor-pointer text-[11px]"
+            data-target="html"
+          >
+            HTML / TAILWIND
+          </button>
+        </div>
       </div>
-      <CodeBlock
-        filename="src/pages/ejemplo.astro"
-        language="ASTRO"
-        showLineNumbers={true}
-        code={cleanUsageCode}
-      />
+
+      <!-- Contenedor Astro -->
+      <div id="usage-code-astro" class="doc-code-block">
+        <CodeBlock
+          filename={`src/pages/${comp.slug}-demo.astro`}
+          language="ASTRO"
+          showLineNumbers={true}
+          code={snippetsByFramework.astro}
+        />
+      </div>
+
+      <!-- Contenedor React -->
+      <div id="usage-code-react" class="doc-code-block hidden">
+        <CodeBlock
+          filename={`src/components/${getComponentImportName(comp.slug)}.tsx`}
+          language="TSX // REACT"
+          showLineNumbers={true}
+          code={snippetsByFramework.react}
+        />
+      </div>
+
+      <!-- Contenedor HTML -->
+      <div id="usage-code-html" class="doc-code-block hidden">
+        <CodeBlock
+          filename={`public/${comp.slug}-snippet.html`}
+          language="HTML // TAILWIND"
+          showLineNumbers={true}
+          code={snippetsByFramework.html}
+        />
+      </div>
     </section>
+
+    <script is:inline>
+      (function () {
+        const switcher = document.getElementById('doc-framework-switcher');
+        if (!switcher) return;
+
+        const btns = Array.from(switcher.querySelectorAll('.doc-framework-btn'));
+        const blocks = {
+          astro: document.getElementById('usage-code-astro'),
+          react: document.getElementById('usage-code-react'),
+          html: document.getElementById('usage-code-html'),
+        };
+
+        function setDocFramework(target) {
+          btns.forEach((btn) => {
+            const isCurrent = btn.getAttribute('data-target') === target;
+            btn.classList.toggle('active', isCurrent);
+            btn.classList.toggle('bg-scorch-crimson', isCurrent);
+            btn.classList.toggle('text-white', isCurrent);
+            btn.classList.toggle('border', isCurrent);
+            btn.classList.toggle('border-black', isCurrent);
+            btn.classList.toggle('text-slate-300', !isCurrent);
+          });
+
+          Object.keys(blocks).forEach((key) => {
+            if (blocks[key]) {
+              blocks[key].classList.toggle('hidden', key !== target);
+            }
+          });
+
+          try {
+            localStorage.setItem('ryukami-framework', target);
+          } catch (e) {}
+
+          window.dispatchEvent(new CustomEvent('ryukami:framework-change', { detail: { framework: target } }));
+        }
+
+        btns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target');
+            if (target) {
+              setDocFramework(target);
+              if (window.playMechanicalClick) window.playMechanicalClick();
+            }
+          });
+        });
+
+        const initialFw = localStorage.getItem('ryukami-framework') || 'astro';
+        setDocFramework(initialFw);
+
+        window.addEventListener('ryukami:framework-change', (e) => {
+          if (e.detail && e.detail.framework && blocks[e.detail.framework]) {
+            const currentActive = btns.find((b) => b.classList.contains('active'))?.getAttribute('data-target');
+            if (currentActive !== e.detail.framework) {
+              setDocFramework(e.detail.framework);
+            }
+          }
+        });
+      })();
+    </script>
 
     <!-- Navegación Anterior / Siguiente (Estilo 8bitcn / shadcn) -->
     <div class="flex flex-wrap items-center justify-between gap-4 pt-8 border-t-2 border-black dark:border-slate-700 font-mono text-xs">
