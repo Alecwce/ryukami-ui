@@ -8,8 +8,8 @@ Guía directa para agentes de IA que editen o amplíen este repositorio.
 - **Comandos del Proyecto:**
   - `pnpm dev` — Regenera `public/r/*.json` e inicia servidor en `http://localhost:4321`
   - `pnpm build` — Regenera `public/r/*.json` y compila producción estática en `dist/`
-  - `pnpm registry:build` — Ejecuta `scripts/build-registry.mjs` para actualizar los endpoints JSON del CLI (`35` módulos + `styles.json` + `tokens.json`)
-  - `pnpm test` — Ejecuta la suite nativa `node:test` (`tests/security.test.mjs`)
+  - `pnpm registry:build` — Ejecuta `scripts/build-registry.ts` para actualizar los endpoints JSON del CLI (`35` módulos + `styles.json` + `tokens.json`)
+  - `pnpm test` — Ejecuta la suite nativa `node:test` (`tests/security.test.ts`)
   - `pnpm preview --port 4321 --host` — Servidor de producción local
 - **Comandos del CLI (`bin/ryukami-ui.mjs` / `ryukami-ui` v2.4.0):**
   - `ryukami-ui list` — Lista los **35 componentes** del registro
@@ -36,7 +36,7 @@ Guía directa para agentes de IA que editen o amplíen este repositorio.
 
 ## 3. Convenciones de Componentes y Registro (`src/components/*.astro`)
 - Define siempre `export interface Props` en el frontmatter de cada componente `.astro`.
-- Si creas un nuevo componente reutilizable en `src/components/`, regístralo en `scripts/build-registry.mjs` y ejecuta `pnpm registry:build` para publicar su JSON en `public/r/<nombre>.json`.
+- Si creas un nuevo componente reutilizable en `src/components/`, regístralo en `scripts/build-registry.ts` y ejecuta `pnpm registry:build` para publicar su JSON en `public/r/<nombre>.json`.
 - Para modales o paneles laterales usa `<dialog closedby="any">` nativo con `overscroll-behavior: contain`.
 - Helpers globales en el cliente:
   - `window.showToast(title, message, variant, duration)`

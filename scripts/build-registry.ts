@@ -13,7 +13,33 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const OUT_DIR = path.join(ROOT_DIR, 'public', 'r');
 
-const ITEMS = [
+export interface RegistryItemDef {
+  name: string;
+  title: string;
+  category: '01_CORE_UI' | '02_FORM_CONTROLS' | '03_LAYOUT_AND_MODALS' | '04_SCORCH_STUDIO';
+  description: string;
+  file: string;
+  registryDependencies: string[];
+}
+
+export interface CompiledFile {
+  path: string;
+  type: string;
+  content: string;
+  sha256: string;
+}
+
+export interface ComponentPayload {
+  name: string;
+  type: string;
+  title: string;
+  category: string;
+  description: string;
+  files: CompiledFile[];
+  registryDependencies: string[];
+}
+
+const ITEMS: RegistryItemDef[] = [
   {
     name: 'button',
     title: 'Button',

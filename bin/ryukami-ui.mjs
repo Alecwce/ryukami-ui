@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 /**
  * RYUKAMI-UI CLI v2.4.0 // Scorch Design System Component Installer & MCP Server
  * Uso:
