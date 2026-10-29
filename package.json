@@ -24,6 +24,13 @@
   "bin": {
     "ryukami-ui": "./bin/ryukami-ui.mjs"
   },
+  "files": [
+    "bin",
+    "public/r",
+    "README.md",
+    "LICENSE",
+    "AGENTS.md"
+  ],
   "scripts": {
     "test": "node --test tests/**/*.test.mjs",
     "dev": "node scripts/build-registry.mjs && astro dev",
