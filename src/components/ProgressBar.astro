@@ -3,10 +3,13 @@ export interface Props {
   label: string;
   value: number;
   max?: number;
-  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald';
+  variant?: 'crimson' | 'cyan' | 'gold' | 'emerald' | 'health' | 'mana' | 'xp' | 'stamina';
   showAscii?: boolean;
   status?: string;
   id?: string;
+  levelUpMessage?: string;
+  pixelCorners?: boolean;
+  class?: string;
 }
 
 const {
@@ -17,6 +20,9 @@ const {
   showAscii = true,
   status,
   id,
+  levelUpMessage = '[ ! ] LEVEL UP!',
+  pixelCorners = false,
+  class: className = '',
 } = Astro.props;
 
 const pct = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
@@ -24,22 +30,31 @@ const totalBlocks = 16;
 const filledBlocks = Math.round((pct / 100) * totalBlocks);
 const asciiBar = `[${'█'.repeat(filledBlocks)}${'░'.repeat(totalBlocks - filledBlocks)}]`;
 
-const colorMap = {
+const colorMap: Record<string, string> = {
   crimson: 'bg-scorch-crimson',
   cyan: 'bg-scorch-cyan',
   gold: 'bg-scorch-gold',
   emerald: 'bg-emerald-500',
+  health: 'bg-scorch-crimson',
+  mana: 'bg-scorch-cyan',
+  xp: 'bg-scorch-gold',
+  stamina: 'bg-emerald-500',
 };
 ---
 
-<div class="space-y-1.5 font-mono text-xs" data-progress-root id={id}>
+<div class={`space-y-1.5 font-mono text-xs ${className}`} data-progress-root id={id}>
   <div class="flex justify-between items-center gap-2">
-    <div class="flex items-center gap-2">
-      <span class={`inline-block w-2.5 h-2.5 border border-black ${colorMap[variant]}`}></span>
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class={`inline-block w-2.5 h-2.5 border border-black ${colorMap[variant] || 'bg-scorch-crimson'}`}></span>
       <span class="font-extrabold uppercase tracking-tight">{label}</span>
       {status && (
         <span class="bg-black text-slate-200 px-1.5 py-0.5 text-[10px] border border-slate-700 font-bold">
           {status}
+        </span>
+      )}
+      {pct >= 100 && levelUpMessage && (
+        <span class="bg-black text-scorch-gold border border-scorch-gold px-1.5 py-0.5 text-[10px] font-extrabold animate-pixel-blink select-none">
+          {levelUpMessage}
         </span>
       )}
     </div>
@@ -55,9 +70,9 @@ const colorMap = {
     </div>
   </div>
 
-  <!-- Barra Mecánica con Retícula Segmentada -->
+  <!-- Barra Mecánica con Retícula Segmentada y Esquinas Opcionales -->
   <div
-    class="w-full h-5 bg-slate-200 dark:bg-slate-950 border-2 border-black dark:border-slate-300 shadow-[-2px_2px_0px_0px_var(--shadow-color,#000000)] relative overflow-hidden p-0.5"
+    class={`w-full h-5 bg-slate-200 dark:bg-slate-950 border-2 border-black dark:border-slate-300 shadow-[-2px_2px_0px_0px_var(--shadow-color,#000000)] relative overflow-hidden p-0.5 ${pixelCorners ? 'pixel-corners' : ''}`}
     role="progressbar"
     aria-label={label}
     aria-valuenow={pct}
@@ -65,7 +80,7 @@ const colorMap = {
     aria-valuemax={100}
   >
     <div
-      class={`h-full ${colorMap[variant]} origin-left transition-transform duration-150 ease-out`}
+      class={`h-full ${colorMap[variant] || 'bg-scorch-crimson'} origin-left transition-transform duration-150 ease-out`}
       style={`transform: scaleX(${pct / 100});`}
       data-progress-fill
     ></div>

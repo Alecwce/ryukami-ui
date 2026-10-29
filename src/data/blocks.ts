@@ -91,6 +91,15 @@ export const BLOCKS_DATA: BlockItem[] = [
     dependencies: ['ascii-generator'],
   },
   {
+    id: 'gaming-hud',
+    name: 'GamingHudBlock.astro',
+    title: '8-Bit RPG Gaming HUD & Stats',
+    category: 'APPLICATION',
+    description: 'Panel HUD de telemetría de videojuego retro con barras de HP, Mana, XP animada (LEVEL UP!) y ranuras de acceso rápido.',
+    snippet: `import GamingHudBlock from '@/blocks/GamingHudBlock.astro';\n\n<GamingHudBlock playerName="RYU_OPERATOR_01" level={42} />`,
+    dependencies: ['progress-bar', 'badge', 'button'],
+  },
+  {
     id: 'footer',
     name: 'FooterBlock.astro',
     title: 'Neo-Brutalist Multi-Column Footer',

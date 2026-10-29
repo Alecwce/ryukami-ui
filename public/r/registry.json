@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T17:12:14.066Z",
+  "updatedAt": "2026-10-29T17:56:05.500Z",
   "totalItems": 35,
   "items": [
     {
@@ -52,7 +52,7 @@
       "category": "01_CORE_UI",
       "description": "Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.",
       "registryDependencies": [],
-      "sha256": "7cd1d133c6c632012370d955f02a04272ffb427105ecfad76f3f04946ba3c8c8",
+      "sha256": "63e280088f81c7120f1728cbcd1426e898e91f00f3e3cc7f0efe86d827ce544d",
       "endpoint": "/r/progress-bar.json",
       "target": "src/components/ProgressBar.astro"
     },

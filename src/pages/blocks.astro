@@ -6,6 +6,7 @@ import FaqBlock from '../blocks/FaqBlock.astro';
 import FeaturesBlock from '../blocks/FeaturesBlock.astro';
 import LoginBlock from '../blocks/LoginBlock.astro';
 import FooterBlock from '../blocks/FooterBlock.astro';
+import GamingHudBlock from '../blocks/GamingHudBlock.astro';
 import BentoGrid from '../components/BentoGrid.astro';
 import DataTable from '../components/DataTable.astro';
 import TerminalEmulator from '../components/TerminalEmulator.astro';
@@ -56,7 +57,7 @@ import { BLOCKS_DATA } from '../data/blocks.ts';
             data-filter="APPLICATION"
             class="filter-btn btn-brutal bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-1.5 font-bold text-[11px]"
           >
-            APLICACIÓN (4)
+            APLICACIÓN (5)
           </button>
           <button
             type="button"
@@ -340,11 +341,33 @@ import { BLOCKS_DATA } from '../data/blocks.ts';
         </div>
       </section>
 
-      <!-- BLOCK 10: BRUTALIST FOOTER -->
+      <!-- BLOCK 10: 8-BIT RPG GAMING HUD -->
+      <section id="gaming-hud" data-category="APPLICATION" class="block-card space-y-3 scroll-mt-28">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
+          <div class="flex items-center gap-2">
+            <span class="font-extrabold text-scorch-gold-text dark:text-scorch-gold">// BLOCK 10: 8-BIT RPG GAMING HUD & TELEMETRY</span>
+            <Badge variant="gold">APPLICATION</Badge>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-500 font-mono">deps: progress-bar, badge, button</span>
+            <span class="bg-black text-white px-2 py-0.5 border border-slate-700 font-bold text-[10px]">GamingHudBlock.astro</span>
+          </div>
+        </div>
+        <GamingHudBlock playerName="RYU_OPERATOR_01" level={42} />
+        <div class="pt-2">
+          <CodeBlock
+            filename="src/blocks/GamingHudBlock.astro"
+            language="ASTRO"
+            code={`import GamingHudBlock from '@/blocks/GamingHudBlock.astro';\n\n<GamingHudBlock playerName="RYU_OPERATOR_01" level={42} />`}
+          />
+        </div>
+      </section>
+
+      <!-- BLOCK 11: BRUTALIST FOOTER -->
       <section id="footer" data-category="MARKETING" class="block-card space-y-3 scroll-mt-28">
         <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-xs border-b border-black/10 dark:border-white/10 pb-2">
           <div class="flex items-center gap-2">
-            <span class="font-extrabold text-slate-700 dark:text-slate-300">// BLOCK 10: NEO-BRUTALIST MULTI-COLUMN FOOTER</span>
+            <span class="font-extrabold text-slate-700 dark:text-slate-300">// BLOCK 11: NEO-BRUTALIST MULTI-COLUMN FOOTER</span>
             <Badge variant="cyan">MARKETING</Badge>
           </div>
           <div class="flex items-center gap-2">

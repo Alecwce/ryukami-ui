@@ -267,6 +267,30 @@ dialog[open]::backdrop {
   }
 }
 
+/* Utilidades de Pixel Art y Animación Arcade (8-Bit Stepped) */
+.pixel-corners {
+  clip-path: polygon(
+    0 4px, 4px 4px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+}
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@keyframes pixel-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-pixel-blink {
+  animation: pixel-blink 0.5s step-end infinite;
+}
+
 /* Accesibilidad: Reducción de movimiento */
 @media (prefers-reduced-motion: reduce) {
   *,
