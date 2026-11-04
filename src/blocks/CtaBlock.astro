@@ -36,7 +36,7 @@ const {
     </p>
   </div>
 
-  <form class="flex flex-col sm:flex-row gap-3 pt-2" onsubmit="event.preventDefault(); window.showToast && window.showToast('REGISTRO COMPLETADO', 'Canal de telemetría enlazado.', 'emerald');">
+  <form class="flex flex-col sm:flex-row gap-3 pt-2" data-demo-form data-toast-title="REGISTRO COMPLETADO" data-toast-message="Canal de telemetría enlazado." data-toast-variant="emerald">
     <div class="flex-1">
       <Input
         label="Terminal / Email"
@@ -52,3 +52,21 @@ const {
     </div>
   </form>
 </div>
+
+<script is:inline>
+  // Demo de formulario sin `onsubmit` inline (compatible con CSP).
+  document.querySelectorAll('form[data-demo-form]').forEach((form) => {
+    if (form.dataset.demoBound === 'true') return;
+    form.dataset.demoBound = 'true';
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (window.showToast) {
+        window.showToast(
+          form.dataset.toastTitle || 'OPERACIÓN COMPLETADA',
+          form.dataset.toastMessage || '',
+          form.dataset.toastVariant || 'emerald'
+        );
+      }
+    });
+  });
+</script>

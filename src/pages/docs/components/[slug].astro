@@ -3,7 +3,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 import ComponentPreview from '../../../components/ComponentPreview.astro';
 import CodeBlock from '../../../components/CodeBlock.astro';
 import Callout from '../../../components/Callout.astro';
-import { REGISTRY_COMPONENTS, getComponentNeighbors } from '../../../data/registry';
+import { REGISTRY_COMPONENTS, getComponentNeighbors, type RegistryComponent } from '../../../data/registry';
 import { getMultiFrameworkSnippets, FRAMEWORK_METADATA } from '../../../data/multi-framework';
 
 // Importar todos los 35 componentes de src/components/*.astro para renderizarlos en la vista previa
@@ -47,6 +47,10 @@ export async function getStaticPaths() {
     params: { slug: comp.slug },
     props: { comp },
   }));
+}
+
+export interface Props {
+  comp: RegistryComponent;
 }
 
 const { comp } = Astro.props;
@@ -109,6 +113,11 @@ const snippetsByFramework = getMultiFrameworkSnippets(comp.slug, cleanUsageCode)
   title={comp.title}
   description={comp.description}
   activeSlug={comp.slug}
+  toc={[
+    { href: '#overview', label: 'Vista Previa' },
+    { href: '#installation', label: 'Instalación CLI' },
+    { href: '#usage', label: 'Uso en Astro' },
+  ]}
 >
   <div class="space-y-8">
     <!-- Encabezado del Componente -->
@@ -346,7 +355,7 @@ const snippetsByFramework = getMultiFrameworkSnippets(comp.slug, cleanUsageCode)
 
           {comp.slug === 'modal' && (
             <div>
-              <Button variant="crimson" onclick="document.getElementById('modal-slug-demo').showModal()">
+              <Button variant="crimson" data-action="open-dialog" data-dialog-target="modal-slug-demo">
                 ABRIR MODAL TUI
               </Button>
               <Modal id="modal-slug-demo" title="0xKERNEL // SYSTEM_DIAGNOSTIC" status="ROOT_ACCESS">
@@ -363,13 +372,13 @@ const snippetsByFramework = getMultiFrameworkSnippets(comp.slug, cleanUsageCode)
 
           {comp.slug === 'toast-container' && (
             <div class="flex flex-wrap gap-2">
-              <Button variant="crimson" size="sm" onclick="window.showToast && window.showToast('ALERTA', 'Mensaje de severidad alta.', 'crimson')">Toast Carmesí</Button>
-              <Button variant="cyan" size="sm" onclick="window.showToast && window.showToast('INFO', 'Mensaje de telemetría.', 'cyan')">Toast Cian</Button>
+              <Button variant="crimson" size="sm" data-action="show-toast" data-toast-title="ALERTA" data-toast-message="Mensaje de severidad alta." data-toast-variant="crimson">Toast Carmesí</Button>
+              <Button variant="cyan" size="sm" data-action="show-toast" data-toast-title="INFO" data-toast-message="Mensaje de telemetría." data-toast-variant="cyan">Toast Cian</Button>
             </div>
           )}
 
           {comp.slug === 'command-palette' && (
-            <Button variant="outline" onclick="window.openPalette && window.openPalette()">
+            <Button variant="outline" data-action="open-palette">
               Abrir Command Palette (Ctrl+K)
             </Button>
           )}

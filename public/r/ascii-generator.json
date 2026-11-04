@@ -5,7 +5,10 @@
   "type": "registry:ui",
   "category": "04_SCORCH_STUDIO",
   "description": "Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "badge",
+    "icon"
+  ],
   "sha256": "dc3bbe32150475344b83d16a91866820850a178f04bedd63780ea1283aafbe6c",
   "files": [
     {

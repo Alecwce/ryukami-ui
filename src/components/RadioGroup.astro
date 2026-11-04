@@ -30,7 +30,7 @@ const {
     {options.map((opt, idx) => {
       const isChecked = value ? opt.value === value : idx === 0;
       return (
-        <label class="group flex items-start justify-between gap-3 p-3 border-2 border-black dark:border-slate-300 bg-white dark:bg-slate-900 shadow-[-3px_3px_0px_0px_var(--shadow-color,#000000)] cursor-pointer transition-transform duration-75 hover:translate-x-[1px] hover:-translate-y-[1px] has-[:checked]:bg-slate-900 has-[:checked]:text-white dark:has-[:checked]:bg-scorch-crimson dark:has-[:checked]:border-white">
+        <label class="group flex items-start justify-between gap-3 p-3 border-2 border-black dark:border-slate-300 bg-white dark:bg-slate-900 shadow-brutal-sm cursor-pointer transition-transform duration-75 hover:translate-x-[1px] hover:-translate-y-[1px] has-[:checked]:bg-slate-900 has-[:checked]:text-white dark:has-[:checked]:bg-scorch-crimson dark:has-[:checked]:border-white">
           <div class="flex items-start gap-3">
             <input
               type="radio"
@@ -38,7 +38,7 @@ const {
               value={opt.value}
               checked={isChecked}
               class="sr-only peer"
-              onchange="window.playMechanicalClick && window.playMechanicalClick()"
+              data-mech-change
             />
             <!-- Indicador de Terminal ( • ) / (   ) -->
             <span
@@ -84,5 +84,16 @@ const {
     };
     syncIndicators();
     group.addEventListener('change', syncIndicators);
+  });
+</script>
+
+<script is:inline>
+  // Feedback mecánico sin `onchange` inline (compatible con CSP).
+  document.querySelectorAll('input[type="radio"][data-mech-change]').forEach((radio) => {
+    if (radio.dataset.mechBound === 'true') return;
+    radio.dataset.mechBound = 'true';
+    radio.addEventListener('change', () => {
+      if (window.playMechanicalClick) window.playMechanicalClick();
+    });
   });
 </script>

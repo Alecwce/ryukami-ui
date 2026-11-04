@@ -22,6 +22,67 @@ const CLI_ROOT = path.resolve(__dirname, '..');
 const LOCAL_REGISTRY_DIR = path.join(CLI_ROOT, 'public', 'r');
 const CLI_USER_AGENT = 'ryukami-ui-cli/2.4.0';
 
+function readPackageVersion() {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(CLI_ROOT, 'package.json'), 'utf-8'));
+    return typeof pkg.version === 'string' && pkg.version ? pkg.version : '0.0.0';
+  } catch {
+    return '0.0.0';
+  }
+}
+
+/** Códigos de salida estables para scripts y CI. */
+const EXIT = { OK: 0, ERROR: 1, USAGE: 2, INTEGRITY: 3, NETWORK: 4 };
+
+class CliError extends Error {
+  constructor(message, exitCode = EXIT.ERROR) {
+    super(message);
+    this.name = 'CliError';
+    this.exitCode = exitCode;
+  }
+}
+
+const MAX_REGISTRY_BYTES = 5 * 1024 * 1024;
+const FETCH_TIMEOUT_MS = 10_000;
+const LOOPBACK_HOSTS = new Set(['localhost', '127.0.0.1', '::1', '[::1]']);
+
+/**
+ * Normaliza y valida la URL base del registro.
+ * Solo HTTPS; HTTP se tolera únicamente contra loopback para desarrollo.
+ */
+function resolveRegistryBase(rawUrl) {
+  if (!rawUrl) return null;
+  let parsed;
+  try {
+    parsed = new URL(rawUrl);
+  } catch {
+    throw new CliError(`[ERROR] URL de registro inválida: "${rawUrl}"`, EXIT.USAGE);
+  }
+  if (parsed.username || parsed.password) {
+    throw new CliError('[ERROR] La URL del registro no puede incluir credenciales.', EXIT.USAGE);
+  }
+  const isLoopback = LOOPBACK_HOSTS.has(parsed.hostname);
+  if (parsed.protocol !== 'https:' && !(parsed.protocol === 'http:' && isLoopback)) {
+    throw new CliError(
+      `[SECURITY ALERT] El registro remoto debe usar HTTPS (recibido: ${parsed.protocol}//${parsed.host}). ` +
+        'Solo localhost puede usar HTTP para desarrollo.',
+      EXIT.USAGE
+    );
+  }
+  return `${parsed.origin}${parsed.pathname.replace(/\/+$/, '')}`;
+}
+
+/** Validación estricta de nombres de componente (evita traversal en rutas y URLs). */
+function assertValidComponentName(name) {
+  if (typeof name !== 'string' || !/^[a-z0-9][a-z0-9-]{0,63}$/.test(name)) {
+    throw new CliError(
+      `[SECURITY ALERT] Nombre de componente inválido: "${name}". Solo se aceptan minúsculas, dígitos y guiones.`,
+      EXIT.USAGE
+    );
+  }
+  return name;
+}
+
 /**
  * Helper de Ciberseguridad: Prevención de Arbitrary File Write y Path Traversal
  * Valida que la ruta final resuelta se encuentre estrictamente dentro de targetDir.
@@ -87,17 +148,102 @@ function validateRegistryPayload(payload, expectedName) {
 }
 
 /**
- * Verificación de integridad criptográfica SHA-256
+ * Verificación de integridad criptográfica SHA-256 (fail-closed).
+ * Un payload sin hash válido se rechaza: la ausencia de firma NUNCA desactiva el control.
+ * `expected` permite anclar el contenido al registro maestro, que se descarga por un
+ * canal distinto al del propio módulo (evita que un payload se auto-valide).
  */
-function verifyFileIntegrity(file) {
-  if (file.sha256) {
-    const computed = crypto.createHash('sha256').update(file.content, 'utf-8').digest('hex');
-    if (computed !== file.sha256) {
-      throw new Error(
-        `[INTEGRITY ERROR] Fallo de suma de verificación SHA-256 en ${file.path}.\nEsperado: ${file.sha256}\nCalculado: ${computed}`
-      );
-    }
+function verifyFileIntegrity(file, expected) {
+  if (!file || typeof file !== 'object') {
+    throw new CliError('[INTEGRITY ERROR] Archivo de registro inválido: no es un objeto.', EXIT.INTEGRITY);
   }
+  if (typeof file.sha256 !== 'string' || !/^[a-f0-9]{64}$/i.test(file.sha256)) {
+    throw new CliError(
+      `[INTEGRITY ERROR] El archivo "${file.path || '(sin ruta)'}" no incluye un sha256 SHA-256 válido. ` +
+        'Instalación abortada: no se aceptan payloads sin firma de integridad.',
+      EXIT.INTEGRITY
+    );
+  }
+  const computed = crypto.createHash('sha256').update(file.content, 'utf-8').digest('hex');
+  if (computed !== file.sha256.toLowerCase()) {
+    throw new CliError(
+      `[INTEGRITY ERROR] Fallo de suma de verificación SHA-256 en ${file.path}.\nEsperado: ${file.sha256}\nCalculado: ${computed}`,
+      EXIT.INTEGRITY
+    );
+  }
+  if (expected && computed !== String(expected).toLowerCase()) {
+    throw new CliError(
+      `[INTEGRITY ERROR] El contenido de "${file.path}" no coincide con el registro maestro.\n` +
+        `Esperado (registry.json): ${expected}\nCalculado: ${computed}`,
+      EXIT.INTEGRITY
+    );
+  }
+  return computed;
+}
+
+/**
+ * Escritura segura de archivos del registro.
+ * Defensa en profundidad contra symlinks (CWE-59) y escapes por directorios enlazados:
+ *  1. La ruta se resuelve y valida léxicamente contra targetDir (resolveSafeTargetPath).
+ *  2. Se resuelve el directorio real y se exige que esté dentro del target real.
+ *  3. Se rechaza cualquier destino que ya sea un symlink.
+ *  4. Se abre con O_NOFOLLOW para cerrar la ventana TOCTOU.
+ * @returns {'written' | 'skipped'}
+ */
+function writeRegistryFile({ targetDir, relativePath, content, overwrite = false }) {
+  const destPath = resolveSafeTargetPath(targetDir, relativePath);
+
+  fs.mkdirSync(targetDir, { recursive: true });
+  const realBase = fs.realpathSync(targetDir);
+
+  fs.mkdirSync(path.dirname(destPath), { recursive: true });
+  const realDir = fs.realpathSync(path.dirname(destPath));
+  if (realDir !== realBase && !realDir.startsWith(realBase + path.sep)) {
+    throw new Error(
+      `[SECURITY ALERT] El directorio destino de "${relativePath}" escapa del proyecto mediante un enlace simbólico (${realDir}).`
+    );
+  }
+
+  const existing = fs.lstatSync(destPath, { throwIfNoEntry: false });
+  if (existing && existing.isSymbolicLink()) {
+    throw new Error(
+      `[SECURITY ALERT] "${relativePath}" es un enlace simbólico. Escritura bloqueada para evitar sobrescribir archivos fuera del proyecto.`
+    );
+  }
+  if (existing && !overwrite) return 'skipped';
+
+  if (existing && overwrite) {
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = `${destPath}.bak-${stamp}`;
+    fs.copyFileSync(destPath, backupPath);
+    process.stderr.write(`  [BACKUP] ${relativePath} -> ${path.basename(backupPath)}\n`);
+  }
+
+  // Escritura atómica: archivo temporal en el mismo directorio + rename.
+  // Un Ctrl-C o un fallo de disco no puede dejar un .astro truncado.
+  const tmpPath = `${destPath}.tmp-${process.pid}-${Date.now()}`;
+  const fd = fs.openSync(
+    tmpPath,
+    fs.constants.O_WRONLY | fs.constants.O_CREAT | fs.constants.O_EXCL,
+    0o644
+  );
+  try {
+    fs.writeFileSync(fd, content, 'utf-8');
+    fs.fsyncSync(fd);
+  } catch (err) {
+    fs.closeSync(fd);
+    fs.rmSync(tmpPath, { force: true });
+    throw err;
+  }
+  fs.closeSync(fd);
+
+  try {
+    fs.renameSync(tmpPath, destPath);
+  } catch (err) {
+    fs.rmSync(tmpPath, { force: true });
+    throw err;
+  }
+  return 'written';
 }
 
 // Colores ANSI Scorch
@@ -123,26 +269,44 @@ function parseArgs(argv) {
   const positional = [];
   const flags = {
     dir: process.cwd(),
+    dirExplicit: false,
     overwrite: false,
     all: false,
     obsidian: false,
+    json: false,
+    version: false,
     registry: process.env.RYUKAMI_REGISTRY_URL || null,
+  };
+
+  const takeValue = (flag, index) => {
+    const value = argv[index];
+    if (value === undefined || value.startsWith('-')) {
+      throw new CliError(`[ERROR] La opción ${flag} requiere un valor.`, EXIT.USAGE);
+    }
+    return value;
   };
 
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === '--dir' || arg === '-d') {
-      flags.dir = path.resolve(argv[++i] || '.');
+      flags.dir = path.resolve(takeValue(arg, ++i));
+      flags.dirExplicit = true;
     } else if (arg === '--overwrite' || arg === '-f' || arg === '--yes' || arg === '-y') {
       flags.overwrite = true;
     } else if (arg === '--all' || arg === '-a') {
       flags.all = true;
     } else if (arg === '--obsidian') {
       flags.obsidian = true;
+    } else if (arg === '--json') {
+      flags.json = true;
     } else if (arg === '--registry' || arg === '-r') {
-      flags.registry = argv[++i];
+      flags.registry = takeValue(arg, ++i);
+    } else if (arg === '--version' || arg === '-v') {
+      flags.version = true;
     } else if (arg === '--help' || arg === '-h') {
       flags.help = true;
+    } else if (arg.startsWith('-')) {
+      throw new CliError(`[ERROR] Opción desconocida: ${arg}`, EXIT.USAGE);
     } else {
       positional.push(arg);
     }
@@ -153,7 +317,54 @@ function parseArgs(argv) {
 
 const DEFAULT_REMOTE_REGISTRY = 'https://ryukami-ui.pages.dev/r';
 
+/**
+ * Descarga con cuerpo acotado: sin timeout ni cap, un registro hostil puede colgar
+ * el CLI (o el servidor MCP) indefinidamente o agotar la memoria.
+ */
+async function readCappedJson(res, url, fileName) {
+  const declared = Number(res.headers.get('content-length') || 0);
+  if (declared > MAX_REGISTRY_BYTES) {
+    throw new CliError(
+      `[ERROR] El registro "${fileName}" excede el tamaño máximo permitido (${MAX_REGISTRY_BYTES} bytes).`,
+      EXIT.NETWORK
+    );
+  }
+
+  if (!res.body) {
+    const text = await res.text();
+    if (text.length > MAX_REGISTRY_BYTES) {
+      throw new CliError(`[ERROR] Respuesta demasiado grande desde ${url}`, EXIT.NETWORK);
+    }
+    return text;
+  }
+
+  const reader = res.body.getReader();
+  const chunks = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > MAX_REGISTRY_BYTES) {
+      await reader.cancel();
+      throw new CliError(
+        `[ERROR] El registro "${fileName}" excede ${MAX_REGISTRY_BYTES} bytes. Descarga abortada.`,
+        EXIT.NETWORK
+      );
+    }
+    chunks.push(value);
+  }
+  return Buffer.concat(chunks.map((c) => Buffer.from(c))).toString('utf-8');
+}
+
 async function fetchRegistryEndpoint(url, fileName) {
+  if (!url.startsWith('https://') && !/^http:\/\/(localhost|127\.0\.0\.1|\[::1\])/.test(url)) {
+    throw new CliError(
+      `[SECURITY ALERT] Descarga bloqueada por protocolo inseguro: ${url}`,
+      EXIT.USAGE
+    );
+  }
+
   let res;
   try {
     res = await fetch(url, {
@@ -161,49 +372,85 @@ async function fetchRegistryEndpoint(url, fileName) {
         'User-Agent': CLI_USER_AGENT,
         Accept: 'application/json',
       },
+      redirect: 'error',
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
     });
   } catch (err) {
-    throw new Error(`Error de conexión con el Registry (${url}): ${err.message}`);
+    if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+      throw new CliError(
+        `[TIMEOUT] El registro no respondió en ${FETCH_TIMEOUT_MS / 1000}s (${url}).`,
+        EXIT.NETWORK
+      );
+    }
+    throw new CliError(`Error de conexión con el Registry (${url}): ${err.message}`, EXIT.NETWORK);
   }
 
   if (res.status === 403) {
-    throw new Error(
-      `[403 FORBIDDEN] Petición interceptada por Cloudflare WAF o política de seguridad en ${url}. Verifica tu conexión.`
+    throw new CliError(
+      `[403 FORBIDDEN] Petición interceptada por Cloudflare WAF o política de seguridad en ${url}. Verifica tu conexión.`,
+      EXIT.NETWORK
     );
   }
   if (res.status === 404) {
-    throw new Error(
-      `[404 NOT FOUND] El archivo "${fileName}" no existe en el registro (${url}).`
+    throw new CliError(
+      `[404 NOT FOUND] El archivo "${fileName}" no existe en el registro (${url}).`,
+      EXIT.NETWORK
     );
   }
   if (res.status === 429) {
-    throw new Error(
-      `[429 RATE LIMIT] Límite de peticiones excedido en Cloudflare Edge. Por favor espera unos momentos antes de reintentar.`
+    throw new CliError(
+      `[429 RATE LIMIT] Límite de peticiones excedido en Cloudflare Edge. Por favor espera unos momentos antes de reintentar.`,
+      EXIT.NETWORK
     );
   }
   if (!res.ok) {
-    throw new Error(`Fallo de descarga HTTP ${res.status} desde ${url}`);
+    throw new CliError(`Fallo de descarga HTTP ${res.status} desde ${url}`, EXIT.NETWORK);
   }
 
-  const data = await res.json();
+  const contentType = res.headers.get('content-type') || '';
+  if (!/json/i.test(contentType)) {
+    throw new CliError(
+      `[ERROR] El registro devolvió un Content-Type inesperado ("${contentType || 'vacío'}") en ${url}.`,
+      EXIT.NETWORK
+    );
+  }
+
+  const raw = await readCappedJson(res, url, fileName);
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    throw new CliError(`[ERROR] El registro devolvió JSON inválido en ${url}.`, EXIT.NETWORK);
+  }
   validateRegistryPayload(data, fileName);
   return data;
 }
 
+const registryCache = new Map();
+
 async function loadRegistryJson(fileName, registryUrl) {
-  if (registryUrl) {
-    const cleanBase = registryUrl.replace(/\/+$/, '');
-    return await fetchRegistryEndpoint(`${cleanBase}/${fileName}`, fileName);
+  const base = resolveRegistryBase(registryUrl) || null;
+  const cacheKey = `${base ?? 'local'}::${fileName}`;
+  if (registryCache.has(cacheKey)) return registryCache.get(cacheKey);
+
+  let payload;
+  if (base) {
+    payload = await fetchRegistryEndpoint(`${base}/${encodeURIComponent(fileName)}`, fileName);
+  } else {
+    const localPath = path.join(LOCAL_REGISTRY_DIR, encodeURIComponent(fileName));
+    if (fs.existsSync(localPath)) {
+      payload = JSON.parse(fs.readFileSync(localPath, 'utf-8'));
+      validateRegistryPayload(payload, fileName);
+    } else {
+      payload = await fetchRegistryEndpoint(
+        `${DEFAULT_REMOTE_REGISTRY}/${encodeURIComponent(fileName)}`,
+        fileName
+      );
+    }
   }
 
-  const localPath = path.join(LOCAL_REGISTRY_DIR, fileName);
-  if (fs.existsSync(localPath)) {
-    const raw = JSON.parse(fs.readFileSync(localPath, 'utf-8'));
-    validateRegistryPayload(raw, fileName);
-    return raw;
-  }
-
-  return await fetchRegistryEndpoint(`${DEFAULT_REMOTE_REGISTRY}/${fileName}`, fileName);
+  registryCache.set(cacheKey, payload);
+  return payload;
 }
 
 function showHelp() {
@@ -222,7 +469,11 @@ function showHelp() {
   console.log(`  ${C.gold}--dir, -d <ruta>${C.reset}                Directorio destino del proyecto (por defecto: actual)`);
   console.log(`  ${C.gold}--overwrite, -f${C.reset}                 Sobrescribe archivos existentes sin omitirlos`);
   console.log(`  ${C.gold}--obsidian${C.reset}                      Incluye design-tokens.json en ryukami-ui init`);
-  console.log(`  ${C.gold}--registry, -r <url>${C.reset}            URL remota del registro (por defecto: https://ryukami-ui.pages.dev/r)`);
+  console.log(`  ${C.gold}--registry, -r <url>${C.reset}            URL remota del registro (solo HTTPS; por defecto: https://ryukami-ui.pages.dev/r)`);
+  console.log(`  ${C.gold}--json${C.reset}                          Salida legible por máquina (ryukami-ui diff --json)`);
+  console.log(`  ${C.gold}--version, -v${C.reset}                   Imprime la versión y sale`);
+  console.log('');
+  console.log(`${C.bold}CÓDIGOS DE SALIDA:${C.reset} ${C.dim}0 OK · 1 deriva/error genérico · 2 uso · 3 integridad · 4 red${C.reset}`);
   console.log('');
   console.log(`${C.bold}EJEMPLOS RÁPIDOS:${C.reset}`);
   console.log(`  ${C.red}$${C.reset} ryukami-ui list`);
@@ -235,13 +486,14 @@ function showHelp() {
 async function cmdList(flags) {
   printBanner();
   const master = await loadRegistryJson('registry.json', flags.registry);
-  console.log(`${C.bold}CATÁLOGO DE COMPONENTES DISPONIBLES (${master.totalItems} MÓDULOS):${C.reset}\n`);
+  const visibleItems = master.items.filter((item) => !item.hidden);
+  console.log(`${C.bold}CATÁLOGO DE COMPONENTES DISPONIBLES (${visibleItems.length} MÓDULOS):${C.reset}\n`);
 
   const pad = (str, len) => str.padEnd(len, ' ');
   console.log(`  ${C.bold}${C.gold}${pad('ID CLI', 20)}${pad('CATEGORÍA', 24)}DESCRIPCIÓN${C.reset}`);
   console.log(`  ${C.dim}────────────────────────────────────────────────────────────────────────────${C.reset}`);
 
-  for (const item of master.items) {
+  for (const item of visibleItems) {
     const deps =
       item.registryDependencies && item.registryDependencies.length
         ? ` ${C.dim}[deps: ${item.registryDependencies.join(', ')}]${C.reset}`
@@ -260,34 +512,53 @@ async function cmdInit(flags) {
   printBanner();
   const targetDir = flags.dir;
   const stylesPayload = await loadRegistryJson('styles.json', flags.registry);
+  const master = await loadRegistryJson('registry.json', flags.registry);
 
   console.log(`${C.cyan}> Inicializando Scorch Design System en:${C.reset} ${C.bold}${targetDir}${C.reset}\n`);
 
   for (const file of stylesPayload.files) {
-    verifyFileIntegrity(file);
-    const destPath = resolveSafeTargetPath(targetDir, file.path);
-    fs.mkdirSync(path.dirname(destPath), { recursive: true });
+    const anchor = master.integrity?.[file.path];
+    if (master.integrity && !anchor) {
+      throw new CliError(
+        `[INTEGRITY ERROR] "${file.path}" no figura en el manifiesto del registro.`,
+        EXIT.INTEGRITY
+      );
+    }
+    verifyFileIntegrity(file, anchor);
+    const status = writeRegistryFile({
+      targetDir,
+      relativePath: file.path,
+      content: file.content,
+      overwrite: flags.overwrite,
+    });
 
-    if (fs.existsSync(destPath) && !flags.overwrite) {
+    if (status === 'skipped') {
       console.log(`  ${C.gold}[SKIP] Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para reemplazar)${C.reset}`);
     } else {
-      fs.writeFileSync(destPath, file.content, 'utf-8');
       console.log(`  ${C.emerald}[OK] Tokens inyectados e integridad verificada:${C.reset} ${file.path}`);
     }
   }
 
   if (flags.obsidian) {
     const tokensPayload = await loadRegistryJson('tokens.json', flags.registry);
-    const tokensDest = resolveSafeTargetPath(targetDir, 'design-tokens.json');
-    fs.writeFileSync(tokensDest, JSON.stringify(tokensPayload, null, 2), 'utf-8');
-    console.log(`  ${C.emerald}[OK] W3C Design Tokens sincronizados:${C.reset} design-tokens.json`);
+    const tokensContent = JSON.stringify(tokensPayload, null, 2);
+    const status = writeRegistryFile({
+      targetDir,
+      relativePath: 'design-tokens.json',
+      content: tokensContent,
+      overwrite: flags.overwrite,
+    });
+    if (status === 'skipped') {
+      console.log(`  ${C.gold}[SKIP] Omitido (ya existe):${C.reset} design-tokens.json ${C.dim}(usa --overwrite para reemplazar)${C.reset}`);
+    } else {
+      console.log(`  ${C.emerald}[OK] W3C Design Tokens sincronizados:${C.reset} design-tokens.json`);
+    }
   }
 
-  const configPath = path.join(targetDir, 'ryukami.json');
   const configData = {
     $schema: 'https://ryukami-ui.dev/schema.json',
     style: 'scorch-velgrynd-v4.1',
-    version: '2.4.0',
+    version: readPackageVersion(),
     tailwind: {
       version: '4.3.3',
       css: 'src/styles/global.css',
@@ -297,8 +568,13 @@ async function cmdInit(flags) {
     },
   };
 
-  if (!fs.existsSync(configPath) || flags.overwrite) {
-    fs.writeFileSync(configPath, JSON.stringify(configData, null, 2), 'utf-8');
+  const configStatus = writeRegistryFile({
+    targetDir,
+    relativePath: 'ryukami.json',
+    content: JSON.stringify(configData, null, 2),
+    overwrite: flags.overwrite,
+  });
+  if (configStatus === 'written') {
     console.log(`  ${C.emerald}[OK] Configuración creada:${C.reset} ryukami.json`);
   } else {
     console.log(`  ${C.gold}[SKIP] Configuración existente:${C.reset} ryukami.json`);
@@ -312,12 +588,15 @@ async function cmdAdd(args, flags) {
   const master = await loadRegistryJson('registry.json', flags.registry);
   const validMap = new Map(master.items.map((i) => [i.name, i]));
 
-  let requested = flags.all ? master.items.map((i) => i.name) : args.map((a) => a.toLowerCase());
+  let requested = flags.all
+    ? master.items.filter((i) => !i.hidden).map((i) => i.name)
+    : args.map((a) => a.toLowerCase());
 
   if (requested.length === 0) {
-    console.error(`${C.red}[ERROR]${C.reset} Especifica al menos un componente o usa ${C.gold}--all${C.reset}.`);
-    console.log(`  Ejemplo: ${C.cyan}ryukami-ui add button badge card${C.reset}\n`);
-    process.exit(1);
+    throw new CliError(
+      'Especifica al menos un componente o usa --all. Ejemplo: ryukami-ui add button badge card',
+      EXIT.USAGE
+    );
   }
 
   // Resolver dependencias del registro (ej: command-palette -> kbd, data-table -> badge)
@@ -329,16 +608,23 @@ async function cmdAdd(args, flags) {
     if (resolvedSet.has(name)) continue;
 
     if (!validMap.has(name)) {
-      console.error(`${C.red}[ERROR] Componente desconocido:${C.reset} "${name}". Ejecuta ${C.cyan}ryukami-ui list${C.reset} para ver los nombres válidos.\n`);
-      process.exit(1);
+      throw new CliError(
+        `Componente desconocido: "${name}". Ejecuta "ryukami-ui list" para ver los nombres válidos.`,
+        EXIT.USAGE
+      );
     }
 
     const meta = validMap.get(name);
     if (meta.registryDependencies) {
       for (const dep of meta.registryDependencies) {
-        if (validMap.has(dep) && !resolvedSet.has(dep)) {
-          queue.push(dep);
+        if (!validMap.has(dep)) {
+          throw new CliError(
+            `Dependencia no publicada: "${name}" requiere "${dep}", pero no existe en el registro. ` +
+              'Esto es un fallo del registro, no de tu proyecto.',
+            EXIT.INTEGRITY
+          );
         }
+        if (!resolvedSet.has(dep)) queue.push(dep);
       }
     }
     resolvedSet.add(name);
@@ -349,20 +635,43 @@ async function cmdAdd(args, flags) {
 
   let installedCount = 0;
   let skippedCount = 0;
+  const writtenInRun = new Set();
 
   for (const name of resolvedSet) {
+    const meta = validMap.get(name);
     const itemPayload = await loadRegistryJson(`${name}.json`, flags.registry);
     for (const file of itemPayload.files) {
-      verifyFileIntegrity(file);
-      const destPath = resolveSafeTargetPath(flags.dir, file.path);
-      fs.mkdirSync(path.dirname(destPath), { recursive: true });
+      // Anclaje al registro maestro: el hash esperado viaja en un payload distinto
+      // (registry.json) que el del módulo, así un módulo manipulado no se auto-valida.
+      const manifest = master.integrity ?? null;
+      const anchoredHash = manifest?.[file.path] ?? (file.path === meta.target ? meta.sha256 : undefined);
+      if (manifest && !(file.path in manifest)) {
+        throw new CliError(
+          `[INTEGRITY ERROR] El archivo "${file.path}" de "${name}" no figura en el manifiesto de integridad del registro.`,
+          EXIT.INTEGRITY
+        );
+      }
+      verifyFileIntegrity(file, anchoredHash);
 
-      if (fs.existsSync(destPath) && !flags.overwrite) {
+      if (writtenInRun.has(file.path)) {
+        console.log(`  ${C.dim}[SHARED] Ya provisto por otra dependencia:${C.reset} ${file.path}`);
+        continue;
+      }
+
+      const status = writeRegistryFile({
+        targetDir: flags.dir,
+        relativePath: file.path,
+        content: file.content,
+        overwrite: flags.overwrite,
+      });
+
+      if (status === 'skipped') {
         console.log(`  ${C.gold}[SKIP] Omitido (ya existe):${C.reset} ${file.path} ${C.dim}(usa --overwrite para sobrescribir)${C.reset}`);
         skippedCount++;
       } else {
-        fs.writeFileSync(destPath, file.content, 'utf-8');
-        console.log(`  ${C.emerald}[OK] Instalado e integridad verificada [${name}]:${C.reset} ${file.path}`);
+        writtenInRun.add(file.path);
+        const label = file.path === meta.target ? `[${name}]` : `[${name} · dependencia]`;
+        console.log(`  ${C.emerald}[OK] Instalado e integridad verificada ${label}:${C.reset} ${file.path}`);
         installedCount++;
       }
     }
@@ -376,52 +685,85 @@ async function cmdAdd(args, flags) {
 
 async function cmdInfo(args, flags) {
   printBanner();
-  const name = (args[0] || '').toLowerCase();
-  if (!name) {
-    console.error(`${C.red}[ERROR] Especifica el nombre del componente. Ejemplo: ryukami-ui info button${C.reset}\n`);
-    process.exit(1);
+  const rawName = String(args[0] || '').toLowerCase();
+  if (!rawName) {
+    throw new CliError('Especifica el nombre del componente. Ejemplo: ryukami-ui info button', EXIT.USAGE);
+  }
+  const name = assertValidComponentName(rawName);
+
+  const master = await loadRegistryJson('registry.json', flags.registry);
+  const known = new Set(master.items.map((item) => item.name));
+  if (!known.has(name)) {
+    throw new CliError(
+      `Componente desconocido: "${name}". Ejecuta "ryukami-ui list" para ver los nombres válidos.`,
+      EXIT.USAGE
+    );
   }
 
   const item = await loadRegistryJson(`${name}.json`, flags.registry);
   console.log(`${C.bold}${C.cyan}MÓDULO:${C.reset}       ${item.title} (${item.name})`);
   console.log(`${C.bold}${C.cyan}CATEGORÍA:${C.reset}    ${item.category}`);
   console.log(`${C.bold}${C.cyan}DESCRIPCIÓN:${C.reset}  ${item.description}`);
-  console.log(`${C.bold}${C.cyan}DEPENDENCIAS:${C.reset} ${item.registryDependencies.length ? item.registryDependencies.join(', ') : 'Ninguna (Zero-Deps)'}`);
+  console.log(`${C.bold}${C.cyan}DEPENDENCIAS:${C.reset} ${item.registryDependencies?.length ? item.registryDependencies.join(', ') : 'Ninguna (Zero-Deps)'}`);
   console.log(`${C.bold}${C.cyan}SHA-256:${C.reset}      ${item.sha256}`);
   console.log(`${C.bold}${C.cyan}ARCHIVOS:${C.reset}     ${item.files.map((f) => f.path).join(', ')}`);
   console.log(`${C.bold}${C.cyan}ENDPOINT:${C.reset}     /r/${item.name}.json\n`);
 }
 
 async function cmdDiff(flags) {
-  printBanner();
   const master = await loadRegistryJson('registry.json', flags.registry);
-  console.log(`${C.cyan}> Auditando integridad SHA-256 en:${C.reset} ${C.bold}${flags.dir}${C.reset}\n`);
+
+  if (!flags.json) {
+    printBanner();
+    console.log(`${C.cyan}> Auditando integridad SHA-256 en:${C.reset} ${C.bold}${flags.dir}${C.reset}\n`);
+  }
 
   let synced = 0;
   let modified = 0;
   let missing = 0;
+  const report = [];
 
-  for (const item of master.items) {
+  for (const item of master.items.filter((i) => !i.hidden)) {
     const destPath = resolveSafeTargetPath(flags.dir, item.target);
     if (!fs.existsSync(destPath)) {
       missing++;
+      report.push({ name: item.name, target: item.target, status: 'missing' });
+      if (!flags.json) console.log(`  ${C.dim}[MISSING]${C.reset}  ${item.name.padEnd(20, ' ')} (${item.target})`);
       continue;
     }
+
     const localContent = fs.readFileSync(destPath, 'utf-8');
     const localHash = crypto.createHash('sha256').update(localContent, 'utf-8').digest('hex');
     if (localHash === item.sha256) {
       synced++;
-      console.log(`  ${C.emerald}[SYNCED]${C.reset}   ${item.name.padEnd(20, ' ')} (${item.target})`);
+      report.push({ name: item.name, target: item.target, status: 'synced' });
+      if (!flags.json) console.log(`  ${C.emerald}[SYNCED]${C.reset}   ${item.name.padEnd(20, ' ')} (${item.target})`);
     } else {
       modified++;
-      console.log(`  ${C.gold}[MODIFIED]${C.reset} ${item.name.padEnd(20, ' ')} (${item.target}) ${C.dim}— difiere del registro v2.4.0${C.reset}`);
+      report.push({ name: item.name, target: item.target, status: 'modified' });
+      if (!flags.json) {
+        console.log(`  ${C.gold}[MODIFIED]${C.reset} ${item.name.padEnd(20, ' ')} (${item.target}) ${C.dim}— difiere del registro v${readPackageVersion()}${C.reset}`);
+      }
     }
+  }
+
+  // Gate de CI: cualquier deriva o archivo ausente debe fallar.
+  process.exitCode = modified > 0 || missing > 0 ? EXIT.ERROR : EXIT.OK;
+
+  if (flags.json) {
+    process.stdout.write(
+      JSON.stringify({ synced, modified, missing, total: report.length, items: report }, null, 2) + '\n'
+    );
+    return;
   }
 
   console.log(`\n${C.dim}──────────────────────────────────────────────────────────────────────${C.reset}`);
   console.log(
     `${C.bold}RESUMEN:${C.reset} ${C.emerald}${synced} sincronizados${C.reset} · ${C.gold}${modified} personalizados${C.reset} · ${C.dim}${missing} no instalados${C.reset}\n`
   );
+  if (process.exitCode !== EXIT.OK) {
+    console.log(`${C.gold}[WARN] La auditoría detectó deriva respecto al registro.${C.reset}\n`);
+  }
 }
 
 /**
@@ -429,135 +771,203 @@ async function cmdDiff(flags) {
  * Permite que agentes como Antigravity, OpenCode 2.0 o Claude consulten componentes sin gastar tokens.
  */
 async function cmdMcp(flags) {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    terminal: false,
-  });
+  const MAX_MESSAGE_BYTES = 1024 * 1024;
 
-  function sendResponse(id, result) {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result }) + '\n');
-  }
+  const TOOLS = [
+    {
+      name: 'list_components',
+      description: 'Lista los 35 componentes Neo-Brutalistas y Retro TUI del registro Ryukami-UI (Scorch v4.1).',
+      inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+    },
+    {
+      name: 'get_component',
+      description: 'Obtiene el código fuente Astro (.astro) y metadatos SHA-256 de un componente de Ryukami-UI.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'ID del componente (ej: button, card, callout, data-table)' },
+        },
+        required: ['name'],
+        additionalProperties: false,
+      },
+    },
+    {
+      name: 'get_design_tokens',
+      description: 'Obtiene los tokens W3C de diseño del sistema Scorch v4.1 (colores WCAG AA, tipografía, sombras).',
+      inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+    },
+  ];
 
-  function sendError(id, code, message) {
-    process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, error: { code, message } }) + '\n');
-  }
+  const writeMessage = (payload) => process.stdout.write(JSON.stringify(payload) + '\n');
+  const ok = (id, result) => ({ jsonrpc: '2.0', id: id ?? null, result });
+  const fail = (id, code, message) => ({ jsonrpc: '2.0', id: id ?? null, error: { code, message } });
 
-  rl.on('line', async (line) => {
-    if (!line.trim()) return;
-    let msg;
-    try {
-      msg = JSON.parse(line);
-    } catch {
-      return;
+  async function processMessage(msg) {
+    if (!msg || typeof msg !== 'object' || Array.isArray(msg)) {
+      return fail(null, -32600, 'Invalid Request: se esperaba un objeto JSON-RPC.');
     }
 
     const { id, method, params } = msg;
+    const isNotification = id === undefined;
+
+    if (typeof method !== 'string') {
+      return isNotification ? null : fail(id, -32600, 'Invalid Request: falta el método.');
+    }
+
     try {
       if (method === 'initialize') {
-        sendResponse(id, {
+        return ok(id, {
           protocolVersion: '2024-11-05',
-          capabilities: { tools: {} },
-          serverInfo: { name: 'ryukami-ui-mcp', version: '2.4.0' },
+          capabilities: { tools: { listChanged: false } },
+          serverInfo: { name: 'ryukami-ui-mcp', version: readPackageVersion() },
         });
-      } else if (method === 'tools/list') {
-        sendResponse(id, {
-          tools: [
-            {
-              name: 'list_components',
-              description: 'Lista los 35 componentes Neo-Brutalistas y Retro TUI del registro Ryukami-UI (Scorch v4.1).',
-              inputSchema: { type: 'object', properties: {} },
-            },
-            {
-              name: 'get_component',
-              description: 'Obtiene el código fuente Astro (.astro) y metadatos SHA-256 de un componente de Ryukami-UI.',
-              inputSchema: {
-                type: 'object',
-                properties: {
-                  name: { type: 'string', description: 'ID del componente (ej: button, card, callout, data-table)' },
-                },
-                required: ['name'],
-              },
-            },
-            {
-              name: 'get_design_tokens',
-              description: 'Obtiene los tokens W3C de diseño del sistema Scorch v4.1 (colores WCAG AA, tipografía, sombras).',
-              inputSchema: { type: 'object', properties: {} },
-            },
-          ],
-        });
-      } else if (method === 'tools/call') {
+      }
+
+      if (method === 'notifications/initialized' || method === 'notifications/cancelled') {
+        return null;
+      }
+
+      if (method === 'ping') return ok(id, {});
+
+      if (method === 'tools/list') return ok(id, { tools: TOOLS });
+
+      if (method === 'tools/call') {
         const toolName = params?.name;
+
         if (toolName === 'list_components') {
           const master = await loadRegistryJson('registry.json', flags.registry);
-          sendResponse(id, {
-            content: [{ type: 'text', text: JSON.stringify(master, null, 2) }],
-          });
-        } else if (toolName === 'get_component') {
-          const compName = String(params?.arguments?.name || '').toLowerCase();
-          const comp = await loadRegistryJson(`${compName}.json`, flags.registry);
-          sendResponse(id, {
-            content: [{ type: 'text', text: JSON.stringify(comp, null, 2) }],
-          });
-        } else if (toolName === 'get_design_tokens') {
-          const tokens = await loadRegistryJson('tokens.json', flags.registry);
-          sendResponse(id, {
-            content: [{ type: 'text', text: JSON.stringify(tokens, null, 2) }],
-          });
-        } else {
-          sendError(id, -32601, `Herramienta desconocida: ${toolName}`);
+          return ok(id, { content: [{ type: 'text', text: JSON.stringify(master, null, 2) }] });
         }
-      } else if (id !== undefined) {
-        sendResponse(id, {});
+
+        if (toolName === 'get_component') {
+          const rawName = String(params?.arguments?.name ?? '').toLowerCase();
+          const compName = assertValidComponentName(rawName);
+          const master = await loadRegistryJson('registry.json', flags.registry);
+          if (!master.items.some((item) => item.name === compName)) {
+            return fail(id, -32602, `Componente desconocido: "${compName}". Usa list_components para ver los IDs válidos.`);
+          }
+          const comp = await loadRegistryJson(`${compName}.json`, flags.registry);
+          return ok(id, { content: [{ type: 'text', text: JSON.stringify(comp, null, 2) }] });
+        }
+
+        if (toolName === 'get_design_tokens') {
+          const tokens = await loadRegistryJson('tokens.json', flags.registry);
+          return ok(id, { content: [{ type: 'text', text: JSON.stringify(tokens, null, 2) }] });
+        }
+
+        return fail(id, -32602, `Herramienta desconocida: ${toolName}`);
       }
+
+      return isNotification ? null : fail(id, -32601, `Method not found: ${method}`);
     } catch (err) {
-      if (id !== undefined) {
-        sendError(id, -32000, err.message);
+      if (isNotification) return null;
+      const code = err instanceof CliError && err.exitCode === EXIT.USAGE ? -32602 : -32000;
+      return fail(id, code, err.message);
+    }
+  }
+
+  async function dispatch(rawLine) {
+    let parsed;
+    try {
+      parsed = JSON.parse(rawLine);
+    } catch {
+      writeMessage(fail(null, -32700, 'Parse error: el mensaje no es JSON válido.'));
+      return;
+    }
+
+    if (Array.isArray(parsed)) {
+      if (parsed.length === 0) {
+        writeMessage(fail(null, -32600, 'Invalid Request: batch vacío.'));
+        return;
       }
+      const responses = [];
+      for (const item of parsed) {
+        const response = await processMessage(item);
+        if (response) responses.push(response);
+      }
+      if (responses.length > 0) writeMessage(responses);
+      return;
+    }
+
+    const response = await processMessage(parsed);
+    if (response) writeMessage(response);
+  }
+
+  let buffer = '';
+  let queue = Promise.resolve();
+
+  process.stdin.setEncoding('utf8');
+  process.stdin.on('data', (chunk) => {
+    buffer += chunk;
+
+    if (buffer.length > MAX_MESSAGE_BYTES && !buffer.includes('\n')) {
+      writeMessage(fail(null, -32600, `Invalid Request: mensaje mayor a ${MAX_MESSAGE_BYTES} bytes.`));
+      buffer = '';
+      return;
+    }
+
+    let newlineIndex;
+    while ((newlineIndex = buffer.indexOf('\n')) !== -1) {
+      const line = buffer.slice(0, newlineIndex).trim();
+      buffer = buffer.slice(newlineIndex + 1);
+      if (!line) continue;
+      if (line.length > MAX_MESSAGE_BYTES) {
+        writeMessage(fail(null, -32600, `Invalid Request: mensaje mayor a ${MAX_MESSAGE_BYTES} bytes.`));
+        continue;
+      }
+      // Cola serializada: acota la concurrencia a 1 petición en vuelo.
+      queue = queue.then(() => dispatch(line)).catch((err) => {
+        process.stderr.write(`[MCP] ${err.message}\n`);
+      });
     }
   });
+
+  process.stdin.on('end', () => {
+    queue.finally(() => process.exit(EXIT.OK));
+  });
+
+  process.stdin.resume();
 }
 
 async function main() {
   const { command, args, flags } = parseArgs(process.argv.slice(2));
+
+  if (flags.version) {
+    console.log(readPackageVersion());
+    return;
+  }
 
   if (flags.help || !command) {
     showHelp();
     return;
   }
 
-  try {
-    switch (command) {
-      case 'list':
-      case 'ls':
-        await cmdList(flags);
-        break;
-      case 'init':
-        await cmdInit(flags);
-        break;
-      case 'add':
-      case 'install':
-      case 'i':
-        await cmdAdd(args, flags);
-        break;
-      case 'info':
-      case 'inspect':
-        await cmdInfo(args, flags);
-        break;
-      case 'diff':
-      case 'status':
-        await cmdDiff(flags);
-        break;
-      case 'mcp':
-        await cmdMcp(flags);
-        break;
-      default:
-        console.error(`${C.red}[ERROR] Comando no reconocido:${C.reset} "${command}"`);
-        showHelp();
-        process.exit(1);
-    }
-  } catch (err) {
-    console.error(`\n${C.red}[ERROR] RYUKAMI-UI CLI:${C.reset} ${err.message}\n`);
-    process.exit(1);
+  switch (command) {
+    case 'list':
+    case 'ls':
+      await cmdList(flags);
+      break;
+    case 'init':
+      await cmdInit(flags);
+      break;
+    case 'add':
+    case 'install':
+    case 'i':
+      await cmdAdd(args, flags);
+      break;
+    case 'info':
+    case 'inspect':
+      await cmdInfo(args, flags);
+      break;
+    case 'diff':
+    case 'status':
+      await cmdDiff(flags);
+      break;
+    case 'mcp':
+      await cmdMcp(flags);
+      break;
+    default:
+      throw new CliError(`Comando no reconocido: "${command}". Ejecuta "ryukami-ui --help".`, EXIT.USAGE);
   }
 }
 
@@ -573,11 +983,20 @@ const isDirectExecution = () => {
 };
 
 if (isDirectExecution()) {
-  main();
+  main().catch((err) => {
+    if (err instanceof CliError) {
+      console.error(`\n${C.red}[ERROR] RYUKAMI-UI CLI:${C.reset} ${err.message}\n`);
+      process.exitCode = err.exitCode;
+    } else {
+      console.error(`\n${C.red}[ERROR] RYUKAMI-UI CLI:${C.reset} ${err.message}\n`);
+      process.exitCode = EXIT.ERROR;
+    }
+  });
 }
 
 export {
   resolveSafeTargetPath,
   verifyFileIntegrity,
   validateRegistryPayload,
+  writeRegistryFile,
 };

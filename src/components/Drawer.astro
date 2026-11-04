@@ -25,7 +25,7 @@ const posClasses =
   triggerLabel && (
     <button
       type="button"
-      onclick={`document.getElementById('${id}').showModal()`}
+      data-drawer-trigger={id}
       class="btn-brutal bg-scorch-cyan text-black px-4 py-2 text-xs font-extrabold"
     >
       <span>{triggerLabel}</span>
@@ -77,3 +77,15 @@ const posClasses =
     </div>
   </div>
 </dialog>
+
+<script is:inline>
+  // Apertura declarativa del drawer (sin `onclick` inline: compatible con CSP).
+  document.querySelectorAll('[data-drawer-trigger]').forEach((trigger) => {
+    if (trigger.dataset.drawerBound === 'true') return;
+    trigger.dataset.drawerBound = 'true';
+    trigger.addEventListener('click', () => {
+      const dialog = document.getElementById(trigger.getAttribute('data-drawer-trigger') || '');
+      if (dialog && typeof dialog.showModal === 'function') dialog.showModal();
+    });
+  });
+</script>

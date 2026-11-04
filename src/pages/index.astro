@@ -81,6 +81,19 @@ import {
 <BaseLayout
   title="Ryukami-UI"
   description="Librería de 35 componentes Neo-Brutalistas y Retro TUI, servidor MCP e instalador CLI para Astro 7 y Tailwind CSS 4."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Ryukami-UI',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    description: 'Librería de 35 componentes Neo-Brutalistas y Retro TUI para Astro 7 y Tailwind CSS 4, con CLI instalador y servidor MCP.',
+    url: 'https://ryukami-ui.pages.dev/',
+    license: 'https://opensource.org/licenses/MIT',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    author: { '@type': 'Organization', name: 'Ryukami Labs' },
+    sameAs: ['https://github.com/Alecwce/ryukami-ui'],
+  }}
 >
 
   <!-- 1. HERO SHOWCASE (ESTILO 8BITCN / SHADCN) -->
@@ -130,7 +143,7 @@ import {
               fetchpriority="high"
               loading="eager"
               decoding="sync"
-              class="w-full h-auto aspect-[800/447] border-2 border-black shadow-[-4px_4px_0px_#D62436]"
+              class="w-full h-auto aspect-[800/447] border-2 border-black shadow-accent-crimson"
             />
           </picture>
           <div class="flex justify-between items-center text-xs font-bold pt-3 font-mono">
@@ -165,7 +178,8 @@ import {
       <Button
         variant="gold"
         size="md"
-        onclick="navigator.clipboard.writeText('ryukami-ui init && ryukami-ui add --all'); window.showToast && window.showToast('CLI COPIADO', 'Comando copiado: ryukami-ui init && ryukami-ui add --all', 'emerald');"
+        data-action="copy-cli"
+        data-cli="ryukami-ui init && ryukami-ui add --all"
       >
         COPIAR CLI
       </Button>
@@ -772,7 +786,10 @@ import {
               <Button
                 variant="crimson"
                 size="sm"
-                onclick="window.showToast && window.showToast('CRITICAL // ALERT', 'Pulso térmico de Velgrynd al 99.4%. Escudo activado.', 'crimson')"
+                data-action="show-toast"
+                data-toast-title="CRITICAL // ALERT"
+                data-toast-message="Pulso térmico de Velgrynd al 99.4%. Escudo activado."
+                data-toast-variant="crimson"
               >
                 <Icon name="zap" class="w-3.5 h-3.5 shrink-0 inline-block mr-1" />
                 <span>Toast Carmesí (420Hz)</span>
@@ -780,21 +797,30 @@ import {
               <Button
                 variant="gold"
                 size="sm"
-                onclick="window.showToast && window.showToast('NOTICE // ADVISORY', 'Certificado SSH próximo a rotar en el nodo 02.', 'gold')"
+                data-action="show-toast"
+                data-toast-title="NOTICE // ADVISORY"
+                data-toast-message="Certificado SSH próximo a rotar en el nodo 02."
+                data-toast-variant="gold"
               >
                 ▲ Toast Oro (660Hz)
               </Button>
               <Button
                 variant="cyan"
                 size="sm"
-                onclick="window.showToast && window.showToast('INFO // TELEMETRY', 'Sincronización de paquetes completada en 12ms.', 'cyan')"
+                data-action="show-toast"
+                data-toast-title="INFO // TELEMETRY"
+                data-toast-message="Sincronización de paquetes completada en 12ms."
+                data-toast-variant="cyan"
               >
                 ◆ Toast Cian (880Hz)
               </Button>
               <Button
                 variant="dark"
                 size="sm"
-                onclick="window.showToast && window.showToast('OK // NOMINAL', 'Compilación estática en Astro 7 lista para producción.', 'emerald')"
+                data-action="show-toast"
+                data-toast-title="OK // NOMINAL"
+                data-toast-message="Compilación estática en Astro 7 lista para producción."
+                data-toast-variant="emerald"
               >
                 [OK] Toast Esmeralda (1040Hz)
               </Button>
@@ -807,7 +833,8 @@ import {
               <Button
                 variant="outline"
                 size="md"
-                onclick="document.getElementById('demo-scorch-modal').showModal()"
+                data-action="open-dialog"
+                data-dialog-target="demo-scorch-modal"
               >
                 <Icon name="app-window" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
                 <span>ABRIR VENTANA MODAL TUI</span>
@@ -825,7 +852,7 @@ import {
               <Button
                 variant="crimson"
                 size="md"
-                onclick="window.openPalette && window.openPalette()"
+                data-action="open-palette"
               >
                 <Icon name="command" class="w-3.5 h-3.5 shrink-0 inline-block mr-1.5" />
                 <span>ABRIR COMMAND PALETTE (CTRL+K)</span>
@@ -1035,7 +1062,7 @@ import {
       <div class="h-0.5 bg-current flex-1 min-w-2"></div>
     </div>
 
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_#000] dark:shadow-[-4px_4px_0px_#D62436]">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border-2 border-black dark:border-slate-700 bg-white dark:bg-slate-900 shadow-brutal">
       <div class="space-y-1">
         <div class="flex items-center gap-2">
           <span class="w-2.5 h-2.5 bg-scorch-crimson border border-black inline-block"></span>

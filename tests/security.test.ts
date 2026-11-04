@@ -1,11 +1,14 @@
-import { test, describe } from 'node:test';
+import { test, describe, after } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {
   resolveSafeTargetPath,
   verifyFileIntegrity,
   validateRegistryPayload,
+  writeRegistryFile,
 } from '../bin/ryukami-ui.mjs';
 
 // Validadores extraídos de ThemeStudio.astro para validación de CSS Injection
@@ -190,5 +193,118 @@ describe('[SEC-03] CSS Injection Prevention (Theme Studio Regex Hardening)', () 
     assert.throws(() => {
       validateRegistryPayload({ invalid: true }, 'tokens.json');
     });
+  });
+});
+
+describe('[SEC-04] Escritura endurecida contra symlinks (CWE-59)', () => {
+  const workspace = fs.mkdtempSync(path.join(os.tmpdir(), 'ryukami-sec-'));
+
+  after(() => {
+    fs.rmSync(workspace, { recursive: true, force: true });
+  });
+
+  test('debe rechazar la escritura cuando el destino es un symlink', () => {
+    const project = path.join(workspace, 'p1');
+    fs.mkdirSync(path.join(project, 'src', 'components'), { recursive: true });
+
+    const secret = path.join(workspace, 'secret-p1.txt');
+    fs.writeFileSync(secret, 'ORIGINAL', 'utf-8');
+    fs.symlinkSync(secret, path.join(project, 'src', 'components', 'Button.astro'));
+
+    assert.throws(
+      () =>
+        writeRegistryFile({
+          targetDir: project,
+          relativePath: 'src/components/Button.astro',
+          content: 'PWNED',
+          overwrite: true,
+        }),
+      (err) => err.message.includes('[SECURITY ALERT]') && err.message.includes('enlace simbólico')
+    );
+    assert.equal(fs.readFileSync(secret, 'utf-8'), 'ORIGINAL');
+  });
+
+  test('debe rechazar un directorio intermedio que escapa del proyecto por symlink', () => {
+    const project = path.join(workspace, 'p2');
+    const outside = path.join(workspace, 'outside-p2');
+    fs.mkdirSync(project, { recursive: true });
+    fs.mkdirSync(outside, { recursive: true });
+    fs.symlinkSync(outside, path.join(project, 'src'));
+
+    assert.throws(
+      () =>
+        writeRegistryFile({
+          targetDir: project,
+          relativePath: 'src/evil.astro',
+          content: 'PWNED',
+          overwrite: true,
+        }),
+      (err) => err.message.includes('[SECURITY ALERT]') && err.message.includes('escapa del proyecto')
+    );
+    assert.equal(fs.existsSync(path.join(outside, 'evil.astro')), false);
+  });
+
+  test('debe escribir normalmente dentro del proyecto con modo 0644', () => {
+    const project = path.join(workspace, 'p3');
+    const status = writeRegistryFile({
+      targetDir: project,
+      relativePath: 'src/components/Button.astro',
+      content: 'CONTENIDO',
+    });
+
+    assert.equal(status, 'written');
+    const dest = path.join(project, 'src', 'components', 'Button.astro');
+    assert.equal(fs.readFileSync(dest, 'utf-8'), 'CONTENIDO');
+    assert.equal(fs.statSync(dest).mode & 0o777, 0o644);
+  });
+
+  test('debe omitir sin --overwrite y respetar el contenido previo', () => {
+    const project = path.join(workspace, 'p4');
+    fs.mkdirSync(path.join(project, 'src'), { recursive: true });
+    fs.writeFileSync(path.join(project, 'src', 'a.txt'), 'EVIDENCIA', 'utf-8');
+
+    const status = writeRegistryFile({
+      targetDir: project,
+      relativePath: 'src/a.txt',
+      content: 'NUEVO',
+      overwrite: false,
+    });
+
+    assert.equal(status, 'skipped');
+    assert.equal(fs.readFileSync(path.join(project, 'src', 'a.txt'), 'utf-8'), 'EVIDENCIA');
+  });
+});
+
+describe('[SEC-05] Integridad fail-closed y anclaje al registro maestro', () => {
+  const content = 'export const x = 1;';
+  const hash = crypto.createHash('sha256').update(content, 'utf-8').digest('hex');
+
+  test('debe RECHAZAR un archivo sin sha256 (no se acepta integridad opcional)', () => {
+    assert.throws(
+      () => verifyFileIntegrity({ path: 'src/x.ts', content }),
+      (err) => err.message.includes('[INTEGRITY ERROR]') && err.message.includes('no incluye un sha256')
+    );
+  });
+
+  test('debe RECHAZAR un sha256 con formato inválido', () => {
+    assert.throws(
+      () => verifyFileIntegrity({ path: 'src/x.ts', content, sha256: 'deadbeef' }),
+      (err) => err.message.includes('[INTEGRITY ERROR]')
+    );
+  });
+
+  test('debe RECHAZAR contenido que no coincide con el registro maestro aunque su hash interno cuadre', () => {
+    assert.throws(
+      () =>
+        verifyFileIntegrity(
+          { path: 'src/x.ts', content, sha256: hash },
+          'f'.repeat(64)
+        ),
+      (err) => err.message.includes('[INTEGRITY ERROR]') && err.message.includes('registro maestro')
+    );
+  });
+
+  test('debe ACEPTAR contenido con hash correcto y anclaje coincidente', () => {
+    assert.doesNotThrow(() => verifyFileIntegrity({ path: 'src/x.ts', content, sha256: hash }, hash));
   });
 });

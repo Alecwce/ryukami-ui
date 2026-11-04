@@ -3,8 +3,52 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-10-29T17:56:05.500Z",
+  "updatedAt": "2026-11-04T11:19:42.321Z",
   "totalItems": 35,
+  "integrity": {
+    "src/components/Button.astro": "953e82e3da4ca73fae56cabd910ad6e3d08882db64f991bfdb9eb750f4398e23",
+    "src/components/Badge.astro": "00ac463693c3f76fbf2a73338e635d3bc966a58f88783ea7588300327b69b93c",
+    "src/components/Card.astro": "c7be9974356e0b42546654972135b5cc74725ed452ca89a8eae168bd4231c484",
+    "src/components/Kbd.astro": "8bc3b339eb02b7fda0f3a993dc7d7220e2cac17cab40f058ff85d0cd2bcda8a0",
+    "src/components/ProgressBar.astro": "d5e98089d441d462cf6dea00f221b2cc3e66daaf77accf9dff76d1a1b7bc5b03",
+    "src/components/Avatar.astro": "f1ee3339b4aad6bbded56bf310215005f8d1338c735f82c1697a78be26ddf18a",
+    "src/components/Skeleton.astro": "9067b660338f63d3d49b404c257ae3e8551e1798b2255da838d28774d7df2b40",
+    "src/components/StatCard.astro": "b28dedac2539ebb4d8eb8450596a654d0382e04f78ef3d5f267f3152eec09763",
+    "src/components/Tooltip.astro": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
+    "src/components/Input.astro": "e99a865a324910c97988d3355775e27828bc120f585a1e8f4939be7bed86674c",
+    "src/components/Textarea.astro": "4e46d639fe8964071fe707931585950834c2b142c0b2ba24c3b7f706863a9cfd",
+    "src/components/Select.astro": "694eec4844e6f6861d4fc57c1bf184f855b69711be64cce057cc9b7be3731186",
+    "src/components/Slider.astro": "b0e2950a7175b49cd3a8ce0e73030250ffcee24626e71910ee46b8af0bff494b",
+    "src/components/RadioGroup.astro": "d5ac2de79273ca38a075ad922129b8fc1d87b4a32db10383a66987dc0be1c17a",
+    "src/components/Checkbox.astro": "d5f32cf9abdaf568548b0287cf84de327072a13a02b9c0c648500b0d8f3f3b68",
+    "src/components/Switch.astro": "2ef13bd29f72a6a7f59c487b7029d205168ac84b164b7fef55ed88f6e10cb0d7",
+    "src/components/Tabs.astro": "56cc7bbd0dbffd1af299a08615e4d01c47448abf62438979623c3882c1c89c79",
+    "src/components/Accordion.astro": "531f280d133bd548de375e0427921c97e45702bf58e13366e422412dde738b2c",
+    "src/components/Breadcrumb.astro": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
+    "src/components/Pagination.astro": "4401cdc9962c6222c425ce39827f3caff462260c70ec679693c21f474c331092",
+    "src/components/Popover.astro": "51ddf452b27b5141a94a6f4458269475aef5ac9534918679e754aba316d540c9",
+    "src/components/Icon.astro": "5fa8ef5f5e461bdb8e33f52de0ea87bba8d466f9651e2190c35f43316c85ff26",
+    "src/components/Alert.astro": "7f5fb9efcb66662eac32c0140b311cda721fcd5b4e9a3edf6177f9dd3566c456",
+    "src/components/Callout.astro": "99a3e2e0ccea9fe4e21b1807721ca08024aec514b27d08d584dce8d43358ad86",
+    "src/components/Modal.astro": "3ca3439d0d4cdef1568e4b7f5cc2225a4bb66ef48b5ddfe2bce93c93e5f336c7",
+    "src/components/Drawer.astro": "dfbf6c25ac3c90ac315ec8c0dc46a10bb54069f5f8cfd6ebb319303d7572ee35",
+    "src/components/ToastContainer.astro": "92b278888f7cb71691959ab32fa051cf6fa283bea938b4b7d20edee03c16fb6d",
+    "src/components/CommandPalette.astro": "4b9aa7da60476aa5e1fb84ef01aa82bbda03b78907f6d00ec089b7ad8257975f",
+    "src/data/registry.ts": "68f6424af5fcee534c130bf810f3bd80ec935bed2188538b9087a5b825b4465c",
+    "src/data/blocks.ts": "1a42fd783b46b0d6b7fa5c862090eaeb449d14c2e2ada2f034cbb705868f5fa0",
+    "src/data/component-props.ts": "35bf51c4dfacdbb9a75be9e8841742ea8428b74493425fa0c341b9dbe0a7e15c",
+    "src/data/component-snippets.ts": "2ef7e103943776e97e94c532caf1962e6fd9402fc5dc1c07860cd2a1c2ba2b83",
+    "src/components/BentoGrid.astro": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
+    "src/components/DataTable.astro": "4cb1a0f8520cb8dedd398a6b5f00f03b9f74005b2c670722aca1b7deaa336270",
+    "src/components/CodeBlock.astro": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
+    "src/components/AudioSynth.astro": "19dbc772f25deaad6e5404a57876aac22bc6453867b6c80d4799696846210820",
+    "src/components/TerminalEmulator.astro": "ca27cf0969af8e19d86ea068895ff81e55fa0dbf1e8f10388550e039e0dbcc1a",
+    "src/components/ComponentPreview.astro": "8a291a13096925c208ab551ea81e502d3552cf90bf39eda06b9b6b6d4ff871f8",
+    "src/data/multi-framework.ts": "58bf2f290455a4b067774024f7df3420198b91d83d9a4599d67b56d46603b58d",
+    "src/components/ThemeStudio.astro": "919e2e0ccf907c39c8b70ec5be6a379273e5c6e712bf503059edf32f28ca849d",
+    "src/components/AsciiGenerator.astro": "dc3bbe32150475344b83d16a91866820850a178f04bedd63780ea1283aafbe6c",
+    "src/styles/global.css": "f279611aa358dbfc6e22dc5f8fb7699d1a05d710f330b68cb3f2d9eb1419dd5e"
+  },
   "items": [
     {
       "name": "button",
@@ -12,6 +56,7 @@
       "category": "01_CORE_UI",
       "description": "Botón mecánico Neo-Brutalista con 5 variantes y síntesis de clic Web Audio.",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "953e82e3da4ca73fae56cabd910ad6e3d08882db64f991bfdb9eb750f4398e23",
       "endpoint": "/r/button.json",
       "target": "src/components/Button.astro"
@@ -22,7 +67,8 @@
       "category": "01_CORE_UI",
       "description": "Etiquetas y pastillas TUI de estado con sombra dura de -2px 2px.",
       "registryDependencies": [],
-      "sha256": "dc663b10223613816db71f34afadfad12b3dab56aefab3316d19ff03f3ec2005",
+      "hidden": false,
+      "sha256": "00ac463693c3f76fbf2a73338e635d3bc966a58f88783ea7588300327b69b93c",
       "endpoint": "/r/badge.json",
       "target": "src/components/Badge.astro"
     },
@@ -32,6 +78,7 @@
       "category": "01_CORE_UI",
       "description": "Ventana de consola TUI interactiva con controles geométricos [ - ][ □ ][ × ].",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "c7be9974356e0b42546654972135b5cc74725ed452ca89a8eae168bd4231c484",
       "endpoint": "/r/card.json",
       "target": "src/components/Card.astro"
@@ -42,7 +89,8 @@
       "category": "01_CORE_UI",
       "description": "Representación física de teclas de atajos de teclado ([Ctrl] + [K]).",
       "registryDependencies": [],
-      "sha256": "d673444a1df85a9938bb73e060e87b156fdb5ae9095b43a98e0e5b65fe938da6",
+      "hidden": false,
+      "sha256": "8bc3b339eb02b7fda0f3a993dc7d7220e2cac17cab40f058ff85d0cd2bcda8a0",
       "endpoint": "/r/kbd.json",
       "target": "src/components/Kbd.astro"
     },
@@ -52,7 +100,8 @@
       "category": "01_CORE_UI",
       "description": "Barra de progreso segmentada estilo BIOS con lectura ASCII [████████░░░░] en vivo.",
       "registryDependencies": [],
-      "sha256": "63e280088f81c7120f1728cbcd1426e898e91f00f3e3cc7f0efe86d827ce544d",
+      "hidden": false,
+      "sha256": "d5e98089d441d462cf6dea00f221b2cc3e66daaf77accf9dff76d1a1b7bc5b03",
       "endpoint": "/r/progress-bar.json",
       "target": "src/components/ProgressBar.astro"
     },
@@ -62,7 +111,8 @@
       "category": "01_CORE_UI",
       "description": "Identificador cuadrado de operador TUI con indicador de estado (ONLINE/BUSY/IDLE).",
       "registryDependencies": [],
-      "sha256": "a9962261337b38097bfaf9b06532f7b0bff0eb91628594efbb1068962f24461a",
+      "hidden": false,
+      "sha256": "f1ee3339b4aad6bbded56bf310215005f8d1338c735f82c1697a78be26ddf18a",
       "endpoint": "/r/avatar.json",
       "target": "src/components/Avatar.astro"
     },
@@ -72,7 +122,8 @@
       "category": "01_CORE_UI",
       "description": "Bloque de carga de búfer ASCII ([ ░░░ SYNC ░░░ ]) con estructura brutalista.",
       "registryDependencies": [],
-      "sha256": "9cba1bb3e88baa74e3c68cd1c78bac6c93d3501ac56e8d5c257f876f080ae6c3",
+      "hidden": false,
+      "sha256": "9067b660338f63d3d49b404c257ae3e8551e1798b2255da838d28774d7df2b40",
       "endpoint": "/r/skeleton.json",
       "target": "src/components/Skeleton.astro"
     },
@@ -82,6 +133,7 @@
       "category": "01_CORE_UI",
       "description": "Tarjeta de métrica KPI con delta porcentual (▲/▼) y sparkline ASCII [▁▂▃▅▆▇█].",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "b28dedac2539ebb4d8eb8450596a654d0382e04f78ef3d5f267f3152eec09763",
       "endpoint": "/r/stat-card.json",
       "target": "src/components/StatCard.astro"
@@ -92,6 +144,7 @@
       "category": "01_CORE_UI",
       "description": "Etiqueta emergente accesible por teclado y hover con sombra dura -2px 2px.",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
       "endpoint": "/r/tooltip.json",
       "target": "src/components/Tooltip.astro"
@@ -102,7 +155,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Campo de entrada brutalista con prefijo de terminal ($ / tcp://), hints y validación.",
       "registryDependencies": [],
-      "sha256": "f9ee89ac110dd26d04bfc46cfdeb1c5b76fae43e1ed68a038a0daf5fbf69466f",
+      "hidden": false,
+      "sha256": "e99a865a324910c97988d3355775e27828bc120f585a1e8f4939be7bed86674c",
       "endpoint": "/r/input.json",
       "target": "src/components/Input.astro"
     },
@@ -112,7 +166,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.",
       "registryDependencies": [],
-      "sha256": "d7a25c3d6a997b273e3ee29074ac15b09f59b3f670a4d3a290b8f58b66620154",
+      "hidden": false,
+      "sha256": "4e46d639fe8964071fe707931585950834c2b142c0b2ba24c3b7f706863a9cfd",
       "endpoint": "/r/textarea.json",
       "target": "src/components/Textarea.astro"
     },
@@ -122,7 +177,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Selector desplegable brutalista con prefijo OPT // e indicador mecánico.",
       "registryDependencies": [],
-      "sha256": "8a7e972a10f74e1836d34890aca0cb325140e28fea455e4f197198c7620c0f99",
+      "hidden": false,
+      "sha256": "694eec4844e6f6861d4fc57c1bf184f855b69711be64cce057cc9b7be3731186",
       "endpoint": "/r/select.json",
       "target": "src/components/Select.astro"
     },
@@ -132,7 +188,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Control deslizante de rango con barra de caracteres ASCII [====|----] en tiempo real.",
       "registryDependencies": [],
-      "sha256": "82520936541734c00e80b011dbe1a19da5a6f2bb1db7f4a6718627929627c8a8",
+      "hidden": false,
+      "sha256": "b0e2950a7175b49cd3a8ce0e73030250ffcee24626e71910ee46b8af0bff494b",
       "endpoint": "/r/slider.json",
       "target": "src/components/Slider.astro"
     },
@@ -142,7 +199,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Selector exclusivo de opciones con indicadores de terminal ( • ) y (   ).",
       "registryDependencies": [],
-      "sha256": "c6c156d9e36278b3f6375d380c14998d5aba4b4f8d0039969913f676f688502a",
+      "hidden": false,
+      "sha256": "d5ac2de79273ca38a075ad922129b8fc1d87b4a32db10383a66987dc0be1c17a",
       "endpoint": "/r/radio-group.json",
       "target": "src/components/RadioGroup.astro"
     },
@@ -152,7 +210,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Casilla de verificación cuadrada con marca pixel-art (X) y descripción.",
       "registryDependencies": [],
-      "sha256": "02a46d97160f2bc78090086e95f7f16dda82a5ed9d7d46cab26d8b90f01a1045",
+      "hidden": false,
+      "sha256": "d5f32cf9abdaf568548b0287cf84de327072a13a02b9c0c648500b0d8f3f3b68",
       "endpoint": "/r/checkbox.json",
       "target": "src/components/Checkbox.astro"
     },
@@ -162,7 +221,8 @@
       "category": "02_FORM_CONTROLS",
       "description": "Interruptor táctil deslizante (role=\"switch\") con variantes crimson, cyan y gold.",
       "registryDependencies": [],
-      "sha256": "d94dfc07b2607f2a999cd3228731347146f52b559b4059b24b73af574766a64f",
+      "hidden": false,
+      "sha256": "2ef13bd29f72a6a7f59c487b7029d205168ac84b164b7fef55ed88f6e10cb0d7",
       "endpoint": "/r/switch.json",
       "target": "src/components/Switch.astro"
     },
@@ -172,6 +232,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Paneles multipestaña TUI con navegación por flechas de teclado y sonido mecánico.",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "56cc7bbd0dbffd1af299a08615e4d01c47448abf62438979623c3882c1c89c79",
       "endpoint": "/r/tabs.json",
       "target": "src/components/Tabs.astro"
@@ -182,6 +243,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Acordeón exclusivo nativo con <details name=\"...\"> accesible y buscable en página.",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "531f280d133bd548de375e0427921c97e45702bf58e13366e422412dde738b2c",
       "endpoint": "/r/accordion.json",
       "target": "src/components/Accordion.astro"
@@ -192,6 +254,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
       "endpoint": "/r/breadcrumb.json",
       "target": "src/components/Breadcrumb.astro"
@@ -202,6 +265,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Barra de paginación mecánica TUI ([ ◄ PREV ] [ 01 ] [ 02 ] [ NEXT ► ]).",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "4401cdc9962c6222c425ce39827f3caff462260c70ec679693c21f474c331092",
       "endpoint": "/r/pagination.json",
       "target": "src/components/Pagination.astro"
@@ -214,17 +278,32 @@
       "registryDependencies": [
         "icon"
       ],
-      "sha256": "aecd6ed4f115e2a263ff6c9f6f75879d328006b51bff4809c613d071ab1204d5",
+      "hidden": false,
+      "sha256": "51ddf452b27b5141a94a6f4458269475aef5ac9534918679e754aba316d540c9",
       "endpoint": "/r/popover.json",
       "target": "src/components/Popover.astro"
+    },
+    {
+      "name": "icon",
+      "title": "Icon (primitiva interna)",
+      "category": "01_CORE_UI",
+      "description": "Set de iconos SVG del sistema Scorch, usado por popover, alert, theme-studio y otros módulos.",
+      "registryDependencies": [],
+      "hidden": true,
+      "sha256": "5fa8ef5f5e461bdb8e33f52de0ea87bba8d466f9651e2190c35f43316c85ff26",
+      "endpoint": "/r/icon.json",
+      "target": "src/components/Icon.astro"
     },
     {
       "name": "alert",
       "title": "Alert",
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).",
-      "registryDependencies": [],
-      "sha256": "492f7133b7e4bf42628c767cc835ac8c7b7018c07f4083458d24a1e46e25f03a",
+      "registryDependencies": [
+        "icon"
+      ],
+      "hidden": false,
+      "sha256": "7f5fb9efcb66662eac32c0140b311cda721fcd5b4e9a3edf6177f9dd3566c456",
       "endpoint": "/r/alert.json",
       "target": "src/components/Alert.astro"
     },
@@ -234,6 +313,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Callout canónico compatible con Obsidian ([!dragon], [!scorch], [!terminal], [!tui], [!summary]).",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "99a3e2e0ccea9fe4e21b1807721ca08024aec514b27d08d584dce8d43358ad86",
       "endpoint": "/r/callout.json",
       "target": "src/components/Callout.astro"
@@ -244,7 +324,8 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Diálogo modal nativo <dialog closedby=\"any\"> con bloqueo de scroll de fondo.",
       "registryDependencies": [],
-      "sha256": "6a3d7538b9fa67d400e6821f2698b381949be4fc5003c06c23bae66749758ce9",
+      "hidden": false,
+      "sha256": "3ca3439d0d4cdef1568e4b7f5cc2225a4bb66ef48b5ddfe2bce93c93e5f336c7",
       "endpoint": "/r/modal.json",
       "target": "src/components/Modal.astro"
     },
@@ -254,7 +335,8 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Panel lateral deslizante nativo <dialog closedby=\"any\"> con posición izquierda o derecha.",
       "registryDependencies": [],
-      "sha256": "c338a6c715dc6453b8b3a3bc2728d609ccbcd51047282c2427f7f9c39052d866",
+      "hidden": false,
+      "sha256": "dfbf6c25ac3c90ac315ec8c0dc46a10bb54069f5f8cfd6ebb319303d7572ee35",
       "endpoint": "/r/drawer.json",
       "target": "src/components/Drawer.astro"
     },
@@ -264,7 +346,8 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Motor global de notificaciones flotantes con síntesis de audio por severidad.",
       "registryDependencies": [],
-      "sha256": "0d4b12b32c31ca5b3e641b89ef0569d1780c435aacd83a2967980c1b9d6fe841",
+      "hidden": false,
+      "sha256": "92b278888f7cb71691959ab32fa051cf6fa283bea938b4b7d20edee03c16fb6d",
       "endpoint": "/r/toast-container.json",
       "target": "src/components/ToastContainer.astro"
     },
@@ -276,7 +359,8 @@
       "registryDependencies": [
         "kbd"
       ],
-      "sha256": "8aa6881d29a909183849ba09b91778fb5772d2e7ccf325fde33af3c228657c65",
+      "hidden": false,
+      "sha256": "4b9aa7da60476aa5e1fb84ef01aa82bbda03b78907f6d00ec089b7ad8257975f",
       "endpoint": "/r/command-palette.json",
       "target": "src/components/CommandPalette.astro"
     },
@@ -286,6 +370,7 @@
       "category": "03_LAYOUT_AND_MODALS",
       "description": "Sistema modular de grillas Neo-Brutalistas (1x, 2x, 3x) con telemetría y cabeceras TUI.",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
       "endpoint": "/r/bento-grid.json",
       "target": "src/components/BentoGrid.astro"
@@ -298,6 +383,7 @@
       "registryDependencies": [
         "badge"
       ],
+      "hidden": false,
       "sha256": "4cb1a0f8520cb8dedd398a6b5f00f03b9f74005b2c670722aca1b7deaa336270",
       "endpoint": "/r/data-table.json",
       "target": "src/components/DataTable.astro"
@@ -307,7 +393,10 @@
       "title": "CodeBlock (Diff & Copy)",
       "category": "04_SCORCH_STUDIO",
       "description": "Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.",
-      "registryDependencies": [],
+      "registryDependencies": [
+        "icon"
+      ],
+      "hidden": false,
       "sha256": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
       "endpoint": "/r/code-block.json",
       "target": "src/components/CodeBlock.astro"
@@ -317,7 +406,10 @@
       "title": "AudioSynth (8-Bit Oscillator)",
       "category": "04_SCORCH_STUDIO",
       "description": "Sintetizador interactivo de 4 pads acústicos Web Audio API (Cherry MX, Pip, Ack, Scorch Pulse).",
-      "registryDependencies": [],
+      "registryDependencies": [
+        "icon"
+      ],
+      "hidden": false,
       "sha256": "19dbc772f25deaad6e5404a57876aac22bc6453867b6c80d4799696846210820",
       "endpoint": "/r/audio-synth.json",
       "target": "src/components/AudioSynth.astro"
@@ -328,6 +420,7 @@
       "category": "04_SCORCH_STUDIO",
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
+      "hidden": false,
       "sha256": "ca27cf0969af8e19d86ea068895ff81e55fa0dbf1e8f10388550e039e0dbcc1a",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
@@ -337,8 +430,11 @@
       "title": "ComponentPreview",
       "category": "04_SCORCH_STUDIO",
       "description": "Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.",
-      "registryDependencies": [],
-      "sha256": "eb8ad8577637848a43f172bc8537c75fbfd232517b5dfb8b6d55d485bd09372d",
+      "registryDependencies": [
+        "icon"
+      ],
+      "hidden": false,
+      "sha256": "8a291a13096925c208ab551ea81e502d3552cf90bf39eda06b9b6b6d4ff871f8",
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"
     },
@@ -347,7 +443,12 @@
       "title": "ThemeStudio",
       "category": "04_SCORCH_STUDIO",
       "description": "Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.",
-      "registryDependencies": [],
+      "registryDependencies": [
+        "button",
+        "badge",
+        "icon"
+      ],
+      "hidden": false,
       "sha256": "919e2e0ccf907c39c8b70ec5be6a379273e5c6e712bf503059edf32f28ca849d",
       "endpoint": "/r/theme-studio.json",
       "target": "src/components/ThemeStudio.astro"
@@ -357,7 +458,11 @@
       "title": "AsciiGenerator",
       "category": "04_SCORCH_STUDIO",
       "description": "Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.",
-      "registryDependencies": [],
+      "registryDependencies": [
+        "badge",
+        "icon"
+      ],
+      "hidden": false,
       "sha256": "dc3bbe32150475344b83d16a91866820850a178f04bedd63780ea1283aafbe6c",
       "endpoint": "/r/ascii-generator.json",
       "target": "src/components/AsciiGenerator.astro"

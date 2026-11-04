@@ -3,7 +3,7 @@ import Button from './Button.astro';
 import Badge from './Badge.astro';
 import Icon from './Icon.astro';
 
-interface Props {
+export interface Props {
   class?: string;
 }
 
@@ -84,7 +84,7 @@ const { class: className = '' } = Astro.props;
       id="scorch-arcade-canvas"
       width="640"
       height="360"
-      class="w-full max-w-full aspect-[16/9] border-2 border-slate-800 shadow-[-4px_4px_0px_0px_#000000] bg-[#05070A] cursor-crosshair focus:outline-none focus:border-scorch-crimson"
+      class="w-full max-w-full aspect-[16/9] border-2 border-slate-800 shadow-brutal bg-[#05070A] cursor-crosshair focus:outline-none focus:border-scorch-crimson"
       tabindex="0"
       aria-label="Pantalla interactiva del juego arcade Scorch Defender"
     ></canvas>

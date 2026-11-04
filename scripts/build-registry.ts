@@ -19,7 +19,11 @@ export interface RegistryItemDef {
   category: '01_CORE_UI' | '02_FORM_CONTROLS' | '03_LAYOUT_AND_MODALS' | '04_SCORCH_STUDIO';
   description: string;
   file: string;
+  /** Archivos adicionales que se empaquetan con el componente (datos, helpers). */
+  files?: string[];
   registryDependencies: string[];
+  /** Primitivas internas: instalables como dependencia, ocultas del catálogo. */
+  hidden?: boolean;
 }
 
 export interface CompiledFile {
@@ -209,12 +213,21 @@ const ITEMS: RegistryItemDef[] = [
     registryDependencies: ['icon'],
   },
   {
+    name: 'icon',
+    title: 'Icon (primitiva interna)',
+    category: '01_CORE_UI',
+    description: 'Set de iconos SVG del sistema Scorch, usado por popover, alert, theme-studio y otros módulos.',
+    file: 'src/components/Icon.astro',
+    registryDependencies: [],
+    hidden: true,
+  },
+  {
     name: 'alert',
     title: 'Alert',
     category: '03_LAYOUT_AND_MODALS',
     description: 'Callouts de sistema con 4 niveles de severidad (crimson, gold, cyan, emerald).',
     file: 'src/components/Alert.astro',
-    registryDependencies: [],
+    registryDependencies: ['icon'],
   },
   {
     name: 'callout',
@@ -254,6 +267,12 @@ const ITEMS: RegistryItemDef[] = [
     category: '03_LAYOUT_AND_MODALS',
     description: 'Consola de comandos interactiva (Ctrl+K) con buscador en vivo y atajos de teclado.',
     file: 'src/components/CommandPalette.astro',
+    files: [
+      'src/data/registry.ts',
+      'src/data/blocks.ts',
+      'src/data/component-props.ts',
+      'src/data/component-snippets.ts',
+    ],
     registryDependencies: ['kbd'],
   },
   {
@@ -278,7 +297,7 @@ const ITEMS: RegistryItemDef[] = [
     category: '04_SCORCH_STUDIO',
     description: 'Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.',
     file: 'src/components/CodeBlock.astro',
-    registryDependencies: [],
+    registryDependencies: ['icon'],
   },
   {
     name: 'audio-synth',
@@ -286,7 +305,7 @@ const ITEMS: RegistryItemDef[] = [
     category: '04_SCORCH_STUDIO',
     description: 'Sintetizador interactivo de 4 pads acústicos Web Audio API (Cherry MX, Pip, Ack, Scorch Pulse).',
     file: 'src/components/AudioSynth.astro',
-    registryDependencies: [],
+    registryDependencies: ['icon'],
   },
   {
     name: 'terminal-emulator',
@@ -302,7 +321,8 @@ const ITEMS: RegistryItemDef[] = [
     category: '04_SCORCH_STUDIO',
     description: 'Visor interactivo [ PREVIEW | CODE | PROPS ] con botón de copiado de CLI y código en 1 clic.',
     file: 'src/components/ComponentPreview.astro',
-    registryDependencies: [],
+    files: ['src/data/component-props.ts', 'src/data/multi-framework.ts'],
+    registryDependencies: ['icon'],
   },
   {
     name: 'theme-studio',
@@ -310,7 +330,7 @@ const ITEMS: RegistryItemDef[] = [
     category: '04_SCORCH_STUDIO',
     description: 'Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.',
     file: 'src/components/ThemeStudio.astro',
-    registryDependencies: [],
+    registryDependencies: ['button', 'badge', 'icon'],
   },
   {
     name: 'ascii-generator',
@@ -318,53 +338,121 @@ const ITEMS: RegistryItemDef[] = [
     category: '04_SCORCH_STUDIO',
     description: 'Forja de banners ASCII 8-bit y emblema del Dragón Scorch en tiempo real.',
     file: 'src/components/AsciiGenerator.astro',
-    registryDependencies: [],
+    registryDependencies: ['badge', 'icon'],
   },
 ];
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const registryIndex = [];
+const compiledItems = [];
+const pathOwner = new Map<string, Set<string>>();
 
 for (const item of ITEMS) {
-  const absPath = path.join(ROOT_DIR, item.file);
-  const content = fs.readFileSync(absPath, 'utf-8');
-  const sha256 = crypto.createHash('sha256').update(content, 'utf-8').digest('hex');
+  const filePaths = [item.file, ...(item.files ?? [])];
+  const files = filePaths.map((filePath) => {
+    const absPath = path.join(ROOT_DIR, filePath);
+    if (!fs.existsSync(absPath)) {
+      throw new Error(`[REGISTRY ERROR] "${item.name}" declara un archivo inexistente: ${filePath}`);
+    }
+    const content = fs.readFileSync(absPath, 'utf-8');
+    const sha256 = crypto.createHash('sha256').update(content, 'utf-8').digest('hex');
+    const type = filePath.startsWith('src/data/') ? 'registry:lib' : 'registry:component';
+    if (!pathOwner.has(filePath)) pathOwner.set(filePath, new Set());
+    pathOwner.get(filePath)!.add(item.name);
+    return { path: filePath, type, sha256, content };
+  });
+
+  compiledItems.push({ def: item, files });
+}
+
+// ---------------------------------------------------------------------------
+// Validación de integridad del registro (falla el build, no el usuario)
+// ---------------------------------------------------------------------------
+const names = new Set(ITEMS.map((i) => i.name));
+const depsOf = new Map(ITEMS.map((i) => [i.name, i.registryDependencies ?? []]));
+
+function transitiveDeps(name: string): Set<string> {
+  const seen = new Set<string>();
+  const queue = [...(depsOf.get(name) ?? [])];
+  while (queue.length) {
+    const dep = queue.shift()!;
+    if (seen.has(dep)) continue;
+    seen.add(dep);
+    queue.push(...(depsOf.get(dep) ?? []));
+  }
+  return seen;
+}
+
+function resolveLocalImport(fromFile: string, spec: string): string | null {
+  const base = path.posix.normalize(path.posix.join(path.posix.dirname(fromFile), spec));
+  for (const candidate of [base, `${base}.ts`, `${base}.astro`, `${base}.js`]) {
+    if (pathOwner.has(candidate)) return candidate;
+    if (fs.existsSync(path.join(ROOT_DIR, candidate))) return candidate;
+  }
+  return null;
+}
+
+for (const { def, files } of compiledItems) {
+  for (const dep of def.registryDependencies) {
+    if (!names.has(dep)) {
+      throw new Error(`[REGISTRY ERROR] "${def.name}" depende de "${dep}", que no existe en el registro.`);
+    }
+    if (dep === def.name) {
+      throw new Error(`[REGISTRY ERROR] "${def.name}" se declara dependencia de sí mismo.`);
+    }
+  }
+
+  const allowed = transitiveDeps(def.name);
+  for (const file of files) {
+    const imports = [...file.content.matchAll(/from\s+['"](\.[^'"]+)['"]/g)].map((m) => m[1]);
+    for (const spec of imports) {
+      const resolved = resolveLocalImport(file.path, spec);
+      if (!resolved) {
+        throw new Error(
+          `[REGISTRY ERROR] "${def.name}" importa "${spec}" en ${file.path}, pero ese archivo no se empaqueta en el payload.`
+        );
+      }
+      const owners = pathOwner.get(resolved);
+      if (owners && !owners.has(def.name) && ![...owners].some((owner) => allowed.has(owner))) {
+        throw new Error(
+          `[REGISTRY ERROR] "${def.name}" importa "${spec}" de "${[...owners].join(', ')}" (${resolved}) sin declararlo en registryDependencies.`
+        );
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Emisión de payloads
+// ---------------------------------------------------------------------------
+for (const { def, files } of compiledItems) {
+  const sha256 = files[0].sha256;
 
   const payload = {
     $schema: 'https://ryukami-ui.dev/schema/registry-item.json',
-    name: item.name,
-    title: item.title,
+    name: def.name,
+    title: def.title,
     type: 'registry:ui',
-    category: item.category,
-    description: item.description,
-    registryDependencies: item.registryDependencies,
+    category: def.category,
+    description: def.description,
+    registryDependencies: def.registryDependencies,
     sha256,
-    files: [
-      {
-        path: item.file,
-        type: 'registry:component',
-        sha256,
-        content,
-      },
-    ],
+    files,
   };
 
-  fs.writeFileSync(
-    path.join(OUT_DIR, `${item.name}.json`),
-    JSON.stringify(payload, null, 2),
-    'utf-8'
-  );
+  fs.writeFileSync(path.join(OUT_DIR, `${def.name}.json`), JSON.stringify(payload, null, 2), 'utf-8');
 
   registryIndex.push({
-    name: item.name,
-    title: item.title,
-    category: item.category,
-    description: item.description,
-    registryDependencies: item.registryDependencies,
+    name: def.name,
+    title: def.title,
+    category: def.category,
+    description: def.description,
+    registryDependencies: def.registryDependencies,
+    hidden: def.hidden === true,
     sha256,
-    endpoint: `/r/${item.name}.json`,
-    target: item.file,
+    endpoint: `/r/${def.name}.json`,
+    target: def.file,
   });
 }
 
@@ -490,13 +578,25 @@ fs.writeFileSync(
   'utf-8'
 );
 
+const packageJson = JSON.parse(fs.readFileSync(path.join(ROOT_DIR, 'package.json'), 'utf-8'));
+const visibleCount = registryIndex.filter((item) => !item.hidden).length;
+
+// Manifiesto de integridad: hash de CADA archivo publicado. El CLI lo usa para
+// anclar cualquier archivo de un módulo (no solo el principal) a un payload distinto.
+const integrity: Record<string, string> = {};
+for (const { files } of compiledItems) {
+  for (const file of files) integrity[file.path] = file.sha256;
+}
+integrity['src/styles/global.css'] = stylesSha256;
+
 const masterRegistry = {
   name: 'ryukami-ui',
-  version: '2.4.0',
+  version: packageJson.version,
   edition: 'Scorch Dragon // Velgrynd Tribute Edition',
   stack: 'Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0',
   updatedAt: new Date().toISOString(),
-  totalItems: registryIndex.length,
+  totalItems: visibleCount,
+  integrity,
   items: registryIndex,
 };
 
@@ -506,4 +606,4 @@ fs.writeFileSync(
   'utf-8'
 );
 
-console.log(`[RYUKAMI-REGISTRY] Compilados ${registryIndex.length} componentes + styles.json + tokens.json en public/r/`);
+console.log(`[RYUKAMI-REGISTRY] Compilados ${visibleCount} componentes + styles.json + tokens.json en public/r/`);

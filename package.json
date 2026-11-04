@@ -32,19 +32,20 @@
     "AGENTS.md"
   ],
   "scripts": {
-    "test": "node --test tests/**/*.test.ts",
+    "test": "node --test \"tests/**/*.test.ts\"",
     "dev": "node scripts/build-registry.ts && astro dev",
     "start": "astro dev",
-    "build": "node scripts/build-registry.ts && astro build",
+    "build": "node scripts/build-registry.ts && astro build && node scripts/build-sitemap.ts",
     "preview": "astro preview",
-    "build:perf": "node scripts/build-registry.ts && astro build --timings",
+    "build:perf": "node scripts/build-registry.ts && astro build --timings && node scripts/build-sitemap.ts",
     "registry:build": "node scripts/build-registry.ts",
     "cli": "node bin/ryukami-ui.mjs",
     "pages:dev": "pnpm build && npx --yes wrangler pages dev dist --port 8788",
     "pages:deploy": "pnpm build && npx --yes wrangler pages deploy dist --project-name=ryukami-ui --branch=main --commit-dirty=true",
     "hooks:setup": "node -e 'fs.writeFileSync(\".git/hooks/pre-push\", \"#!/usr/bin/env bash\\necho \\\"[RYUKAMI AUTO-DEPLOY] Compilando 35 modulos + Astro y desplegando a Cloudflare Pages...\\\"\\nif pnpm run pages:deploy; then\\n  echo \\\"[RYUKAMI AUTO-DEPLOY] Produccion sincronizada en https://ryukami-ui.pages.dev\\\"\\nelse\\n  echo \\\"[RYUKAMI AUTO-DEPLOY] Advertencia: Despliegue directo no disponible (auth/red), continuando push.\\\"\\nfi\\n\"); fs.chmodSync(\".git/hooks/pre-push\", 0o755); console.log(\"[OK] Hook de Auto-Deploy pre-push instalado con tolerancia a fallos\");'",
     "ship": "git push origin main",
-    "astro": "astro"
+    "astro": "astro",
+    "lint:design": "node scripts/lint-design.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "4.3.3",

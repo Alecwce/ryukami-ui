@@ -5,7 +5,11 @@
   "type": "registry:ui",
   "category": "04_SCORCH_STUDIO",
   "description": "Personalizador en vivo de tokens CSS, sombras brutalistas y trama halftone.",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "button",
+    "badge",
+    "icon"
+  ],
   "sha256": "919e2e0ccf907c39c8b70ec5be6a379273e5c6e712bf503059edf32f28ca849d",
   "files": [
     {

@@ -35,7 +35,7 @@ const {
     </p>
   </div>
 
-  <form class="space-y-4" onsubmit="event.preventDefault(); window.showToast && window.showToast('SESIÓN INICIADA', 'Operador autenticado con éxito.', 'emerald');">
+  <form class="space-y-4" data-demo-form data-toast-title="SESIÓN INICIADA" data-toast-message="Operador autenticado con éxito." data-toast-variant="emerald">
     <Input
       label="Identificador de Operador"
       placeholder="alex@ryukami.dev"
@@ -61,3 +61,21 @@ const {
     </Button>
   </form>
 </div>
+
+<script is:inline>
+  // Demo de formulario sin `onsubmit` inline (compatible con CSP).
+  document.querySelectorAll('form[data-demo-form]').forEach((form) => {
+    if (form.dataset.demoBound === 'true') return;
+    form.dataset.demoBound = 'true';
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (window.showToast) {
+        window.showToast(
+          form.dataset.toastTitle || 'OPERACIÓN COMPLETADA',
+          form.dataset.toastMessage || '',
+          form.dataset.toastVariant || 'emerald'
+        );
+      }
+    });
+  });
+</script>

@@ -23,6 +23,7 @@ const {
 } = Astro.props;
 
 const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
+const hintId = `${selectId}-hint`;
 ---
 
 <div class="space-y-1.5 font-mono text-xs w-full">
@@ -30,7 +31,7 @@ const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
     {label}
   </label>
 
-  <div class="relative flex items-stretch border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-[-4px_4px_0px_0px_var(--shadow-color,#000000)] transition-transform duration-75 focus-within:translate-x-[1px] focus-within:-translate-y-[1px] focus-within:border-scorch-crimson focus-within:ring-2 focus-within:ring-scorch-crimson">
+  <div class="relative flex items-stretch border-2 border-black dark:border-slate-200 bg-white dark:bg-slate-900 shadow-brutal transition-transform duration-75 focus-within:translate-x-[1px] focus-within:-translate-y-[1px] focus-within:border-scorch-crimson focus-within:ring-2 focus-within:ring-scorch-crimson">
     {prefix && (
       <span class="px-2.5 py-2 bg-black text-scorch-cyan font-extrabold border-r-2 border-black dark:border-slate-700 flex items-center select-none shrink-0">
         {prefix}
@@ -39,8 +40,9 @@ const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
     <select
       id={selectId}
       name={name}
+      aria-describedby={hint ? hintId : undefined}
       class="w-full appearance-none bg-transparent px-3 py-2.5 pr-10 font-mono text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none cursor-pointer"
-      onchange="window.playMechanicalClick && window.playMechanicalClick()"
+      data-mech-change
     >
       {options.map((opt) => (
         <option
@@ -62,8 +64,19 @@ const selectId = `scorch-select-${Math.random().toString(36).substring(2, 9)}`;
   </div>
 
   {hint && (
-    <p class="text-[11px] text-slate-700 dark:text-slate-300">
+    <p id={hintId} class="text-[11px] text-slate-700 dark:text-slate-300">
       &gt; {hint}
     </p>
   )}
 </div>
+
+<script is:inline>
+  // Feedback mecánico sin `onchange` inline (compatible con CSP).
+  document.querySelectorAll('select[data-mech-change]').forEach((select) => {
+    if (select.dataset.mechBound === 'true') return;
+    select.dataset.mechBound = 'true';
+    select.addEventListener('change', () => {
+      if (window.playMechanicalClick) window.playMechanicalClick();
+    });
+  });
+</script>

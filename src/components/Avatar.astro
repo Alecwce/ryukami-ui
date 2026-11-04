@@ -32,7 +32,7 @@ const normalizedStatus = (String(status).toLowerCase() as keyof typeof statusMap
 const statusInfo = statusMap[normalizedStatus] || statusMap.online;
 ---
 
-<div class="inline-flex items-center gap-3 p-2.5 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-300 shadow-[-3px_3px_0px_0px_var(--shadow-color,#000000)] font-mono text-xs">
+<div class="inline-flex items-center gap-3 p-2.5 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-300 shadow-brutal-sm font-mono text-xs">
   <div class="relative shrink-0">
     <div class={`w-10 h-10 border-2 border-black flex items-center justify-center font-extrabold text-xs tracking-tighter ${bgMap[variant]}`}>
       {initials}

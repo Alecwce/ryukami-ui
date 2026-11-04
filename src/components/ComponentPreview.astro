@@ -3,7 +3,7 @@ import Icon from './Icon.astro';
 import type { PropItem } from '../data/component-props';
 import { getMultiFrameworkSnippets, FRAMEWORK_METADATA } from '../data/multi-framework';
 
-interface Props {
+export interface Props {
   title: string;
   code: string;
   slug?: string;
@@ -16,6 +16,8 @@ const { title, code, slug: propSlug, status = "ASCII READY", cli, propsDoc } = A
 const derivedSlug = propSlug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 const snippets = getMultiFrameworkSnippets(derivedSlug, code);
 const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
+const lineNumbers = (text) =>
+  text.trim().split('\n').map((_, i) => String(i + 1).padStart(2, '0')).join('\n');
 ---
 
 <div class="tui-window overflow-hidden" id={uniqueId}>
@@ -128,45 +130,21 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
       </span>
     </div>
 
-    <!-- 1. Astro Code Pane -->
-    <div class="framework-pane framework-pane-astro p-4">
-      <div class="min-w-full inline-block">
-        {snippets.astro.trim().split('\n').map((line, i) => (
-          <div class="flex items-baseline leading-5 font-mono">
-            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
-          </div>
-        ))}
-      </div>
+    <!-- Paneles de código: numeración en un <pre> aparte para no inflar el DOM -->
+    <div class="framework-pane framework-pane-astro p-4 flex gap-3">
+      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.astro)}</pre>
+      <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.astro.trim()}</pre>
     </div>
 
-    <!-- 2. React Code Pane -->
-    <div class="framework-pane framework-pane-react hidden p-4">
-      <div class="min-w-full inline-block">
-        {snippets.react.trim().split('\n').map((line, i) => (
-          <div class="flex items-baseline leading-5 font-mono">
-            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
-          </div>
-        ))}
-      </div>
+    <div class="framework-pane framework-pane-react hidden p-4 flex gap-3">
+      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.react)}</pre>
+      <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.react.trim()}</pre>
     </div>
 
-    <!-- 3. HTML Code Pane -->
-    <div class="framework-pane framework-pane-html hidden p-4">
-      <div class="min-w-full inline-block">
-        {snippets.html.trim().split('\n').map((line, i) => (
-          <div class="flex items-baseline leading-5 font-mono">
-            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <span class="whitespace-pre font-mono flex-1 min-w-0 text-slate-200">{line || '\u00A0'}</span>
-          </div>
-        ))}
+    <div class="framework-pane framework-pane-html hidden p-4 flex gap-3">
+      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.html)}</pre>
+      <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.html.trim()}</pre>
+    </div>
       </div>
     </div>
   </div>
@@ -380,7 +358,10 @@ const uniqueId = `preview-${Math.random().toString(36).substring(2, 9)}`;
       });
     });
 
-    const savedFw = localStorage.getItem('ryukami-framework') || 'astro';
+    let savedFw = 'astro';
+    try {
+      savedFw = localStorage.getItem('ryukami-framework') || 'astro';
+    } catch (e) {}
     switchFramework(savedFw);
 
     window.addEventListener('ryukami:framework-change', (e: any) => {

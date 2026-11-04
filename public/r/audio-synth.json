@@ -5,7 +5,9 @@
   "type": "registry:ui",
   "category": "04_SCORCH_STUDIO",
   "description": "Sintetizador interactivo de 4 pads acústicos Web Audio API (Cherry MX, Pip, Ack, Scorch Pulse).",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
   "sha256": "19dbc772f25deaad6e5404a57876aac22bc6453867b6c80d4799696846210820",
   "files": [
     {

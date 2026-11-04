@@ -29,13 +29,16 @@ jobs:
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run AppSec & Supply Chain Tests (node:test)
+      - name: Design system lint (Scorch v4.1)
+        run: pnpm run lint:design
+
+      - name: Run AppSec, Registry, MCP & CLI Tests (node:test)
         run: pnpm test
 
       - name: Build registry & static site with timings

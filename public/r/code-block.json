@@ -5,7 +5,9 @@
   "type": "registry:ui",
   "category": "04_SCORCH_STUDIO",
   "description": "Visor de código TUI con numeración de líneas, resaltado diff (+/-) y copiado en 1 clic.",
-  "registryDependencies": [],
+  "registryDependencies": [
+    "icon"
+  ],
   "sha256": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
   "files": [
     {
