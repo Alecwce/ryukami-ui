@@ -3,7 +3,7 @@
   "version": "2.4.0",
   "edition": "Scorch Dragon // Velgrynd Tribute Edition",
   "stack": "Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0",
-  "updatedAt": "2026-11-04T11:19:42.321Z",
+  "updatedAt": "2026-11-04T11:44:40.139Z",
   "totalItems": 35,
   "integrity": {
     "src/components/Button.astro": "953e82e3da4ca73fae56cabd910ad6e3d08882db64f991bfdb9eb750f4398e23",

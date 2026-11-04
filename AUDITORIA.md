@@ -74,7 +74,7 @@ Pendiente de Fase 2 (justificado): **CSP estricta** (requiere eliminar los 25 `o
 | **CSP** | `Content-Security-Policy-Report-Only` en [public/_headers](public/_headers) (observación sin bloqueo) con `default-src 'self'`, `script-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'` | Cabecera presente en `dist/_headers` |
 | **Deploy workflow** | El step de Cloudflare leía `env.CLOUDFLARE_API_TOKEN` definido en el propio step (siempre vacío en `if:` → nunca desplegaba). Movido a `env` de job; etiquetas «27 Modules» y «Node 22» corregidas | Revisión del YAML + check de secrets |
 
-**Para activar la CSP en modo bloqueo** falta generar hashes de los 17 `<script is:inline>` en post-build y renombrar la cabecera. Se dejó en Report-Only a propósito: sin navegador headless no se puede verificar que ningún script quede bloqueado, y una CSP mal calibrada rompe toda la interactividad del sitio.
+**CSP en modo bloqueo (cerrado).** `scripts/build-csp.ts` calcula el sha256 de cada `<script is:inline>` del build y escribe `dist/_headers` con `Content-Security-Policy` real (31 hashes, 43 páginas). Verificado con **Chrome headless sobre las 43 páginas**: 0 violaciones (`Refused to`) y 0 errores `Uncaught`, con el script de tema ejecutándose (`data-theme-preset` presente). Tests en `[CSP]`.
 
 ---
 

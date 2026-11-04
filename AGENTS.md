@@ -7,7 +7,7 @@ Guía directa para agentes de IA que editen o amplíen este repositorio.
 - **Gestor de paquetes:** `pnpm`
 - **Comandos del Proyecto:**
   - `pnpm dev` — Regenera `public/r/*.json` e inicia servidor en `http://localhost:4321`
-  - `pnpm build` — Regenera `public/r/*.json` y compila producción estática en `dist/`
+  - `pnpm build` — Regenera `public/r/*.json`, compila `dist/`, genera `sitemap.xml` y `_headers` con la CSP en modo bloqueo (hashes de scripts inline)
   - `pnpm registry:build` — Ejecuta `scripts/build-registry.ts` para actualizar los endpoints JSON del CLI (`35` módulos + `styles.json` + `tokens.json`)
   - `pnpm lint:design` — Gate del sistema de diseño (reglas de este documento hechas código)
   - `pnpm test` — Ejecuta la suite nativa `node:test` (`tests/*.test.ts`: seguridad, registro/E2E, MCP, CLI y diseño)
@@ -41,6 +41,7 @@ Guía directa para agentes de IA que editen o amplíen este repositorio.
 - Define siempre `export interface Props` en el frontmatter de cada componente `.astro`.
 - Si creas un nuevo componente reutilizable en `src/components/`, regístralo en `scripts/build-registry.ts` y ejecuta `pnpm registry:build` para publicar su JSON en `public/r/<nombre>.json`.
 - Para modales o paneles laterales usa `<dialog closedby="any">` nativo con `overscroll-behavior: contain`.
+- **CSP en bloqueo:** `scripts/build-csp.ts` hashea cada `<script is:inline>` y publica `dist/_headers`. Si añades un script inline nuevo no hace falta tocar hashes (se generan), pero **sí** está prohibido `eval`, `new Function` y URLs `javascript:`.
 - **Sin manejadores inline:** nada de `onclick=`/`onchange=`/`onsubmit=` (bloquean una CSP estricta). Usa `data-action` + el despachador de [BaseLayout.astro](src/layouts/BaseLayout.astro) (`open-palette`, `toggle-theme`, `toggle-sound`, `show-toast`, `open-dialog`, `copy-cli`) o un listener propio con guarda `data-*-bound`. Lo verifica la regla DS-10 de `pnpm lint:design`.
 - **Sombras de acento:** usa `shadow-accent-current|cyan|crimson`; las sombras arbitrarias `shadow-[…]` están prohibidas (DS-02).
 - Helpers globales en el cliente:
