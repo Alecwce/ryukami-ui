@@ -589,12 +589,19 @@ for (const { files } of compiledItems) {
 }
 integrity['src/styles/global.css'] = stylesSha256;
 
+// Sin `updatedAt` por defecto: un timestamp volátil ensuciaba el árbol en cada
+// build. Si se necesita, se puede fijar de forma reproducible con SOURCE_DATE_EPOCH.
+const sourceEpoch = Number(process.env.SOURCE_DATE_EPOCH);
+const updatedAt = Number.isFinite(sourceEpoch) && sourceEpoch > 0
+  ? new Date(sourceEpoch * 1000).toISOString()
+  : null;
+
 const masterRegistry = {
   name: 'ryukami-ui',
   version: packageJson.version,
   edition: 'Scorch Dragon // Velgrynd Tribute Edition',
   stack: 'Astro 7.4 + Tailwind CSS 4.3 + TypeScript 7.0',
-  updatedAt: new Date().toISOString(),
+  ...(updatedAt ? { updatedAt } : {}),
   totalItems: visibleCount,
   integrity,
   items: registryIndex,
