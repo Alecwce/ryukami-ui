@@ -41,7 +41,7 @@ const {
             [>_]
           </div>
           <div>
-            <span class="text-[10px] text-slate-500 uppercase font-bold block">OPERADOR ACTIVO</span>
+            <span class="text-[10px] text-muted uppercase font-bold block">OPERADOR ACTIVO</span>
             <span class="font-extrabold text-sm text-slate-900 dark:text-white">{playerName}</span>
             <div class="flex gap-1.5 mt-0.5">
               <Badge variant="gold">LVL {level}</Badge>
@@ -50,7 +50,7 @@ const {
           </div>
         </div>
 
-        <div class="text-[11px] text-slate-600 dark:text-slate-400 space-y-1 border-t-2 border-dashed border-slate-300 dark:border-slate-800 pt-3">
+        <div class="text-[11px] text-slate-600 dark:text-muted space-y-1 border-t-2 border-dashed border-slate-300 dark:border-slate-800 pt-3">
           <div class="flex justify-between">
             <span class="font-bold">CLASE:</span>
             <span class="text-slate-900 dark:text-white font-mono">SCORCH_ENGINEER</span>
@@ -68,7 +68,7 @@ const {
 
       <!-- Ranuras de Acceso Rápido / Inventario -->
       <div class="pt-4 border-t-2 border-slate-300 dark:border-slate-800 mt-4">
-        <span class="text-[10px] text-slate-500 uppercase font-bold block mb-1.5">ACCIONES RÁPIDAS:</span>
+        <span class="text-[10px] text-muted uppercase font-bold block mb-1.5">ACCIONES RÁPIDAS:</span>
         <div class="grid grid-cols-4 gap-1.5 text-center text-[10px] font-bold">
           <div class="border-2 border-black dark:border-slate-700 p-1.5 bg-white dark:bg-black hover:border-scorch-crimson cursor-pointer transition-colors">
             <span class="text-scorch-crimson block font-extrabold">[1]</span>
@@ -83,7 +83,7 @@ const {
             <span>SHIELD</span>
           </div>
           <div class="border-2 border-black dark:border-slate-700 p-1.5 bg-white dark:bg-black hover:border-emerald-500 cursor-pointer transition-colors">
-            <span class="text-emerald-500 block font-extrabold">[4]</span>
+            <span class="text-emerald-700 block font-extrabold">[4]</span>
             <span>BURST</span>
           </div>
         </div>
@@ -96,7 +96,7 @@ const {
         <span class="font-extrabold text-xs uppercase tracking-tight text-slate-900 dark:text-white">
           // ESTADO VITAL & ENERGÍA
         </span>
-        <span class="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 border border-emerald-500/30">
+        <span class="text-[10px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 border border-emerald-500/30">
           [ESTADO: COMBATE_ACTIVO]
         </span>
       </div>
@@ -138,7 +138,7 @@ const {
           <span class="text-[10px] font-extrabold text-scorch-crimson uppercase">
             OBJETIVO EN RANGO: 0xBOSS_CORRUPT
           </span>
-          <span class="text-[10px] text-slate-500 font-bold">4,200 / 5,000 HP</span>
+          <span class="text-[10px] text-muted font-bold">4,200 / 5,000 HP</span>
         </div>
         <ProgressBar
           label="BOSS INTEGRITY"

@@ -22,7 +22,7 @@ const { items = [], prefix = '~' } = Astro.props;
   </span>
   {items.map((item, idx) => (
     <div class="inline-flex items-center gap-1.5">
-      <span class="text-slate-500 font-extrabold select-none" aria-hidden="true">/</span>
+      <span class="text-muted font-extrabold select-none" aria-hidden="true">/</span>
       {item.active || !item.href ? (
         <span
           aria-current={item.active ? 'page' : undefined}

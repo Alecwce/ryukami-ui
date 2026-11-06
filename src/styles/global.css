@@ -347,6 +347,11 @@ dialog[open]::backdrop {
 }
 }
 
+/* Texto secundario con contraste AA en ambos temas (--text-muted) */
+@utility text-muted {
+  color: var(--text-muted);
+}
+
 /* Sombras de acento (no siguen --shadow-color: heredan el color del token) */
 @utility shadow-accent-current {
   box-shadow: -2px 2px 0px 0px currentColor;

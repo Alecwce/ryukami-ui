@@ -77,7 +77,7 @@ function getLineColor(line: string) {
       {lines.map((line, i) => (
         <div class={`flex items-baseline leading-5 font-mono ${getRowStyle(line)}`}>
           {showLineNumbers && (
-            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-500 font-mono text-[11px] font-bold opacity-60">
+            <span class="w-8 shrink-0 text-right pr-3.5 select-none text-slate-400 font-mono text-[11px] font-bold opacity-60">
               {String(i + 1).padStart(2, '0')}
             </span>
           )}

@@ -100,7 +100,7 @@ const lineNumbers = (text) =>
     <!-- Selector de Framework (Astro / React TSX / Tailwind HTML) -->
     <div class="code-framework-bar px-3 py-2 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 text-[11px] select-none">
       <div class="flex items-center gap-2">
-        <span class="text-slate-500 font-bold uppercase text-[10px]">// FRAMEWORK:</span>
+        <span class="text-slate-400 font-bold uppercase text-[10px]">// FRAMEWORK:</span>
         <div class="inline-flex bg-black border border-slate-700 p-0.5">
           <button
             type="button"
@@ -132,17 +132,17 @@ const lineNumbers = (text) =>
 
     <!-- Paneles de código: numeración en un <pre> aparte para no inflar el DOM -->
     <div class="framework-pane framework-pane-astro p-4 flex gap-3">
-      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.astro)}</pre>
+      <pre class="select-none text-right text-slate-400 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.astro)}</pre>
       <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.astro.trim()}</pre>
     </div>
 
     <div class="framework-pane framework-pane-react hidden p-4 flex gap-3">
-      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.react)}</pre>
+      <pre class="select-none text-right text-slate-400 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.react)}</pre>
       <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.react.trim()}</pre>
     </div>
 
     <div class="framework-pane framework-pane-html hidden p-4 flex gap-3">
-      <pre class="select-none text-right text-slate-500 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.html)}</pre>
+      <pre class="select-none text-right text-slate-400 text-[11px] font-bold leading-5 shrink-0 m-0" aria-hidden="true">{lineNumbers(snippets.html)}</pre>
       <pre class="whitespace-pre font-mono leading-5 text-slate-200 m-0 flex-1 min-w-0">{snippets.html.trim()}</pre>
     </div>
       </div>

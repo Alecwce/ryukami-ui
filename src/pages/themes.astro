@@ -46,7 +46,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
             // PRESETS DE SISTEMA (6 PALETAS NOMBRADAS)
           </h2>
         </div>
-        <span class="font-mono text-xs text-slate-500 font-bold">HAZ CLIC EN CUALQUIERA PARA APLICAR</span>
+        <span class="font-mono text-xs text-muted font-bold">HAZ CLIC EN CUALQUIERA PARA APLICAR</span>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="themes-grid">
@@ -67,7 +67,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
                 <Badge variant={t.badgeVariant}>{t.tag}</Badge>
               </div>
 
-              <p class="font-mono text-[10px] text-slate-500 font-bold">
+              <p class="font-mono text-[10px] text-muted font-bold">
                 // {t.edition}
               </p>
 
@@ -95,9 +95,9 @@ import { THEME_PRESETS } from '../data/theme-presets';
                     title={`Dark Scale: ${t.colors.dark}`}
                   ></span>
                 </div>
-                <div class="flex justify-between font-mono text-[10px] text-slate-600 dark:text-slate-400">
+                <div class="flex justify-between font-mono text-[10px] text-slate-600 dark:text-muted">
                   <span>{t.colors.primary}</span>
-                  <span class="font-bold text-emerald-600 dark:text-emerald-400">{t.contrast}</span>
+                  <span class="font-bold text-emerald-700 dark:text-emerald-400">{t.contrast}</span>
                 </div>
               </div>
 
@@ -139,7 +139,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
             // INTERACTIVE COMPONENT PLAYGROUND (VISTA EN VIVO)
           </h2>
         </div>
-        <span class="font-mono text-xs text-slate-500 font-bold hidden sm:inline">REACTS IN REALTIME</span>
+        <span class="font-mono text-xs text-muted font-bold hidden sm:inline">REACTS IN REALTIME</span>
       </div>
 
       <div class="tui-window p-6 sm:p-8 bg-white dark:bg-slate-900 border-2 border-black dark:border-slate-700 shadow-brutal space-y-6">
@@ -162,7 +162,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
           <!-- Botones y Acciones -->
           <div class="space-y-3">
-            <span class="text-[10px] text-slate-500 font-bold uppercase">// BUTTONS &amp; ACTIONS</span>
+            <span class="text-[10px] text-muted font-bold uppercase">// BUTTONS &amp; ACTIONS</span>
             <div class="flex flex-wrap gap-2">
               <Button variant="crimson" size="sm">PRIMARIO</Button>
               <Button variant="cyan" size="sm">CYAN ACCENT</Button>
@@ -173,7 +173,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
 
           <!-- Badges & Kbd -->
           <div class="space-y-3">
-            <span class="text-[10px] text-slate-500 font-bold uppercase">// BADGES &amp; KEYCAPS</span>
+            <span class="text-[10px] text-muted font-bold uppercase">// BADGES &amp; KEYCAPS</span>
             <div class="flex flex-wrap items-center gap-2">
               <Badge variant="crimson">ONLINE</Badge>
               <Badge variant="cyan">TTY_V4</Badge>
@@ -185,7 +185,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
 
           <!-- KPI Metric Card -->
           <div class="space-y-3">
-            <span class="text-[10px] text-slate-500 font-bold uppercase">// TELEMETRY KPI</span>
+            <span class="text-[10px] text-muted font-bold uppercase">// TELEMETRY KPI</span>
             <StatCard
               title="VELGRYND CONTRAST"
               value="5.04:1"
@@ -218,7 +218,7 @@ import { THEME_PRESETS } from '../data/theme-presets';
             // LABORATORIO DE AJUSTE FINO (THEME STUDIO)
           </h2>
         </div>
-        <span class="font-mono text-xs text-slate-500 font-bold hidden sm:inline">CUSTOM CSS GENERATOR</span>
+        <span class="font-mono text-xs text-muted font-bold hidden sm:inline">CUSTOM CSS GENERATOR</span>
       </div>
 
       <ThemeStudio />

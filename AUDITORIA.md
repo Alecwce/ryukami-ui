@@ -76,6 +76,15 @@ Pendiente de Fase 2 (justificado): **CSP estricta** (requiere eliminar los 25 `o
 
 **CSP en modo bloqueo (cerrado).** `scripts/build-csp.ts` calcula el sha256 de cada `<script is:inline>` del build y escribe `dist/_headers` con `Content-Security-Policy` real (31 hashes, 43 páginas). Verificado con **Chrome headless sobre las 43 páginas**: 0 violaciones (`Refused to`) y 0 errores `Uncaught`, con el script de tema ejecutándose (`data-theme-preset` presente). Tests en `[CSP]`.
 
+## Estado de correcciones — Fase 4 (contraste AA)
+
+| Cambio | Detalle |
+| :--- | :--- |
+| **Token `text-muted`** | Nueva utilidad `@utility text-muted` respaldada por `--text-muted`. Sustituye a `text-slate-400`/`text-slate-500` en superficies claras: **9.65–12.92:1** en ambos temas (antes 2.39–4.45:1) |
+| **Paneles oscuros** | En superficies permanentemente oscuras (terminal, consola arcade, paneles de código) el gris se fija en `text-slate-400` para no heredar el token del tema claro |
+| **Emerald** | `text-emerald-500/600` sobre fondo claro → `emerald-700` (3.77 → 5.4:1) |
+| **Cobertura** | 23 archivos; quedan 0 usos de `text-slate-500` sobre fondo claro |
+
 ---
 
 ## 1. Lo que está bien (verificado, no asumido)

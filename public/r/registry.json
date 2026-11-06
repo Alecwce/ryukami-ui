@@ -15,7 +15,7 @@
     "src/components/StatCard.astro": "b28dedac2539ebb4d8eb8450596a654d0382e04f78ef3d5f267f3152eec09763",
     "src/components/Tooltip.astro": "f8d66632b2d0a9a4b652928865eee9d197f65001bb6fbf0e0cd4f3869f7a1d9e",
     "src/components/Input.astro": "e99a865a324910c97988d3355775e27828bc120f585a1e8f4939be7bed86674c",
-    "src/components/Textarea.astro": "4e46d639fe8964071fe707931585950834c2b142c0b2ba24c3b7f706863a9cfd",
+    "src/components/Textarea.astro": "8be5625f80c4374cb6e133d718acba27503de84be81bbba2a2c0d9e4d5470d00",
     "src/components/Select.astro": "694eec4844e6f6861d4fc57c1bf184f855b69711be64cce057cc9b7be3731186",
     "src/components/Slider.astro": "b0e2950a7175b49cd3a8ce0e73030250ffcee24626e71910ee46b8af0bff494b",
     "src/components/RadioGroup.astro": "d5ac2de79273ca38a075ad922129b8fc1d87b4a32db10383a66987dc0be1c17a",
@@ -23,7 +23,7 @@
     "src/components/Switch.astro": "2ef13bd29f72a6a7f59c487b7029d205168ac84b164b7fef55ed88f6e10cb0d7",
     "src/components/Tabs.astro": "56cc7bbd0dbffd1af299a08615e4d01c47448abf62438979623c3882c1c89c79",
     "src/components/Accordion.astro": "531f280d133bd548de375e0427921c97e45702bf58e13366e422412dde738b2c",
-    "src/components/Breadcrumb.astro": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
+    "src/components/Breadcrumb.astro": "4c2d65bbe0d79ccbc08b114235419f3dc514988b9f1276d27e537e3960d3867f",
     "src/components/Pagination.astro": "4401cdc9962c6222c425ce39827f3caff462260c70ec679693c21f474c331092",
     "src/components/Popover.astro": "51ddf452b27b5141a94a6f4458269475aef5ac9534918679e754aba316d540c9",
     "src/components/Icon.astro": "5fa8ef5f5e461bdb8e33f52de0ea87bba8d466f9651e2190c35f43316c85ff26",
@@ -38,15 +38,15 @@
     "src/data/component-props.ts": "35bf51c4dfacdbb9a75be9e8841742ea8428b74493425fa0c341b9dbe0a7e15c",
     "src/data/component-snippets.ts": "2ef7e103943776e97e94c532caf1962e6fd9402fc5dc1c07860cd2a1c2ba2b83",
     "src/components/BentoGrid.astro": "dc9d5133a68049024be195338890196c9825da9849da6e5649b0cdb4381c93e1",
-    "src/components/DataTable.astro": "4cb1a0f8520cb8dedd398a6b5f00f03b9f74005b2c670722aca1b7deaa336270",
-    "src/components/CodeBlock.astro": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
+    "src/components/DataTable.astro": "e8db29c1941268ea693dc215fa14ab139acef80a06f7e85d27dcf9a7bdc0a0e8",
+    "src/components/CodeBlock.astro": "a68f564daa55bd4000bc2050449f346b6fb433e694e96ad956c35e44ef59cab4",
     "src/components/AudioSynth.astro": "19dbc772f25deaad6e5404a57876aac22bc6453867b6c80d4799696846210820",
-    "src/components/TerminalEmulator.astro": "ca27cf0969af8e19d86ea068895ff81e55fa0dbf1e8f10388550e039e0dbcc1a",
-    "src/components/ComponentPreview.astro": "8a291a13096925c208ab551ea81e502d3552cf90bf39eda06b9b6b6d4ff871f8",
+    "src/components/TerminalEmulator.astro": "346283df98d3ec08c1b6db0beead96dcd5845e9d64f93bed8dbf878728d212ba",
+    "src/components/ComponentPreview.astro": "1c6322126ed9b0268d4f7d770a074b8395fdf2860b5b391a90e6242ccb680e9a",
     "src/data/multi-framework.ts": "58bf2f290455a4b067774024f7df3420198b91d83d9a4599d67b56d46603b58d",
     "src/components/ThemeStudio.astro": "919e2e0ccf907c39c8b70ec5be6a379273e5c6e712bf503059edf32f28ca849d",
     "src/components/AsciiGenerator.astro": "dc3bbe32150475344b83d16a91866820850a178f04bedd63780ea1283aafbe6c",
-    "src/styles/global.css": "f279611aa358dbfc6e22dc5f8fb7699d1a05d710f330b68cb3f2d9eb1419dd5e"
+    "src/styles/global.css": "cdc441393c92c53be835177f01079d2f1f5dfd178e3016b58a079afdc29c8fe7"
   },
   "items": [
     {
@@ -166,7 +166,7 @@
       "description": "Editor multilínea de búfer UTF-8 con contador en vivo de líneas y bytes.",
       "registryDependencies": [],
       "hidden": false,
-      "sha256": "4e46d639fe8964071fe707931585950834c2b142c0b2ba24c3b7f706863a9cfd",
+      "sha256": "8be5625f80c4374cb6e133d718acba27503de84be81bbba2a2c0d9e4d5470d00",
       "endpoint": "/r/textarea.json",
       "target": "src/components/Textarea.astro"
     },
@@ -254,7 +254,7 @@
       "description": "Ruta de navegación estilo sistema de archivos Unix (~/ryukami/core/nodes).",
       "registryDependencies": [],
       "hidden": false,
-      "sha256": "1f0c37a82f63774df626408ee5c2203c3c6471bda4a2bfabbd90dde7431d99b3",
+      "sha256": "4c2d65bbe0d79ccbc08b114235419f3dc514988b9f1276d27e537e3960d3867f",
       "endpoint": "/r/breadcrumb.json",
       "target": "src/components/Breadcrumb.astro"
     },
@@ -383,7 +383,7 @@
         "badge"
       ],
       "hidden": false,
-      "sha256": "4cb1a0f8520cb8dedd398a6b5f00f03b9f74005b2c670722aca1b7deaa336270",
+      "sha256": "e8db29c1941268ea693dc215fa14ab139acef80a06f7e85d27dcf9a7bdc0a0e8",
       "endpoint": "/r/data-table.json",
       "target": "src/components/DataTable.astro"
     },
@@ -396,7 +396,7 @@
         "icon"
       ],
       "hidden": false,
-      "sha256": "b2726c70680b42bd8e8b345f69f0ce716beed193ccb9aaee9700a66cd19d4afd",
+      "sha256": "a68f564daa55bd4000bc2050449f346b6fb433e694e96ad956c35e44ef59cab4",
       "endpoint": "/r/code-block.json",
       "target": "src/components/CodeBlock.astro"
     },
@@ -420,7 +420,7 @@
       "description": "Consola interactiva en vivo con comandos (neofetch, status, dragon, cli, theme, clear).",
       "registryDependencies": [],
       "hidden": false,
-      "sha256": "ca27cf0969af8e19d86ea068895ff81e55fa0dbf1e8f10388550e039e0dbcc1a",
+      "sha256": "346283df98d3ec08c1b6db0beead96dcd5845e9d64f93bed8dbf878728d212ba",
       "endpoint": "/r/terminal-emulator.json",
       "target": "src/components/TerminalEmulator.astro"
     },
@@ -433,7 +433,7 @@
         "icon"
       ],
       "hidden": false,
-      "sha256": "8a291a13096925c208ab551ea81e502d3552cf90bf39eda06b9b6b6d4ff871f8",
+      "sha256": "1c6322126ed9b0268d4f7d770a074b8395fdf2860b5b391a90e6242ccb680e9a",
       "endpoint": "/r/component-preview.json",
       "target": "src/components/ComponentPreview.astro"
     },
