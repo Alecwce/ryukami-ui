@@ -85,6 +85,16 @@ Pendiente de Fase 2 (justificado): **CSP estricta** (requiere eliminar los 25 `o
 | **Emerald** | `text-emerald-500/600` sobre fondo claro → `emerald-700` (3.77 → 5.4:1) |
 | **Cobertura** | 23 archivos; quedan 0 usos de `text-slate-500` sobre fondo claro |
 
+## Estado de correcciones — Fase 5 (typecheck)
+
+| Cambio | Detalle |
+| :--- | :--- |
+| **tsconfig TS 7** | Fuera `baseUrl` (eliminado en TypeScript 7); `paths` relativos `./src/*`. Ya no falla `tsc` |
+| **Gate `pnpm typecheck`** | `tsc --noEmit` sobre `src/**/*.ts` con `types: []`, de modo que pasa **sin `@types/node`** y CI no necesita dependencias nuevas |
+| **CI** | Nuevo step «Typecheck (TypeScript 7)» entre el lint de diseño y los tests; run `42229215422` en verde |
+
+Limitación conocida: los `.astro` **no** se validan (haría falta `@astrojs/check`, que no se pudo instalar en este entorno porque el store de pnpm es de solo lectura). La convención `export interface Props` sí está cubierta por el lint (DS-06), aunque de forma estructural, no semántica.
+
 ---
 
 ## 1. Lo que está bien (verificado, no asumido)
