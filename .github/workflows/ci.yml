@@ -38,6 +38,9 @@ jobs:
       - name: Design system lint (Scorch v4.1)
         run: pnpm run lint:design
 
+      - name: Typecheck (TypeScript 7)
+        run: pnpm run typecheck
+
       - name: Run AppSec, Registry, MCP & CLI Tests (node:test)
         run: pnpm test
 

@@ -10,6 +10,7 @@ Guía directa para agentes de IA que editen o amplíen este repositorio.
   - `pnpm build` — Regenera `public/r/*.json`, compila `dist/`, genera `sitemap.xml` y `_headers` con la CSP en modo bloqueo (hashes de scripts inline)
   - `pnpm registry:build` — Ejecuta `scripts/build-registry.ts` para actualizar los endpoints JSON del CLI (`35` módulos + `styles.json` + `tokens.json`)
   - `pnpm lint:design` — Gate del sistema de diseño (reglas de este documento hechas código)
+  - `pnpm typecheck` — `tsc --noEmit` sobre los módulos TypeScript de `src/` (compatible con TS 7)
   - `pnpm test` — Ejecuta la suite nativa `node:test` (`tests/*.test.ts`: seguridad, registro/E2E, MCP, CLI y diseño)
   - `pnpm preview --port 4321 --host` — Servidor de producción local
 - **Comandos del CLI (`bin/ryukami-ui.mjs` / `ryukami-ui` v2.4.0):**
